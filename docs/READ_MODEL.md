@@ -73,6 +73,26 @@ Reports older than 90 seconds are stale. The chart has a 15-minute window with u
 No metrics are persisted into the PM provider or checked-in snapshot. Offline
 bootstrap remains independent. Missing files don't block durable-state reads.
 
+The observer retains already observed numeric points in process memory, bounded to
+15 minutes/180 points per execution source and 2048 sources overall. Bounded log-tail
+turnover, missing telemetry files, and an inactive/expired lease do not erase points
+already seen. Current `status` still comes from the current observation/lease, never
+from retained points; historical values cannot make a worker live. No ended lease's
+log is reopened to reconstruct history. Scope, Workstream, session, exact checkout,
+branch and telemetry source distinguish histories. A new lease on the same execution
+source preserves earlier points but starts a separate attribution interval; optional
+point `break_before: true` prevents the chart connecting across those intervals.
+Unregistered intervals stay unknown, not zero or interpolated. The existing first
+sample, counter-reset and long-report-interval gaps also remain unknown.
+
+`activity.history_coverage` states this bounded process-local coverage and is shown
+in Workstream telemetry detail. Service restart clears the observation cache;
+unobserved history outside the permitted parser tail is not recoverable. Browser
+reloads share the running observer's retained history. Removed/invalid registrations
+do not surface a historical series; a changed execution identity starts separately.
+For local rollback, `retain_activity_history: false` in the service config selects
+the previous stateless adapter projection. Neither mode is a PM history datastore.
+
 The browser polls its normalized read endpoint every 5 seconds; provider polling
 remains 30 seconds. The compact native SVG area/line treatment references SparkOps
 Fleet's D3 chart, without importing SparkOps, React, or Highcharts. The first real

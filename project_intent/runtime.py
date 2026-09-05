@@ -6,10 +6,11 @@ from pathlib import Path
 import tempfile
 import threading
 
-from .model import validate_snapshot, valid_presence
+from .model import validate_snapshot, valid_presence, utcnow
 from .provider import adapter, MAX_BYTES
 from .activity import codex_activity
 from .enrollment import read_registrations
+from .activity_history import ActivityHistory
 
 
 def read_json(path):
@@ -35,6 +36,7 @@ class Store:
         self.config=config
         self.lock=threading.RLock()
         self.states={}
+        self.activity_history=ActivityHistory()
         for scope in config['scopes']:
             if scope['id'] in self.states: raise ValueError('Duplicate scope')
             snapshot=None
@@ -57,7 +59,16 @@ class Store:
             except (OSError,ValueError,KeyError,TypeError,StopIteration,AttributeError):
                 with self.lock:self.states[scope['id']]['provider_status']='unavailable'
 
-    def view(self):
+    def view(self, now=None):
+        # Serialize read/merge cycles so concurrent API clients cannot let an older
+        # tail read replace newer observations. No provider network work runs here.
+        with self.lock:
+            return self._view(now)
+
+    def _view(self, now=None):
+        now=now or utcnow()
+        observed_at=now.timestamp()
+        self.activity_history.prune(observed_at)
         with self.lock: states=copy.deepcopy(self.states)
         for scope in self.config['scopes']:
             sources=scope.get('presence_sources',[]);present=[]; failures=0
@@ -69,28 +80,34 @@ class Store:
                 states[scope['id']]['local_reports']=[]
                 states[scope['id']]['report_coverage']='unavailable-or-over-limit; exact report publication remains available'
             activity={}
-            for binding in scope.get('activity_sources',[])[:16]:
+            static_bindings=scope.get('activity_sources',[])[:16]
+            for binding in static_bindings:
                 # Explicit one-source-per-workstream v0, never guess attribution.
                 key=binding['workstream']
-                if key in activity:
+                if sum(b['workstream']==key for b in static_bindings)>1:
                     activity[key]={'status':'ambiguous-binding','points':[]}
                 else:
-                    activity[key]=codex_activity(binding)
+                    metric=codex_activity(binding,observed_at)
+                    identity=(scope['id'],key,binding.get('session'),binding.get('path'))
+                    activity[key]=self.activity_history.observe(identity,metric,observed_at,binding.get('since')) if self.config.get('retain_activity_history',True) else metric
             known={r['id'] for r in (states[scope['id']]['snapshot'] or {}).get('records',[]) if r['kind']=='workstream'}
             enrolled_activity={}
             for source in scope.get('enrollment_sources',[])[:16]:
-                enrolled,failed=read_registrations(source,scope['id'],known)
+                enrolled,failed=read_registrations(source,scope['id'],known,now=now)
                 failures+=failed
                 for record,binding in enrolled:
                     present.append(record)
-                    if binding:
-                        metric=codex_activity(binding)
-                        enrolled_activity.setdefault(record['workstream'],[]).append(metric)
-            for key,metrics in enrolled_activity.items():
+                    if record.get('telemetry'):
+                        enrolled_activity.setdefault(record['workstream'],[]).append((record,binding))
+            for key,entries in enrolled_activity.items():
                 # Separate per-worker measurements; never sum mismatched reporting intervals.
-                if len({m['session'] for m in metrics})!=len(metrics):
+                if len({r['session'] for r,b in entries})!=len(entries):
                     activity[key]={'status':'ambiguous-binding','points':[]}
-                elif len(metrics)==1:
+                    continue
+                metrics=[self.activity_history.enrolled(scope['id'],r,b,observed_at) for r,b in entries] if self.config.get('retain_activity_history',True) else [codex_activity(b,observed_at) for r,b in entries if b]
+                if not metrics:
+                    continue
+                if len(metrics)==1:
                     activity[key]=metrics[0]
                 else:
                     last=max((m.get('last_report_at') or 0 for m in metrics),default=0)
