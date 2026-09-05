@@ -16,6 +16,7 @@ one optional `scope` parameter. Contract ID: `sayhi.project-intent.observatory/v
 | attention | Scope/Workstream, explainable kind and message; no automatic intervention |
 | initiatives | Native grouping plus explicit qualified refs, visible membership only |
 | recent_handoffs | Most recent captured handoffs ordered by parsed instants |
+| recently_rested / rested_coverage | Latest explicit inactive registrations in the last24hours, newest first, capped12. Timestamp is the inactive registration heartbeat, not an exact stopping time. Expired active leases are excluded. Multiple sessions may rest while another works on the same Workstream. |
 | coverage / read_only | Explicit observation limitations and read-only boundary |
 
 Workstream keys are scope-qualified. Core record identifiers are stable local IDs.
@@ -41,6 +42,16 @@ Failure distinctions:
 Refreshing the UI is a read, not a remote PM mutation or an execution action. The
 server polls provider reads every 30 seconds. This tranche does not expose operator
 refresh-provider, notes, claims, assignment or review mutation APIs.
+
+The opt-in `/observatory` presentation uses the same API and existing card/detail
+components. Home summarizes fresh observations, explicitly reported inactive
+sessions and attention; hash navigation exposes all work (including completed and
+deferred declarations), architecture, environments, handoffs and coverage. `/`
+remains the classic rollback view. No PM datastore or session history is added.
+`workstreams[].local_reports` are rendered with their local/pending/uncertain/
+published state and full evidence/receipt detail, independently of provider
+readiness/handoffs. Recent report cards are bounded24; all available reports remain
+in Workstream detail. Listing coverage is shown, not inferred as complete history.
 
 ## Optional measured activity (local dogfood)
 

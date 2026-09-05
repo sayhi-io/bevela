@@ -235,7 +235,15 @@ def project(states, allowed_scopes, selected=None, now=None):
             'execution':{'status':'not-selected','meaning':'Only explicitly related architecture/grouping is included'}})
         if s['provider_status'] in ('unavailable','not-yet-observed'):
             attention.append({'scope':s['id'],'kind':'dependency-unavailable','message':'Related architecture/grouping uses last-known state from an unavailable source'})
+    visible_keys={w['key'] for w in workstreams}
+    rested=sorted((dict(p, reported_inactive_at=p['heartbeat_at']) for p in sessions
+                   if p['workstream'] in visible_keys and p['status']=='inactive'
+                   and 0 <= (now-date(p['heartbeat_at'])).total_seconds() <= 86400),
+                  key=lambda p:(-date(p['heartbeat_at']).timestamp(),p['workstream'],p['session']))
     return {'contract':CONTRACT,'observed_at':now.isoformat(),'scopes':scopes,'workstreams':workstreams,
+        'recently_rested':rested[:12],
+        'rested_coverage':{'window_seconds':86400,'total':len(rested),'limit':12,
+                          'meaning':'Latest explicit inactive registration per session; heartbeat is report time, not proof of completion or exact stopping time. Expired leases are excluded.'},
         'dependency_sources':dependencies,
         'architecture':arch,'sessions':sessions,'convergence':convergence,'attention':attention,'initiatives':initiatives,
         'recent_handoffs':sorted([w for w in workstreams if w.get('handoff_at')],key=lambda w:date(w['handoff_at']),reverse=True)[:12],
