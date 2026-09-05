@@ -1,0 +1,4 @@
+interface:
+  display_name: "Project Intent"
+  short_description: "Orient, coordinate, and hand off scoped agent work"
+  default_prompt: "Use $project-intent to find my assignment and carry its next authorized step through evidence and handoff."

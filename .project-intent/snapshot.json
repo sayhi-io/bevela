@@ -1,0 +1,466 @@
+{
+  "initiatives": [
+    {
+      "createdAt": "2026-09-05T19:23:53.121Z",
+      "description": "A shared SayHi capability, with explicitly scoped product participation and independent recovery.",
+      "health": null,
+      "id": 3,
+      "labelIds": [],
+      "ownerUserId": null,
+      "position": 1000,
+      "priority": null,
+      "progress": {
+        "canceled": 0,
+        "completed": 0,
+        "total": 5
+      },
+      "projectId": 4,
+      "startDate": null,
+      "status": "active",
+      "targetDate": null,
+      "title": "Independent Project Intent and Mission Control",
+      "updatedAt": "2026-09-05T19:23:53.121Z"
+    }
+  ],
+  "mission": "SayHi's independent development-intent and architectural-coherence service. Products participate within explicit scopes; SparkOps contributes execution awareness but does not own Project Intent.",
+  "records": [
+    {
+      "acceptance": [
+        "Credential-free immutable local outbox; scoped native publication with uncertain delivery reconciliation.",
+        "Preserve explicit authority, offline truth, evidence attribution, and independent review before merge readiness."
+      ],
+      "assignee_name": null,
+      "assignee_username": null,
+      "avoid": "No product-runtime dependency, fleet or production mutation, provider fork, generalized scheduler, browser writes, commits or merges.",
+      "boundaries": [
+        "platform/independence",
+        "intent/scopes",
+        "intent/reporting"
+      ],
+      "completion_evidence": [
+        "Native PI-MISSION-01 comment206: first supported reporting worker handoff (historical pre-review source); 64 local unit tests passed after real six-task enrollment; independent review pending."
+      ],
+      "delegate_name": null,
+      "delegate_username": null,
+      "id": "PI-REPORTING-01",
+      "initiative_id": null,
+      "integration_dependency": "PI-MISSION-01",
+      "kind": "workstream",
+      "provider_id": 42,
+      "provider_identifier": "SAYINT-6",
+      "provider_lifecycle": "Todo",
+      "provider_url": "http://127.0.0.1:8281",
+      "readiness": {
+        "implementation": "implemented-locally",
+        "merge": "not-ready",
+        "production": "not-authorized",
+        "review": "pending"
+      },
+      "required_environment": {
+        "known_limitations": [
+          "No production or fleet authority",
+          "Native provider provisional"
+        ],
+        "requirement": "Checkout-owned Python environment, independent loopback provider for authorized local dogfood"
+      },
+      "revision": "2",
+      "scope": "Credential-free immutable local outbox; scoped native publication with uncertain delivery reconciliation.",
+      "source_checkout": "/home/meanaverage/sayhi/worktrees/sayhi-project-intent/mission-control",
+      "state": "active",
+      "statement": "Supported worker reporting and native publication",
+      "title": "Supported worker reporting and native publication"
+    },
+    {
+      "acceptance": [
+        "Native inventory and confirmed metadata reconciliation with expected revisions and durable history.",
+        "Preserve explicit authority, offline truth, evidence attribution, and independent review before merge readiness."
+      ],
+      "assignee_name": null,
+      "assignee_username": null,
+      "avoid": "No product-runtime dependency, fleet or production mutation, provider fork, generalized scheduler, browser writes, commits or merges.",
+      "boundaries": [
+        "platform/independence",
+        "intent/scopes",
+        "intent/provider"
+      ],
+      "completion_evidence": [
+        "Native PI-MISSION-01 comment206: first supported reporting worker handoff (historical pre-review source); 64 local unit tests passed after real six-task enrollment; independent review pending."
+      ],
+      "delegate_name": null,
+      "delegate_username": null,
+      "id": "PI-RECONCILE-01",
+      "initiative_id": null,
+      "integration_dependency": "PI-MISSION-01",
+      "kind": "workstream",
+      "provider_id": 43,
+      "provider_identifier": "SAYINT-7",
+      "provider_lifecycle": "Todo",
+      "provider_url": "http://127.0.0.1:8281",
+      "readiness": {
+        "implementation": "implemented-locally",
+        "merge": "not-ready",
+        "production": "not-authorized",
+        "review": "pending"
+      },
+      "required_environment": {
+        "known_limitations": [
+          "No production or fleet authority",
+          "Native provider provisional"
+        ],
+        "requirement": "Checkout-owned Python environment, independent loopback provider for authorized local dogfood"
+      },
+      "revision": "2",
+      "scope": "Native inventory and confirmed metadata reconciliation with expected revisions and durable history.",
+      "source_checkout": "/home/meanaverage/sayhi/worktrees/sayhi-project-intent/mission-control",
+      "state": "active",
+      "statement": "Routine confirmed assignment enrollment and reconciliation",
+      "title": "Routine confirmed assignment enrollment and reconciliation"
+    },
+    {
+      "acceptance": [
+        "Explicit session attachment and deduplicated bounded continuation through a provisional Codex connector.",
+        "Preserve explicit authority, offline truth, evidence attribution, and independent review before merge readiness."
+      ],
+      "assignee_name": null,
+      "assignee_username": null,
+      "avoid": "No product-runtime dependency, fleet or production mutation, provider fork, generalized scheduler, browser writes, commits or merges.",
+      "boundaries": [
+        "platform/independence",
+        "intent/scopes",
+        "intent/session-routing"
+      ],
+      "completion_evidence": [
+        "Native comment233 on PI-SESSION-01: connector implementation worker immutable handoff; real queued receipt, execution not confirmed."
+      ],
+      "delegate_name": null,
+      "delegate_username": null,
+      "id": "PI-SESSION-01",
+      "initiative_id": null,
+      "integration_dependency": "PI-MISSION-01",
+      "kind": "workstream",
+      "provider_id": 44,
+      "provider_identifier": "SAYINT-8",
+      "provider_lifecycle": "Todo",
+      "provider_url": "http://127.0.0.1:8281",
+      "readiness": {
+        "implementation": "implemented-locally",
+        "merge": "not-ready",
+        "production": "not-authorized",
+        "review": "pending"
+      },
+      "required_environment": {
+        "known_limitations": [
+          "No production or fleet authority",
+          "Native provider provisional"
+        ],
+        "requirement": "Checkout-owned Python environment, independent loopback provider for authorized local dogfood"
+      },
+      "revision": "2",
+      "scope": "Explicit session attachment and deduplicated bounded continuation through a provisional Codex connector.",
+      "source_checkout": "/home/meanaverage/sayhi/worktrees/sayhi-project-intent/mission-control",
+      "state": "active",
+      "statement": "Connect existing orchestrator sessions",
+      "title": "Connect existing orchestrator sessions"
+    },
+    {
+      "acceptance": [
+        "Install Project Intent workflow skill and small repository bootstrap pointers to supported interfaces.",
+        "Preserve explicit authority, offline truth, evidence attribution, and independent review before merge readiness."
+      ],
+      "assignee_name": null,
+      "assignee_username": null,
+      "avoid": "No product-runtime dependency, fleet or production mutation, provider fork, generalized scheduler, browser writes, commits or merges.",
+      "boundaries": [
+        "platform/independence",
+        "intent/scopes",
+        "intent/bootstrap"
+      ],
+      "completion_evidence": [
+        "Native comment234 on PI-MISSION-01: workflow skill worker immutable bootstrap handoff; report remains attributed to original parent assignment."
+      ],
+      "delegate_name": null,
+      "delegate_username": null,
+      "id": "PI-WORKFLOW-SKILL-01",
+      "initiative_id": null,
+      "integration_dependency": "PI-MISSION-01",
+      "kind": "workstream",
+      "provider_id": 45,
+      "provider_identifier": "SAYINT-9",
+      "provider_lifecycle": "Todo",
+      "provider_url": "http://127.0.0.1:8281",
+      "readiness": {
+        "implementation": "implemented-locally",
+        "merge": "not-ready",
+        "production": "not-authorized",
+        "review": "pending"
+      },
+      "required_environment": {
+        "known_limitations": [
+          "No production or fleet authority",
+          "Native provider provisional"
+        ],
+        "requirement": "Checkout-owned Python environment, independent loopback provider for authorized local dogfood"
+      },
+      "revision": "2",
+      "scope": "Install Project Intent workflow skill and small repository bootstrap pointers to supported interfaces.",
+      "source_checkout": "/home/meanaverage/sayhi/worktrees/sayhi-project-intent/mission-control",
+      "state": "active",
+      "statement": "Package worker and orchestrator workflow",
+      "title": "Package worker and orchestrator workflow"
+    },
+    {
+      "acceptance": [
+        "Real worker reports, independent review, bounded corrections, isolated checkout verification and source manifest.",
+        "Preserve explicit authority, offline truth, evidence attribution, and independent review before merge readiness."
+      ],
+      "assignee_name": null,
+      "assignee_username": null,
+      "avoid": "No product-runtime dependency, fleet or production mutation, provider fork, generalized scheduler, browser writes, commits or merges.",
+      "boundaries": [
+        "platform/independence",
+        "intent/scopes",
+        "intent/evidence"
+      ],
+      "delegate_name": null,
+      "delegate_username": null,
+      "id": "PI-DOGFOOD-SEAL-01",
+      "initiative_id": null,
+      "integration_dependency": "PI-MISSION-01",
+      "kind": "workstream",
+      "provider_id": 46,
+      "provider_identifier": "SAYINT-10",
+      "provider_lifecycle": "Todo",
+      "provider_url": "http://127.0.0.1:8281",
+      "readiness": {
+        "implementation": "in-progress",
+        "merge": "not-ready",
+        "production": "not-authorized",
+        "review": "pending"
+      },
+      "required_environment": {
+        "known_limitations": [
+          "No production or fleet authority",
+          "Native provider provisional"
+        ],
+        "requirement": "Checkout-owned Python environment, independent loopback provider for authorized local dogfood"
+      },
+      "revision": "1",
+      "scope": "Real worker reports, independent review, bounded corrections, isolated checkout verification and source manifest.",
+      "source_checkout": "/home/meanaverage/sayhi/worktrees/sayhi-project-intent/mission-control",
+      "state": "active",
+      "statement": "Dogfood review and source sealing",
+      "title": "Dogfood review and source sealing"
+    },
+    {
+      "acceptance": [
+        "Later admitted execution bridge: context consumption, placement, credentials, session control and receipts owned by SparkOps.",
+        "Preserve explicit authority, offline truth, evidence attribution, and independent review before merge readiness."
+      ],
+      "assignee_name": null,
+      "assignee_username": null,
+      "avoid": "No product-runtime dependency, fleet or production mutation, provider fork, generalized scheduler, browser writes, commits or merges.",
+      "boundaries": [
+        "platform/independence",
+        "intent/scopes",
+        "intent/execution-consumer"
+      ],
+      "delegate_name": null,
+      "delegate_username": null,
+      "id": "PI-SPARKOPS-BRIDGE-01",
+      "initiative_id": null,
+      "integration_dependency": "PI-MISSION-01",
+      "kind": "workstream",
+      "provider_id": 47,
+      "provider_identifier": "SAYINT-11",
+      "provider_lifecycle": "Todo",
+      "provider_url": "http://127.0.0.1:8281",
+      "readiness": {
+        "implementation": "deferred",
+        "merge": "not-ready",
+        "production": "not-authorized",
+        "review": "pending"
+      },
+      "required_environment": {
+        "known_limitations": [
+          "No production or fleet authority",
+          "Native provider provisional"
+        ],
+        "requirement": "Checkout-owned Python environment, independent loopback provider for authorized local dogfood"
+      },
+      "revision": "1",
+      "scope": "Later admitted execution bridge: context consumption, placement, credentials, session control and receipts owned by SparkOps.",
+      "source_checkout": "/home/meanaverage/sayhi/worktrees/sayhi-project-intent/mission-control",
+      "state": "deferred",
+      "statement": "Deferred SparkOps execution consumer bridge",
+      "title": "Deferred SparkOps execution consumer bridge"
+    },
+    {
+      "assignee_name": null,
+      "assignee_username": null,
+      "boundaries": [
+        "platform/independence"
+      ],
+      "delegate_name": null,
+      "delegate_username": null,
+      "id": "PI-INDEPENDENCE-01",
+      "initiative_id": null,
+      "kind": "invariant",
+      "provider_id": 33,
+      "provider_identifier": "SAYINT-1",
+      "provider_lifecycle": "In Progress",
+      "provider_url": "http://127.0.0.1:8281",
+      "revision": "1",
+      "state": "accepted",
+      "statement": "Project Intent runtime, persistence, access and recovery must not require SparkOps, SparkOps Cloud, Projects, Verify or the main SayHi application to run.",
+      "title": "PI-INDEPENDENCE-01"
+    },
+    {
+      "assignee_name": null,
+      "assignee_username": null,
+      "boundaries": [
+        "intent/scopes"
+      ],
+      "delegate_name": null,
+      "delegate_username": null,
+      "id": "PI-SCOPES-01",
+      "initiative_id": null,
+      "kind": "invariant",
+      "provider_id": 34,
+      "provider_identifier": "SAYINT-2",
+      "provider_lifecycle": "In Progress",
+      "provider_url": "http://127.0.0.1:8281",
+      "revision": "1",
+      "state": "accepted",
+      "statement": "Authenticate every data request and authorize scopes before aggregation, detail, counts, attention, architecture applicability, or cross-scope relationships. Boundary-key equality never grants cross-scope access.",
+      "title": "PI-SCOPES-01"
+    },
+    {
+      "assignee_name": null,
+      "assignee_username": null,
+      "boundaries": [
+        "intent/projection"
+      ],
+      "delegate_name": null,
+      "delegate_username": null,
+      "id": "PI-TRUTH-01",
+      "initiative_id": null,
+      "kind": "invariant",
+      "provider_id": 35,
+      "provider_identifier": "SAYINT-3",
+      "provider_lifecycle": "In Progress",
+      "provider_url": "http://127.0.0.1:8281",
+      "revision": "1",
+      "state": "accepted",
+      "statement": "PM provider owns durable intent. Cached snapshots are last-known non-authoritative projections; presence and execution observations have distinct freshness. Missing observations never mean available or safe.",
+      "title": "PI-TRUTH-01"
+    },
+    {
+      "assignee_name": null,
+      "assignee_username": null,
+      "boundaries": [
+        "intent/projection",
+        "intent/observatory"
+      ],
+      "delegate_name": null,
+      "delegate_username": null,
+      "id": "PI-OBSERVE-01",
+      "initiative_id": null,
+      "kind": "invariant",
+      "provider_id": 36,
+      "provider_identifier": "SAYINT-4",
+      "provider_lifecycle": "In Progress",
+      "provider_url": "http://127.0.0.1:8281",
+      "revision": "1",
+      "state": "accepted",
+      "statement": "Observatory is read-only. Matching declared evidence/invariant revisions is not verified conformance; implementation completion is not production authorization.",
+      "title": "PI-OBSERVE-01"
+    },
+    {
+      "acceptance": [
+        "Real provider workstreams visible with scoped counts/detail and explicit cache freshness.",
+        "Show readiness, handoffs, evidence, applicable invariant revision comparisons, semantic convergence and environment requirements without availability invention.",
+        "Distinct execution-source-unavailable and provider-cache fallback semantics; service operates with no SparkOps/application endpoint.",
+        "Scope isolation and fail-closed access tested through API; browser UI uses normalized API only.",
+        "Independent review and bounded corrections before handoff; production activation separate.",
+        "Workers use supported reporting and enrollment; operator actions are scope-checked and auditable; uncertain delivery is explicit.",
+        "Provisional session continuation is bound to confirmed session/checkout and request identity; browser stays read-only."
+      ],
+      "assignee_name": null,
+      "assignee_username": null,
+      "avoid": "No product-runtime dependency, public deployment, destructive outage on real systems, provider fork, synthetic project lifecycle, new PM datastore, scheduler, provisioning or UI mutation commands. Preserve working SparkOps prototype.",
+      "boundaries": [
+        "platform/independence",
+        "intent/scopes",
+        "intent/projection",
+        "intent/observatory"
+      ],
+      "completion_evidence": [
+        "/tmp/sayhi-intent-observatory-4agTBJ/source-manifest.json",
+        "/tmp/sayhi-intent-observatory-4agTBJ/browser-results.json",
+        "/home/meanaverage/sayhi/worktrees/sayhi-project-intent/mission-control/docs/VALIDATION.md"
+      ],
+      "completion_subject": "sha256:e453e88e375398f948bd533e1f6407ee1e7ff964a1f2ca63d170f745176f862d",
+      "conformance_assertions": [
+        {
+          "invariant": "PI-INDEPENDENCE-01",
+          "revision": "1",
+          "subject": "sha256:e453e88e375398f948bd533e1f6407ee1e7ff964a1f2ca63d170f745176f862d"
+        },
+        {
+          "invariant": "PI-SCOPES-01",
+          "revision": "1",
+          "subject": "sha256:e453e88e375398f948bd533e1f6407ee1e7ff964a1f2ca63d170f745176f862d"
+        },
+        {
+          "invariant": "PI-TRUTH-01",
+          "revision": "1",
+          "subject": "sha256:e453e88e375398f948bd533e1f6407ee1e7ff964a1f2ca63d170f745176f862d"
+        },
+        {
+          "invariant": "PI-OBSERVE-01",
+          "revision": "1",
+          "subject": "sha256:e453e88e375398f948bd533e1f6407ee1e7ff964a1f2ca63d170f745176f862d"
+        }
+      ],
+      "delegate_name": "Intent observatory",
+      "delegate_username": "intent-observatory",
+      "environment": {
+        "forbidden": "No Compose/VM allocation or product credentials",
+        "profile_reference": "sparkops/local-dev-v1 is a consumer reference, not a platform runtime dependency",
+        "requirement": "checkout-local Python 3.12 stdlib service and .venv; loopback only"
+      },
+      "handoff_at": "2026-09-05T19:55:39.958922+00:00",
+      "handoff_summary": "Independent read-only Mission Control approved for bounded local dogfood. Successor: source-seal this uncommitted checkout, establish remote/normal CI with explicit authority, and qualify provider least privilege, managed service and backup recovery before broader deployment. No product outage or production activation performed. Environment owner review/catalog digest reconciliation remains separate.",
+      "handoff_verification": "20 tests independently rerun by observatory_review; approved-local. Browser and isolated cache-outage checks executed by implementation worker, not independently repeated.",
+      "id": "PI-MISSION-01",
+      "initiative_id": null,
+      "kind": "workstream",
+      "provider_id": 37,
+      "provider_identifier": "SAYINT-5",
+      "provider_lifecycle": "In Progress",
+      "provider_url": "http://127.0.0.1:8281",
+      "readiness": {
+        "commit": "uncommitted",
+        "implementation": "continuation-in-progress",
+        "merge": "awaiting-source-seal-and-CI",
+        "production": "not-authorized",
+        "review": "earlier-source-approved-current-increment-pending"
+      },
+      "revision": "2",
+      "scope": "Independent sayhi-project-intent repository, normalized read model, provisional provider adapter, authenticated loopback service, static observatory, cache/export/offline orientation, tests and deployment/recovery contract. User-authorized continuation: supported local reporting/outbox, scoped operator provider reconciliation, provisional existing-session connector, worker/orchestrator skill, real dogfood and independent source sealing. Mature SparkOps admitted execution bridge is deferred.",
+      "source_checkout": "/home/meanaverage/sayhi/worktrees/sayhi-project-intent/mission-control",
+      "state": "active",
+      "statement": "Deliver a small independent, scoped, read-only Mission Control over real provider-backed Project Intent state.",
+      "title": "PI-MISSION-01"
+    }
+  ],
+  "scope_id": "sayhi/project-intent",
+  "source": {
+    "authoritative": false,
+    "captured_at": "2026-09-05T22:56:33.230681+00:00",
+    "mode": "offline_snapshot",
+    "project": "SAYINT",
+    "provider": "itsaplan"
+  },
+  "version": 1
+}
