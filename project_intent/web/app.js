@@ -72,7 +72,7 @@ function activityChart(work) {
  for(const level of [12,44,76])svg.append(svgNode('path',{d:`M0 ${level}H640`,class:'activity-grid'}));
  let segment=[];
  const flush=()=>{if(!segment.length)return;const line=segment.map((p,i)=>(i?'L':'M')+x(p).toFixed(2)+' '+y(p).toFixed(2)).join(' ');svg.append(svgNode('path',{d:line+` L${x(segment.at(-1))} 76 L${x(segment[0])} 76 Z`,class:'activity-area'}),svgNode('path',{d:line,class:'activity-line'}));segment=[];};
- let last=null;for(const p of points){if(p.value===null||(last&&p.at-last.at>120))flush();if(p.value!==null){segment.push(p);const dot=svgNode('circle',{cx:x(p),cy:y(p),r:3,class:'activity-point'});const title=svgNode('title',{});title.textContent=new Date(p.at*1000).toLocaleTimeString()+' · '+p.value.toFixed(2)+' reported output tokens/s';dot.append(title);svg.append(dot);}last=p;}flush();
+ let last=null;for(const p of points){if(p.break_before||p.value===null||(last&&p.at-last.at>120))flush();if(p.value!==null){segment.push(p);const dot=svgNode('circle',{cx:x(p),cy:y(p),r:3,class:'activity-point'});const title=svgNode('title',{});title.textContent=new Date(p.at*1000).toLocaleTimeString()+' · '+p.value.toFixed(2)+' reported output tokens/s';dot.append(title);svg.append(dot);}last=p;}flush();
  const latest=points.at(-1);const value=activity.status==='recent'&&latest.value!==null?latest.value.toFixed(1)+' reported tok/s':activity.status+' · last reports';
  shell.append(svg,el('span',value+' · 15m · peak '+maximum.toFixed(1),'activity-caption'));
  return shell;
@@ -80,6 +80,40 @@ function activityChart(work) {
 function clear(id) { const n=$(id);n.replaceChildren();return n; }
 function short(value, limit=190) { const s=String(value||'');return s.length>limit?s.slice(0,limit)+'…':s; }
 function safeLink(value) { try {const u=new URL(value);return ['https:','http:'].includes(u.protocol)&&!u.username&&!u.password?u.href:null;} catch{return null;} }
+function pullRequestLink(ref) {
+ // Defense in depth: render only an exact repository/number link, never arbitrary metadata hrefs.
+ const repo=ref.repository;
+ if(typeof repo!=='string'||!/^https:\/\/[a-z0-9.-]+(?:\/[A-Za-z0-9_.-]+){2,8}$/.test(repo)||repo.split('/').some(p=>p==='.'||p==='..')||!Number.isSafeInteger(ref.number)||ref.number<=0)return null;
+ return [repo+'/pull/'+ref.number,repo+'/-/merge_requests/'+ref.number].includes(ref.url)?ref.url:null;
+}
+function pullRequestChip(ref) {
+ const href=pullRequestLink(ref);if(!href)return null;
+ const a=el('a',undefined,'pr-chip');a.href=href;a.target='_blank';a.rel='noopener noreferrer';
+ const label=ref.repository.replace('https://','');
+ a.append(el('strong','PR #'+ref.number),el('span',label,'pr-repository'));
+ const observed=ref.observation_status==='last-known';
+ const state=observed?(ref.observation?.draft?'draft':ref.observation?.state||'state unknown'):'state unknown';
+ a.append(el('span',(observed?'Observed ':'')+state,'pr-state'));a.title=label+' · '+ref.relationship+' · '+(observed?'Last observed '+ref.observation.observed_at:'No usable state observation');
+ return a;
+}
+function renderPullRequests(parent,work,detail=false) {
+ const refs=work.pull_requests||[];
+ if(!refs.length){if(detail)parent.append(el('p','No pull request references enrolled. This is not a repository scan.','section-note'));return;}
+ const box=el('div',undefined,detail?'pr-details':'pr-chips');
+ for(const ref of refs){const chip=pullRequestChip(ref);if(!chip)continue;
+  if(!detail){box.append(chip);continue;}
+  const row=el('div',undefined,'pr-detail');row.append(chip,el('p','Relationship: '+ref.relationship));
+  const obs=ref.observation;
+  if(ref.observation_status==='last-known'){
+   row.append(el('p','Last observed '+obs.observed_at+' · '+ref.age_seconds+'s before projection · '+obs.source,'section-note'));
+   row.append(el('p','Review: '+(obs.review||'unknown')+' · Required checks: '+(obs.required_checks||'unknown')));
+   row.append(el('p','Observed head: '+(obs.head||'not enrolled'),'identifier'));
+  }else{row.append(el('p',ref.observation_status==='future-timestamp'?'Observation timestamp is in the future; current state unknown.':'State, review and checks not observed.','section-note'));if(obs)disclosure(row,'Unusable observation (not current evidence)',[JSON.stringify(obs)]);}
+  box.append(row);
+ }
+ parent.append(box);
+ if(detail)parent.append(el('p','Git provider is authoritative. These are timestamped observations, not live checks; a changed PR head requires re-verification. Merged does not mean deployed or production authorized.','section-note'));
+}
 function list(parent, values) {const ul=el('ul');for(const value of values)ul.append(el('li',typeof value==='string'?value:JSON.stringify(value)));parent.append(ul);}
 function icon(name) {
  const paths={intent:'M12 3 3 8l9 5 9-5-9-5M3 12l9 5 9-5M3 16l9 5 9-5',scope:'M8 3H3v5m13-5h5v5M3 16v5h5m13-5v5h-5',avoid:'M5 5l14 14M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0',proof:'M8 3h8l4 4v14H4V3h4m0 9 3 3 5-5',worker:'M16 7a4 4 0 1 1-8 0 4 4 0 0 1 8 0M4 21v-3a8 8 0 0 1 16 0v3',architecture:'M12 3 3 7v6c0 4 9 8 9 8s9-4 9-8V7l-9-4m-4 9 3 3 5-5',environment:'M3 4h18v12H3V4m5 17h8m-4-5v5',readiness:'M4 5h16M4 12h16M4 19h16M8 3v4m8 3v4m-6 3v4',nearby:'M5 5v14m14-14v14M5 8c7 0 7 8 14 8M2 5h6m8 0h6M2 19h6m8 0h6',handoff:'M3 12h18m-7-7 7 7-7 7'};
@@ -95,11 +129,12 @@ function showDetail(key) {
  const w=data?.workstreams.find(w=>w.key===key);if(!w)return;
  const body=clear('detail-content');const hero=el('div',undefined,'detail-hero');hero.append(scopeName('p',w.scope_id),workstreamName('h2',w),el('p',w.statement,'mission-statement'));body.append(hero);
  let s=section(body,'Readiness','readiness');s.append(el('p','Independent dimensions — not a release pipeline.','section-note'));const readiness=el('div',undefined,'readiness-cards');for(const [k,v] of Object.entries(w.readiness||{})){const card=el('div',undefined,'readiness-card');card.append(el('span',k,'readiness-label'),badge(v));readiness.append(card);}s.append(readiness,el('p','Local validation does not imply CI execution, merge, environment admission or production activation.','section-note'));
+ s=section(body,'Integration · pull requests','nearby');renderPullRequests(s,w,true);
  const bounds=el('div',undefined,'boundary-grid');body.append(bounds);s=section(bounds,'In scope','scope');s.append(el('p',w.scope));s=section(bounds,'Out of scope','avoid');s.append(el('p',w.avoid||'Not recorded'));
  s=section(body,'What must be proven','proof');const acceptance=el('ol',undefined,'acceptance-list');for(const [i,text] of (w.acceptance||[]).entries()){const li=el('li');li.append(el('span',String(i+1).padStart(2,'0'),'criterion-number'),el('span',text));acceptance.append(li);}s.append(acceptance,el('p','Acceptance criteria, not completion checkmarks.','section-note'));
  s=section(body,'Execution','worker');s.append(el('p','Declared lifecycle: '+w.state,'section-note'),executionBadge(w),el('p',executionObservation(w).explanation,'section-note'));
  s.append(activityChart(w));
- for(const a of w.activity?.sessions||[w.activity||{}]){if(a.session){s.append(el('p','Telemetry session: '+a.session),el('p',a.meaning,'section-note'));disclosure(s,'Reported activity samples · '+a.session,(a.points||[]).map(p=>new Date(p.at*1000).toLocaleTimeString()+' · '+(p.value===null?'unknown':p.value+' reported output tokens/s')));}}
+ for(const a of w.activity?.sessions||[w.activity||{}]){if(a.session){s.append(el('p','Telemetry session: '+a.session),el('p',a.meaning,'section-note'));if(a.history_coverage)s.append(el('p',a.history_coverage,'section-note'));disclosure(s,'Reported activity samples · '+a.session,(a.points||[]).map(p=>new Date(p.at*1000).toLocaleTimeString()+' · '+(p.break_before?'new attribution interval · ':'')+(p.value===null?'unknown':p.value+' reported output tokens/s')));}}
  const active=w.workers.filter(p=>p.status==='active');
  s.append(el('p',active.length?active.map(p=>p.session+' — '+p.working).join('\n'):'No live worker lease in the enrolled observation feeds. Activity elsewhere is unknown.'));
  for(const p of w.workers){s.append(workerCheckout(p));disclosure(s,'Granular scope and observation · '+p.session,['Last heartbeat: '+p.heartbeat_at,'Lease expires: '+p.expires_at,'Checkout observed: '+(p.checkout?.observed_at||'unknown'),'HEAD: '+(p.checkout?.head||'not observed / unborn'),'Repository identity: '+(p.checkout?.repository_common_dir||'unknown'),'Current semantic seams: '+((p.touching_seams||[]).join(', ')||'not declared'),'Approaching: '+((p.approaching||[]).join(', ')||'not declared'),'Avoid paths: '+((p.avoid_paths||[]).join(', ')||'not declared'),'Avoid: '+((p.avoid||[]).join(', ')||'not declared'),'Declared scope only; not detected edits or permission.']);}
@@ -126,6 +161,7 @@ function renderWorkCard(w) {
  const descriptive=w.title&&w.title!==w.id;
  title.append(descriptive?workstreamName('h3',w):el('h3',w.statement));title.onclick=()=>showDetail(w.key);card.append(title);
  const identity=el('div',undefined,'work-reference');identity.append(workstreamName('span',{...w,title:w.id}),el('span','Lifecycle: '+w.state));card.append(identity);
+ renderPullRequests(card,w);
  const fresh=(w.workers||[]).filter(p=>p.status==='active'&&Date.parse(p.expires_at)>Date.now());
  const action=fresh.map(p=>p.working).filter(Boolean).join(' · ');
  card.append(el('p',short(action||((w.readiness?.execution||'No fresh worker observation').replaceAll('-',' ')),180),'current-action'));
@@ -170,4 +206,4 @@ async function refresh(){const request=++generation;try{const selected=$('scope'
 $('notifications').onclick=()=>$('attention-dialog').showModal();
 $('attention-close').onclick=()=>$('attention-dialog').close();
 $('attention-dialog').addEventListener('click',event=>{if(event.target!==$('attention-dialog'))return;const r=event.target.getBoundingClientRect();if(event.clientX<r.left||event.clientX>r.right||event.clientY<r.top||event.clientY>r.bottom)event.target.close();});
-$('refresh').onclick=refresh;$('scope').onchange=()=>{$('detail').close();$('attention-dialog').close();$('notification-count').textContent='—';$('notifications').setAttribute('aria-label','Needs attention: awaiting selected scope');data=null;for(const id of ['metrics','workstreams','attention','convergence','architecture','architecture-summary','handoffs','sources','environments','initiatives'])clear(id);refresh();};$('close').onclick=()=>$('detail').close();refresh();setInterval(refresh,5000);
+$('refresh').onclick=refresh;$('scope').onchange=()=>{$('detail').close();$('attention-dialog').close();$('notification-count').textContent='—';$('notifications').setAttribute('aria-label','Needs attention: awaiting selected scope');data=null;for(const id of ['detail-content','metrics','workstreams','attention','convergence','architecture','architecture-summary','handoffs','sources','environments','initiatives'])clear(id);refresh();};$('close').onclick=()=>$('detail').close();refresh();setInterval(refresh,5000);

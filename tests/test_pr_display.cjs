@@ -1,0 +1,40 @@
+/* Normalized PR display: safe links, missing evidence, independent lifecycle. */
+const assert=require('node:assert/strict');
+const fs=require('node:fs');
+const vm=require('node:vm');
+const path=require('node:path');
+const context={URL,document:{createElement:tag=>({tag,children:[],append(...nodes){this.children.push(...nodes);}})}};
+vm.createContext(context);
+const source=fs.readFileSync(path.join(__dirname,'../project_intent/web/app.js'),'utf8');
+vm.runInContext(source.split('function list(')[0],context);
+const text=node=>(node.textContent??'')+node.children.map(text).join(' ');
+const ref={repository:'https://github.com/meanaverage/sayhi-project-intent',number:1,
+ url:'https://github.com/meanaverage/sayhi-project-intent/pull/1',relationship:'implementation',observation_status:'not-observed'};
+let chip=context.pullRequestChip(ref);
+assert.equal(chip.href,ref.url);
+assert.match(text(chip),/PR #1/);
+assert.match(text(chip),/github.com\/meanaverage\/sayhi-project-intent/);
+assert.match(text(chip),/state unknown/);
+for(const url of ['javascript:alert(1)',ref.url+'?x=1',ref.url+'#x','https://evil.example/pull/1'])assert.equal(context.pullRequestChip({...ref,url}),null);
+assert.equal(context.pullRequestChip({...ref,number:true}),null);
+assert.equal(context.pullRequestChip({...ref,repository:'https://github.com/a/../b',url:'https://github.com/a/../b/pull/1'}),null);
+const observed={...ref,observation_status:'last-known',age_seconds:3600,observation:{state:'merged',observed_at:'2026-09-06T00:00:00Z',source:'GitHub API',head:'a'.repeat(40)}};
+const parent=context.el('div');context.renderPullRequests(parent,{pull_requests:[observed]},true);
+assert.match(text(parent),/Required checks: unknown/);
+assert.match(text(parent),/Merged does not mean deployed or production authorized/);
+assert.match(text(parent),/Last observed/);
+assert.match(text(parent),/3600s before projection/);
+const missing=context.el('div');context.renderPullRequests(missing,{pull_requests:[]},true);
+assert.match(text(missing),/No pull request references enrolled/);
+assert.match(text(context.pullRequestChip({...observed,observation_status:'future-timestamp'})),/state unknown/);
+// Run the actual scope handler: even a failed refresh must not retain old detail data.
+const nodes=new Map();
+const fakeNode=()=>({textContent:'old data',close(){this.closed=true;},setAttribute(){},replaceChildren(){this.textContent='';}});
+context.document.getElementById=id=>{if(!nodes.has(id))nodes.set(id,fakeNode());return nodes.get(id);};
+context.refresh=()=>{};
+const handler=source.match(/\$\('scope'\)\.onchange=\(\)=>\{.*?\};/)[0];
+vm.runInContext(handler,context);
+nodes.get('scope').onchange();
+assert.equal(nodes.get('detail').closed,true);
+assert.equal(nodes.get('detail-content').textContent,'');
+console.log('PR display checks passed: qualified safe links, missing checks unknown, cached age, separate production state.');

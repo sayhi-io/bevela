@@ -16,6 +16,7 @@ one optional `scope` parameter. Contract ID: `sayhi.project-intent.observatory/v
 | attention | Scope/Workstream, explainable kind and message; no automatic intervention |
 | initiatives | Native grouping plus explicit qualified refs, visible membership only |
 | recent_handoffs | Most recent captured handoffs ordered by parsed instants |
+| recently_rested / rested_coverage | Latest explicit inactive registrations in the last24hours, newest first, capped12. Timestamp is the inactive registration heartbeat, not an exact stopping time. Expired active leases are excluded. Multiple sessions may rest while another works on the same Workstream. |
 | coverage / read_only | Explicit observation limitations and read-only boundary |
 
 Workstream keys are scope-qualified. Core record identifiers are stable local IDs.
@@ -42,6 +43,47 @@ Refreshing the UI is a read, not a remote PM mutation or an execution action. Th
 server polls provider reads every 30 seconds. This tranche does not expose operator
 refresh-provider, notes, claims, assignment or review mutation APIs.
 
+The opt-in `/observatory` presentation uses the same API and existing card/detail
+components. Home summarizes fresh observations, explicitly reported inactive
+sessions and attention; hash navigation exposes all work (including completed and
+deferred declarations), architecture, environments, handoffs and coverage. `/`
+remains the classic rollback view. No PM datastore or session history is added.
+`workstreams[].local_reports` are rendered with their local/pending/uncertain/
+published state and full evidence/receipt detail, independently of provider
+readiness/handoffs. Recent report cards are bounded24; all available reports remain
+in Workstream detail. Listing coverage is shown, not inferred as complete history.
+
+## Explicit pull request references
+
+Workstream provider metadata may carry `pull_requests` (at most20). Each reference
+has `repository` (canonical HTTPS repository URL), `number` (positive integer),
+`url` (exact repository `/pull/N` or `/-/merge_requests/N` link), and `relationship`
+(`implementation`, `dependency`, or `integration`). Nested repository groups are
+allowed; these are link formats, not a claim of full Git-provider integration.
+No credentials, query, fragment, port, traversal, duplicate repository/number, or
+unknown fields are accepted. Each workstream can reference several repositories;
+several workstreams may reference the same PR. No links are inferred from prose.
+
+Optional `observation` requires timezone-aware `observed_at` and short `source`.
+Optional fields: `head` (full40/64hex object ID), `state` (`open`, `closed`, `merged`),
+`draft` (boolean), `review` (`approved`, `changes-requested`, `review-required`,
+`unknown`), and `required_checks` (`passed`, `failed`, `pending`, `unknown`). Review
+and check observations require an exact head. They do not establish checks for a
+later head or current architecture. No observation means unknown, never green.
+
+Projection adds `observation_status` (`not-observed`, `last-known`, or
+`future-timestamp`) and `age_seconds` relative to the projection. It never labels
+these observations live. Future timestamps retain provenance but do not present
+their states as usable evidence. Provider refresh time does not refresh a PR's own
+observation time. Offline snapshot preserves references and original observations.
+Scope filtering precedes projection. Invalid metadata rejects a provider refresh
+under the existing validated-snapshot/cache fallback, not partial trusted data.
+
+Both UI views show repository-qualified PR chips and a detail Integration section.
+Git provider remains authoritative; merged never implies deployed or production
+authorized. No GitHub polling, credential service, automatic PR inference, provider
+write from the browser, or stale-observation attention automation is introduced.
+
 ## Optional measured activity (local dogfood)
 
 Workstreams now carry `activity`, separate from presence and durable records.
@@ -61,6 +103,26 @@ Reports older than 90 seconds are stale. The chart has a 15-minute window with u
 180 observations and a labeled per-chart scale; it is not a cross-worker ranking.
 No metrics are persisted into the PM provider or checked-in snapshot. Offline
 bootstrap remains independent. Missing files don't block durable-state reads.
+
+The observer retains already observed numeric points in process memory, bounded to
+15 minutes/180 points per execution source and 2048 sources overall. Bounded log-tail
+turnover, missing telemetry files, and an inactive/expired lease do not erase points
+already seen. Current `status` still comes from the current observation/lease, never
+from retained points; historical values cannot make a worker live. No ended lease's
+log is reopened to reconstruct history. Scope, Workstream, session, exact checkout,
+branch and telemetry source distinguish histories. A new lease on the same execution
+source preserves earlier points but starts a separate attribution interval; optional
+point `break_before: true` prevents the chart connecting across those intervals.
+Unregistered intervals stay unknown, not zero or interpolated. The existing first
+sample, counter-reset and long-report-interval gaps also remain unknown.
+
+`activity.history_coverage` states this bounded process-local coverage and is shown
+in Workstream telemetry detail. Service restart clears the observation cache;
+unobserved history outside the permitted parser tail is not recoverable. Browser
+reloads share the running observer's retained history. Removed/invalid registrations
+do not surface a historical series; a changed execution identity starts separately.
+For local rollback, `retain_activity_history: false` in the service config selects
+the previous stateless adapter projection. Neither mode is a PM history datastore.
 
 The browser polls its normalized read endpoint every 5 seconds; provider polling
 remains 30 seconds. The compact native SVG area/line treatment references SparkOps

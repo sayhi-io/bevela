@@ -3,6 +3,7 @@ from collections import defaultdict
 from datetime import datetime, timezone
 from pathlib import PurePosixPath
 import re
+from urllib.parse import urlsplit
 
 CONTRACT = 'sayhi.project-intent.observatory/v1'
 
@@ -17,6 +18,60 @@ def date(value):
     if parsed.tzinfo is None:
         raise ValueError('Timestamp must include timezone')
     return parsed
+
+
+def validate_pull_requests(value):
+    """Explicit references only; never discover repositories or fetch link targets."""
+    if not isinstance(value, list) or len(value)>20:
+        raise ValueError('Invalid pull request list')
+    seen=set()
+    for ref in value:
+        if not isinstance(ref,dict) or set(ref)-{'repository','number','url','relationship','observation'}:
+            raise ValueError('Invalid pull request reference')
+        repo=ref.get('repository'); number=ref.get('number'); url=ref.get('url')
+        if not isinstance(repo,str) or len(repo)>512 or not isinstance(url,str) or len(url)>600:
+            raise ValueError('Invalid pull request URLs')
+        parsed=urlsplit(repo)
+        if (parsed.scheme!='https' or not parsed.hostname or parsed.username or parsed.password
+                or parsed.query or parsed.fragment or parsed.port
+                or not re.fullmatch(r'https://[a-z0-9.-]+(?:/[A-Za-z0-9_.-]+){2,8}',repo)
+                or any(p in ('.','..') for p in parsed.path.split('/'))):
+            raise ValueError('Invalid repository URL')
+        if type(number) is not int or not 0<number<2**53:
+            raise ValueError('Invalid pull request number')
+        if url not in (repo+'/pull/'+str(number),repo+'/-/merge_requests/'+str(number)):
+            raise ValueError('Pull request URL does not match repository/number')
+        if ref.get('relationship') not in ('implementation','dependency','integration'):
+            raise ValueError('Invalid pull request relationship')
+        if (repo,number) in seen:raise ValueError('Duplicate pull request reference')
+        seen.add((repo,number))
+        if 'observation' not in ref:continue
+        obs=ref['observation']
+        if not isinstance(obs,dict) or set(obs)-{'observed_at','source','head','state','draft','review','required_checks'}:
+            raise ValueError('Invalid pull request observation')
+        date(obs.get('observed_at'))
+        if not isinstance(obs.get('source'),str) or not 1<=len(obs['source'])<=160 or any(ord(c)<32 for c in obs['source']):
+            raise ValueError('Invalid pull request observation source')
+        if 'head' in obs and (not isinstance(obs['head'],str) or not re.fullmatch(r'[a-fA-F0-9]{40}|[a-fA-F0-9]{64}',obs['head'])):
+            raise ValueError('Invalid pull request head')
+        if 'draft' in obs and type(obs['draft']) is not bool:raise ValueError('Invalid draft observation')
+        for key,choices in [('state',('open','closed','merged')),('review',('approved','changes-requested','review-required','unknown')),('required_checks',('passed','failed','pending','unknown'))]:
+            if key in obs and obs[key] not in choices:raise ValueError('Invalid pull request '+key)
+        if any(key in obs for key in ('review','required_checks')) and 'head' not in obs:
+            raise ValueError('Review/check observations require exact head')
+    return value
+
+
+def pull_requests(value, now):
+    result=[]
+    for ref in validate_pull_requests(value):
+        item=dict(ref)
+        observation=ref.get('observation')
+        age=(now-date(observation['observed_at'])).total_seconds() if observation else None
+        item['observation_status']='not-observed' if age is None else ('future-timestamp' if age<0 else 'last-known')
+        item['age_seconds']=int(age) if age is not None and age>=0 else None
+        result.append(item)
+    return result
 
 
 def validate_snapshot(snapshot):
@@ -41,6 +96,7 @@ def validate_snapshot(snapshot):
         if not isinstance(r.get('boundaries'), list) or any(not isinstance(x,str) or not x for x in r['boundaries']):
             raise ValueError('Invalid boundary keys')
         if r['kind']=='workstream':
+            validate_pull_requests(r.get('pull_requests',[]))
             if not isinstance(r.get('scope'),str) or not strings(r.get('acceptance')):
                 raise ValueError('Missing work scope/acceptance')
             if not isinstance(r.get('readiness',{}),dict) or any(not isinstance(k,str) or not isinstance(v,str) for k,v in r.get('readiness',{}).items()):
@@ -179,6 +235,7 @@ def project(states, allowed_scopes, selected=None, now=None):
                   'handoff_verification','conformance_assertions','source_checkout','branch','integration_dependency',
                   'provider_id','provider_url','initiative_id','delegate_name','delegate_username','assignee_name','assignee_username','provider_identifier','provider_lifecycle')
         work = {k:r[k] for k in fields if k in r}
+        work['pull_requests']=pull_requests(r.get('pull_requests',[]),now)
         source_state=next(s for s in states if s['id']==r['scope_id'])
         work['local_reports']=[report for report in source_state.get('local_reports',[]) if report.get('payload',{}).get('scope')==r['scope_id'] and report.get('payload',{}).get('workstream')==r['id']]
         work['report_coverage']=source_state.get('report_coverage','not-configured')
@@ -235,7 +292,15 @@ def project(states, allowed_scopes, selected=None, now=None):
             'execution':{'status':'not-selected','meaning':'Only explicitly related architecture/grouping is included'}})
         if s['provider_status'] in ('unavailable','not-yet-observed'):
             attention.append({'scope':s['id'],'kind':'dependency-unavailable','message':'Related architecture/grouping uses last-known state from an unavailable source'})
+    visible_keys={w['key'] for w in workstreams}
+    rested=sorted((dict(p, reported_inactive_at=p['heartbeat_at']) for p in sessions
+                   if p['workstream'] in visible_keys and p['status']=='inactive'
+                   and 0 <= (now-date(p['heartbeat_at'])).total_seconds() <= 86400),
+                  key=lambda p:(-date(p['heartbeat_at']).timestamp(),p['workstream'],p['session']))
     return {'contract':CONTRACT,'observed_at':now.isoformat(),'scopes':scopes,'workstreams':workstreams,
+        'recently_rested':rested[:12],
+        'rested_coverage':{'window_seconds':86400,'total':len(rested),'limit':12,
+                          'meaning':'Latest explicit inactive registration per session; heartbeat is report time, not proof of completion or exact stopping time. Expired leases are excluded.'},
         'dependency_sources':dependencies,
         'architecture':arch,'sessions':sessions,'convergence':convergence,'attention':attention,'initiatives':initiatives,
         'recent_handoffs':sorted([w for w in workstreams if w.get('handoff_at')],key=lambda w:date(w['handoff_at']),reverse=True)[:12],
