@@ -17,6 +17,21 @@ access=json.loads((args.state_dir/'operator-access.json').read_text())
 for scope in config['scopes']:scope['provider']={'kind':'snapshot','path':scope['cache']}
 server=ThreadingHTTPServer(('127.0.0.1',0),handler(Store(config),config['principals']))
 thread=threading.Thread(target=server.serve_forever,daemon=True);thread.start()
+def check_width_control(page):
+ slider=page.locator('#minimap-width');slider.focus();page.keyboard.press('Home')
+ start=slider.bounding_box();minimum=page.locator('#page-minimap').bounding_box()['width']
+ page.keyboard.press('End');end=slider.bounding_box()
+ assert abs(start['x']-end['x'])<0.5 and abs(start['width']-end['width'])<0.5,(start,end)
+ assert page.locator('#page-minimap').bounding_box()['width']>minimum
+ expect(slider).to_be_focused()
+ page.keyboard.press('Home')
+ page.mouse.move(start['x']+8,start['y']+start['height']/2);page.mouse.down()
+ page.mouse.move(start['x']+start['width']-8,start['y']+start['height']/2,steps=12);page.mouse.up()
+ dragged=slider.bounding_box()
+ assert abs(start['x']-dragged['x'])<0.5 and abs(start['width']-dragged['width'])<0.5
+ assert page.locator('#page-minimap').bounding_box()['width']>minimum
+ expect(slider).to_be_focused()
+ page.keyboard.press('Home')
 try:
  with sync_playwright() as p:
   browser=p.chromium.launch(headless=True)
@@ -68,6 +83,7 @@ try:
   page.locator('#theme').select_option('light')
   page.wait_for_function("() => getComputedStyle(document.querySelector('#page-minimap')).backgroundColor==='rgb(251, 252, 250)'")
   page.screenshot(path=str(args.output/'minimap-cards-light.png'),animations='disabled')
+  check_width_control(page)
   page.locator('#minimap-width').focus();before=page.locator('#page-minimap').bounding_box()['width']
   page.keyboard.press('ArrowRight');assert page.locator('#page-minimap').bounding_box()['width']>before
   grip=page.locator('.minimap-grip').bounding_box();page.mouse.move(grip['x']+8,grip['y']+20);page.mouse.down();page.mouse.move(grip['x']+88,grip['y']+20);page.mouse.up()
@@ -100,6 +116,7 @@ try:
   page.screenshot(path=str(args.output/'highlight-key-mobile.png'),animations='disabled')
   page.keyboard.press('Escape')
   page.locator('#minimap-toggle').click()
+  check_width_control(page)
   assert page.evaluate('document.documentElement.scrollWidth<=innerWidth')
   page.wait_for_function("() => document.querySelector('#page-minimap').getBoundingClientRect().right <= innerWidth")
   box=page.locator('#page-minimap').bounding_box();assert box['x']>=0 and box['x']+box['width']<=390 and box['y']>=80,box
@@ -118,6 +135,13 @@ try:
   page.wait_for_function("() => data && data.scopes.length===1")
   expect(page.locator('#highlight-key-examples')).not_to_contain_text('sayhi/sparkops')
   assert 'sayhi/sparkops' not in page.locator('#page-minimap').inner_text()
+  page.keyboard.press('Escape')
+  page.locator('#view-nav a[href="#sources"]').click()
+  expect(page.locator('#source-coverage-explanation')).to_contain_text('configured scopes authorized')
+  expect(page.locator('#source-coverage-explanation')).to_contain_text('not every worker')
+  expect(page.locator('#source-coverage-explanation')).to_contain_text('not completeness of coverage')
+  expect(page.locator('#sources .tile')).to_have_count(1)
+  page.screenshot(path=str(args.output/'sources-coverage-mobile.png'),animations='disabled')
   assert not errors,errors
   context.close();browser.close()
 finally:

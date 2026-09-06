@@ -15,8 +15,8 @@
  const context=make('span',undefined,'minimap-context');toolbar.append(modes,context);
  const index=make('nav');index.id='minimap-index';index.setAttribute('aria-label','Sections on this page');
  const source=make('p',undefined,'minimap-source');source.setAttribute('role','status');
- const footer=make('div',undefined,'minimap-footer');footer.append(make('span','Jump to context'));
- const sizeLabel=make('label','Width');sizeLabel.htmlFor='minimap-width';const width=make('input');width.type='range';width.id='minimap-width';width.step='8';width.title='Page minimap width';footer.append(sizeLabel,width);
+ const footer=make('div',undefined,'minimap-footer');
+ const sizeLabel=make('label','Width');sizeLabel.htmlFor='minimap-width';const width=make('input');width.type='range';width.id='minimap-width';width.step='8';width.title='Page minimap width';footer.append(sizeLabel,width,make('span','Jump to context'));
  const grip=make('div',undefined,'minimap-grip');grip.setAttribute('aria-hidden','true');grip.append(make('span'));
  panel.append(header,toolbar,index,source,footer,grip);dock.append(panel,trigger);document.body.append(dock);
  let items=[],signature='',mode='list',wantedWidth=304,activeKey=null,scheduled=false;

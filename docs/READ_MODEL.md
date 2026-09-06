@@ -53,6 +53,37 @@ published state and full evidence/receipt detail, independently of provider
 readiness/handoffs. Recent report cards are bounded24; all available reports remain
 in Workstream detail. Listing coverage is shown, not inferred as complete history.
 
+## Explicit pull request references
+
+Workstream provider metadata may carry `pull_requests` (at most20). Each reference
+has `repository` (canonical HTTPS repository URL), `number` (positive integer),
+`url` (exact repository `/pull/N` or `/-/merge_requests/N` link), and `relationship`
+(`implementation`, `dependency`, or `integration`). Nested repository groups are
+allowed; these are link formats, not a claim of full Git-provider integration.
+No credentials, query, fragment, port, traversal, duplicate repository/number, or
+unknown fields are accepted. Each workstream can reference several repositories;
+several workstreams may reference the same PR. No links are inferred from prose.
+
+Optional `observation` requires timezone-aware `observed_at` and short `source`.
+Optional fields: `head` (full40/64hex object ID), `state` (`open`, `closed`, `merged`),
+`draft` (boolean), `review` (`approved`, `changes-requested`, `review-required`,
+`unknown`), and `required_checks` (`passed`, `failed`, `pending`, `unknown`). Review
+and check observations require an exact head. They do not establish checks for a
+later head or current architecture. No observation means unknown, never green.
+
+Projection adds `observation_status` (`not-observed`, `last-known`, or
+`future-timestamp`) and `age_seconds` relative to the projection. It never labels
+these observations live. Future timestamps retain provenance but do not present
+their states as usable evidence. Provider refresh time does not refresh a PR's own
+observation time. Offline snapshot preserves references and original observations.
+Scope filtering precedes projection. Invalid metadata rejects a provider refresh
+under the existing validated-snapshot/cache fallback, not partial trusted data.
+
+Both UI views show repository-qualified PR chips and a detail Integration section.
+Git provider remains authoritative; merged never implies deployed or production
+authorized. No GitHub polling, credential service, automatic PR inference, provider
+write from the browser, or stale-observation attention automation is introduced.
+
 ## Optional measured activity (local dogfood)
 
 Workstreams now carry `activity`, separate from presence and durable records.
