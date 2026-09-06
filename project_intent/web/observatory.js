@@ -7,6 +7,7 @@ function selectView(focus=false){const key=location.hash.slice(1)||'home';const 
 window.addEventListener('hashchange',()=>selectView(true));selectView();
 $('open-attention').onclick=()=>$('attention-dialog').showModal();
 $('highlight-key').addEventListener('keydown',event=>{if(event.key==='Escape'){$('highlight-key').open=false;$('highlight-key').querySelector('summary').focus();event.stopPropagation();}});
+document.addEventListener('pointerdown',event=>{const key=$('highlight-key');if(event.button===0&&key.open&&!key.contains(event.target))key.open=false;});
 function renderHighlightKey(result){const examples=clear('highlight-key-examples');for(const scope of result.scopes)examples.append(scopeName('div',scope.id));const work=result.workstreams[0];if(work)examples.append(workstreamName('div',{...work,title:work.id}));if(!examples.children.length)examples.append(el('p','No identity examples in this observation.','quiet'));}
 function workButton(work,label='Open context'){const button=el('button',label);button.onclick=()=>showDetail(work.key);return button;}
 function reportCard(report,work,full=false){

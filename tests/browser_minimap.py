@@ -35,7 +35,7 @@ def check_width_control(page):
 try:
  with sync_playwright() as p:
   browser=p.chromium.launch(headless=True)
-  context=browser.new_context(http_credentials=access,viewport={'width':1440,'height':1050},reduced_motion='reduce')
+  context=browser.new_context(http_credentials=access,viewport={'width':1440,'height':1050},reduced_motion='reduce',has_touch=True)
   page=context.new_page();errors=[];page.on('pageerror',lambda e:errors.append(str(e)))
   page.goto(f'http://127.0.0.1:{server.server_port}/observatory#work')
   page.wait_for_selector('#workstreams .work-card')
@@ -51,6 +51,11 @@ try:
   expect(key.locator('summary')).to_be_focused()
   page.screenshot(path=str(args.output/'highlight-key-desktop.png'),animations='disabled')
   page.keyboard.press('Escape');expect(key).not_to_have_attribute('open','')
+  key.locator('summary').click();key.locator('h2').click()
+  expect(key).to_have_attribute('open','')
+  page.locator('#refresh').click(button='right');expect(key).to_have_attribute('open','')
+  page.locator('#refresh').click();expect(key).not_to_have_attribute('open','')
+  expect(page.locator('#refresh')).to_be_focused()
   expect(page.locator('#view-title')).to_have_text('Work')
   expect(page.locator('#view-description')).to_be_visible()
   page.locator('#view-nav a[href="#home"]').click()
@@ -72,6 +77,13 @@ try:
   page.screenshot(path=str(args.output/'minimap-collapsed-desktop.png'),animations='disabled')
   page.locator('#minimap-toggle').click()
   expect(page.locator('#page-minimap')).to_be_visible()
+  assert page.locator('#minimap-toggle').bounding_box()['x']>720
+  page.locator('#minimap-toggle').click();expect(page.locator('#page-minimap')).to_be_hidden()
+  page.locator('#minimap-toggle').click()
+  page.locator('#refresh').click(button='right');expect(page.locator('#page-minimap')).to_be_visible()
+  page.locator('#refresh').click();expect(page.locator('#page-minimap')).to_be_hidden()
+  expect(page.locator('#refresh')).to_be_focused()
+  page.locator('#minimap-toggle').click()
   expect(page.locator('.minimap-entry')).to_have_count(3)
   assert page.locator('.minimap-entry').first.get_attribute('aria-label').startswith('1. All workstreams')
   page.locator('[aria-label="Card view"]').click()
@@ -86,8 +98,9 @@ try:
   check_width_control(page)
   page.locator('#minimap-width').focus();before=page.locator('#page-minimap').bounding_box()['width']
   page.keyboard.press('ArrowRight');assert page.locator('#page-minimap').bounding_box()['width']>before
-  grip=page.locator('.minimap-grip').bounding_box();page.mouse.move(grip['x']+8,grip['y']+20);page.mouse.down();page.mouse.move(grip['x']+88,grip['y']+20);page.mouse.up()
+  grip=page.locator('.minimap-grip').bounding_box();page.mouse.move(grip['x']+8,grip['y']+20);page.mouse.down();page.mouse.move(grip['x']-72,grip['y']+20);page.mouse.up()
   assert page.locator('#page-minimap').bounding_box()['width']>before+50
+  expect(page.locator('#page-minimap')).to_be_visible()
   page.locator('[aria-label="List view"]').click()
   page.locator('[data-map-key="initiatives"]').click()
   expect(page.locator('#initiatives').locator('xpath=..').locator('h2')).to_be_focused()
@@ -95,6 +108,9 @@ try:
   page.keyboard.press('Escape');expect(page.locator('#minimap-toggle')).to_be_focused()
   page.locator('#minimap-toggle').click()
   page.locator('#view-nav a[href="#architecture"]').click()
+  expect(page.locator('#page-minimap')).to_be_hidden()
+  expect(page.locator('#view-title')).to_have_text('Architecture')
+  page.locator('#minimap-toggle').click()
   expect(page.locator('.minimap-entry')).to_have_count(page.locator('#architecture .tile').count())
   target=page.locator('.minimap-entry').last
   target.focus();page.evaluate('render(data)')
@@ -105,7 +121,11 @@ try:
   page.locator('#theme').select_option('dark')
   page.wait_for_function("() => getComputedStyle(document.querySelector('#page-minimap')).backgroundColor==='rgb(28, 37, 31)'")
   page.screenshot(path=str(args.output/'minimap-list-dark.png'),animations='disabled')
-  page.locator('#notifications').click();page.keyboard.press('Escape')
+  page.locator('#notifications').click()
+  expect(page.locator('#page-minimap')).to_be_hidden()
+  expect(page.locator('#attention-dialog')).to_be_visible()
+  page.keyboard.press('Escape');page.locator('#minimap-toggle').click()
+  page.locator('#notifications').focus();page.keyboard.press('Enter');page.keyboard.press('Escape')
   expect(page.locator('#page-minimap')).to_be_visible()
   page.set_viewport_size({'width':390,'height':844})
   page.keyboard.press('Escape')
@@ -114,14 +134,16 @@ try:
   panel=page.locator('.highlight-key-panel').bounding_box()
   assert panel['x']>=0 and panel['x']+panel['width']<=390,panel
   page.screenshot(path=str(args.output/'highlight-key-mobile.png'),animations='disabled')
-  page.keyboard.press('Escape')
+  page.locator('#refresh').tap();expect(key).not_to_have_attribute('open','')
   page.locator('#minimap-toggle').click()
+  assert page.locator('#minimap-toggle').bounding_box()['x']>195
   check_width_control(page)
   assert page.evaluate('document.documentElement.scrollWidth<=innerWidth')
   page.wait_for_function("() => document.querySelector('#page-minimap').getBoundingClientRect().right <= innerWidth")
   box=page.locator('#page-minimap').bounding_box();assert box['x']>=0 and box['x']+box['width']<=390 and box['y']>=80,box
   page.screenshot(path=str(args.output/'minimap-mobile.png'),animations='disabled')
-  page.keyboard.press('Escape')
+  page.locator('#view-nav a[href="#work"]').tap();expect(page.locator('#page-minimap')).to_be_hidden()
+  expect(page.locator('#view-title')).to_have_text('Work')
   page.screenshot(path=str(args.output/'minimap-collapsed-mobile.png'),animations='disabled')
   page.locator('#minimap-toggle').click()
   page.route('**/api/v1/observatory*',lambda route:route.abort())

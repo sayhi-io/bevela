@@ -16,22 +16,23 @@
  const index=make('nav');index.id='minimap-index';index.setAttribute('aria-label','Sections on this page');
  const source=make('p',undefined,'minimap-source');source.setAttribute('role','status');
  const footer=make('div',undefined,'minimap-footer');
- const sizeLabel=make('label','Width');sizeLabel.htmlFor='minimap-width';const width=make('input');width.type='range';width.id='minimap-width';width.step='8';width.title='Page minimap width';footer.append(sizeLabel,width,make('span','Jump to context'));
+ const sizeLabel=make('label','Width');sizeLabel.htmlFor='minimap-width';const width=make('input');width.type='range';width.id='minimap-width';width.step='8';width.title='Page minimap width';footer.append(make('span','Jump to context'),sizeLabel,width);
  const grip=make('div',undefined,'minimap-grip');grip.setAttribute('aria-hidden','true');grip.append(make('span'));
  panel.append(header,toolbar,index,source,footer,grip);dock.append(panel,trigger);document.body.append(dock);
  let items=[],signature='',mode='list',wantedWidth=304,activeKey=null,scheduled=false;
- function bounds(){const left=innerWidth<=700?16:120;return {min:Math.min(264,innerWidth-left-20),max:Math.min(520,innerWidth-left-20)};}
+ function bounds(){const reserved=innerWidth<=700?36:144;return {min:Math.min(264,innerWidth-reserved),max:Math.min(520,innerWidth-reserved)};}
  function resize(value){const b=bounds();wantedWidth=Math.min(b.max,Math.max(b.min,value));panel.style.width=wantedWidth+'px';width.min=b.min;width.max=b.max;width.value=wantedWidth;}
  resize(wantedWidth);
  function setOpen(open,restore=true){panel.hidden=!open;trigger.setAttribute('aria-expanded',String(open));trigger.setAttribute('aria-label',open?'Close page minimap':'Open page minimap');if(open){refresh();close.focus();}else if(restore)trigger.focus();}
  trigger.onclick=()=>setOpen(panel.hidden);close.onclick=()=>setOpen(false);
+ document.addEventListener('pointerdown',event=>{if(event.button===0&&!panel.hidden&&!dock.contains(event.target))setOpen(false,false);});
  document.addEventListener('keydown',event=>{if(event.key==='Escape'&&!panel.hidden&&!document.querySelector('dialog[open]')){event.preventDefault();setOpen(false);}});
  function setMode(value){mode=value;panel.dataset.mode=mode;list.setAttribute('aria-pressed',String(mode==='list'));cards.setAttribute('aria-pressed',String(mode==='cards'));}
  list.onclick=()=>setMode('list');cards.onclick=()=>setMode('cards');setMode(mode);
  width.oninput=()=>resize(Number(width.value));
  let drag=null;
  grip.addEventListener('pointerdown',event=>{if(event.button!==0)return;drag={x:event.clientX,width:panel.getBoundingClientRect().width};grip.setPointerCapture(event.pointerId);panel.classList.add('resizing');event.preventDefault();});
- grip.addEventListener('pointermove',event=>{if(drag)resize(drag.width+event.clientX-drag.x);});
+ grip.addEventListener('pointermove',event=>{if(drag)resize(drag.width+drag.x-event.clientX);});
  const endDrag=()=>{drag=null;panel.classList.remove('resizing');};grip.addEventListener('pointerup',endDrag);grip.addEventListener('pointercancel',endDrag);grip.addEventListener('lostpointercapture',endDrag);
  function collect(){const sections=[...main.querySelectorAll(':scope > section[data-view]')].filter(s=>!s.hidden);return sections.flatMap(section=>{
   const container=section.querySelector('.tiles, #workstreams');
