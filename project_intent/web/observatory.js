@@ -6,6 +6,8 @@ const bell=icon('handoff');bell.querySelector('path').setAttribute('d','M18 8a6 
 function selectView(focus=false){const key=location.hash.slice(1)||'home';const selected=views[key]?key:'home';for(const section of document.querySelectorAll('[data-view]'))section.hidden=!section.dataset.view.split(' ').includes(selected);for(const a of $('view-nav').children){if(a.hash==='#'+selected)a.setAttribute('aria-current','page');else a.removeAttribute('aria-current');}for(const [i,card] of [...$('rested').children].entries())card.hidden=selected==='home'&&i>=6;for(const [i,card] of [...$('convergence').children].entries())card.hidden=selected==='home'&&i>=3;$('view-title').textContent=views[selected][0];$('view-title').classList.toggle('home-navigation-target',selected==='home');$('view-description').textContent=views[selected][2];$('view-description').hidden=selected==='home';if(focus)$('view-title').focus();}
 window.addEventListener('hashchange',()=>selectView(true));selectView();
 $('open-attention').onclick=()=>$('attention-dialog').showModal();
+$('highlight-key').addEventListener('keydown',event=>{if(event.key==='Escape'){$('highlight-key').open=false;$('highlight-key').querySelector('summary').focus();event.stopPropagation();}});
+function renderHighlightKey(result){const examples=clear('highlight-key-examples');for(const scope of result.scopes)examples.append(scopeName('div',scope.id));const work=result.workstreams[0];if(work)examples.append(workstreamName('div',{...work,title:work.id}));if(!examples.children.length)examples.append(el('p','No identity examples in this observation.','quiet'));}
 function workButton(work,label='Open context'){const button=el('button',label);button.onclick=()=>showDetail(work.key);return button;}
 function reportCard(report,work,full=false){
  const tile=el('article',undefined,'tile report-card');const packet=report.payload.packet;
@@ -27,6 +29,7 @@ showDetail=function(key){classicDetail(key);detailKey=key;const work=data?.works
 const classicRender=render;
 render=function(result){
  classicRender(result);
+ renderHighlightKey(result);
  // Work view includes completed/deferred intent too; home is observational only.
  const ordered=[...result.workstreams].sort((a,b)=>executionRank(b)-executionRank(a)||a.key.localeCompare(b.key));
  const all=clear('workstreams');for(const work of ordered)all.append(renderWorkCard(work));
@@ -40,4 +43,4 @@ render=function(result){
  selectView();
 };
 // Clear added surfaces synchronously on scope change; failed fetch cannot leak prior scope.
-$('scope').addEventListener('change',()=>{for(const id of ['live-work','rested','rested-coverage','home-attention','reports','report-coverage'])clear(id);detailKey=null;});
+$('scope').addEventListener('change',()=>{for(const id of ['live-work','rested','rested-coverage','home-attention','reports','report-coverage','highlight-key-examples'])clear(id);detailKey=null;});
