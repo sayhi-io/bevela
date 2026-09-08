@@ -4,8 +4,42 @@ Project Intent is SayHi's independent development-intent and architectural-coher
 service. SparkOps, Verify and Projects participate within explicit scopes; no product
 owns its runtime. Mission Control is the read-only human observatory over that state.
 
-This is a bounded provisional v0, running alongside the unchanged SparkOps CLI
-prototype. It does not migrate that working implementation or its users silently.
+This is a bounded provisional service, running alongside the unchanged SparkOps
+CLI prototype. It does not migrate that working implementation or its users
+silently. The source is committed on `main`; local dogfood and production
+qualification remain separate concerns.
+
+## Current status
+
+The canonical repository is `repos/sayhi-project-intent`. The current `main`
+branch contains the Mission Control service, scoped worker/session observations,
+Workstream Map, workspace inventory, and bounded CLI evaluation harnesses. The
+local dogfood instance is a separately managed user service:
+
+```bash
+systemctl --user status project-intent-dogfood.service
+```
+
+It serves the read-only observatory on `http://127.0.0.1:8290` from a pinned
+release under the workspace runtime state. Source changes do not become live
+until a separately authorized release activation updates that pinned runtime.
+This is still loopback development dogfood: it is not public hosting, a HA
+service, or production availability evidence.
+
+## Mission Control views
+
+The authenticated observatory exposes the conventional read-only views plus the
+newer presentation experiments:
+
+- `/observatory` — workstreams, architecture, reports, attention, and worker/session detail.
+- `/observatory#map` or `/workstream-map` — scoped declared-boundary and convergence map.
+- `/observatory?design=plan`, `studio`, or `console` — presentation-only variants.
+
+Worker groups and workspace inventory are projections of explicitly authorized
+read-model data. They do not infer agent identity, detect edits, allocate work,
+grant permissions, or add provider authority. See [Workstream Map](docs/WORKSTREAM_MAP_EXPERIMENT.md),
+[worker groups](docs/WORKER_GROUPS.md), and [design lab](docs/DESIGN_LAB.md) for
+the detailed contracts and experimental limits.
 
 ## Worker and orchestrator workflow
 
@@ -30,8 +64,9 @@ Read [reporting and reconciliation](docs/REPORTING.md) and the
 publication does not certify evidence or automatically change provider readiness.
 The local connector records delivery; it does not infer execution from a queue
 receipt. The [mature SparkOps execution-consumer bridge](docs/SPARKOPS_CONSUMER_BRIDGE.md)
-is deferred task 6. [Integration validation](docs/INTEGRATION_GATE.md) covers the
-immediate tranche and its remaining Git/CI gates.
+is deferred task 6. [Integration validation](docs/INTEGRATION_GATE.md) records
+the post-merge review and the remaining independent-review, CI, release, and
+production gates.
 
 The skill's canonical source is this repository's `skills/project-intent/` directory.
 For this workspace it is made discoverable at
@@ -53,6 +88,10 @@ python3 -m venv .venv
 .venv/bin/project-intent start --snapshot .project-intent/snapshot.json --workstream PI-MISSION-01
 .venv/bin/project-intent serve --config /private/project-intent/config.json --port 8290
 ```
+
+The `serve` command is useful for an explicitly configured development process.
+For the managed local dogfood instance, inspect the user service above rather
+than starting a second process on port 8290.
 
 Open `http://127.0.0.1:8290`. Every page/API request requires independent Basic
 credentials: a principal name and a randomly generated high-entropy token. This
@@ -96,6 +135,12 @@ only reads explicitly configured feeds, never shells out to Git or SparkOps.
 
 See [architecture](docs/ARCHITECTURE.md), [read model](docs/READ_MODEL.md), and
 [operations](docs/OPERATIONS.md) for authority, recovery and production limits.
+
+The repository also contains bounded, non-runtime evaluation material under
+`experiments/` and `docs/CLI_AB_*.md`. These studies test worker isolation,
+handoffs, and whether structured Project Intent context helps execution; they do
+not turn Project Intent into a mandatory execution graph or prove productivity
+benefits.
 
 ## Enroll a real worker
 

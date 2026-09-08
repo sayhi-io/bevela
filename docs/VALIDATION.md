@@ -1,4 +1,9 @@
-# Real observatory dogfood evidence
+# Historical real observatory dogfood evidence
+
+This document records the original local dogfood review. The source described
+here was subsequently committed, pushed, and merged into `main`; the historical
+worktree and evidence paths are retained for provenance and are not the current
+release pointer.
 
 This work is `sayhi/project-intent:PI-MISSION-01`, enrolled in the independent
 SAYINT provider project/initiative. It uses existing SparkOps development records,
@@ -8,14 +13,12 @@ were created to populate the interface.
 
 ## Source and runtime boundary
 
-Independent repository: `repos/sayhi-project-intent`; implementation worktree:
-`worktrees/sayhi-project-intent/mission-control`, branch `agent/mission-control`.
-This is new uncommitted source; no remote, source commit, push, merge or public
-deployment is claimed. Workspace README/AGENTS and `bin/project-intent` now make
-the independent implementation discoverable. The SparkOps prototype code remains
-unchanged and usable by its current consumers.
+Independent repository: `repos/sayhi-project-intent`; the reviewed source began in
+`worktrees/sayhi-project-intent/mission-control`, branch `agent/mission-control`,
+and is now integrated into the committed `main` branch. The SparkOps prototype
+code remains unchanged and usable by its current consumers.
 
-The running local service is `http://127.0.0.1:8290`; all content/API reads require
+The running local dogfood service is `http://127.0.0.1:8290`; all content/API reads require
 the independent operator or scoped-reader credential. The PM provider remains a
 separate provisional service. New cache, configuration and access material live in
 `state/project-intent`, not inside SparkOps, Cloud, Projects, the origin, or their
@@ -65,11 +68,14 @@ synthetic workstream lifecycle experiment. Browser outage checks use real snapsh
 ## Remaining limits
 
 No actual product outage drill, fleet integration, public access, production backup
-restore, managed unattended service activation, cross-host presence, or substrate
-availability proof. Provider credentials are outside Git but native privileges need
-production qualification. Environment availability/occupancy is always unknown in
-this first read adapter. Missing divergence declarations are not a code audit.
+restore, production-managed unattended service activation, cross-host presence, or
+substrate availability proof. The local loopback dogfood service is managed for
+development, but that does not establish production availability. Provider
+credentials are outside Git but native privileges need production qualification.
+Environment availability/occupancy is always unknown in this first read adapter.
+Missing divergence declarations are not a code audit.
 
-Source remains uncommitted and awaits source sealing/normal CI before merge. Platform
-production activation is not authorized. Any later broader hosting must retain the
-independent authentication, persistence and recovery boundary described in OPERATIONS.
+The historical source seal does not replace fresh CI or production review for later
+changes. Platform production activation is not authorized. Any later broader hosting
+must retain the independent authentication, persistence and recovery boundary
+described in OPERATIONS.
