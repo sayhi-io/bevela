@@ -12,10 +12,11 @@ assignment and enroll a unique inspection session. Its task is to review the cur
 delivered source and report concrete findings/evidence. No fictional workstream,
 invariant amendment, coordination request or finding is needed.
 
-At this checkpoint the implementation repository has an unborn branch and no remote.
-It cannot produce a clean Git checkout of committed source. Report an **isolated
-source-copy validation** until a separately authorized commit exists. Historical
-local approval covers only its recorded source; new changes need new review.
+The initial source checkpoint was an unborn branch with no remote, so its evidence
+was correctly reported as an **isolated source-copy validation**. That source is now
+committed and merged into `main`. The historical approval covers only the exact
+recorded source seal; subsequent changes, including UI experiments and deployment
+candidate work, require their own review and validation.
 
 1. Read the repository instructions and operational contracts, including REPORTING.md
    and SESSION_CONNECTOR.md. Review scope filtering, publication receipts and failure
@@ -67,7 +68,8 @@ unless a distinct Codex thread identity is independently established. No parent
 telemetry may be attributed to a child. Treat this as a documented integration
 constraint; it does not prove a particular worker caused any registration overwrite.
 
-After source integration is separately authorized, repeat validation from the actual
-committed checkout and obtain required CI evidence. The checked-in workflow is a
-definition, not proof CI ran. No commit, push, merge, public deployment or production
-activation follows automatically from this gate.
+After source integration, repeat validation from the actual committed checkout and
+obtain required CI evidence for each substantive change. The checked-in workflow is
+a definition, not proof CI ran. Local service activation is also separate from
+source integration: the loopback dogfood process uses a pinned runtime release.
+No public deployment or production activation follows automatically from this gate.
