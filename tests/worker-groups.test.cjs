@@ -1,0 +1,10 @@
+const {test}=require('node:test'),assert=require('node:assert/strict');
+const F=require('../project_intent/web/worker-group-facts.js');
+const now=1800000000000,at=now/1000;
+const p={session:'s',status:'active',heartbeat_at:new Date(now-1000).toISOString(),expires_at:new Date(now+60000).toISOString()};
+const a={session:'s',status:'recent',last_report_at:at-2,points:[{at:at-2,value:12.34}]};
+test('rate is attached to exact session, never work aggregate',()=>{const r=F.sessions({workers:[p],activity:{sessions:[a,{...a,session:'other'}]}},now);assert.equal(r.length,2);assert(r.every(x=>x.rate===12.34));assert.equal(r.find(x=>x.id==='s').label,'12.3 tok/s');});
+test('presence-only remains unmeasured; not zero rate',()=>{const r=F.sessions({workers:[p]},now)[0];assert.equal(r.label,'Present · unmeasured');assert.equal(r.rate,null);});
+test('stale, disconnected, released, missing and invalid samples never look live',()=>{for(const metric of [{...a,last_report_at:at-91},{...a,points:[{at:at-100,value:1}]},{...a,points:[{at:at+5,value:1}]},{...a,points:[{at:at-2,value:null}]},{...a,points:[{at:at-2,value:-3}]}])assert.equal(F.sessions({workers:[p],activity:metric},now)[0].rate,null);assert.equal(F.sessions({workers:[p],activity:a},now,false)[0].kind,'unknown');assert.equal(F.sessions({workers:[{...p,status:'inactive'}],activity:a},now)[0].label,'Released');});
+test('zero is a measured rate, duplicates ambiguous, no fake session from anonymous metric',()=>{assert.equal(F.sessions({activity:{...a,points:[{at:at-2,value:0}]}},now)[0].rate,0);assert.equal(F.sessions({workers:[p,p],activity:a},now)[0].label,'Ambiguous registration');assert.equal(F.sessions({activity:{...a,session:null}},now).length,0);});
+test('sharing uses exact identity within authorized scope; input unchanged',()=>{const data={workstreams:[{key:'a:1',scope_id:'a',workers:[p]},{key:'a:2',scope_id:'a',workers:[p]},{key:'b:3',scope_id:'b',workers:[p]},{key:'a:4',scope_id:'a',workers:[{...p,session:'similar-s'}]}]};const before=JSON.stringify(data);assert.equal(F.assignments(data,'a','s').length,2);assert.equal(JSON.stringify(data),before);});

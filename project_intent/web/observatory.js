@@ -1,7 +1,8 @@
 /* Opt-in presentation boundary over the same read model and classic components. */
 'use strict';
-const views={home:['Overview','intent','Live observations, recent releases and the next judgment.'],work:['Work','scope','Every enrolled workstream, with execution and durable readiness kept separate.'],architecture:['Architecture','architecture','Applicable constraints and explainable revision comparisons.'],environments:['Environments','environment','Declared requirements, not measured capacity or permission.'],handoffs:['Handoffs','handoff','Worker reports alongside durable provider handoffs.'],sources:['Sources','proof','Coverage, freshness and independent observation sources.']};
-for(const [key,[label,name]] of Object.entries(views)){const a=el('a');a.href='#'+key;a.title=label;a.append(icon(name),el('span',label));$('view-nav').append(a);}
+if(location.pathname==='/workstream-map'&&!location.hash)history.replaceState(null,'','#map');
+const views={home:['Overview','intent','Live observations, recent releases and the next judgment.'],map:['Map','scope','Architectural surfaces from existing declarations. A projection, not a workflow.'],work:['Work','scope','Every enrolled workstream, with execution and durable readiness kept separate.'],architecture:['Architecture','architecture','Applicable constraints and explainable revision comparisons.'],environments:['Environments','environment','Declared requirements, not measured capacity or permission.'],handoffs:['Handoffs','handoff','Worker reports alongside durable provider handoffs.'],sources:['Sources','proof','Coverage, freshness and independent observation sources.']};
+for(const [key,[label,name]] of Object.entries(views)){const a=el('a');a.href='#'+key;a.title=key==='map'?'Workstream Map':label;const glyph=icon(name);if(key==='map')glyph.querySelector('path').setAttribute('d','M3 6l6-3 6 3 6-3v15l-6 3-6-3-6 3V6m6-3v15m6-12v15');a.append(glyph,el('span',label));$('view-nav').append(a);}
 const bell=icon('handoff');bell.querySelector('path').setAttribute('d','M18 8a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9M10 21h4');$('notifications').prepend(bell);
 function selectView(focus=false){const key=location.hash.slice(1)||'home';const selected=views[key]?key:'home';for(const section of document.querySelectorAll('[data-view]'))section.hidden=!section.dataset.view.split(' ').includes(selected);for(const a of $('view-nav').children){if(a.hash==='#'+selected)a.setAttribute('aria-current','page');else a.removeAttribute('aria-current');}for(const [i,card] of [...$('rested').children].entries())card.hidden=selected==='home'&&i>=6;for(const [i,card] of [...$('convergence').children].entries())card.hidden=selected==='home'&&i>=3;$('view-title').textContent=views[selected][0];$('view-title').classList.toggle('home-navigation-target',selected==='home');$('view-description').textContent=views[selected][2];$('view-description').hidden=selected==='home';if(focus)$('view-title').focus();}
 window.addEventListener('hashchange',()=>selectView(true));selectView();
@@ -25,11 +26,38 @@ function reportOrder(a,b){const time=x=>{const v=Date.parse(x.report.created_at)
 let detailKey=null;
 const classicDetail=showDetail;
 let reportSignature=null;
-function appendReports(work){const signature=JSON.stringify([work.key,work.report_coverage,work.local_reports]);if($('worker-report-detail')&&signature===reportSignature)return;reportSignature=signature;$('worker-report-detail')?.remove();const s=section($('detail-content'),'Worker reports · separate from provider readiness','handoff');s.id='worker-report-detail';s.append(el('p','Coverage: '+work.report_coverage,'quiet'));for(const report of work.local_reports||[])s.append(reportCard(report,work,true));if(!work.local_reports?.length)empty(s,'No local worker reports in the available feed.');}
-showDetail=function(key){classicDetail(key);detailKey=key;const work=data?.workstreams.find(w=>w.key===key);if(work)appendReports(work);};
+function appendReports(work){
+ const signature=JSON.stringify([work.key,work.report_coverage,work.local_reports]);if($('worker-report-detail')&&signature===reportSignature)return;
+ const prior=$('worker-report-detail'),open=new Set([...prior?.querySelectorAll('.report-branch[open]')||[]].map(n=>n.dataset.report));
+ const focused=document.activeElement,focusBranch=focused?.closest('.report-branch'),focusId=focusBranch?.dataset.report,focusIndex=focusBranch?[...focusBranch.querySelectorAll('summary,button,a')].indexOf(focused):-1;
+ const scroll=$('detail').scrollTop;reportSignature=signature;prior?.remove();
+ const s=section($('detail-content'),'Worker reports · separate from provider readiness','handoff');s.id='worker-report-detail';s.append(el('p','Coverage: '+work.report_coverage,'quiet'));
+ for(const report of work.local_reports||[]){const branch=el('details',undefined,'value-tree report-branch');branch.dataset.report=report.id;branch.open=open.has(report.id);branch.append(el('summary',report.created_at+' · '+(report.publication?.state||'local')+' · worker report'),reportCard(report,work,true));s.append(branch);if(report.id===focusId)(branch.querySelectorAll('summary,button,a')[focusIndex]||branch.querySelector('summary')).focus({preventScroll:true});}
+ if(!work.local_reports?.length)empty(s,'No local worker reports in the available feed.');if(prior)$('detail').scrollTop=scroll;
+}
+function readinessTree(work){const old=$('detail-content').querySelector('.readiness-cards');if(!old)return;const tree=el('details',undefined,'value-tree');tree.open=true;tree.append(el('summary','Provider-declared readiness'));const rows=el('dl',undefined,'value-rows');for(const [name,value] of Object.entries(work.readiness||{}))rows.append(el('dt',name.replaceAll('_',' ')),el('dd',String(value).replaceAll('-',' ')));if(!rows.children.length)tree.append(el('p','No readiness values recorded.','quiet'));else tree.append(rows);tree.append(el('p','Source: durable provider metadata in this observation. Worker reports below are separate assertions; they do not overwrite these values.','section-note'));old.replaceWith(tree);}
+showDetail=function(key){classicDetail(key);detailKey=key;const work=data?.workstreams.find(w=>w.key===key);if(work){readinessTree(work);appendReports(work);}};
 const classicRender=render;
+const workspaceSection=el('section');workspaceSection.dataset.view='sources';workspaceSection.id='workspace-inventory';workspaceSection.hidden=true;document.querySelector('#sources').closest('section').before(workspaceSection);
+const workspaceSummary=el('a',undefined,'workspace-coverage-link');workspaceSummary.href='#sources';workspaceSummary.hidden=true;document.querySelector('.status-tools').prepend(workspaceSummary);
+function renderWorkspaceInventory(result){
+ const inventory=result.workspace_inventory;workspaceSummary.hidden=!inventory;
+ if(!inventory){workspaceSection.replaceChildren();return;}
+ const signature=JSON.stringify([inventory.status,inventory.repositories,inventory.meaning]);
+ const timestamp='Inventory: '+inventory.status+' · observed '+(inventory.observed_at||'unknown')+' · repositories without a mapping are visible gaps, not empty projects.';
+ if(workspaceSection.dataset.inventory===signature&&$('workspace-inventory-time')){$('workspace-inventory-time').textContent=timestamp;return;}
+ workspaceSection.replaceChildren();workspaceSection.dataset.inventory=signature;
+ workspaceSection.append(el('h2','Workspace repository coverage'));
+ workspaceSummary.textContent=inventory.status==='observed'?inventory.repository_count+' repos · '+inventory.connected_count+' intent connections':'Workspace inventory · '+inventory.status;
+ workspaceSection.append(el('p',inventory.meaning||'Workspace inventory not configured.','quiet'));
+ const time=el('p',timestamp,'quiet');time.id='workspace-inventory-time';workspaceSection.append(time);
+ const table=el('table',undefined,'inventory-table');const head=el('thead'),row=el('tr');for(const text of ['Repository / checkout','Intent coverage','Provider / execution'])row.append(el('th',text));head.append(row);table.append(head);const body=el('tbody');
+ for(const repo of inventory.repositories||[]){const tr=el('tr'),name=el('td'),intent=el('td'),observations=el('td');name.append(el('strong',repo.repository));const detail=el('details');detail.append(el('summary','Checkout'),el('code',repo.checkout));name.append(detail);intent.append(el('span',repo.intent_status==='configured'?repo.scope:repo.intent_status==='not-mapped'?'Not enrolled here':'Scope not connected'));if(repo.enrolled_workstreams!==null)intent.append(el('small',repo.enrolled_workstreams+' enrolled Workstreams · scope-level'));observations.append(el('span','Provider: '+repo.provider_status),el('small','Execution: '+repo.execution_status));tr.append(name,intent,observations);body.append(tr);}
+ table.append(body);workspaceSection.append(table);
+}
 render=function(result){
  classicRender(result);
+ renderWorkspaceInventory(result);
  renderHighlightKey(result);
  // Work view includes completed/deferred intent too; home is observational only.
  const ordered=[...result.workstreams].sort((a,b)=>executionRank(b)-executionRank(a)||a.key.localeCompare(b.key));
@@ -44,4 +72,4 @@ render=function(result){
  selectView();
 };
 // Clear added surfaces synchronously on scope change; failed fetch cannot leak prior scope.
-$('scope').addEventListener('change',()=>{for(const id of ['live-work','rested','rested-coverage','home-attention','reports','report-coverage','highlight-key-examples'])clear(id);detailKey=null;});
+$('scope').addEventListener('change',()=>{for(const id of ['live-work','rested','rested-coverage','home-attention','reports','report-coverage','highlight-key-examples','workspace-inventory'])clear(id);workspaceSummary.hidden=true;detailKey=null;});

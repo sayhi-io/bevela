@@ -11,3 +11,5 @@ jobs:
           persist-credentials: false
       - name: Independent offline contract tests
         run: python3 -m unittest discover -s tests -v
+      - name: Projection-only Workstream Map tests
+        run: node --test tests/workstream-map.test.cjs tests/worker-groups.test.cjs tests/identity-facts.test.cjs

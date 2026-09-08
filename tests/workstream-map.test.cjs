@@ -1,0 +1,11 @@
+const {test}=require('node:test');
+const assert=require('node:assert/strict');
+const F=require('../project_intent/web/workstream-map-facts.js');
+const now=Date.parse('2026-09-06T02:00:00Z');
+const worker={session:'one',status:'active',heartbeat_at:'2026-09-06T01:59:00Z',expires_at:'2026-09-06T02:01:00Z',touching_seams:['shared'],approaching:['next']};
+const a={key:'a:one',scope_id:'a',boundaries:['shared'],workers:[worker]};
+test('freshness is a lease, not lifecycle',()=>{assert(F.fresh(worker,now));for(const p of [{status:'inactive'},{expires_at:'2026-09-06T02:00:00Z'},{heartbeat_at:'2026-09-06T02:02:00Z'}])assert(!F.fresh({...worker,...p},now));});
+test('touching and approaching stay distinct; outage removes live declarations',()=>{const ports=F.ports(a,now);assert.equal(ports[0].boundary,'next');assert.equal(ports[0].declared,false);assert.equal(ports[0].approaching.length,1);assert.equal(ports[1].touching.length,1);assert.deepEqual(F.ports(a,now,false),[{boundary:'shared',declared:true,touching:[],approaching:[]}]);});
+test('overlap does not invent convergence or cross scope edges',()=>{const b={...a,key:'b:two',scope_id:'b'};const list=F.seams({},[a,b],now);assert.equal(list.length,4);assert(list.every(s=>s.convergence===null));assert.notEqual(F.key('a','shared'),F.key('b','shared'));});
+test('only normalized convergence is associated; inputs unchanged',()=>{const result={convergence:[{scope:'a',boundary:'shared',workstreams:['a:one','a:two']}]};const before=JSON.stringify([result,a]);assert.equal(F.seams(result,[a],now).find(s=>s.boundary==='shared').convergence,result.convergence[0]);assert.equal(JSON.stringify([result,a]),before);});
+test('architecture requires exact boundary AND normalized applicability',()=>{const seam=F.seams({},[a],now).find(s=>s.boundary==='shared');const good={key:'invariant',boundaries:['shared'],workstreams:['a:one']};assert.deepEqual(F.architecture({architecture:[good,{...good,key:'other',workstreams:['b:two']},{...good,key:'elsewhere',boundaries:['elsewhere']}]},seam),[good]);});

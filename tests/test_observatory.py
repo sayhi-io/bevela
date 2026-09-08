@@ -178,14 +178,15 @@ class ServiceTests(SnapshotCase):
             return urlopen(Request(base+path,headers=headers,method=method),timeout=2)
         with self.assertRaises(HTTPError) as e:request('/api/v1/observatory')
         self.assertEqual(e.exception.code,401)
-        for path,mime in [('/minimap.js','text/javascript'),('/minimap.css','text/css')]:
+        for path,mime in [('/minimap.js','text/javascript'),('/minimap.css','text/css'),('/identity-facts.js','text/javascript'),('/design-lab.js','text/javascript'),('/design-lab.css','text/css')]:
             with self.subTest(asset=path):
                 with self.assertRaises(HTTPError) as denied:request(path)
                 self.assertEqual(denied.exception.code,401)
                 with request(path,'reader') as response:
                     self.assertIn(mime,response.headers['Content-Type'])
                     self.assertTrue(response.read())
-        with request('/api/v1/observatory','reader') as r:self.assertTrue(json.load(r)['workstreams'])
+        with request('/api/v1/observatory','reader') as r:
+            payload=json.load(r);self.assertTrue(payload['workstreams']);self.assertNotIn('workspace_inventory',payload)
         with request('/api/v1/observatory','denied') as r:self.assertFalse(json.load(r)['workstreams'])
         with self.assertRaises(HTTPError) as e:request('/api/v1/observatory?scope=other','reader')
         self.assertEqual(e.exception.code,403)
