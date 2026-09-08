@@ -6,6 +6,7 @@ import subprocess
 import sys
 import tempfile
 import unittest
+from unittest.mock import patch
 from project_intent.enrollment import registration, read_registrations, telemetry_path, find_codex_session
 from project_intent.model import utcnow, project
 from project_intent.runtime import Store, write_json
@@ -29,6 +30,14 @@ class EnrollmentTests(unittest.TestCase):
 
     def read(self,**kwargs):
         return read_registrations(self.source,self.scope,{'PI-MISSION-01'},now=kwargs.get('now',self.now))
+
+    def test_unreadable_directory_metadata_reports_unavailable(self):
+        with patch('project_intent.enrollment.Path.is_dir',side_effect=PermissionError('denied')):
+            self.assertEqual(self.read(),([],1))
+
+    def test_unreadable_directory_listing_reports_unavailable(self):
+        with patch('project_intent.enrollment.os.scandir',side_effect=PermissionError('denied')):
+            self.assertEqual(self.read(),([],1))
 
     def test_enroll_and_renew_preserves_attribution_boundary(self):
         first=self.record();second=registration(self.snapshot,'PI-MISSION-01','worker','renew',[],[],old=first,now=self.now+timedelta(minutes=20))

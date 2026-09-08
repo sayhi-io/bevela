@@ -1,0 +1,41 @@
+# Candidate only; see README.md. Does not inherit SparkOps identity or credentials.
+[Unit]
+Description=Project Intent observatory (dedicated identity candidate)
+Wants=network-online.target
+After=network-online.target
+AssertPathExists=/etc/project-intent/admitted
+
+[Service]
+Type=simple
+User=project-intent
+Group=project-intent
+WorkingDirectory=/var/lib/project-intent
+StateDirectory=project-intent
+StateDirectoryMode=0700
+RuntimeDirectory=project-intent
+RuntimeDirectoryMode=0700
+ExecStart=/opt/project-intent/current/bin/project-intent serve --config /etc/project-intent/config.json --port 8290
+Environment=PYTHONDONTWRITEBYTECODE=1
+Restart=on-failure
+RestartSec=3s
+UMask=0077
+NoNewPrivileges=yes
+CapabilityBoundingSet=
+AmbientCapabilities=
+ProtectSystem=strict
+ProtectHome=yes
+PrivateTmp=yes
+PrivateDevices=yes
+ProtectKernelTunables=yes
+ProtectKernelModules=yes
+ProtectKernelLogs=yes
+ProtectControlGroups=yes
+RestrictSUIDSGID=yes
+RestrictRealtime=yes
+LockPersonality=yes
+RestrictAddressFamilies=AF_UNIX AF_INET AF_INET6
+SystemCallArchitectures=native
+LimitCORE=0
+
+[Install]
+WantedBy=multi-user.target
