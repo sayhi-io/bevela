@@ -63,12 +63,20 @@ After reviewing the orientation, run the printed `enroll` command with the
 worker's actual access mode, paths, semantic seams and bounded task summary.
 `discover` and `start` remain available as lower-level commands.
 
+No candidate fits? Workers can use the opt-in `task-register` command to inspect live
+native inventory and record **the task the user already assigned**, then onboard and
+enroll. Repository setup does not pre-create every future task. This is synchronous
+bookkeeping, not a coordinator queue or new execution authority. See
+[task registration](docs/TASK_REGISTRATION.md) for the preview/submit flow, retries
+and local scope policy.
+
 Supported interfaces share the normalized context; optional operator commands are
 local CLI operations, not browser mutation endpoints:
 
 | Need | Interface |
 | --- | --- |
 | Worker onboarding, orientation and presence | `onboard`, `discover`, `start`, `enroll` |
+| Record an existing user task, refresh onboarding context | `task-register` (opt-in local capability) |
 | Immutable local report and publication status | `report`, `report-status` |
 | Authorized native publication and metadata reconciliation | `publish-report`, `provider-list`, `reconcile` |
 | Explicit existing-session attachment and bounded continuation | `session-attach`, `session-continue` |
@@ -89,8 +97,9 @@ For this workspace it is made discoverable at
 not bundled into the Python runtime distribution. Check an existing target before
 installation and preserve a different installed skill. A new session can discover
 the installation; already-running workers should explicitly read the linked SKILL.md
-when asked to use it. The symlink follows this worktree's current bytes, so report
-the skill hash/source seal when claiming a reviewed version.
+when asked to use it. The managed workspace installation follows the pinned release
+through `state/project-intent/current`, not an arbitrary development branch. Report
+the resolved source and skill hash/source seal when claiming a reviewed version.
 
 ## Run and orient
 
@@ -122,8 +131,10 @@ provider polling is independent and read-only. No provider credentials reach the
 Real local dogfood configuration and cache are under
 `/home/meanaverage/sayhi/state/project-intent/`, outside Git. The private
 `operator-access.json` contains the operator login; `sparkops-reader-access.json`
-demonstrates a product-only principal. The configured scopes are Project Intent and
-SparkOps. Verify and Projects are supported as scopes but not fictitiously enrolled.
+demonstrates a product-only principal. The local scope map now covers 20 configured
+SayHi project scopes, including Project Intent, SparkOps, Verify and Projects. Scope
+configuration alone does not establish task inventory, worker enrollment or write
+permission; inspect the current scope map and discovery results for actual coverage.
 
 Use explicit scoped export for repository fallback:
 
@@ -178,8 +189,10 @@ workers. Exact current-checkout reference matches sort first, but are never auto
 assignments. Both `PI-MISSION-01` and its native `SAYINT-5` resolve to the same intent;
 cross-scope ambiguity fails and requires explicit `--scope`. Read the assignment's
 constraints, environment and acceptance from `start` before enrolling. If no existing
-record fits, report that durable enrollment is missing; do not silently invent an
-assignment, borrow an unrelated workstream, or interpret a similar title as authority.
+record fits, inspect live native inventory with the configured `task-register` route
+and record the already assigned task as described above. Do not invent work, borrow
+an unrelated workstream, or interpret a similar title as authority. If registration
+is unavailable, report the exact tracking gap rather than claiming enrollment.
 
 Enrollment observes **only the worker's own checkout**, defaulting to the current
 directory (`--checkout` overrides). It records host, exact Git worktree root, shared
@@ -243,5 +256,7 @@ At handoff, release your registration:
 
 No process is launched or session controlled. Release/expiry stops telemetry reads;
 crashed workers need no manual cleanup for correctness. Registration does not create
-PM work, grant authority, prove liveness, or override scope. Offline snapshots remain
+PM work, grant authority, prove liveness, or override scope. Here registration means
+session enrollment; the separate `task-register` command records durable user tasks.
+Offline snapshots remain
 last-known intent, and telemetry/presence stay separate operational observations.

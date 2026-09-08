@@ -44,6 +44,11 @@ Do not ask the human to look up an ID. Use task text, exact reference match and
 native delegate information to identify candidates; inspect scope/avoid/acceptance
 with `start`, then select the existing alias or native identifier. Similarity is
 not assignment authority; resolve true ambiguity or missing enrollment explicitly.
+For a genuinely user-assigned task with no fitting cached record, use the opt-in
+`task-register` live inventory and preview/submit flow in docs/TASK_REGISTRATION.md.
+The worker may create its missing task record; it must not invent work or ownership.
+Unavailable bookkeeping is an explicit tracking gap, not by itself a reason to stop
+otherwise-authorized work. Honor any explicit enrollment/admission prerequisite.
 Declare `--access edit --touching-path ...` or `--access inspect`, current semantic
 seams, approaching seams and exclusions. Enrollment captures your own Git root,
 branch and HEAD; never substitute another owner's source reference. Inspect nearby
