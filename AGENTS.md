@@ -35,8 +35,11 @@ claims or rewrite provider readiness. Coordinate with Environment Catalog throug
 references, not by owning provisioning. Keep reviewed source, local tests, actual
 CI, merge and production activation separate.
 
-Before substantial work, use `start` for your actual assignment, then `enroll`
-after first running `discover` from your actual checkout to find relevant work.
+Before substantial work, use `onboard --query "task keywords"` from your actual
+checkout, then rerun `onboard --scope SCOPE --workstream ID` for the exact candidate.
+It is read-only and prints the explicit enrollment step; then run `enroll` yourself.
+The lower-level `discover` and `start` commands remain available for debugging or
+offline packet handling.
 Do not ask the human to look up an ID. Use task text, exact reference match and
 native delegate information to identify candidates; inspect scope/avoid/acceptance
 with `start`, then select the existing alias or native identifier. Similarity is

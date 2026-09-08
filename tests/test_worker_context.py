@@ -85,3 +85,29 @@ class WorkerContextTests(unittest.TestCase):
                 '--workstream','PI-MISSION-01','--session','worker','--directory',d,'--access','edit'],cwd=ROOT,capture_output=True,text=True)
             self.assertNotEqual(result.returncode,0);self.assertIn('--touching-path',result.stderr)
             self.assertFalse((Path(d)/'worker.json').exists())
+
+    def test_onboard_discovery_does_not_enroll(self):
+        with tempfile.TemporaryDirectory() as d:
+            config=Path(d)/'worker.json'
+            config.write_text(json.dumps({'scopes':{self.scope:{'snapshot':str(ROOT/'.project-intent/snapshot.json'),
+                'enrollment_directory':str(Path(d)/'enrolled')}}}))
+            result=subprocess.run([sys.executable,'-m','project_intent.cli','onboard','--worker-config',str(config),
+                '--scope',self.scope,'--query','mission'],cwd=ROOT,capture_output=True,text=True)
+            self.assertEqual(result.returncode,0,result.stderr)
+            output=json.loads(result.stdout)
+            self.assertTrue(output['discovery']['candidates'])
+            self.assertIn('not assignments',output['contract'])
+            self.assertFalse((Path(d)/'enrolled').exists())
+
+    def test_onboard_selected_candidate_prints_orientation_and_template(self):
+        with tempfile.TemporaryDirectory() as d:
+            config=Path(d)/'worker.json'
+            config.write_text(json.dumps({'scopes':{self.scope:{'snapshot':str(ROOT/'.project-intent/snapshot.json'),
+                'enrollment_directory':str(Path(d)/'enrolled')}}}))
+            result=subprocess.run([sys.executable,'-m','project_intent.cli','onboard','--worker-config',str(config),
+                '--scope',self.scope,'--workstream','PI-MISSION-01'],cwd=ROOT,capture_output=True,text=True)
+            self.assertEqual(result.returncode,0,result.stderr)
+            output=json.loads(result.stdout)
+            self.assertEqual(output['orientation']['assignment']['id'],'PI-MISSION-01')
+            self.assertIn('enroll',output['enrollment_template'])
+            self.assertFalse((Path(d)/'enrolled').exists())
