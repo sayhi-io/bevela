@@ -1,0 +1,15 @@
+--- a/project_intent/workspace_inventory.py
++++ b/project_intent/workspace_inventory.py
+@@ -14,7 +14,11 @@
+     if not isinstance(settings,dict) or not isinstance(settings.get('root'),str) or not isinstance(settings.get('scope_by_repository',{}),dict):
+         return {'status':'unavailable','repositories':[]}
+     root=Path(settings['root'])
+-    if not root.is_absolute() or root.is_symlink():
++    try:
++        safe_root = root.is_absolute() and not root.is_symlink()
++    except OSError:
++        safe_root = False
++    if not safe_root:
+         return {'status':'unavailable','repositories':[]}
+     allowed=set(principal.get('scopes',[]))
+     scopes={s['id']:s for s in projection['scopes']}

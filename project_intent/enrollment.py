@@ -59,8 +59,14 @@ def registration(snapshot,workstream,session,working,approaching,avoid,path=None
 def read_registrations(source,scope,known,now=None,include_telemetry=True):
     now=now or utcnow();records=[];failures=0
     directory=Path(source['directory'])
-    if not directory.is_dir():return [],1
-    files=sorted(directory.glob('*.json'))
+    try:
+        if not directory.is_dir():return [],1
+        # scandir surfaces permission errors that glob can silently suppress.
+        # An unreadable optional feed must not become an API authorization error.
+        with os.scandir(directory) as entries:
+            files=sorted(Path(entry.path) for entry in entries if entry.name.endswith('.json'))
+    except OSError:
+        return [],1
     if len(files)>128:failures+=1
     for file in files[:128]:
         try:
