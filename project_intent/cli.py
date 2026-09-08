@@ -29,11 +29,14 @@ def markdown(snapshot):
 
 def main():
     p=argparse.ArgumentParser(description=__doc__)
-    p.add_argument('command',choices=['serve','export','discover','onboard','start','presence','enroll','report','report-status','publish-report','provider-list','reconcile','session-attach','session-continue'])
+    p.add_argument('command',choices=['serve','export','discover','onboard','task-register','start','presence','enroll','report','report-status','publish-report','provider-list','reconcile','session-attach','session-continue'])
     from .session_connector import add_arguments
     add_arguments(p)
-    p.add_argument('--input',help='JSON report or confirmed reconciliation packet')
-    p.add_argument('--submit',action='store_true',help='Queue local report for operator publication')
+    p.add_argument('--input',help='JSON task, report or confirmed reconciliation packet')
+    p.add_argument('--submit',action='store_true',help='Queue a report, or submit a reviewed task registration')
+    p.add_argument('--registration-config',default=os.environ.get('PROJECT_INTENT_REGISTRATION_CONFIG'),help='Local opt-in task registration policy/provider configuration')
+    p.add_argument('--inventory-digest',help='Review binding returned by task-register preview')
+    p.add_argument('--native-identifier',help='Explicit existing native issue for task registration')
     p.add_argument('--report-id')
     p.add_argument('--config');p.add_argument('--port',type=int,default=8290)
     p.add_argument('--scope');p.add_argument('--output');p.add_argument('--snapshot')
@@ -50,6 +53,20 @@ def main():
     p.add_argument('--touching-seam',action='append',default=None,help='Opaque architectural boundary currently touched')
     p.add_argument('--avoid-path',action='append',default=None)
     args=p.parse_args()
+    if args.command=='task-register':
+        from .task_registration import register
+        if not args.registration_config or not args.scope or not args.input:
+            p.error('task-register requires configured --registration-config, --scope and --input; see docs/TASK_REGISTRATION.md')
+        try:
+            cfg=read_json(args.registration_config)
+            if args.worker_config:
+                worker_entry=read_json(args.worker_config)['scopes'][args.scope]
+                entry=next(e for e in cfg['scopes'] if e['id']==args.scope)
+                if Path(worker_entry['snapshot']).resolve()!=Path(entry['cache']).resolve():
+                    raise ValueError('Worker snapshot and registration cache differ; fix local configuration')
+            out=register(cfg,args.scope,read_json(args.input),args.checkout,args.submit,args.inventory_digest,args.native_identifier)
+            print(json.dumps(out,indent=2));return
+        except (OSError,ValueError,KeyError,TypeError,StopIteration) as exc:p.error(str(exc))
     if args.command in ('provider-list','reconcile','publish-report'):
         from .provider_write import configured,reconcile
         from .reporting import publish
@@ -95,6 +112,9 @@ def main():
                       'contract':'Discovery and orientation are read-only. Candidates are not assignments; enrollment remains an explicit worker action.'}
             if not args.workstream:
                 response['next_step']='Select an exact scope and alias/native ID, then rerun onboard with --scope and --workstream.'
+                response['missing_assignment']='If no candidate fits after broadening discovery, use task-register --scope SCOPE --input TASK.json to review live native inventory and record the existing user task. See docs/TASK_REGISTRATION.md. Do not borrow unrelated work or invent new work.'
+                if not result['candidates']:
+                    response['next_step']='No cached candidate matched. Broaden discovery; if none fits, preview live inventory with task-register for the already user-assigned task.'
                 response['enrollment_required']='After inspecting the selected orientation, run enroll with explicit access, paths, seams and working summary.'
                 print(json.dumps(response,indent=2));return
             try:

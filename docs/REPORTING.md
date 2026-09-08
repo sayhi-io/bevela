@@ -1,5 +1,9 @@
 # Supported reporting and provider reconciliation
 
+For routine recording of work the user already assigned, workers can use the separate
+opt-in [task registration](TASK_REGISTRATION.md) capability. General reconciliation
+below remains the operator path for metadata corrections and uncertain outcomes.
+
 Workers use the credential-free scope map. From their actual checkout:
 
 ```sh

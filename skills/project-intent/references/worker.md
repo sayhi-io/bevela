@@ -6,6 +6,11 @@ first pass. After selecting an exact candidate, use `onboard --scope SCOPE
 environment requirements, readiness, handoffs and nearby work. It prints an
 explicit enrollment template but never enrolls automatically. `start` remains the
 lower-level orientation command.
+If no candidate fits after broadening discovery, follow the source repository's
+`docs/TASK_REGISTRATION.md`: preview live native inventory, select an existing issue
+or record the already user-assigned task, submit the reviewed choice, then onboard
+and enroll. This records an assignment; it does not invent one or grant execution.
+Keep uncertain receipts explicit and retry the original packet, never a renamed task.
 Keep an explicit reference to the revisions and source being evaluated. Missing
 conformance evidence is unknown; a later accepted revision requires reconciliation
 with older evidence, not retroactive failure of the older claim.

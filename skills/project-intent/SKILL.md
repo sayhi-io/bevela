@@ -27,8 +27,15 @@ available as lower-level commands. Add `--scope` when needed. Select candidates
 against the existing user task, ownership, scope, exclusions and acceptance criteria;
 a matching title or reference checkout does not grant ownership. Broaden an overly
 specific search before concluding enrollment is missing. Missing snapshot candidates
-do not prove no provider issue exists: ask the authorized coordinator to inspect the
-native inventory, preserving the packet needed to reconcile an existing record.
+do not prove no provider issue exists. If no candidate fits, use the configured
+`task-register` route to inspect live native inventory and record the task the user
+already assigned. Read [task registration](../../docs/TASK_REGISTRATION.md) in this
+skill's source release for its packet and preview/submit flow. Reuse an existing native
+record when appropriate; do not invent new work or borrow unrelated assignments.
+Workers perform this bookkeeping themselves under the configured local capability;
+no routine human ID lookup or separate coordinator queue is required. If that route
+is unavailable, report the precise tracking gap. It does not itself revoke otherwise
+authorized work; honor any explicit enrollment/admission prerequisite.
 
 Record what context is absent. An unenrolled environment requirement, invariant or
 acceptance criterion is project-information debt unless the supported model cannot

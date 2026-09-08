@@ -4,11 +4,21 @@ permissions:
   contents: read
 jobs:
   contract:
-    runs-on: ubuntu-latest
+    # Real bubblewrap isolation needs unprivileged user namespaces. The 24.04
+    # hosted image rejects its UID-map setup; keep this test on a compatible
+    # supported runner instead of skipping it or disabling host AppArmor.
+    runs-on: ubuntu-22.04
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
         with:
           persist-credentials: false
+      - uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065
+        with:
+          python-version: '3.12'
+      - name: Install isolation-test dependency
+        run: |
+          sudo apt-get update
+          sudo apt-get install --yes bubblewrap
       - name: Independent offline contract tests
         run: python3 -m unittest discover -s tests -v
       - name: Projection-only Workstream Map tests

@@ -1,5 +1,6 @@
 """Opt-in scoped operator commands; never exposed through the browser API."""
 import json
+from http.client import HTTPException
 from pathlib import Path
 from urllib.request import Request,build_opener
 from urllib.error import HTTPError
@@ -18,6 +19,7 @@ class OperatorProvider(ItsAPlan):
         try:
             with build_opener(NoRedirect()).open(req,timeout=10) as response:raw=response.read(MAX_BYTES+1)
         except HTTPError as exc:raise OSError('Provider request rejected: HTTP '+str(exc.code)) from None
+        except HTTPException:raise OSError('Provider transport incomplete') from None
         if len(raw)>MAX_BYTES:raise ValueError('Provider response exceeds bound')
         return json.loads(raw) if raw else {}
 
@@ -30,6 +32,13 @@ class OperatorProvider(ItsAPlan):
             record=json.loads(values[0]) if values else None
             rows.append({'native_id':issue['id'],'identifier':issue['identifier'],'title':issue['title'],
                          'record':record,'metadata_digest':digest(record),'field_id':field,'description':issue.get('description','')})
+            for role in ('delegate','assignee'):
+                user_id=issue.get(role+'UserId')
+                member=next((m for m in project.get('assignees',[]) if m['userId']==user_id),None)
+                rows[-1][role]={'user_id':user_id,'name':member.get('name') if member else None,
+                               'username':member.get('username') if member else None}
+            column=next((c for c in project.get('columns',[]) if c['id']==issue.get('columnId')),None)
+            rows[-1]['lifecycle']=column['name'] if column else None
         return rows
 
     def resolve(self,reference):
@@ -61,7 +70,7 @@ def configured(config,scope):
     return entry,OperatorProvider(entry['provider'])
 
 
-def reconcile(provider,scope,packet,journal):
+def reconcile(provider,scope,packet,journal,expected_inventory_digest=None):
     """Compare expected metadata, preserve evidence, journal uncertainty before writes.
 
     Provider has no atomic compare-and-swap: operators must serialize external edits.
@@ -76,13 +85,18 @@ def reconcile(provider,scope,packet,journal):
     with locked(journal):
         prior=read_json(file) if file.exists() else {}
         rows=provider.inventory();ref=packet.get('native_identifier')
+        if expected_inventory_digest is not None and digest(sorted(rows,key=lambda r:r['identifier']))!=expected_inventory_digest:
+            raise ValueError('Native inventory changed at mutation boundary; preview and inspect again')
         matches=[i for i in rows if i['identifier']==ref] if ref else [i for i in rows if (i['record'] or {}).get('id')==record['id'] or i['title']==packet.get('title')]
         if len(matches)>1:raise ValueError('Ambiguous native records; resolve before enrollment')
         if matches:
             issue=matches[0];old=issue['record']
             if any(i['native_id']!=issue['native_id'] and (i['record'] or {}).get('id')==record['id'] for i in rows):
                 raise ValueError('Alias already belongs to another native issue')
-            if old==record:return {'state':'published','identifier':issue['identifier'],'metadata_digest':digest(record),'operation':operation}
+            if old==record:
+                result={'state':'published','identifier':issue['identifier'],'metadata_digest':digest(record),'operation':operation}
+                write_json(file,result)
+                return result
             if ref and issue['metadata_digest']!=packet.get('expected_digest'):raise ValueError('Metadata changed since inspection; reconcile the latest revision')
             if not ref and old is not None:raise ValueError('Existing candidate found; inspect and target its native identifier')
             if not ref and old is None and not str(issue.get('description','')).startswith('project-intent-enrollment:'+operation+'\n'):

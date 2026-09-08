@@ -114,5 +114,10 @@ entries available in its credential-free worker map, not undisclosed global work
 `enroll` publishes the session's selected boundary and reports nearby declared overlap.
 Workers must reconcile a different native delegate/reference against the actual user
 assignment. Reference paths can be inspection material and never silently become
-execution locations. Missing durable enrollment is explicit, not automatic issue
-creation. Existing machine/session registrations remain backward compatible.
+execution locations. Missing durable enrollment is explicit. The opt-in local
+`task-register` capability records already user-assigned work after live native
+inventory review; discovery and session enrollment remain read-only/local respectively.
+It reuses operator reconciliation with a separate narrow scope/checkout policy,
+preserves native owners, and refreshes the shared cache before reporting onboarding
+ready. It is not a new PM store, assignment authority, scheduler or HTTP write route.
+Existing machine/session registrations remain backward compatible.

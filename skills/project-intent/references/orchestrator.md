@@ -12,6 +12,11 @@ overlap. Do not manufacture convergence, invariant changes or reviewer findings.
 
 ## Provider reconciliation
 
+Routine recording of an already user-assigned task belongs to the worker's configured
+`task-register` capability; see the source's `docs/TASK_REGISTRATION.md`. A human or
+separate coordinator need not create every task. Reconciliation remains appropriate
+for conflicting metadata, missing capability or unresolved uncertain provider writes.
+
 Use supported `provider-list` and `reconcile` commands only through configured,
 authorized provider access. Read `docs/REPORTING.md` and each command's help. Inventory
 native issues before creating assignments: the snapshot contains only the enrolled
