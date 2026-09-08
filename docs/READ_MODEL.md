@@ -1,5 +1,30 @@
 # Observatory read contract v1
 
+## Optional operator workspace inventory
+
+The HTTP projection may additionally include `workspace_inventory`. It is an
+operational observation, not a PM source or a new scope. A principal must explicitly
+have `workspace_inventory: true`; product readers receive no repository names,
+paths, counts or filesystem scan. Config supplies one absolute `root` and exact
+`scope_by_repository` mappings. Only immediate real directories with a `.git`
+marker are considered, at most200 root entries; symlinks and non-repositories are
+excluded. No Git commands, code reads, credential reads or other-session discovery.
+
+Configured scoped observations are correlated by explicit mapping. Unmapped entries
+are visible as `not-mapped`, with unknown remote PM state and worker activity—not
+zero work or an assertion that no provider project exists. Explicit mappings to
+unauthorized scopes are omitted before counts. A selected scope excludes unmapped
+and other-scope repositories. Root access failure is `unavailable`; enumeration
+limits are `partial-limit`, never a successful full inventory. The source root is
+the canonical `repos/` inventory, not runtime/vendor/archive or every nested path
+under the workspace. New canonical repositories appear automatically on reads.
+
+Repository inventory does not enroll Workstreams or expand provider credentials.
+Full inventory coverage and complete intent/agent observation remain distinct.
+The two existing provider connections continue unchanged. Offline snapshots retain
+their existing durable intent contract; this live filesystem inventory is not
+silently promoted into offline PM truth.
+
 `project(states, allowed_scopes, selected=None, now=None)` is a pure function shared
 by the service and offline CLI. HTTP: authenticated `GET /api/v1/observatory` with
 one optional `scope` parameter. Contract ID: `sayhi.project-intent.observatory/v1`.
