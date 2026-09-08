@@ -18,8 +18,12 @@ and command-specific help before relying on flags. Use the checkout's Project In
 README and linked operational docs for the installed version. Do not search private
 service configuration or old provisioning scripts for credentials.
 
-From the actual execution checkout, run `discover --query "task keywords"`, then
-`start --workstream ALIAS-OR-NATIVE-ID`. Add `--scope` when needed. Select candidates
+From the actual execution checkout, prefer `onboard --query "task keywords"` for the
+read-only first pass, then rerun `onboard --scope SCOPE --workstream
+ALIAS-OR-NATIVE-ID` for the selected candidate. It combines discovery with the
+same orientation that `start` provides and prints an explicit enrollment template;
+it never enrolls or assigns a worker automatically. `discover` and `start` remain
+available as lower-level commands. Add `--scope` when needed. Select candidates
 against the existing user task, ownership, scope, exclusions and acceptance criteria;
 a matching title or reference checkout does not grant ownership. Broaden an overly
 specific search before concluding enrollment is missing. Missing snapshot candidates

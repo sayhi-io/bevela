@@ -29,7 +29,7 @@ def markdown(snapshot):
 
 def main():
     p=argparse.ArgumentParser(description=__doc__)
-    p.add_argument('command',choices=['serve','export','discover','start','presence','enroll','report','report-status','publish-report','provider-list','reconcile','session-attach','session-continue'])
+    p.add_argument('command',choices=['serve','export','discover','onboard','start','presence','enroll','report','report-status','publish-report','provider-list','reconcile','session-attach','session-continue'])
     from .session_connector import add_arguments
     add_arguments(p)
     p.add_argument('--input',help='JSON report or confirmed reconciliation packet')
@@ -86,10 +86,32 @@ def main():
             if args.scope not in entries:p.error('Scope unavailable in local worker configuration')
             entries={args.scope:entries[args.scope]}
         states,source_errors=local_states(entries,read_json)
-    if args.command=='discover':
+    if args.command in ('discover','onboard'):
         try:checkout=checkout_identity(args.checkout or Path.cwd())
         except (ValueError,OSError):checkout=None
         result=discovery(states,checkout,args.query);result['source_errors']=source_errors
+        if args.command=='onboard':
+            response={'discovery':result,
+                      'contract':'Discovery and orientation are read-only. Candidates are not assignments; enrollment remains an explicit worker action.'}
+            if not args.workstream:
+                response['next_step']='Select an exact scope and alias/native ID, then rerun onboard with --scope and --workstream.'
+                response['enrollment_required']='After inspecting the selected orientation, run enroll with explicit access, paths, seams and working summary.'
+                print(json.dumps(response,indent=2));return
+            try:
+                state,selected=resolve_assignment(states,args.workstream,args.scope)
+                selected_scope=state['id'];view=project([state],[selected_scope])
+                work=next(w for w in view['workstreams'] if w['id']==selected['id'])
+                response['orientation']={'scope':view['scopes'][0],'assignment':work,
+                    'checkout':checkout,
+                    'nearby_workers':nearby_workers([state],checkout,[],work['boundaries'],selected_scope),
+                    'attention':[a for a in view['attention'] if a.get('workstream') in (None,work['key'])],
+                    'convergence':[c for c in view['convergence'] if work['key'] in c['workstreams']],
+                    'coverage':'Offline orientation only: last-known durable snapshot plus locally registered leases. No PM mutation or provider credential required.'}
+                response['next_step']='Review the orientation against the actual task, then enroll explicitly.'
+                response['enrollment_template']='/home/meanaverage/sayhi/bin/project-intent enroll --scope '+selected_scope+' --workstream '+selected['id']+' --codex --access edit --touching-path relative/path --touching-seam current/seam --approaching next/seam --working "bounded task"'
+            except ValueError as exc:
+                p.error(str(exc))
+            print(json.dumps(response,indent=2));return
         print(json.dumps(result,indent=2));return
     if entries and not args.snapshot:
         try:

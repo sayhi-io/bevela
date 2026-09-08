@@ -1,7 +1,11 @@
 # Worker path
 
-Use `start` to read intent, applicable invariant revisions, precedents, environment
-requirements, readiness, handoffs and nearby work before substantial implementation.
+Use `onboard --query "task keywords"` from the actual checkout for the read-only
+first pass. After selecting an exact candidate, use `onboard --scope SCOPE
+--workstream ID` to read intent, applicable invariant revisions, precedents,
+environment requirements, readiness, handoffs and nearby work. It prints an
+explicit enrollment template but never enrolls automatically. `start` remains the
+lower-level orientation command.
 Keep an explicit reference to the revisions and source being evaluated. Missing
 conformance evidence is unknown; a later accepted revision requires reconciliation
 with older evidence, not retroactive failure of the older claim.

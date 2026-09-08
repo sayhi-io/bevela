@@ -48,12 +48,27 @@ assignment discovery, exact-checkout scope, revision-aware evidence, coordinatio
 and successor handoff. Workers select IDs from discovery themselves; humans need
 not copy IDs or relay routine continuation commands.
 
+For a consistent start, run the read-only onboarding flow from the actual task
+checkout. It discovers candidates and, when given an exact ID, prints the full
+orientation plus an explicit enrollment template; it never enrolls or assigns a
+worker automatically:
+
+```bash
+/home/meanaverage/sayhi/bin/project-intent onboard --query "task keywords"
+/home/meanaverage/sayhi/bin/project-intent onboard \
+  --scope sayhi/project-intent --workstream SELECTED-ALIAS-OR-NATIVE-ID
+```
+
+After reviewing the orientation, run the printed `enroll` command with the
+worker's actual access mode, paths, semantic seams and bounded task summary.
+`discover` and `start` remain available as lower-level commands.
+
 Supported interfaces share the normalized context; optional operator commands are
 local CLI operations, not browser mutation endpoints:
 
 | Need | Interface |
 | --- | --- |
-| Worker orientation and presence | `discover`, `start`, `enroll` |
+| Worker onboarding, orientation and presence | `onboard`, `discover`, `start`, `enroll` |
 | Immutable local report and publication status | `report`, `report-status` |
 | Authorized native publication and metadata reconciliation | `publish-report`, `provider-list`, `reconcile` |
 | Explicit existing-session attachment and bounded continuation | `session-attach`, `session-continue` |
