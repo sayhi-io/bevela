@@ -9,8 +9,9 @@
 > This sanitized documentation copy is not a replacement for a historical sealed
 > input. Original frozen source and evidence remain unchanged in their archives.
 
-This replaces Study03 as the proposed test of PI's practical value. The old
-release studies and evidence remain historical, not evidence for this design.
+This native microstudy replaced the scripted release studies. Those coached-control
+cases are now [withdrawn from the active suite](CLI_AB_EVALUATION.md#withdrawn-coached-controls);
+their frozen archives remain unchanged and are not evidence for this design.
 
 Question: does PI help ordinary concurrent Codex agents accommodate one another's
 code/data changes on shared or related architectural surfaces?

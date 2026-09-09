@@ -55,7 +55,9 @@ class ResultsPublicationTests(unittest.TestCase):
         self.assertFalse(any(r['model'] == 'gpt-5.6-sol' and r['effort'] == 'low' and r['pi_enabled'] for r in rows))
 
     def test_readme_and_public_result_links_resolve(self):
-        paths = [ROOT / 'README.md', ROOT / 'RESULTS.md', *sorted((ROOT / 'docs/results').glob('*.md'))]
+        paths = [ROOT / 'README.md', ROOT / 'RESULTS.md',
+                 ROOT / 'docs/CLI_AB_EVALUATION.md', ROOT / 'docs/README_ACCURACY_AUDIT.md',
+                 *sorted((ROOT / 'docs/results').glob('*.md'))]
         for path in paths:
             self.assertTrue(path.is_file(), path)
             for target in re.findall(r'\]\(([^)]+)\)', path.read_text()):
@@ -63,6 +65,31 @@ class ResultsPublicationTests(unittest.TestCase):
                     continue
                 target = target.split('#')[0]
                 self.assertTrue((path.parent / target).exists(), f'{path.name}: {target}')
+
+    def test_withdrawn_controls_are_not_active_cases(self):
+        for name in ('experiments/shared_contract_study.py',
+                     'experiments/luna_release_study.py',
+                     'experiments/luna_release_study_v2.py',
+                     'docs/CLI_AB_PILOT_01.md', 'docs/CLI_AB_SHARED_CONTRACT.md',
+                     'docs/CLI_AB_LUNA_RELEASE_03.md', 'docs/CLI_AB_STUDY03.md'):
+            self.assertFalse((ROOT / name).exists(), name)
+        catalog = (ROOT / 'RESULTS.md').read_text()
+        self.assertIn('withdrawn-coached-controls', catalog)
+        for line in catalog.splitlines():
+            if line.startswith('|'):
+                self.assertNotRegex(line, r'Status Pilot01|Status Study02|Release Study03')
+        # Removing invalid controls must not remove unfavorable native outcomes.
+        for name in ('seam_microstudy.py', 'seven_seams.py', 'torture_refunds.py',
+                     'concurrency_study.py', 'seven_seams_self_organizing.py'):
+            self.assertTrue((ROOT / 'experiments' / name).is_file(), name)
+
+    def test_readme_breakthrough_bars_match_recorded_scores(self):
+        readme = (ROOT / 'README.md').read_text()
+        bars = re.findall(r'Run \d\s+\[([#.]{7})\]\s+(\d)/7', readme)
+        self.assertEqual([0, 2, 3, 4, 3, 7, 7], [int(score) for _, score in bars])
+        for bar, score in bars:
+            self.assertEqual(int(score), bar.count('#'))
+        self.assertFalse(any(line.startswith('|') for line in readme.splitlines()))
 
 
 if __name__ == '__main__':

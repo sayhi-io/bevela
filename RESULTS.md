@@ -7,6 +7,8 @@
 We evaluate the **combined project**, not how busy a worker looks. Correctness,
 project elapsed time, aggregate worker effort and useful parallel contributions
 are separate outcomes. Failures, ties and interrupted attempts stay in the record.
+[Coached controls are withdrawn](docs/CLI_AB_EVALUATION.md#withdrawn-coached-controls),
+not counted as evidence for or against PI.
 
 ## Study history · newest first
 
@@ -36,16 +38,13 @@ defined [below](#pi-behavior-versions), not deployed release numbers.
 | Sep 8 | [Unchanged microstudy · ten more pairs, 4–13](docs/results/early-studies.md) | Luna Medium | **8/10** preserve both tasks | **7/10** preserve both tasks | v0.01 |
 | Sep 8 | [Unchanged microstudy · repeats 1–3](docs/results/early-studies.md) | Luna Medium | **2/3** preserve both tasks | **2/3** preserve both tasks | v0.01 |
 | Sep 8 | [Microstudy · label pilot and preceding pilots](docs/results/early-studies.md) | Luna Medium | Label pilot correct; different-task/launch attempts separate | Label pilot incorrect; other attempts separate | v0.01 |
-| Sep 8, from 20:46 | [Release Study03 v2 · two pairs](docs/results/early-studies.md) | Luna Medium | **1/2 accepted** after the historical gates/review | **0/2 accepted** | v0.01 |
-| Sep 8, 19:50 | [Release Study03 v1 · invalidated](docs/results/early-studies.md) | Luna Medium | Only A-control launched; evaluator navigation race invalidated scoring | Not launched | v0.01 frozen |
-| Sep 6, from 05:28 | [Status Study02 · shared contract](docs/results/early-studies.md) | Astra Medium | **2/2 accepted** | **2/2 accepted** | Prebaseline snapshot |
-| Sep 6, first pilot | [Status Pilot01 · freshness/filtering](docs/results/early-studies.md) | Astra Medium | **11/11** common checks | **11/11** common checks | Prebaseline `617f595` |
 
 Scores listed together in this overview follow **trial-number order**; linked
 per-run ledgers provide execution chronology. The original seven seams and refund
 torture are different fixtures. Their seven-point scores must not be pooled.
-Early coached/handoff-heavy studies remain historical evidence, not a clean test
-of otherwise-unmodified native worker coordination.
+The earlier Status/release cases have been removed from this catalog and the
+active experiment suite because their harness supplied coordination to the control.
+Their original history remains recoverable; native failures and ties remain above.
 
 ## The low-effort A/B/C breakthrough
 
@@ -122,7 +121,6 @@ commit or activation. Fixture/recorder suffixes such as `v1`–`v4` are a separa
 | **v0.03** | Frozen `seam-repair-b-v3` candidate | First local repair-claim candidate. Stopped trials exposed stale deferral and incomplete agreement behavior; not silently relabeled as v0.04. |
 | **v0.02** | [`b896b73`](https://github.com/meanaverage/sayhi-project-intent/commit/b896b7360ceff0c7c153cb07995ad13e551cedf0), subsequently merged through `ace04ef` | Ranked partial discovery, scoped inventory recovery and clearer enrollment/instruction flow. |
 | **v0.01** | `86ffbc5504dca87e5ed1ea1b2eabb8ac3383e5cb` baseline | Scoped onboarding/presence and task registration before the recovery and repair changes. |
-| **Prebaseline** | Pilot01 `617f595`; Study02's separately frozen snapshot | Earlier Status evaluation era; not retrospectively assigned one identical backend version. |
 
 Full backend and workflow fingerprints are in [measurements.json](docs/results/measurements.json).
 Backend fingerprints cover sorted Python module SHA-256 values; skill/workflow
@@ -133,8 +131,7 @@ increment PI behavior. The code did not change mid-study to improve a result.
 
 - **Accepted:** original seven seams require both producer and consumer checks in
   all seven groups. Refund torture uses its distinct seven-group checker. Early
-  Status/release studies used their recorded gates and source-review decisions;
-  “accepted” there is not a seven-seam score.
+  microstudies require both tasks to survive; unscored repair trials remain unscored.
 - **Wall time:** recent project time runs from first native launch through final
   post-exit verification. Earlier seven-seam/refund tables report the worker window
   only, excluding later scoring. We do not sum workers to obtain project time.
@@ -165,7 +162,7 @@ increment PI behavior. The code did not change mid-study to improve a result.
 | [Concurrency versus context](docs/results/concurrency.md) | [Protocol](docs/CLI_CONCURRENCY_STUDY.md) · [recorder](experiments/concurrency_study.py) |
 | [Refund torture](docs/results/refunds.md) | [Protocol](docs/CLI_TORTURE_REFUNDS.md) · [fixture](experiments/torture_refunds/fixture) · [checker](experiments/torture_refunds_check.py) |
 | [Original seven-seam history](docs/results/seven-seams.md) | [Protocol](docs/CLI_SEVEN_SEAMS.md) · [fixture](experiments/seven_seams/fixture) · [checker](experiments/seven_seams_check.py) |
-| [Early pilots, microstudy and repair attempts](docs/results/early-studies.md) | [Microstudy](docs/CLI_AB_SEAM_MICRO.md) · [release v1](docs/CLI_AB_LUNA_RELEASE_03.md) · [release v2](docs/CLI_AB_LUNA_RELEASE_03_V2.md) |
+| [Native microstudy and repair attempts](docs/results/early-studies.md) | [Microstudy](docs/CLI_AB_SEAM_MICRO.md) · [withdrawal policy](docs/CLI_AB_EVALUATION.md#withdrawn-coached-controls) |
 
 This is an exploratory evidence record. The aim is to learn where shared project
 state makes concurrent development useful, not to select only results that favor PI.
