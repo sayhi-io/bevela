@@ -49,7 +49,9 @@ class OnboardingRecoveryTests(unittest.TestCase):
         subprocess.run(['git', 'init', '-q', str(self.checkout)], check=True)
 
     def run_cli(self, *args):
-        result = subprocess.run([sys.executable, '-m', 'project_intent.cli', *args],
+        # CI runs from source without an editable install. Exercise the exact
+        # release launcher from the unrelated task checkout in both environments.
+        result = subprocess.run([sys.executable, '-I', str(ROOT / 'project_intent/_worker_cli.py'), *args],
                                 cwd=self.checkout, capture_output=True, text=True)
         self.assertEqual(result.returncode, 0, result.stderr)
         return json.loads(result.stdout)
