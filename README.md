@@ -1,232 +1,211 @@
-# SayHi Project Intent · Mission Control
+# Project Intent
 
-Project Intent is SayHi's independent development-intent and architectural-coherence
-service. SparkOps, Verify and Projects participate within explicit scopes; no product
-owns its runtime. Mission Control is the read-only human observatory over that state.
+### Shared project state for concurrent AI software workers.
 
-This is a bounded provisional service, running alongside the unchanged SparkOps
-CLI prototype. It does not migrate that working implementation or its users
-silently. The source is committed on `main`; local dogfood and production
-qualification remain separate concerns.
+Project Intent helps independent coding workers understand **what other workers are changing, where their work intersects, what must remain true, and how to reconcile a shared boundary before declaring success**.
 
-## Current status
+It began as a way to expose project intent to AI workers. In practice, the harder problem turned out to be concurrency: capable workers can each complete a locally reasonable task while producing an incompatible combined system. Project Intent is evolving into a coordination substrate for that problem.
 
-The canonical repository is `repos/sayhi-project-intent`. The current `main`
-branch contains the Mission Control service, scoped worker/session observations,
-Workstream Map, workspace inventory, and bounded CLI evaluation harnesses. The
-local dogfood instance is a separately managed user service:
+> **The goal is not to make agents talk more. The goal is to let concurrent workers converge on a coherent project.**
 
-```bash
-systemctl --user status project-intent-dogfood.service
+[Architecture](docs/ARCHITECTURE.md) · [Worker protocol](skills/project-intent/SKILL.md) · [Experiments](docs/CLI_AB_EVALUATION.md) · [Operations](docs/OPERATIONS.md)
+
+---
+
+## Why this exists
+
+Modern coding agents are increasingly capable in isolation. A repository with several of them working at once introduces a different class of failure.
+
+One worker changes a representation. Another consumes the old representation. Both implementations can look reasonable locally. Both can pass focused tests. The project still breaks at the seam.
+
+Giving the workers more reasoning time does not necessarily repair the missing shared state. They need a durable way to discover neighboring work and answer questions such as:
+
+- What is another worker changing right now?
+- Which contracts or architectural seams do our tasks share?
+- Which assumptions may have become stale while I was working?
+- Has somebody already accepted responsibility for a specific cross-seam repair?
+- What evidence says the combined behavior works?
+- What should a successor know after the original worker disappears?
+
+Project Intent makes those facts explicit without turning development into a mandatory agent graph or central planner.
+
+## What Project Intent provides
+
+Project Intent maintains a bounded, scoped model of project work and exposes it to workers and humans through a local CLI and the read-only **Mission Control** observatory.
+
+| Primitive | Purpose |
+| --- | --- |
+| **Intent** | The task, constraints, acceptance criteria and relevant architecture. |
+| **Presence** | Which workers are active, where they are working and what they report doing. |
+| **Seams** | Declared architectural boundaries where independently owned work may interact. |
+| **Integration context** | Relevant peer requirements and last-known work summaries, including after handoff. |
+| **Repair coordination** | One acknowledged repairer for a specific break and path set, without claiming ownership of the whole seam. |
+| **Evidence** | Revision-aware reports and source-bound validation rather than an unqualified “done.” |
+| **Mission Control** | A human-readable projection of workstreams, workers, architecture, attention and convergence state. |
+
+Project Intent does **not** grant code authority, infer hidden edits, replace Git, schedule workers, or make a task correct because it appears in Mission Control. Its coordination model is deliberately cooperative and explicit.
+
+## Experimental results
+
+The repository includes matched worker studies because the central question is empirical: **does structured shared project state actually help concurrent workers produce a correct combined result?**
+
+The first paired pilot was intentionally inconclusive. Ordinary and PI-aware Astra/Medium teams both completed the requested Status features and passed the same 11/11 independent acceptance checks. The PI-aware arm was not faster and used more reported input tokens. That result prevented us from claiming a benefit simply because the system looked useful. See [Pilot 01](docs/CLI_AB_PILOT_01.md).
+
+A newer **seven-seam** fixture increases the concurrency pressure. Two native workers share a disposable checkout. One migrates seven data representations while the other builds seven consumers of those changing contracts:
+
+| Seam | Concurrent pressure |
+| --- | --- |
+| Prices | integer cents ↔ dollar totals and labels |
+| Stock | on-hand/reserved records ↔ sellable counts |
+| Weights | integer grams ↔ kilogram totals and labels |
+| Discounts | basis points ↔ percentages and discounted prices |
+| Delivery | stored hours ↔ displayed days |
+| Contacts | structured contacts ↔ email/name presentation |
+| Orders | explicit states ↔ paid/pending/refunded labels |
+
+The checker scores whether **both sides of each seam survive together**, from 0/7 to 7/7. Workers receive their complete tasks up front; there is no hidden model adjudicator, prescribed task order, injected failure notification, or automatic repair owner. See [Seven-seam study](docs/CLI_SEVEN_SEAMS.md).
+
+### Latest seven-seam observations
+
+> **RESULT PLACEHOLDER — replace with the committed trial summary before release.**
+>
+> Recent local trials have produced the most interesting signal so far: configurations that plateau without Project Intent have reached **7/7 with Project Intent**, including low-reasoning runs. Add the exact model × effort × PI/no-PI repetitions, run counts, hashes and timing here once their evidence bundle is committed. Do not promote the observation into a generalized productivity or model-superiority claim.
+
+Suggested final chart once the result packet is committed:
+
+```text
+Seven seams preserved together
+
+Luna · Low · ordinary      ████░░░  4/7   ← replace with measured aggregate
+Luna · Low · Project Intent ███████  7/7   ← replace with measured aggregate
+Sol  · Low · ordinary      ████░░░  4/7   ← replace with measured aggregate
+Sol  · Low · Project Intent ███████  7/7   ← replace with measured aggregate
+
+Illustrative layout only — values above are placeholders until linked evidence is committed.
 ```
 
-It serves the read-only observatory on `http://127.0.0.1:8290` from a pinned
-release under the workspace runtime state. Source changes do not become live
-until a separately authorized release activation updates that pinned runtime.
-This is still loopback development dogfood: it is not public hosting, a HA
-service, or production availability evidence.
+The hypothesis worth testing is stronger than “more context helps”: **some apparent reasoning failures may actually be failures of project-state representation and worker concurrency.** We are treating that as a hypothesis, not a conclusion, until repetitions across fixtures and model strata support it.
 
-## Mission Control views
+## Mission Control
 
-The authenticated observatory exposes the conventional read-only views plus the
-newer presentation experiments:
+Mission Control is the read-only human observatory over Project Intent state. It exposes workstreams, architecture, reports, worker/session detail, attention state and an experimental Workstream Map for seeing declared boundaries and convergence pressure.
 
-- `/observatory` — workstreams, architecture, reports, attention, and worker/session detail.
-- `/observatory#map` or `/workstream-map` — scoped declared-boundary and convergence map.
-- `/observatory?design=plan`, `studio`, or `console` — presentation-only variants.
+<!-- Screenshot placeholder. Recommended capture: Mission Control Workstream Map with 3–5 simultaneous workers, visible seams, one overlap/repair state, and enough surrounding UI to establish that this is an operational product rather than a diagram. -->
 
-Worker groups and workspace inventory are projections of explicitly authorized
-read-model data. They do not infer agent identity, detect edits, allocate work,
-grant permissions, or add provider authority. See [Workstream Map](docs/WORKSTREAM_MAP_EXPERIMENT.md),
-[worker groups](docs/WORKER_GROUPS.md), and [design lab](docs/DESIGN_LAB.md) for
-the detailed contracts and experimental limits.
+> **Screenshot coming soon.**  
+> Recommended asset path: `docs/assets/mission-control-workstream-map.png`
 
-## Worker and orchestrator workflow
+Mission Control deliberately does not mutate provider state or grant execution authority. The browser is an observatory; worker and operator mutations remain explicit local operations.
 
-Use the repo-backed [Project Intent skill](skills/project-intent/SKILL.md) for
-assignment discovery, exact-checkout scope, revision-aware evidence, coordination
-and successor handoff. Workers select IDs from discovery themselves; humans need
-not copy IDs or relay routine continuation commands.
+## How it works
 
-Supported interfaces share the normalized context; optional operator commands are
-local CLI operations, not browser mutation endpoints:
+A worker begins with the task it was actually assigned. Project Intent discovers the corresponding scoped workstream and returns its requirements, constraints, acceptance criteria, architecture and relevant neighboring work. The worker then enrolls its actual checkout, access mode, paths and semantic seams.
 
-| Need | Interface |
-| --- | --- |
-| Worker orientation and presence | `discover`, `start`, `enroll` |
-| Immutable local report and publication status | `report`, `report-status` |
-| Authorized native publication and metadata reconciliation | `publish-report`, `provider-list`, `reconcile` |
-| Explicit existing-session attachment and bounded continuation | `session-attach`, `session-continue` |
-| Last-known repository context | `export`, offline `start` |
+As work proceeds, other workers can see that declared state through scoped integration context. When two changes create a concrete shared break, workers can establish a path-bounded repair plan: one worker volunteers, affected peers acknowledge the plan, the repairer performs the agreed edit, and closure records validation evidence bound to the relevant source. Independent work on the same architectural seam remains independent.
 
-Read [reporting and reconciliation](docs/REPORTING.md) and the
-[optional session connector](docs/SESSION_CONNECTOR.md) before their use. Native
-publication does not certify evidence or automatically change provider readiness.
-The local connector records delivery; it does not infer execution from a queue
-receipt. The [mature SparkOps execution-consumer bridge](docs/SPARKOPS_CONSUMER_BRIDGE.md)
-is deferred task 6. [Integration validation](docs/INTEGRATION_GATE.md) records
-the post-merge review and the remaining independent-review, CI, release, and
-production gates.
+At handoff, last-known summaries survive the worker session so a successor can reconstruct the project situation without inheriting the original conversation. Mission Control projects the same normalized state for humans.
 
-The skill's canonical source is this repository's `skills/project-intent/` directory.
-For this workspace it is made discoverable at
-`/home/meanaverage/.codex/skills/project-intent` by a symlink to that directory; it is
-not bundled into the Python runtime distribution. Check an existing target before
-installation and preserve a different installed skill. A new session can discover
-the installation; already-running workers should explicitly read the linked SKILL.md
-when asked to use it. The symlink follows this worktree's current bytes, so report
-the skill hash/source seal when claiming a reviewed version.
+```text
+          task + constraints + architecture
+                       │
+                       ▼
+                 Project Intent
+                ╱      │       ╲
+               ╱       │        ╲
+          Worker A   Worker B   Worker C
+             │          │          │
+             └────── seams ─────────┘
+                       │
+                integration context
+                       │
+                 repair / validate
+                       │
+                       ▼
+                coherent project
+```
 
-## Run and orient
+## Quick start
 
-Python 3.11+; no runtime dependencies outside the standard library:
+Project Intent requires Python 3.11+ and currently has no runtime dependencies outside the standard library.
 
 ```bash
 python3 -m venv .venv
 .venv/bin/python -m pip install -e .
 .venv/bin/python -m unittest discover -s tests -v
-.venv/bin/project-intent start --snapshot .project-intent/snapshot.json --workstream PI-MISSION-01
-.venv/bin/project-intent serve --config /private/project-intent/config.json --port 8290
 ```
 
-The `serve` command is useful for an explicitly configured development process.
-For the managed local dogfood instance, inspect the user service above rather
-than starting a second process on port 8290.
-
-Open `http://127.0.0.1:8290`. Every page/API request requires independent Basic
-credentials: a principal name and a randomly generated high-entropy token. This
-loopback service is not a public internet server. Do not reuse a product password,
-put credentials in a URL, or bind a public proxy without a separately reviewed TLS
-and identity boundary. Use a private SSH tunnel if accessing another machine.
-
-The service reads `GET /api/v1/observatory?scope=sayhi%2Fsparkops`. Omit `scope`
-for all scopes granted to the authenticated principal, not all SayHi data. The UI
-uses only this normalized API. Refresh view re-reads the projection; background
-provider polling is independent and read-only. No provider credentials reach the UI.
-
-Real local dogfood configuration and cache are under
-`/home/meanaverage/sayhi/state/project-intent/`, outside Git. The private
-`operator-access.json` contains the operator login; `sparkops-reader-access.json`
-demonstrates a product-only principal. The configured scopes are Project Intent and
-SparkOps. Verify and Projects are supported as scopes but not fictitiously enrolled.
-
-Use explicit scoped export for repository fallback:
+Orient a worker from its **actual task checkout**:
 
 ```bash
-.venv/bin/project-intent export --config /private/project-intent/config.json \
-  --scope sayhi/project-intent --output .project-intent
+project-intent onboard --query "task keywords"
+project-intent onboard --scope YOUR_SCOPE --workstream SELECTED_WORKSTREAM
 ```
 
-`snapshot.json` and `PROJECT.md` are replaceable, last-known projections. Offline
-`start` never contacts the provider, reads another repository, or authorizes a PM
-mutation. Export is an operator/local-process operation; keep its config private.
+Review the returned assignment and enrollment template, then enroll the worker with its real checkout boundary and work summary. `discover`, `start`, and `enroll` are available as lower-level operations.
 
-Live cooperative presence has a separate one-hour lease:
+For local development of Mission Control:
 
 ```bash
-.venv/bin/project-intent presence --snapshot .project-intent/snapshot.json \
-  --workstream PI-MISSION-01 --directory /private/project-intent/presence/platform \
-  --session UNIQUE_SESSION --working "bounded task" --approaching intent/projection
+project-intent serve --config /private/project-intent/config.json --port 8290
 ```
 
-Renew at meaningful transitions; add `--inactive` at handoff. Directory access is
-local cooperative authority, not authenticated fleet identity or a lock. The server
-only reads explicitly configured feeds, never shells out to Git or SparkOps.
+Then open `http://127.0.0.1:8290`. The development service requires independently configured credentials and should remain loopback-only unless a separately reviewed network/TLS/identity boundary is provided.
 
-See [architecture](docs/ARCHITECTURE.md), [read model](docs/READ_MODEL.md), and
-[operations](docs/OPERATIONS.md) for authority, recovery and production limits.
+For the complete worker workflow, use the [Project Intent skill](skills/project-intent/SKILL.md). For deployment and authority boundaries, read [Operations](docs/OPERATIONS.md) first.
 
-The repository also contains bounded, non-runtime evaluation material under
-`experiments/` and `docs/CLI_AB_*.md`. These studies test worker isolation,
-handoffs, and whether structured Project Intent context helps execution; they do
-not turn Project Intent into a mandatory execution graph or prove productivity
-benefits.
+## Design principles
 
-## Enroll a real worker
+**Workers remain workers.** Project Intent does not replace native coding-agent behavior with a proprietary execution loop.
 
-Workers should navigate onboarding themselves; the operator need not supply IDs.
-From their actual task checkout:
+**Coordination is not authority.** Presence, a Workstream ID, a repair claim or a UI state never grants permission to edit or deploy.
 
-```bash
-/home/meanaverage/sayhi/bin/project-intent discover --query "task keywords"
-/home/meanaverage/sayhi/bin/project-intent start --workstream SELECTED-ALIAS-OR-NATIVE-ID
-/home/meanaverage/sayhi/bin/project-intent enroll --workstream SELECTED-ALIAS-OR-NATIVE-ID \
-  --codex --access edit --touching-path relative/file.py \
-  --touching-seam your/current-boundary --approaching your/next-boundary \
-  --avoid-path unrelated/directory --working "actual bounded task"
-```
+**The project is larger than the conversation.** Important task, architecture, peer and handoff state should survive individual model sessions.
 
-These commands are for the worker to choose and execute, not instructions for the
-human to fill in. Discovery returns task descriptions, aliases, provider-native
-identifiers, native delegate/assignee names, reference checkouts and registered
-workers. Exact current-checkout reference matches sort first, but are never automatic
-assignments. Both `PI-MISSION-01` and its native `SAYINT-5` resolve to the same intent;
-cross-scope ambiguity fails and requires explicit `--scope`. Read the assignment's
-constraints, environment and acceptance from `start` before enrolling. If no existing
-record fits, report that durable enrollment is missing; do not silently invent an
-assignment, borrow an unrelated workstream, or interpret a similar title as authority.
+**Seams matter more than file collisions.** Concurrent workers can conflict semantically without touching the same file. Project Intent records architectural boundaries as first-class coordination state.
 
-Enrollment observes **only the worker's own checkout**, defaulting to the current
-directory (`--checkout` overrides). It records host, exact Git worktree root, shared
-Git directory, branch, HEAD and observation timestamp. No remote URL, status/diff,
-or other worktree is scanned. Detached/unborn HEAD remains explicit. A workstream's
-`source_checkout` is merely a reference; it may be another owner's inspection source.
-It is never substituted for the executing worker's checkout.
+**Evidence beats ceremony.** Enrollment counts, messages and claims are not success. The relevant combined behavior still has to work.
 
-Edit intent requires explicit relative paths (files/directories, no globs or `..`);
-`.` means an explicitly whole-checkout task. `--access inspect` declares inspection
-instead. Unspecified legacy scope is displayed as unknown, not narrow or safe.
-`--touching-seam` and `--approaching` describe architectural boundaries, not just
-paths. `--avoid-path` and `--avoid` preserve exclusions. Renew enrollment when these
-change. A still-active session cannot silently switch checkouts: release first.
-Branch/HEAD changes inside the same checkout are refreshed at enrollment transitions.
+**Missing information stays missing.** Project Intent avoids silently converting absent observations into reassuring assumptions.
 
-`start` and `enroll` show nearby fresh local registrations: same-repository worktrees,
-declared path overlap and same-scope semantic overlap. Different checkouts in the same
-repository can converge; identical path spellings in unrelated repos do not. These
-are advisory declarations, not detected edits, conflict proofs or edit permissions.
-The CLI reads cached durable state and local leases without provider credentials;
-missing/stale snapshots are explicit. Existing unannotated provider issues remain
-outside this enrolled subset until a separate provider-enrollment step supplies scope.
+**Keep the baseline strong.** Evaluation controls retain normal source inspection, Git, repository documentation and ordinary communication. PI should earn its complexity rather than win against an artificially weakened worker.
 
-From this workspace, a Codex worker can orient and opt into observation:
+## Origin
 
-```bash
-/home/meanaverage/sayhi/bin/project-intent start \
-  --scope sayhi/sparkops --workstream ENV-SUBSTRATE-01
-/home/meanaverage/sayhi/bin/project-intent enroll \
-  --scope sayhi/sparkops --workstream ENV-SUBSTRATE-01 --codex \
-  --working "Your actual current bounded task" --approaching "your/actual-seam"
-```
+Project Intent started inside SayHi while several increasingly autonomous coding workers were operating across projects such as SparkOps, Verify and the broader SayHi platform.
 
-Choose your actual assigned Workstream; this example does not assign the Environment
-owner's work to a new worker. `--codex` uses your `CODEX_THREAD_ID`, matches only that
-session's filename, and verifies its header. It does not search other conversations
-or infer ownership. Alternatively provide `--session ID --telemetry-file /path/to/own-rollout.jsonl`.
-For another runner, use `--session ID` without a telemetry file: presence works,
-but inference remains unconnected. Only the inspected Codex numeric adapter ships now.
+The original problem looked like **intent preservation**: give a worker enough durable project context that it could understand its assignment, architectural constraints and neighboring work without a human repeatedly reconstructing that context in chat.
 
-The workspace launcher selects a credential-free `worker-scopes.json` map outside
-Git. Standalone installations use `--worker-config /path/to/map --scope SCOPE`, or
-explicit `--snapshot FILE --directory DIRECTORY`. No provider/admin credential is
-needed. Observer and worker must share the local registration directory; an
-arbitrary directory is not automatically added to the observer.
+Dogfooding exposed a more consequential problem. The workers were often individually capable; the fragile part was the **space between them**. Parallel changes could be locally correct and globally incompatible. Conversation history was ephemeral. Git showed what had changed, but not necessarily what another worker was about to change or which architectural contract it believed it was preserving.
 
-Repeat **enroll** at meaningful transitions and before its one-hour lease expires.
-It renews presence without resetting the telemetry attribution boundary while the
-lease is continuous; omitted working/approaching/avoid fields retain prior values.
-After expiry or release, re-enrollment starts a new attribution boundary so work
-done during a gap is not silently attributed. First rate needs two new usage reports.
-Do not use the older `presence` command to overwrite enrollment files.
+That shifted the project from a passive intent record toward a bounded concurrency and convergence substrate: presence, semantic seams, integration context, successor handoffs, repair agreement and source-bound evidence. “Project Intent” remains the name because intent is still the foundation—but the system increasingly exists to help many workers preserve that intent **together**.
 
-At handoff, release your registration:
+## Current maturity
 
-```bash
-/home/meanaverage/sayhi/bin/project-intent enroll \
-  --scope sayhi/sparkops --workstream ENV-SUBSTRATE-01 --codex --inactive
-```
+Project Intent is active SayHi dogfood and experimental infrastructure, **not a generally available production service**. The repository contains a real local service, CLI, normalized read model, Mission Control UI, worker/session observation, repair coordination and evaluation harnesses. Public/multi-host deployment, hostile-tenant isolation, distributed fencing, generalized scheduling and production HA are outside the current claim.
 
-No process is launched or session controlled. Release/expiry stops telemetry reads;
-crashed workers need no manual cleanup for correctness. Registration does not create
-PM work, grant authority, prove liveness, or override scope. Offline snapshots remain
-last-known intent, and telemetry/presence stay separate operational observations.
+The local browser surface is read-only. Provider credentials stay outside the UI. Source changes do not automatically become a managed runtime release. See [Architecture](docs/ARCHITECTURE.md), [Read model](docs/READ_MODEL.md), [Operations](docs/OPERATIONS.md), and [Integration gate](docs/INTEGRATION_GATE.md) for the precise boundaries.
+
+## Documentation
+
+| Document | Go here for |
+| --- | --- |
+| [Architecture](docs/ARCHITECTURE.md) | authority boundaries, components and data flow |
+| [Read model](docs/READ_MODEL.md) | normalized project/workstream projection |
+| [Operations](docs/OPERATIONS.md) | local service, configuration, recovery and deployment limits |
+| [Worker skill](skills/project-intent/SKILL.md) | canonical worker-facing workflow |
+| [Task registration](docs/TASK_REGISTRATION.md) | recording an already assigned task when inventory is missing |
+| [Repair coordination](docs/REPAIR_COORDINATION.md) | bounded peer agreement for a concrete cross-seam repair |
+| [Reporting](docs/REPORTING.md) | evidence, publication and reconciliation |
+| [Session connector](docs/SESSION_CONNECTOR.md) | bounded continuation of an existing session |
+| [Workstream Map](docs/WORKSTREAM_MAP_EXPERIMENT.md) | Mission Control convergence visualization |
+| [Evaluation](docs/CLI_AB_EVALUATION.md) | experimental principles and methodology |
+| [Pilot 01](docs/CLI_AB_PILOT_01.md) | first matched A/B result and its negative finding |
+| [Study 02](docs/CLI_AB_SHARED_CONTRACT.md) | harder cross-layer shared-contract study |
+| [Study 03](docs/CLI_AB_STUDY03.md) | continuity/succession study design |
+| [Seven seams](docs/CLI_SEVEN_SEAMS.md) | concurrent seven-contract fixture and recorder |
+
+## Status
+
+Development is intentionally evidence-driven. The immediate work is to commit and summarize the new seven-seam repetitions, replace the result/chart placeholder above with source-linked measurements, capture the first Mission Control screenshot, and continue testing whether the observed concurrency benefit survives across tasks and model/reasoning strata.
+
+Project Intent should become more complicated only where the experiments show that the complication helps workers converge.
