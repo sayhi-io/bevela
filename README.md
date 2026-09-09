@@ -1,18 +1,33 @@
 # Project Intent
 
-**Independent workers. One coherent product.**
+## $1,250.00? For a cup of tea?
 
-Shared project state for coding agents working across repositories, worktrees and architectural boundaries.
-See what neighboring workers report changing, understand the contracts you share, and reconcile the combined result.
+One coding agent changed prices from dollars to integer cents. Another kept building receipts as if nothing had changed.
+
+Both pieces of code looked reasonable. The checkout total was even correct.
+
+The receipt?
+
+```text
+tea:   $1250.00
+cake:   $725.00
+```
+
+Welcome to concurrent software development with AI agents.
+
+**Project Intent gives coding workers shared project state so independently reasonable changes can still become one coherent product.**
+
+Workers can see neighboring intent, declared architectural seams, active work and integration context—across repositories, worktrees and component boundaries—before `$12.50` becomes `$1,250.00`.
 
 [Results](RESULTS.md) · [How it works](#how-it-works) · [Get started](#get-started) · [Architecture](docs/ARCHITECTURE.md)
 
 ---
 
-## A weaker model with PI beat a stronger model without it.
+## We tried giving the problem a smarter model.
 
-On the original seven-seam migration, **Luna Low with Project Intent preserved every seam in both runs.**
-Neither Luna Low nor the stronger Sol Low configuration completed the whole project without PI.
+It still lost.
+
+On the original seven-seam migration, **Luna Low with Project Intent preserved every seam in both runs.** Neither Luna Low nor the stronger Sol Low configuration completed the whole project without PI.
 
 ```text
 SEVEN SEAMS / LOW-EFFORT A/B/C
@@ -34,9 +49,11 @@ C   LUNA LOW / WITH PI
 # preserved seam   . failed seam
 ```
 
-**Two complete projects with PI. None across the five ordinary runs.**
+**Two complete projects with PI. None across five ordinary runs.**
 
-Each project used two concurrent workers. Every point requires the producer **and** consumer contract to survive together—not just a worker's own tests. Low reasoning effort throughout; PI behavior v0.05; small exploratory batches, with every run shown.
+Small exploratory batches, every run shown, low reasoning effort throughout. This does not prove PI makes weaker models smarter. It suggests something more interesting:
+
+> **Sometimes the model is not the problem. The project state is.**
 
 [Explore the A/B/C discovery →](docs/results/seven-seams.md#low-effort-abc-comparison)
 
@@ -44,53 +61,69 @@ Each project used two concurrent workers. Every point requires the producer **an
 
 ## The problem lives between the changes
 
-One worker migrates prices from dollars to cents. Another builds a receipt against the old representation.
-Both can pass focused tests. Together, they can print **$1,250.00 instead of $12.50**.
+The tea bug is deliberately tiny because the failure mode is not.
 
-Project Intent began inside SayHi: one product assembled from many independently developed repositories.
-APIs, schemas, security boundaries and runtime assumptions cross those repository lines. A human should not have to relay every relevant change between workers.
+A worker changes a schema. Another keeps using the old one. One migrates a security boundary. Another still assumes the previous authorization model. A producer and consumer can each pass their own tests while the combined product is wrong.
 
-Git tells you what changed. PI adds recorded task intent, architectural relationships and declared neighboring work—including work that has not landed yet.
+Project Intent began inside SayHi: one product assembled from many independently developed repositories, with AI workers changing APIs, schemas, runtime assumptions and security boundaries at the same time.
+
+Git records what changed. **Project Intent records what workers say they are changing next, what boundaries they share, and what still has to work together.**
+
+That is the gap PI is trying to close.
 
 ## How it works
 
 **Keep the workers' normal tools. Give them shared project context.**
 
 1. **Find the actual task.** Inspect its scoped requirements, constraints, acceptance criteria and related architecture.
-2. **Declare the work.** Enroll your own session with its checkout, paths, seams and intended changes.
+2. **Declare the work.** Enroll the session with its checkout, paths, seams and intended changes.
 3. **Reconcile the boundary.** Refresh peer context and inspect the affected code. For competing repairs, agree on one repairer and a bounded set of paths.
 4. **Verify the combined result.** Check both sides of the contract, retain useful evidence and hand off unresolved impacts.
 
 Workers get **related task requirements**, **last-known peer summaries** and **explicit repair agreement**.
-A shared seam is context—not a lock or permission to take over someone else's work.
+A shared seam is context—not a lock, a scheduler or permission to take over someone else's work.
 
 [Worker workflow](skills/project-intent/SKILL.md) · [Repair agreement](docs/REPAIR_COORDINATION.md) · [Reporting & handoff](docs/REPORTING.md)
 
 ## A correctness win is not yet a concurrency win
 
-The A/B/C result established an observed capability advantage. The next question was **why**:
-better peer context, useful parallel coordination, or both?
+The A/B/C result was exciting. Then we tried to figure out what it actually meant.
 
-The later Luna Medium studies gave ordinary workers the same task information and added single-worker baselines.
+Was PI helping because workers had better peer context? Was it enabling useful parallel work? Was it merely rescuing a weaker model? Or were we testing the wrong thing entirely?
 
-### Assigned roles: more distinct contributions, no speedup
+So we kept running experiments—and kept the inconvenient results.
 
-With a predefined producer/consumer split, both workers landed distinct, retained contributions during overlap in **3/3 PI projects**, versus **0/3 ordinary projects**.
+### Great teamwork. Still slower than one worker.
 
-But **every condition passed 7/7**. One ordinary worker had the lowest median project completion time and token usage on this small task. The suspected limit was that coordination overhead outweighed the short serial workload; the next completed study removed the predefined split.
+With a predefined producer/consumer split, both PI workers landed distinct, retained contributions during overlap in **3/3 projects**, versus **0/3 ordinary projects**.
+
+That is the behavior we wanted to see.
+
+The economics were less flattering: **every condition still passed 7/7**, and one ordinary worker had the lowest median completion time and token usage on this small fixture. PI made the concurrent work cleaner, but the task was too short for parallelism to repay its coordination overhead.
 
 [Split-role study →](docs/results/concurrency.md)
 
-### Identical objectives: awareness did not become a work split
+### Three agents walk into a repository. One does all the work.
 
-Three workers received the same complete objective. **Neither arm divided implementation usefully.**
-One worker implemented the entire migration in every project; the others mostly attempted duplicate work.
-All conditions still reached 7/7, and PI added overhead.
+Next we gave three Luna Medium workers the **same complete objective** and removed the predefined split.
 
-The suspected limit: broad declarations did not establish agreed responsibilities before one worker could finish.
-The proposed next test is a longer, genuinely parallel task with equal information and no prescribed allocation. **It has not been run.**
+PI told them about one another. They still did not meaningfully divide the implementation.
+
+One worker implemented the entire migration in every project; the others mostly attempted duplicate work. Ordinary and PI projects all reached 7/7, and PI added overhead.
+
+That does not necessarily mean PI failed. It may mean **task decomposition belongs to an orchestrator, while PI should stay focused on keeping already-divided work coherent.**
 
 [Self-organizing study →](docs/results/self-organizing.md)
+
+### The harder refund fixture moved the needle again
+
+On a more difficult overlapping-edit migration, Luna Medium ordinary workers scored **0/7, 6/7, 6/7**. Luna Medium + PI scored **0/7, 7/7, 7/7**.
+
+That is promising, but not clean enough to declare victory. One PI run failed completely, Luna High solved the task once without PI, and the treatment still bundles shared context with coordination behavior.
+
+So the next methodological shift is deliberate: **stop making the model weaker to make PI visible. Make the project harder while keeping the worker capable enough to use PI reliably.**
+
+[Refund torture study →](docs/results/refunds.md)
 
 **Correctness. Project time. Worker effort. Useful concurrency.** We measure them separately.
 More tokens are not automatically worse; more active processes are not automatically progress.
@@ -99,15 +132,34 @@ More tokens are not automatically worse; more active processes are not automatic
 
 ---
 
-## Mission Control
+## One product. A dozen-ish repositories. What could go wrong?
 
-**A read-only view of the project—not a control panel for its workers.**
+Project Intent started because SayHi is one product assembled from nearly a dozen repositories.
 
-Browse workstreams, architecture, reports, worker/session observations and attention indicators.
-The experimental [Workstream Map](docs/WORKSTREAM_MAP_EXPERIMENT.md) shows declared boundaries and convergence pressure.
+Once AI workers started changing several of them concurrently, the human operator became the world's least interesting message bus: constantly relaying what one worker was doing to another worker somewhere else.
 
-Historical registrations are not a headcount. Missing observations do not mean no one is working.
-Integration context and repair plans are CLI features; Mission Control does not yet display those plans.
+PI is an attempt to replace that human relay with durable shared project state.
+
+The same coordination problem appears at several scales:
+
+- different repositories sharing an API or product contract,
+- different worktrees changing related behavior,
+- several workers sharing one checkout,
+- a worker handing work to a successor after its session ends.
+
+PI does not require those workers to become nodes in a proprietary agent graph. They remain ordinary coding workers. PI is the shared substrate around them.
+
+## Mission Control, without the commanding
+
+**Mission Control is a read-only observatory—not a control panel for its workers.**
+
+Browse workstreams, architecture, reports, worker/session observations and attention indicators. The experimental [Workstream Map](docs/WORKSTREAM_MAP_EXPERIMENT.md) shows declared boundaries and convergence pressure.
+
+Historical registrations are not a headcount. Missing observations do not mean no one is working. Integration context and repair plans are CLI features; Mission Control does not yet display those plans.
+
+<!-- Screenshot placeholder. Recommended capture: Workstream Map with several simultaneous workers, visible seams, and one overlap or repair state. -->
+
+> **Screenshot coming soon.**
 
 ## Get started
 
@@ -147,15 +199,21 @@ See [Operations](docs/OPERATIONS.md) for configuration, recovery and deployment 
 
 </details>
 
-## Boundaries worth knowing
+## What PI does not magically solve
 
-**Active SayHi dogfood. Experimental infrastructure. Not a generally available production service.**
+**It does not read minds.** PI is declaration-based. Hidden edits remain hidden until a worker reports or discovers them.
 
-- **Declarations, not surveillance.** PI does not detect hidden edits or push automatic code-change notifications. Workers must refresh context and check the actual source.
-- **Coordination, not authority.** A lease, repair claim or “done” report is neither editing permission nor proof of correctness. No scheduling or filesystem fencing.
-- **Explicit scope.** Worker integration context is scoped. Current repair agreement requires the same configured scope feed and local repository/host—not arbitrary cross-repository repair.
-- **Clear ownership.** Providers own durable task truth; Git owns source history. Offline snapshots and retained worker summaries are last-known context, not guarantees of current remote state.
-- **Source is not deployment.** Review, CI, merge and activation are separate. No claims of hostile-tenant isolation, distributed fencing or production high availability.
+**It is not your orchestrator.** PI currently does not decide who should work on what. That may belong to a separate orchestrator agent.
+
+**It does not grant authority.** A lease, repair claim or “done” report is neither editing permission nor proof of correctness.
+
+**It does not make bad code good.** The integrated project still has to pass its actual tests and acceptance checks.
+
+**It is not distributed locking.** Current repair agreement is cooperative and scoped; there is no filesystem fencing or global seam lock.
+
+**It is not deployment.** Review, CI, merge and activation remain separate concerns.
+
+Those are intentional boundaries, not hidden footnotes.
 
 ## Go deeper
 
@@ -165,4 +223,4 @@ See [Operations](docs/OPERATIONS.md) for configuration, recovery and deployment 
 
 ---
 
-*The goal is not more agent conversation. It is a coherent product after concurrent changes.*
+*Independent workers. One coherent product. And, ideally, reasonably priced tea.*
