@@ -1,0 +1,2801 @@
+{
+  "schema_version": 1,
+  "study_kind": "sol_distributed_software",
+  "stages_allocated": {
+    "calibration": true,
+    "ceiling": false,
+    "evaluation": false
+  },
+  "batches": [
+    {
+      "stage": "calibration",
+      "candidate": 1,
+      "frozen_at": "2026-09-09T08:50:45.285064+00:00",
+      "projects": [
+        {
+          "label": "B1",
+          "condition": "B",
+          "status": "completed_reviewed",
+          "accepted": true,
+          "autonomous_complete": true,
+          "native_identity_verified": true,
+          "workers": [
+            {
+              "role": "catalog",
+              "started_at": "2026-09-09T08:51:08.574060+00:00",
+              "finished_at": "2026-09-09T08:56:34.076484+00:00",
+              "duration_seconds": 325.502426772,
+              "start_seconds": 0.000763983,
+              "end_seconds": 325.503190755,
+              "exit_code": 0,
+              "timed_out": false,
+              "stream_complete": true,
+              "native_identity_verified": true,
+              "tokens": {
+                "input_tokens": 248474,
+                "cached_input_tokens": 222464,
+                "cache_write_input_tokens": 0,
+                "output_tokens": 9251,
+                "reasoning_output_tokens": 1816,
+                "total_tokens": 257725
+              },
+              "token_usage_status": "last_observed_cumulative",
+              "tools": {
+                "native_paired_call_count": 9,
+                "pi_tagged_native_call_count": 0,
+                "pi_tagged_command_count": 0,
+                "pi_tagged_native_seconds": 0,
+                "pi_tagged_command_output_bytes": 0,
+                "pi_tagged_native_output_bytes": 0,
+                "enrollment_completed_seconds": null,
+                "onboarding_observed_span_seconds": null,
+                "pi_failed_commands": 0,
+                "pi_operation_candidates": {}
+              },
+              "edits": {
+                "patch_call_candidates": 2,
+                "file_change_events": 2,
+                "completed_file_change_events": 2,
+                "failed_file_change_events": 0,
+                "reported_relative_paths": [
+                  "catalog/__init__.py"
+                ],
+                "omitted_path_entries": 0
+              },
+              "native_sha256_declared_by_analysis": "eeb05f6df0f38f960d66d16f31b3ed443e1459b8e579300507b4f1678f8d38a9"
+            },
+            {
+              "role": "orders",
+              "started_at": "2026-09-09T08:51:08.573299+00:00",
+              "finished_at": "2026-09-09T08:58:08.872336+00:00",
+              "duration_seconds": 420.29904346,
+              "start_seconds": 0.0,
+              "end_seconds": 420.29904346,
+              "exit_code": 0,
+              "timed_out": false,
+              "stream_complete": true,
+              "native_identity_verified": true,
+              "tokens": {
+                "input_tokens": 406712,
+                "cached_input_tokens": 372352,
+                "cache_write_input_tokens": 0,
+                "output_tokens": 12124,
+                "reasoning_output_tokens": 2822,
+                "total_tokens": 418836
+              },
+              "token_usage_status": "last_observed_cumulative",
+              "tools": {
+                "native_paired_call_count": 12,
+                "pi_tagged_native_call_count": 0,
+                "pi_tagged_command_count": 0,
+                "pi_tagged_native_seconds": 0,
+                "pi_tagged_command_output_bytes": 0,
+                "pi_tagged_native_output_bytes": 0,
+                "enrollment_completed_seconds": null,
+                "onboarding_observed_span_seconds": null,
+                "pi_failed_commands": 0,
+                "pi_operation_candidates": {}
+              },
+              "edits": {
+                "patch_call_candidates": 4,
+                "file_change_events": 3,
+                "completed_file_change_events": 3,
+                "failed_file_change_events": 0,
+                "reported_relative_paths": [
+                  "orders/__init__.py",
+                  "orders/test_orders.py"
+                ],
+                "omitted_path_entries": 0
+              },
+              "native_sha256_declared_by_analysis": "d7d6580feb2a948d296bedbf97efbb4d5ad2b13d64b7a915f377cf8a48a77e25"
+            },
+            {
+              "role": "settlement",
+              "started_at": "2026-09-09T08:51:08.573318+00:00",
+              "finished_at": "2026-09-09T08:57:33.254030+00:00",
+              "duration_seconds": 384.680717442,
+              "start_seconds": 1.7424e-05,
+              "end_seconds": 384.680734866,
+              "exit_code": 0,
+              "timed_out": false,
+              "stream_complete": true,
+              "native_identity_verified": true,
+              "tokens": {
+                "input_tokens": 231602,
+                "cached_input_tokens": 190208,
+                "cache_write_input_tokens": 0,
+                "output_tokens": 11165,
+                "reasoning_output_tokens": 1667,
+                "total_tokens": 242767
+              },
+              "token_usage_status": "last_observed_cumulative",
+              "tools": {
+                "native_paired_call_count": 8,
+                "pi_tagged_native_call_count": 0,
+                "pi_tagged_command_count": 0,
+                "pi_tagged_native_seconds": 0,
+                "pi_tagged_command_output_bytes": 0,
+                "pi_tagged_native_output_bytes": 0,
+                "enrollment_completed_seconds": null,
+                "onboarding_observed_span_seconds": null,
+                "pi_failed_commands": 0,
+                "pi_operation_candidates": {}
+              },
+              "edits": {
+                "patch_call_candidates": 2,
+                "file_change_events": 1,
+                "completed_file_change_events": 1,
+                "failed_file_change_events": 0,
+                "reported_relative_paths": [
+                  "settlement/__init__.py"
+                ],
+                "omitted_path_entries": 0
+              },
+              "native_sha256_declared_by_analysis": "66f915641cf5987991ac9acd1fa95401b737cc76af0dc26cc8814570271da411"
+            },
+            {
+              "role": "reporting",
+              "started_at": "2026-09-09T08:51:08.574479+00:00",
+              "finished_at": "2026-09-09T08:59:18.288239+00:00",
+              "duration_seconds": 489.713764343,
+              "start_seconds": 0.001182382,
+              "end_seconds": 489.714946725,
+              "exit_code": 0,
+              "timed_out": false,
+              "stream_complete": true,
+              "native_identity_verified": true,
+              "tokens": {
+                "input_tokens": 535905,
+                "cached_input_tokens": 498048,
+                "cache_write_input_tokens": 0,
+                "output_tokens": 14149,
+                "reasoning_output_tokens": 3647,
+                "total_tokens": 550054
+              },
+              "token_usage_status": "last_observed_cumulative",
+              "tools": {
+                "native_paired_call_count": 15,
+                "pi_tagged_native_call_count": 0,
+                "pi_tagged_command_count": 0,
+                "pi_tagged_native_seconds": 0,
+                "pi_tagged_command_output_bytes": 0,
+                "pi_tagged_native_output_bytes": 0,
+                "enrollment_completed_seconds": null,
+                "onboarding_observed_span_seconds": null,
+                "pi_failed_commands": 0,
+                "pi_operation_candidates": {}
+              },
+              "edits": {
+                "patch_call_candidates": 6,
+                "file_change_events": 5,
+                "completed_file_change_events": 5,
+                "failed_file_change_events": 0,
+                "reported_relative_paths": [
+                  "reporting/__init__.py",
+                  "reporting/test_reporting.py"
+                ],
+                "omitted_path_entries": 0
+              },
+              "native_sha256_declared_by_analysis": "dcd7711d404d35ac13416883698edf9c077daaca0f7e0d449ba72a5a61ca9d7d"
+            }
+          ],
+          "provenance": {
+            "plan_sha256": "f70c32cd053fe3b75f89dac094bd9f09790abf1623aa0197ad36577223198c6c",
+            "result_sha256": "bffb2f15948c4780a2269e63e34e8cd46b28f0b15835581cd4272fb973ab4ce2",
+            "worker_analysis_sha256": "aaa17912cdb9770da77f0ed3b571965541361a7aaedc96c3aff00c5e722c73fa",
+            "replay_sha256": "bd568254f3907e5d68200582a3296d8c08659761f24176ed846fcf07c4f79a41",
+            "review_sha256": "257ff26742d855a1a6ed43fc9506906bf1d879ad79af8b9f011b515567dc2589",
+            "history_sha256_declared_by_review": "314c8260b446f7ae235aab95e866c2bf3173307a82af59e373e9e76a4da0bfd2",
+            "native_sha256_declared_by_review": {
+              "catalog": "eeb05f6df0f38f960d66d16f31b3ed443e1459b8e579300507b4f1678f8d38a9",
+              "orders": "d7d6580feb2a948d296bedbf97efbb4d5ad2b13d64b7a915f377cf8a48a77e25",
+              "settlement": "66f915641cf5987991ac9acd1fa95401b737cc76af0dc26cc8814570271da411",
+              "reporting": "dcd7711d404d35ac13416883698edf9c077daaca0f7e0d449ba72a5a61ca9d7d"
+            },
+            "before_sha256_declared_by_plan": "1120aeb330fd5358bc8c01cdceb4f2923f87bada2f79ce4b9bff392200991ba6",
+            "recorder_sha256_declared_by_plan": "a60be3c061db37454bc45b3ede64c78a1c77ce5427c01d5b74c3fc49908445a8",
+            "pi_commit": "689a91979e313ac295e2e9277d82b4c9d0dff573",
+            "input_hashes_declared_by_plan": {
+              "catalog.txt": "f89adec90337c0b46129db293db35df701fe859e4dfeafbc9ec8863cea099432",
+              "orders.txt": "34559b9fb39450b48b4d1bf70eb86638e383c3ed191ff973088808de0a51591b",
+              "settlement.txt": "80d581628972cce9e28348e218a2b079770704b4ca019e5f6f8cc940a7023c32",
+              "reporting.txt": "7ba21d2ba17d39be5882e182b754d9c7724f891caeb63526a7fac2dbcf5ff731",
+              "check_contract.py": "e3b9c8c4600c01d0c723b66a52f4096ac0fd4de5efa5bd08580e055a63c5f137"
+            }
+          },
+          "model": "gpt-5.6-sol",
+          "effort": "medium",
+          "pi_enabled": false,
+          "started_at": "2026-09-09T08:51:08.573299+00:00",
+          "finished_at": "2026-09-09T08:59:18.288239+00:00",
+          "outcomes": {
+            "groups": [
+              {
+                "name": "cancellation_reordering",
+                "passed": true,
+                "tests_run": null,
+                "failures": null,
+                "errors": null,
+                "details_omitted": false
+              },
+              {
+                "name": "deferred_settlement",
+                "passed": true,
+                "tests_run": null,
+                "failures": null,
+                "errors": null,
+                "details_omitted": false
+              },
+              {
+                "name": "durable_order_outbox",
+                "passed": true,
+                "tests_run": null,
+                "failures": null,
+                "errors": null,
+                "details_omitted": false
+              },
+              {
+                "name": "integrated_replay",
+                "passed": true,
+                "tests_run": null,
+                "failures": null,
+                "errors": null,
+                "details_omitted": false
+              },
+              {
+                "name": "legacy_workflow",
+                "passed": true,
+                "tests_run": null,
+                "failures": null,
+                "errors": null,
+                "details_omitted": false
+              },
+              {
+                "name": "migration_and_restart",
+                "passed": true,
+                "tests_run": null,
+                "failures": null,
+                "errors": null,
+                "details_omitted": false
+              },
+              {
+                "name": "mixed_wire_versions",
+                "passed": true,
+                "tests_run": null,
+                "failures": null,
+                "errors": null,
+                "details_omitted": false
+              },
+              {
+                "name": "money_and_quotes",
+                "passed": true,
+                "tests_run": null,
+                "failures": null,
+                "errors": null,
+                "details_omitted": false
+              },
+              {
+                "name": "order_recovery",
+                "passed": true,
+                "tests_run": null,
+                "failures": null,
+                "errors": null,
+                "details_omitted": false
+              },
+              {
+                "name": "reporting_late_join",
+                "passed": true,
+                "tests_run": null,
+                "failures": null,
+                "errors": null,
+                "details_omitted": false
+              },
+              {
+                "name": "reservation_atomicity",
+                "passed": true,
+                "tests_run": null,
+                "failures": null,
+                "errors": null,
+                "details_omitted": false
+              },
+              {
+                "name": "validation_is_atomic",
+                "passed": true,
+                "tests_run": null,
+                "failures": null,
+                "errors": null,
+                "details_omitted": false
+              }
+            ],
+            "components": [
+              {
+                "name": "catalog",
+                "passed": true,
+                "tests_run": 2,
+                "failures": 0,
+                "errors": 0,
+                "details_omitted": false
+              },
+              {
+                "name": "orders",
+                "passed": true,
+                "tests_run": 5,
+                "failures": 0,
+                "errors": 0,
+                "details_omitted": false
+              },
+              {
+                "name": "reporting",
+                "passed": true,
+                "tests_run": 4,
+                "failures": 0,
+                "errors": 0,
+                "details_omitted": false
+              },
+              {
+                "name": "settlement",
+                "passed": true,
+                "tests_run": 2,
+                "failures": 0,
+                "errors": 0,
+                "details_omitted": false
+              }
+            ],
+            "failed_contracts": [],
+            "evaluation_error_present": false
+          },
+          "timing": {
+            "setup_seconds": 0.011698511021677405,
+            "archive_seconds": 0.026930701,
+            "verification_seconds": 0.269236168,
+            "project_seconds": 490.013702327
+          },
+          "concurrency": {
+            "worker_interval_seconds": 489.714946725,
+            "worker_seconds": 1620.1959520169999,
+            "factor": 3.3084470115771714,
+            "max_simultaneous": 4,
+            "active_intervals": [
+              {
+                "start_seconds": 0.0,
+                "end_seconds": 1.7424e-05,
+                "active": 1
+              },
+              {
+                "start_seconds": 1.7424e-05,
+                "end_seconds": 0.000763983,
+                "active": 2
+              },
+              {
+                "start_seconds": 0.000763983,
+                "end_seconds": 0.001182382,
+                "active": 3
+              },
+              {
+                "start_seconds": 0.001182382,
+                "end_seconds": 325.503190755,
+                "active": 4
+              },
+              {
+                "start_seconds": 325.503190755,
+                "end_seconds": 384.680734866,
+                "active": 3
+              },
+              {
+                "start_seconds": 384.680734866,
+                "end_seconds": 420.29904346,
+                "active": 2
+              },
+              {
+                "start_seconds": 420.29904346,
+                "end_seconds": 489.714946725,
+                "active": 1
+              }
+            ]
+          },
+          "replay": {
+            "first_accepted_sample_seconds": 343.970206846,
+            "durable_accepted_sample_seconds": 343.970206846,
+            "final_sample_matches_final_score": true,
+            "sampled_state_count": 12,
+            "evaluation_error_state_count": 0
+          },
+          "review": {
+            "available": true,
+            "infrastructure_failure": false,
+            "integrity_failure": false
+          },
+          "tokens_last_observed_sum": {
+            "input_tokens": 1422693,
+            "cached_input_tokens": 1283072,
+            "cache_write_input_tokens": 0,
+            "output_tokens": 46689,
+            "reasoning_output_tokens": 9952,
+            "total_tokens": 1469382
+          },
+          "token_totals_include_partial_timeout": false
+        },
+        {
+          "label": "B2",
+          "condition": "B",
+          "status": "completed_reviewed",
+          "accepted": true,
+          "autonomous_complete": true,
+          "native_identity_verified": true,
+          "workers": [
+            {
+              "role": "catalog",
+              "started_at": "2026-09-09T09:01:17.855396+00:00",
+              "finished_at": "2026-09-09T09:07:37.934896+00:00",
+              "duration_seconds": 380.079504254,
+              "start_seconds": 0.000543119,
+              "end_seconds": 380.080047373,
+              "exit_code": 0,
+              "timed_out": false,
+              "stream_complete": true,
+              "native_identity_verified": true,
+              "tokens": {
+                "input_tokens": 315765,
+                "cached_input_tokens": 278912,
+                "cache_write_input_tokens": 0,
+                "output_tokens": 10649,
+                "reasoning_output_tokens": 2343,
+                "total_tokens": 326414
+              },
+              "token_usage_status": "last_observed_cumulative",
+              "tools": {
+                "native_paired_call_count": 11,
+                "pi_tagged_native_call_count": 0,
+                "pi_tagged_command_count": 0,
+                "pi_tagged_native_seconds": 0,
+                "pi_tagged_command_output_bytes": 0,
+                "pi_tagged_native_output_bytes": 0,
+                "enrollment_completed_seconds": null,
+                "onboarding_observed_span_seconds": null,
+                "pi_failed_commands": 0,
+                "pi_operation_candidates": {}
+              },
+              "edits": {
+                "patch_call_candidates": 4,
+                "file_change_events": 3,
+                "completed_file_change_events": 3,
+                "failed_file_change_events": 0,
+                "reported_relative_paths": [
+                  "catalog/__init__.py",
+                  "catalog/test_catalog.py"
+                ],
+                "omitted_path_entries": 0
+              },
+              "native_sha256_declared_by_analysis": "702f649e15cd18fd34865e78f1b618f233ef3d80a16beff5f26f44018b30999a"
+            },
+            {
+              "role": "orders",
+              "started_at": "2026-09-09T09:01:17.854853+00:00",
+              "finished_at": "2026-09-09T09:07:54.746129+00:00",
+              "duration_seconds": 396.891277274,
+              "start_seconds": 0.0,
+              "end_seconds": 396.891277274,
+              "exit_code": 0,
+              "timed_out": false,
+              "stream_complete": true,
+              "native_identity_verified": true,
+              "tokens": {
+                "input_tokens": 443744,
+                "cached_input_tokens": 409728,
+                "cache_write_input_tokens": 0,
+                "output_tokens": 11265,
+                "reasoning_output_tokens": 2237,
+                "total_tokens": 455009
+              },
+              "token_usage_status": "last_observed_cumulative",
+              "tools": {
+                "native_paired_call_count": 13,
+                "pi_tagged_native_call_count": 0,
+                "pi_tagged_command_count": 0,
+                "pi_tagged_native_seconds": 0,
+                "pi_tagged_command_output_bytes": 0,
+                "pi_tagged_native_output_bytes": 0,
+                "enrollment_completed_seconds": null,
+                "onboarding_observed_span_seconds": null,
+                "pi_failed_commands": 0,
+                "pi_operation_candidates": {}
+              },
+              "edits": {
+                "patch_call_candidates": 4,
+                "file_change_events": 3,
+                "completed_file_change_events": 3,
+                "failed_file_change_events": 0,
+                "reported_relative_paths": [
+                  "orders/__init__.py"
+                ],
+                "omitted_path_entries": 0
+              },
+              "native_sha256_declared_by_analysis": "9ddaec4a010386579fe1af3fa8c7a1342e9e001fd6d8d61c85f290c0ebc64d92"
+            },
+            {
+              "role": "settlement",
+              "started_at": "2026-09-09T09:01:17.856548+00:00",
+              "finished_at": "2026-09-09T09:12:06.777790+00:00",
+              "duration_seconds": 648.921244885,
+              "start_seconds": 0.001695614,
+              "end_seconds": 648.922940499,
+              "exit_code": 0,
+              "timed_out": false,
+              "stream_complete": true,
+              "native_identity_verified": true,
+              "tokens": {
+                "input_tokens": 603462,
+                "cached_input_tokens": 567552,
+                "cache_write_input_tokens": 0,
+                "output_tokens": 12629,
+                "reasoning_output_tokens": 3192,
+                "total_tokens": 616091
+              },
+              "token_usage_status": "last_observed_cumulative",
+              "tools": {
+                "native_paired_call_count": 17,
+                "pi_tagged_native_call_count": 0,
+                "pi_tagged_command_count": 0,
+                "pi_tagged_native_seconds": 0,
+                "pi_tagged_command_output_bytes": 0,
+                "pi_tagged_native_output_bytes": 0,
+                "enrollment_completed_seconds": null,
+                "onboarding_observed_span_seconds": null,
+                "pi_failed_commands": 0,
+                "pi_operation_candidates": {}
+              },
+              "edits": {
+                "patch_call_candidates": 5,
+                "file_change_events": 4,
+                "completed_file_change_events": 4,
+                "failed_file_change_events": 0,
+                "reported_relative_paths": [
+                  "settlement/__init__.py"
+                ],
+                "omitted_path_entries": 0
+              },
+              "native_sha256_declared_by_analysis": "71559f1ea67f86db1455c753926079649ed620e1412575b4d720080682ffc300"
+            },
+            {
+              "role": "reporting",
+              "started_at": "2026-09-09T09:01:17.854997+00:00",
+              "finished_at": "2026-09-09T09:09:29.990734+00:00",
+              "duration_seconds": 492.13574417,
+              "start_seconds": 0.000139744,
+              "end_seconds": 492.135883914,
+              "exit_code": 0,
+              "timed_out": false,
+              "stream_complete": true,
+              "native_identity_verified": true,
+              "tokens": {
+                "input_tokens": 481651,
+                "cached_input_tokens": 427776,
+                "cache_write_input_tokens": 0,
+                "output_tokens": 13942,
+                "reasoning_output_tokens": 3766,
+                "total_tokens": 495593
+              },
+              "token_usage_status": "last_observed_cumulative",
+              "tools": {
+                "native_paired_call_count": 14,
+                "pi_tagged_native_call_count": 0,
+                "pi_tagged_command_count": 0,
+                "pi_tagged_native_seconds": 0,
+                "pi_tagged_command_output_bytes": 0,
+                "pi_tagged_native_output_bytes": 0,
+                "enrollment_completed_seconds": null,
+                "onboarding_observed_span_seconds": null,
+                "pi_failed_commands": 0,
+                "pi_operation_candidates": {}
+              },
+              "edits": {
+                "patch_call_candidates": 5,
+                "file_change_events": 4,
+                "completed_file_change_events": 4,
+                "failed_file_change_events": 0,
+                "reported_relative_paths": [
+                  "reporting/__init__.py",
+                  "reporting/test_reporting.py"
+                ],
+                "omitted_path_entries": 0
+              },
+              "native_sha256_declared_by_analysis": "91485c7926a55fe90dcbacb669091e9e154dd84025ec53899896f62bf8bb66f1"
+            }
+          ],
+          "provenance": {
+            "plan_sha256": "d11a19f821c9ef74fe06e3bc728402a3ab710878403a48b85be729d1368989d0",
+            "result_sha256": "45b9e48be17c32857ed4d75a2201bbce361d7d8231e8478f1b86de37eb944703",
+            "worker_analysis_sha256": "cc8ebaedf220d859a96ebb650c8f8365535cfeb34ff7b0000e4cca422391e864",
+            "replay_sha256": "0db772c9697ff86fcd2fc797225dac4ea71b7544794403018a6af91f7416779e",
+            "review_sha256": "dff374434d30edc884cf5021a2e2d1b57d130bf90632788f6ff8d6c0cf8182ba",
+            "history_sha256_declared_by_review": "527bbcc63848333d8c77062dbcaf45d8046143fc1cf6cac0e6bb40bbe632b1c1",
+            "native_sha256_declared_by_review": {
+              "catalog": "702f649e15cd18fd34865e78f1b618f233ef3d80a16beff5f26f44018b30999a",
+              "orders": "9ddaec4a010386579fe1af3fa8c7a1342e9e001fd6d8d61c85f290c0ebc64d92",
+              "settlement": "71559f1ea67f86db1455c753926079649ed620e1412575b4d720080682ffc300",
+              "reporting": "91485c7926a55fe90dcbacb669091e9e154dd84025ec53899896f62bf8bb66f1"
+            },
+            "before_sha256_declared_by_plan": "1120aeb330fd5358bc8c01cdceb4f2923f87bada2f79ce4b9bff392200991ba6",
+            "recorder_sha256_declared_by_plan": "a60be3c061db37454bc45b3ede64c78a1c77ce5427c01d5b74c3fc49908445a8",
+            "pi_commit": "689a91979e313ac295e2e9277d82b4c9d0dff573",
+            "input_hashes_declared_by_plan": {
+              "catalog.txt": "f89adec90337c0b46129db293db35df701fe859e4dfeafbc9ec8863cea099432",
+              "orders.txt": "34559b9fb39450b48b4d1bf70eb86638e383c3ed191ff973088808de0a51591b",
+              "settlement.txt": "80d581628972cce9e28348e218a2b079770704b4ca019e5f6f8cc940a7023c32",
+              "reporting.txt": "7ba21d2ba17d39be5882e182b754d9c7724f891caeb63526a7fac2dbcf5ff731",
+              "check_contract.py": "e3b9c8c4600c01d0c723b66a52f4096ac0fd4de5efa5bd08580e055a63c5f137"
+            }
+          },
+          "model": "gpt-5.6-sol",
+          "effort": "medium",
+          "pi_enabled": false,
+          "started_at": "2026-09-09T09:01:17.854853+00:00",
+          "finished_at": "2026-09-09T09:12:06.777790+00:00",
+          "outcomes": {
+            "groups": [
+              {
+                "name": "cancellation_reordering",
+                "passed": true,
+                "tests_run": null,
+                "failures": null,
+                "errors": null,
+                "details_omitted": false
+              },
+              {
+                "name": "deferred_settlement",
+                "passed": true,
+                "tests_run": null,
+                "failures": null,
+                "errors": null,
+                "details_omitted": false
+              },
+              {
+                "name": "durable_order_outbox",
+                "passed": true,
+                "tests_run": null,
+                "failures": null,
+                "errors": null,
+                "details_omitted": false
+              },
+              {
+                "name": "integrated_replay",
+                "passed": true,
+                "tests_run": null,
+                "failures": null,
+                "errors": null,
+                "details_omitted": false
+              },
+              {
+                "name": "legacy_workflow",
+                "passed": true,
+                "tests_run": null,
+                "failures": null,
+                "errors": null,
+                "details_omitted": false
+              },
+              {
+                "name": "migration_and_restart",
+                "passed": true,
+                "tests_run": null,
+                "failures": null,
+                "errors": null,
+                "details_omitted": false
+              },
+              {
+                "name": "mixed_wire_versions",
+                "passed": true,
+                "tests_run": null,
+                "failures": null,
+                "errors": null,
+                "details_omitted": false
+              },
+              {
+                "name": "money_and_quotes",
+                "passed": true,
+                "tests_run": null,
+                "failures": null,
+                "errors": null,
+                "details_omitted": false
+              },
+              {
+                "name": "order_recovery",
+                "passed": true,
+                "tests_run": null,
+                "failures": null,
+                "errors": null,
+                "details_omitted": false
+              },
+              {
+                "name": "reporting_late_join",
+                "passed": true,
+                "tests_run": null,
+                "failures": null,
+                "errors": null,
+                "details_omitted": false
+              },
+              {
+                "name": "reservation_atomicity",
+                "passed": true,
+                "tests_run": null,
+                "failures": null,
+                "errors": null,
+                "details_omitted": false
+              },
+              {
+                "name": "validation_is_atomic",
+                "passed": true,
+                "tests_run": null,
+                "failures": null,
+                "errors": null,
+                "details_omitted": false
+              }
+            ],
+            "components": [
+              {
+                "name": "catalog",
+                "passed": true,
+                "tests_run": 5,
+                "failures": 0,
+                "errors": 0,
+                "details_omitted": false
+              },
+              {
+                "name": "orders",
+                "passed": true,
+                "tests_run": 2,
+                "failures": 0,
+                "errors": 0,
+                "details_omitted": false
+              },
+              {
+                "name": "reporting",
+                "passed": true,
+                "tests_run": 5,
+                "failures": 0,
+                "errors": 0,
+                "details_omitted": false
+              },
+              {
+                "name": "settlement",
+                "passed": true,
+                "tests_run": 2,
+                "failures": 0,
+                "errors": 0,
+                "details_omitted": false
+              }
+            ],
+            "failed_contracts": [],
+            "evaluation_error_present": false
+          },
+          "timing": {
+            "setup_seconds": 0.011439487017923966,
+            "archive_seconds": 0.014904398,
+            "verification_seconds": 0.249828151,
+            "project_seconds": 649.189209238
+          },
+          "concurrency": {
+            "worker_interval_seconds": 648.922940499,
+            "worker_seconds": 1918.027770583,
+            "factor": 2.955709608768186,
+            "max_simultaneous": 4,
+            "active_intervals": [
+              {
+                "start_seconds": 0.0,
+                "end_seconds": 0.000139744,
+                "active": 1
+              },
+              {
+                "start_seconds": 0.000139744,
+                "end_seconds": 0.000543119,
+                "active": 2
+              },
+              {
+                "start_seconds": 0.000543119,
+                "end_seconds": 0.001695614,
+                "active": 3
+              },
+              {
+                "start_seconds": 0.001695614,
+                "end_seconds": 380.080047373,
+                "active": 4
+              },
+              {
+                "start_seconds": 380.080047373,
+                "end_seconds": 396.891277274,
+                "active": 3
+              },
+              {
+                "start_seconds": 396.891277274,
+                "end_seconds": 492.135883914,
+                "active": 2
+              },
+              {
+                "start_seconds": 492.135883914,
+                "end_seconds": 648.922940499,
+                "active": 1
+              }
+            ]
+          },
+          "replay": {
+            "first_accepted_sample_seconds": 536.619070169,
+            "durable_accepted_sample_seconds": 536.619070169,
+            "final_sample_matches_final_score": true,
+            "sampled_state_count": 15,
+            "evaluation_error_state_count": 0
+          },
+          "review": {
+            "available": true,
+            "infrastructure_failure": false,
+            "integrity_failure": false
+          },
+          "tokens_last_observed_sum": {
+            "input_tokens": 1844622,
+            "cached_input_tokens": 1683968,
+            "cache_write_input_tokens": 0,
+            "output_tokens": 48485,
+            "reasoning_output_tokens": 11538,
+            "total_tokens": 1893107
+          },
+          "token_totals_include_partial_timeout": false
+        },
+        {
+          "label": "B3",
+          "condition": "B",
+          "status": "completed_reviewed",
+          "accepted": true,
+          "autonomous_complete": true,
+          "native_identity_verified": true,
+          "workers": [
+            {
+              "role": "catalog",
+              "started_at": "2026-09-09T09:14:36.298904+00:00",
+              "finished_at": "2026-09-09T09:21:05.107954+00:00",
+              "duration_seconds": 388.809055189,
+              "start_seconds": 2.0272e-05,
+              "end_seconds": 388.809075461,
+              "exit_code": 0,
+              "timed_out": false,
+              "stream_complete": true,
+              "native_identity_verified": true,
+              "tokens": {
+                "input_tokens": 380473,
+                "cached_input_tokens": 347392,
+                "cache_write_input_tokens": 0,
+                "output_tokens": 11327,
+                "reasoning_output_tokens": 2227,
+                "total_tokens": 391800
+              },
+              "token_usage_status": "last_observed_cumulative",
+              "tools": {
+                "native_paired_call_count": 12,
+                "pi_tagged_native_call_count": 0,
+                "pi_tagged_command_count": 0,
+                "pi_tagged_native_seconds": 0,
+                "pi_tagged_command_output_bytes": 0,
+                "pi_tagged_native_output_bytes": 0,
+                "enrollment_completed_seconds": null,
+                "onboarding_observed_span_seconds": null,
+                "pi_failed_commands": 0,
+                "pi_operation_candidates": {}
+              },
+              "edits": {
+                "patch_call_candidates": 4,
+                "file_change_events": 3,
+                "completed_file_change_events": 3,
+                "failed_file_change_events": 0,
+                "reported_relative_paths": [
+                  "catalog/__init__.py",
+                  "catalog/test_catalog.py"
+                ],
+                "omitted_path_entries": 0
+              },
+              "native_sha256_declared_by_analysis": "3bb4ebd609ec0a3bf12eb43cfbae9081b92461685e713041d65651ab0068355f"
+            },
+            {
+              "role": "orders",
+              "started_at": "2026-09-09T09:14:36.299787+00:00",
+              "finished_at": "2026-09-09T09:21:15.350925+00:00",
+              "duration_seconds": 399.051138181,
+              "start_seconds": 0.000907119,
+              "end_seconds": 399.0520453,
+              "exit_code": 0,
+              "timed_out": false,
+              "stream_complete": true,
+              "native_identity_verified": true,
+              "tokens": {
+                "input_tokens": 428474,
+                "cached_input_tokens": 362368,
+                "cache_write_input_tokens": 0,
+                "output_tokens": 11420,
+                "reasoning_output_tokens": 2211,
+                "total_tokens": 439894
+              },
+              "token_usage_status": "last_observed_cumulative",
+              "tools": {
+                "native_paired_call_count": 13,
+                "pi_tagged_native_call_count": 0,
+                "pi_tagged_command_count": 0,
+                "pi_tagged_native_seconds": 0,
+                "pi_tagged_command_output_bytes": 0,
+                "pi_tagged_native_output_bytes": 0,
+                "enrollment_completed_seconds": null,
+                "onboarding_observed_span_seconds": null,
+                "pi_failed_commands": 0,
+                "pi_operation_candidates": {}
+              },
+              "edits": {
+                "patch_call_candidates": 4,
+                "file_change_events": 3,
+                "completed_file_change_events": 3,
+                "failed_file_change_events": 0,
+                "reported_relative_paths": [
+                  "orders/__init__.py"
+                ],
+                "omitted_path_entries": 0
+              },
+              "native_sha256_declared_by_analysis": "b080f058852394b428a1c47715a7f05e3a4daa9d733f821e02d8685ef07e8fd2"
+            },
+            {
+              "role": "settlement",
+              "started_at": "2026-09-09T09:14:36.299731+00:00",
+              "finished_at": "2026-09-09T09:21:09.547921+00:00",
+              "duration_seconds": 393.248192312,
+              "start_seconds": 0.000851295,
+              "end_seconds": 393.249043607,
+              "exit_code": 0,
+              "timed_out": false,
+              "stream_complete": true,
+              "native_identity_verified": true,
+              "tokens": {
+                "input_tokens": 267981,
+                "cached_input_tokens": 237440,
+                "cache_write_input_tokens": 0,
+                "output_tokens": 11406,
+                "reasoning_output_tokens": 2213,
+                "total_tokens": 279387
+              },
+              "token_usage_status": "last_observed_cumulative",
+              "tools": {
+                "native_paired_call_count": 9,
+                "pi_tagged_native_call_count": 0,
+                "pi_tagged_command_count": 0,
+                "pi_tagged_native_seconds": 0,
+                "pi_tagged_command_output_bytes": 0,
+                "pi_tagged_native_output_bytes": 0,
+                "enrollment_completed_seconds": null,
+                "onboarding_observed_span_seconds": null,
+                "pi_failed_commands": 0,
+                "pi_operation_candidates": {}
+              },
+              "edits": {
+                "patch_call_candidates": 3,
+                "file_change_events": 2,
+                "completed_file_change_events": 2,
+                "failed_file_change_events": 0,
+                "reported_relative_paths": [
+                  "settlement/__init__.py",
+                  "settlement/test_settlement.py"
+                ],
+                "omitted_path_entries": 0
+              },
+              "native_sha256_declared_by_analysis": "b9e38fbf2c3ff5cc567c1f45cf4a50661ac9f2ce8c64395d907b5d12c9decdbb"
+            },
+            {
+              "role": "reporting",
+              "started_at": "2026-09-09T09:14:36.298884+00:00",
+              "finished_at": "2026-09-09T09:20:37.911945+00:00",
+              "duration_seconds": 361.613067944,
+              "start_seconds": 0.0,
+              "end_seconds": 361.613067944,
+              "exit_code": 0,
+              "timed_out": false,
+              "stream_complete": true,
+              "native_identity_verified": true,
+              "tokens": {
+                "input_tokens": 367216,
+                "cached_input_tokens": 328704,
+                "cache_write_input_tokens": 0,
+                "output_tokens": 10371,
+                "reasoning_output_tokens": 2051,
+                "total_tokens": 377587
+              },
+              "token_usage_status": "last_observed_cumulative",
+              "tools": {
+                "native_paired_call_count": 12,
+                "pi_tagged_native_call_count": 0,
+                "pi_tagged_command_count": 0,
+                "pi_tagged_native_seconds": 0,
+                "pi_tagged_command_output_bytes": 0,
+                "pi_tagged_native_output_bytes": 0,
+                "enrollment_completed_seconds": null,
+                "onboarding_observed_span_seconds": null,
+                "pi_failed_commands": 0,
+                "pi_operation_candidates": {}
+              },
+              "edits": {
+                "patch_call_candidates": 3,
+                "file_change_events": 2,
+                "completed_file_change_events": 2,
+                "failed_file_change_events": 0,
+                "reported_relative_paths": [
+                  "reporting/__init__.py"
+                ],
+                "omitted_path_entries": 0
+              },
+              "native_sha256_declared_by_analysis": "a1c29346b63108ea84effcb61080347696949734ab65b0b3326f05e1bea468c8"
+            }
+          ],
+          "provenance": {
+            "plan_sha256": "39351b43b704b6415a7d2cfa0283c3d5648cdc37ccf5955a39073b8a5d94b741",
+            "result_sha256": "1893466d173ae2c7f76a3dca03325dd24bb4c352c7de1d236c1cd3c52b44cafc",
+            "worker_analysis_sha256": "7854e2e452a66738e704fcfd60e8eeb1b84aa485e370ed8e5ff1b1424b2c3fe3",
+            "replay_sha256": "700bf7e53e2ff689eeba98934b43beeecb722a7ae4e0bf655946056e459f4fd4",
+            "review_sha256": "49dd11e383a6e1a442a9e6125c0829293c4c53a59c2378d86e5ae28d07378bb3",
+            "history_sha256_declared_by_review": "f26be0bb7b9105f31a06658acc2966a86a1c7f8a5a33d5b4d5ba1543272d4ea8",
+            "native_sha256_declared_by_review": {
+              "catalog": "3bb4ebd609ec0a3bf12eb43cfbae9081b92461685e713041d65651ab0068355f",
+              "orders": "b080f058852394b428a1c47715a7f05e3a4daa9d733f821e02d8685ef07e8fd2",
+              "settlement": "b9e38fbf2c3ff5cc567c1f45cf4a50661ac9f2ce8c64395d907b5d12c9decdbb",
+              "reporting": "a1c29346b63108ea84effcb61080347696949734ab65b0b3326f05e1bea468c8"
+            },
+            "before_sha256_declared_by_plan": "1120aeb330fd5358bc8c01cdceb4f2923f87bada2f79ce4b9bff392200991ba6",
+            "recorder_sha256_declared_by_plan": "a60be3c061db37454bc45b3ede64c78a1c77ce5427c01d5b74c3fc49908445a8",
+            "pi_commit": "689a91979e313ac295e2e9277d82b4c9d0dff573",
+            "input_hashes_declared_by_plan": {
+              "catalog.txt": "f89adec90337c0b46129db293db35df701fe859e4dfeafbc9ec8863cea099432",
+              "orders.txt": "34559b9fb39450b48b4d1bf70eb86638e383c3ed191ff973088808de0a51591b",
+              "settlement.txt": "80d581628972cce9e28348e218a2b079770704b4ca019e5f6f8cc940a7023c32",
+              "reporting.txt": "7ba21d2ba17d39be5882e182b754d9c7724f891caeb63526a7fac2dbcf5ff731",
+              "check_contract.py": "e3b9c8c4600c01d0c723b66a52f4096ac0fd4de5efa5bd08580e055a63c5f137"
+            }
+          },
+          "model": "gpt-5.6-sol",
+          "effort": "medium",
+          "pi_enabled": false,
+          "started_at": "2026-09-09T09:14:36.298884+00:00",
+          "finished_at": "2026-09-09T09:21:15.350925+00:00",
+          "outcomes": {
+            "groups": [
+              {
+                "name": "cancellation_reordering",
+                "passed": true,
+                "tests_run": null,
+                "failures": null,
+                "errors": null,
+                "details_omitted": false
+              },
+              {
+                "name": "deferred_settlement",
+                "passed": true,
+                "tests_run": null,
+                "failures": null,
+                "errors": null,
+                "details_omitted": false
+              },
+              {
+                "name": "durable_order_outbox",
+                "passed": true,
+                "tests_run": null,
+                "failures": null,
+                "errors": null,
+                "details_omitted": false
+              },
+              {
+                "name": "integrated_replay",
+                "passed": true,
+                "tests_run": null,
+                "failures": null,
+                "errors": null,
+                "details_omitted": false
+              },
+              {
+                "name": "legacy_workflow",
+                "passed": true,
+                "tests_run": null,
+                "failures": null,
+                "errors": null,
+                "details_omitted": false
+              },
+              {
+                "name": "migration_and_restart",
+                "passed": true,
+                "tests_run": null,
+                "failures": null,
+                "errors": null,
+                "details_omitted": false
+              },
+              {
+                "name": "mixed_wire_versions",
+                "passed": true,
+                "tests_run": null,
+                "failures": null,
+                "errors": null,
+                "details_omitted": false
+              },
+              {
+                "name": "money_and_quotes",
+                "passed": true,
+                "tests_run": null,
+                "failures": null,
+                "errors": null,
+                "details_omitted": false
+              },
+              {
+                "name": "order_recovery",
+                "passed": true,
+                "tests_run": null,
+                "failures": null,
+                "errors": null,
+                "details_omitted": false
+              },
+              {
+                "name": "reporting_late_join",
+                "passed": true,
+                "tests_run": null,
+                "failures": null,
+                "errors": null,
+                "details_omitted": false
+              },
+              {
+                "name": "reservation_atomicity",
+                "passed": true,
+                "tests_run": null,
+                "failures": null,
+                "errors": null,
+                "details_omitted": false
+              },
+              {
+                "name": "validation_is_atomic",
+                "passed": true,
+                "tests_run": null,
+                "failures": null,
+                "errors": null,
+                "details_omitted": false
+              }
+            ],
+            "components": [
+              {
+                "name": "catalog",
+                "passed": true,
+                "tests_run": 4,
+                "failures": 0,
+                "errors": 0,
+                "details_omitted": false
+              },
+              {
+                "name": "orders",
+                "passed": true,
+                "tests_run": 2,
+                "failures": 0,
+                "errors": 0,
+                "details_omitted": false
+              },
+              {
+                "name": "reporting",
+                "passed": true,
+                "tests_run": 2,
+                "failures": 0,
+                "errors": 0,
+                "details_omitted": false
+              },
+              {
+                "name": "settlement",
+                "passed": true,
+                "tests_run": 6,
+                "failures": 0,
+                "errors": 0,
+                "details_omitted": false
+              }
+            ],
+            "failed_contracts": [],
+            "evaluation_error_present": false
+          },
+          "timing": {
+            "setup_seconds": 0.015258873987477273,
+            "archive_seconds": 0.014342586,
+            "verification_seconds": 0.238226951,
+            "project_seconds": 399.305945781
+          },
+          "concurrency": {
+            "worker_interval_seconds": 399.0520453,
+            "worker_seconds": 1542.721453626,
+            "factor": 3.865965534561314,
+            "max_simultaneous": 4,
+            "active_intervals": [
+              {
+                "start_seconds": 0.0,
+                "end_seconds": 2.0272e-05,
+                "active": 1
+              },
+              {
+                "start_seconds": 2.0272e-05,
+                "end_seconds": 0.000851295,
+                "active": 2
+              },
+              {
+                "start_seconds": 0.000851295,
+                "end_seconds": 0.000907119,
+                "active": 3
+              },
+              {
+                "start_seconds": 0.000907119,
+                "end_seconds": 361.613067944,
+                "active": 4
+              },
+              {
+                "start_seconds": 361.613067944,
+                "end_seconds": 388.809075461,
+                "active": 3
+              },
+              {
+                "start_seconds": 388.809075461,
+                "end_seconds": 393.249043607,
+                "active": 2
+              },
+              {
+                "start_seconds": 393.249043607,
+                "end_seconds": 399.0520453,
+                "active": 1
+              }
+            ]
+          },
+          "replay": {
+            "first_accepted_sample_seconds": 307.615746756,
+            "durable_accepted_sample_seconds": 307.615746756,
+            "final_sample_matches_final_score": true,
+            "sampled_state_count": 11,
+            "evaluation_error_state_count": 0
+          },
+          "review": {
+            "available": true,
+            "infrastructure_failure": false,
+            "integrity_failure": false
+          },
+          "tokens_last_observed_sum": {
+            "input_tokens": 1444144,
+            "cached_input_tokens": 1275904,
+            "cache_write_input_tokens": 0,
+            "output_tokens": 44524,
+            "reasoning_output_tokens": 8702,
+            "total_tokens": 1488668
+          },
+          "token_totals_include_partial_timeout": false
+        }
+      ],
+      "status_counts": {
+        "completed_reviewed": 3
+      },
+      "provenance": {
+        "freeze_sha256": "fe5f61ef1ab6531b6ccb3915c9cf28508b5628de727979f58e6ef648b4094373",
+        "protocol_sha256_declared": "518c21ffca00102c5fa07684d95dae4e596bc7de3ef236ede064cdee73c1ceb2",
+        "code_sha256_declared": {
+          "experiments/__init__.py": "640c5ec857918624357de75677b1802ed866d14ddbb18832e1f77b38f6f592f6",
+          "experiments/concurrency_study.py": "158e364406791ed6efae0de9cac7d26a2bec2c17f197e59955dedee5b547c967",
+          "experiments/distributed_check.py": "930bfa5f3273c94641f55c573cbf67a9f84c01041460b8d16fc83135358ae3bb",
+          "experiments/distributed_study.py": "a60be3c061db37454bc45b3ede64c78a1c77ce5427c01d5b74c3fc49908445a8",
+          "experiments/self_organizing_analysis.py": "31afa9f3654582220d75dd3f2c3ee49a78f1e8b862771ed831ec2a992108f95d",
+          "experiments/seven_seams.py": "7185c16ff9a45f3a36d432c36c9a784cca88d2fd1ef74a641e81a825f0e35d67",
+          "experiments/seven_seams_self_organizing.py": "6b4b4f512900b843a14a38a7044c5893d93ad6da2a51999123c16b3eaa6c6672"
+        },
+        "fixture_sha256_declared": {
+          "OBJECTIVE.md": "5d54ca921ca87e7f9fb1731e36c89968be52e91e55bab990946ff3f04c2088dc",
+          "README.md": "5272f89a5740a5dd806f11744271b2b862b179a21095b8ae5383b6594ea1836d",
+          "acceptance.py": "e3b9c8c4600c01d0c723b66a52f4096ac0fd4de5efa5bd08580e055a63c5f137",
+          "architecture.json": "e77e91bd9ff0c5f12cf495cf7f8c901e230a1a4f9b063331b5d3daa943657507",
+          "catalog/__init__.py": "827e3658ba73affd0b8b53657779f4e64c2b82d0926d1919071cd8bb79c5ab39",
+          "catalog/test_catalog.py": "2216f8660d066be59e92490cc91f876a437377d84730b798285f8df18c406014",
+          "orders/__init__.py": "669507236e18c0d4d7bd764643eea3f7f2c89390cc67db0e639a09ae891774ee",
+          "orders/test_orders.py": "8f731aad6edd9722a23bd7d1685e531607f39ec987e0c95a537ee93e185360f6",
+          "reporting/__init__.py": "396e0261b8a6bebb26b338d4bb76e5cd69e0aec711b6e4a01ed5997b7e6413a7",
+          "reporting/test_reporting.py": "93bfddece2ee590a586aec32bb6361c1f2d560b46e2e46bca3c38695a61cf73d",
+          "settlement/__init__.py": "1b82705ccad05bd5f5a7210d3752915de86fe7f0ad8dd6136901719faf972710",
+          "settlement/test_settlement.py": "08e84fc1ee13c1ff9d832159c556f87527385e162b6551e9d6e9e015fa9d2d1c",
+          "tasks/catalog.txt": "f89adec90337c0b46129db293db35df701fe859e4dfeafbc9ec8863cea099432",
+          "tasks/orders.txt": "34559b9fb39450b48b4d1bf70eb86638e383c3ed191ff973088808de0a51591b",
+          "tasks/reporting.txt": "7ba21d2ba17d39be5882e182b754d9c7724f891caeb63526a7fac2dbcf5ff731",
+          "tasks/settlement.txt": "80d581628972cce9e28348e218a2b079770704b4ca019e5f6f8cc940a7023c32"
+        },
+        "tests_sha256_declared": {
+          "test_distributed_fixture.py": "de1cbe17630acbe26a233c77b5697707511ca30cc4c7256c55b4273df2564981",
+          "test_distributed_study.py": "9491ee11e85a16dea7e099c11146fd6a9475d4c2e29813029ad9f10906315a33"
+        }
+      }
+    },
+    {
+      "stage": "calibration",
+      "candidate": 2,
+      "frozen_at": "2026-09-09T09:45:57.885491+00:00",
+      "projects": [
+        {
+          "label": "B1",
+          "condition": "B",
+          "status": "completed_reviewed",
+          "accepted": true,
+          "autonomous_complete": true,
+          "native_identity_verified": true,
+          "workers": [
+            {
+              "role": "catalog",
+              "started_at": "2026-09-09T09:46:08.870935+00:00",
+              "finished_at": "2026-09-09T09:54:59.462458+00:00",
+              "duration_seconds": 530.59152745,
+              "start_seconds": 0.000262928,
+              "end_seconds": 530.591790378,
+              "exit_code": 0,
+              "timed_out": false,
+              "stream_complete": true,
+              "native_identity_verified": true,
+              "tokens": {
+                "input_tokens": 414385,
+                "cached_input_tokens": 369920,
+                "cache_write_input_tokens": 0,
+                "output_tokens": 15630,
+                "reasoning_output_tokens": 2551,
+                "total_tokens": 430015
+              },
+              "token_usage_status": "last_observed_cumulative",
+              "tools": {
+                "native_paired_call_count": 11,
+                "pi_tagged_native_call_count": 0,
+                "pi_tagged_command_count": 0,
+                "pi_tagged_native_seconds": 0,
+                "pi_tagged_command_output_bytes": 0,
+                "pi_tagged_native_output_bytes": 0,
+                "enrollment_completed_seconds": null,
+                "onboarding_observed_span_seconds": null,
+                "pi_failed_commands": 0,
+                "pi_operation_candidates": {}
+              },
+              "edits": {
+                "patch_call_candidates": 4,
+                "file_change_events": 3,
+                "completed_file_change_events": 3,
+                "failed_file_change_events": 0,
+                "reported_relative_paths": [
+                  "catalog/CONTRACT.md",
+                  "catalog/__init__.py",
+                  "catalog/test_returns.py"
+                ],
+                "omitted_path_entries": 0
+              },
+              "native_sha256_declared_by_analysis": "551bf0dbff01e5645da2a8e73cc6362621c5338ecd999198b370a020854148b8"
+            },
+            {
+              "role": "orders",
+              "started_at": "2026-09-09T09:46:08.871397+00:00",
+              "finished_at": "2026-09-09T09:57:26.009250+00:00",
+              "duration_seconds": 677.137857282,
+              "start_seconds": 0.000724144,
+              "end_seconds": 677.138581426,
+              "exit_code": 0,
+              "timed_out": false,
+              "stream_complete": true,
+              "native_identity_verified": true,
+              "tokens": {
+                "input_tokens": 1014463,
+                "cached_input_tokens": 963968,
+                "cache_write_input_tokens": 0,
+                "output_tokens": 19361,
+                "reasoning_output_tokens": 4447,
+                "total_tokens": 1033824
+              },
+              "token_usage_status": "last_observed_cumulative",
+              "tools": {
+                "native_paired_call_count": 23,
+                "pi_tagged_native_call_count": 0,
+                "pi_tagged_command_count": 0,
+                "pi_tagged_native_seconds": 0,
+                "pi_tagged_command_output_bytes": 0,
+                "pi_tagged_native_output_bytes": 0,
+                "enrollment_completed_seconds": null,
+                "onboarding_observed_span_seconds": null,
+                "pi_failed_commands": 0,
+                "pi_operation_candidates": {}
+              },
+              "edits": {
+                "patch_call_candidates": 9,
+                "file_change_events": 7,
+                "completed_file_change_events": 7,
+                "failed_file_change_events": 0,
+                "reported_relative_paths": [
+                  "orders/CONTRACT.md",
+                  "orders/__init__.py",
+                  "orders/test_orders.py"
+                ],
+                "omitted_path_entries": 0
+              },
+              "native_sha256_declared_by_analysis": "4687ceb3c9a6b80b3f7e3b208d4600538c6df32d0ad77a9df9ca8b6e5d7a1ca7"
+            },
+            {
+              "role": "settlement",
+              "started_at": "2026-09-09T09:46:08.871196+00:00",
+              "finished_at": "2026-09-09T09:56:54.569452+00:00",
+              "duration_seconds": 645.698254847,
+              "start_seconds": 0.000529024,
+              "end_seconds": 645.698783871,
+              "exit_code": 0,
+              "timed_out": false,
+              "stream_complete": true,
+              "native_identity_verified": true,
+              "tokens": {
+                "input_tokens": 520813,
+                "cached_input_tokens": 435968,
+                "cache_write_input_tokens": 0,
+                "output_tokens": 19174,
+                "reasoning_output_tokens": 4417,
+                "total_tokens": 539987
+              },
+              "token_usage_status": "last_observed_cumulative",
+              "tools": {
+                "native_paired_call_count": 12,
+                "pi_tagged_native_call_count": 0,
+                "pi_tagged_command_count": 0,
+                "pi_tagged_native_seconds": 0,
+                "pi_tagged_command_output_bytes": 0,
+                "pi_tagged_native_output_bytes": 0,
+                "enrollment_completed_seconds": null,
+                "onboarding_observed_span_seconds": null,
+                "pi_failed_commands": 0,
+                "pi_operation_candidates": {}
+              },
+              "edits": {
+                "patch_call_candidates": 3,
+                "file_change_events": 2,
+                "completed_file_change_events": 2,
+                "failed_file_change_events": 0,
+                "reported_relative_paths": [
+                  "settlement/CONTRACT.md",
+                  "settlement/__init__.py",
+                  "settlement/test_settlement.py"
+                ],
+                "omitted_path_entries": 0
+              },
+              "native_sha256_declared_by_analysis": "c1ecf75c21a06d387420332a6802b6b0429196a5d87925c365b9b503a3a82317"
+            },
+            {
+              "role": "reporting",
+              "started_at": "2026-09-09T09:46:08.870676+00:00",
+              "finished_at": "2026-09-09T09:58:30.738879+00:00",
+              "duration_seconds": 741.868208487,
+              "start_seconds": 0.0,
+              "end_seconds": 741.868208487,
+              "exit_code": 0,
+              "timed_out": false,
+              "stream_complete": true,
+              "native_identity_verified": true,
+              "tokens": {
+                "input_tokens": 610614,
+                "cached_input_tokens": 574848,
+                "cache_write_input_tokens": 0,
+                "output_tokens": 15021,
+                "reasoning_output_tokens": 1358,
+                "total_tokens": 625635
+              },
+              "token_usage_status": "last_observed_cumulative",
+              "tools": {
+                "native_paired_call_count": 14,
+                "pi_tagged_native_call_count": 0,
+                "pi_tagged_command_count": 0,
+                "pi_tagged_native_seconds": 0,
+                "pi_tagged_command_output_bytes": 0,
+                "pi_tagged_native_output_bytes": 0,
+                "enrollment_completed_seconds": null,
+                "onboarding_observed_span_seconds": null,
+                "pi_failed_commands": 0,
+                "pi_operation_candidates": {}
+              },
+              "edits": {
+                "patch_call_candidates": 4,
+                "file_change_events": 5,
+                "completed_file_change_events": 5,
+                "failed_file_change_events": 0,
+                "reported_relative_paths": [
+                  "reporting/CONTRACT.md",
+                  "reporting/__init__.py",
+                  "reporting/test_reporting.py"
+                ],
+                "omitted_path_entries": 0
+              },
+              "native_sha256_declared_by_analysis": "74f38de58bbe030707461a27bccff7f515d2ccf9ceb876f5fbac7492f4486ae3"
+            }
+          ],
+          "provenance": {
+            "plan_sha256": "6b92a54fe7dfa2b742b460816e0acbe31122b795259992b9437c68e499205435",
+            "result_sha256": "387cefdf45e6286d569f7f7ba01e8a039d489c8fc2a66f1b26c310c9e5e6123f",
+            "worker_analysis_sha256": "b5dffa4e27ab94297f24cf0cf69675aa0b3560eed9c85a9510740ab64fdcdaf9",
+            "replay_sha256": "fd0aeb24f10a9769786d821035613a6a0a5bb06f738bdae40db1b5daa83b885c",
+            "review_sha256": "92e9f7c07ce21876d8e29e001d27404609e4983daf72d48bd9ca382d52ff3527",
+            "history_sha256_declared_by_review": "d188bd56c6bd1ef7160b7c414714435f58844b05b8ef32594dfe7af14d82e40c",
+            "native_sha256_declared_by_review": {
+              "catalog": "551bf0dbff01e5645da2a8e73cc6362621c5338ecd999198b370a020854148b8",
+              "orders": "4687ceb3c9a6b80b3f7e3b208d4600538c6df32d0ad77a9df9ca8b6e5d7a1ca7",
+              "settlement": "c1ecf75c21a06d387420332a6802b6b0429196a5d87925c365b9b503a3a82317",
+              "reporting": "74f38de58bbe030707461a27bccff7f515d2ccf9ceb876f5fbac7492f4486ae3"
+            },
+            "before_sha256_declared_by_plan": "09c6e4c6e795bebda5539fe1696e60cd5e7d2d102e43942a9d81ad80e20ba71c",
+            "recorder_sha256_declared_by_plan": "a60be3c061db37454bc45b3ede64c78a1c77ce5427c01d5b74c3fc49908445a8",
+            "pi_commit": "689a91979e313ac295e2e9277d82b4c9d0dff573",
+            "input_hashes_declared_by_plan": {
+              "catalog.txt": "133233c158f40cbad961b66a61fd4a6d6ad96b93713d5f96409e49e9e0eb9e97",
+              "orders.txt": "11e898c1b076c14820495b60dc81abf1277f63d00dccd8ddd905fe1641c5708e",
+              "settlement.txt": "9d1b882515372f67dd1c027ddae40b961a2d06a88c9475d9bef7a50db055d676",
+              "reporting.txt": "2131b446c2e5e772db156aa7f81520ae3bb2000107da67a589326546f610b3c7",
+              "check_contract.py": "4038acf5a9a839cee9e131d2b774d5f7bb1ae4d5dba2b1e46814a8a6bec572f0"
+            }
+          },
+          "model": "gpt-5.6-sol",
+          "effort": "medium",
+          "pi_enabled": false,
+          "started_at": "2026-09-09T09:46:08.870676+00:00",
+          "finished_at": "2026-09-09T09:58:30.738879+00:00",
+          "outcomes": {
+            "groups": [
+              {
+                "name": "cancellation_reordering",
+                "passed": true,
+                "tests_run": null,
+                "failures": null,
+                "errors": null,
+                "details_omitted": false
+              },
+              {
+                "name": "deferred_settlement",
+                "passed": true,
+                "tests_run": null,
+                "failures": null,
+                "errors": null,
+                "details_omitted": false
+              },
+              {
+                "name": "durable_order_outbox",
+                "passed": true,
+                "tests_run": null,
+                "failures": null,
+                "errors": null,
+                "details_omitted": false
+              },
+              {
+                "name": "integrated_replay",
+                "passed": true,
+                "tests_run": null,
+                "failures": null,
+                "errors": null,
+                "details_omitted": false
+              },
+              {
+                "name": "legacy_workflow",
+                "passed": true,
+                "tests_run": null,
+                "failures": null,
+                "errors": null,
+                "details_omitted": false
+              },
+              {
+                "name": "migration_and_restart",
+                "passed": true,
+                "tests_run": null,
+                "failures": null,
+                "errors": null,
+                "details_omitted": false
+              },
+              {
+                "name": "mixed_wire_versions",
+                "passed": true,
+                "tests_run": null,
+                "failures": null,
+                "errors": null,
+                "details_omitted": false
+              },
+              {
+                "name": "money_and_quotes",
+                "passed": true,
+                "tests_run": null,
+                "failures": null,
+                "errors": null,
+                "details_omitted": false
+              },
+              {
+                "name": "order_recovery",
+                "passed": true,
+                "tests_run": null,
+                "failures": null,
+                "errors": null,
+                "details_omitted": false
+              },
+              {
+                "name": "partial_return_cancellation",
+                "passed": true,
+                "tests_run": null,
+                "failures": null,
+                "errors": null,
+                "details_omitted": false
+              },
+              {
+                "name": "partial_return_pipeline",
+                "passed": true,
+                "tests_run": null,
+                "failures": null,
+                "errors": null,
+                "details_omitted": false
+              },
+              {
+                "name": "partial_return_recovery",
+                "passed": true,
+                "tests_run": null,
+                "failures": null,
+                "errors": null,
+                "details_omitted": false
+              },
+              {
+                "name": "reporting_late_join",
+                "passed": true,
+                "tests_run": null,
+                "failures": null,
+                "errors": null,
+                "details_omitted": false
+              },
+              {
+                "name": "reservation_atomicity",
+                "passed": true,
+                "tests_run": null,
+                "failures": null,
+                "errors": null,
+                "details_omitted": false
+              },
+              {
+                "name": "validation_is_atomic",
+                "passed": true,
+                "tests_run": null,
+                "failures": null,
+                "errors": null,
+                "details_omitted": false
+              }
+            ],
+            "components": [
+              {
+                "name": "catalog",
+                "passed": true,
+                "tests_run": 5,
+                "failures": 0,
+                "errors": 0,
+                "details_omitted": false
+              },
+              {
+                "name": "orders",
+                "passed": true,
+                "tests_run": 5,
+                "failures": 0,
+                "errors": 0,
+                "details_omitted": false
+              },
+              {
+                "name": "reporting",
+                "passed": true,
+                "tests_run": 4,
+                "failures": 0,
+                "errors": 0,
+                "details_omitted": false
+              },
+              {
+                "name": "settlement",
+                "passed": true,
+                "tests_run": 4,
+                "failures": 0,
+                "errors": 0,
+                "details_omitted": false
+              }
+            ],
+            "failed_contracts": [],
+            "evaluation_error_present": false
+          },
+          "timing": {
+            "setup_seconds": 0.018157454003812745,
+            "archive_seconds": 0.02176573,
+            "verification_seconds": 0.361512975,
+            "project_seconds": 742.253178536
+          },
+          "concurrency": {
+            "worker_interval_seconds": 741.868208487,
+            "worker_seconds": 2595.295848066,
+            "factor": 3.4983246597922903,
+            "max_simultaneous": 4,
+            "active_intervals": [
+              {
+                "start_seconds": 0.0,
+                "end_seconds": 0.000262928,
+                "active": 1
+              },
+              {
+                "start_seconds": 0.000262928,
+                "end_seconds": 0.000529024,
+                "active": 2
+              },
+              {
+                "start_seconds": 0.000529024,
+                "end_seconds": 0.000724144,
+                "active": 3
+              },
+              {
+                "start_seconds": 0.000724144,
+                "end_seconds": 530.591790378,
+                "active": 4
+              },
+              {
+                "start_seconds": 530.591790378,
+                "end_seconds": 645.698783871,
+                "active": 3
+              },
+              {
+                "start_seconds": 645.698783871,
+                "end_seconds": 677.138581426,
+                "active": 2
+              },
+              {
+                "start_seconds": 677.138581426,
+                "end_seconds": 741.868208487,
+                "active": 1
+              }
+            ]
+          },
+          "replay": {
+            "first_accepted_sample_seconds": 599.422099938,
+            "durable_accepted_sample_seconds": 599.422099938,
+            "final_sample_matches_final_score": true,
+            "sampled_state_count": 18,
+            "evaluation_error_state_count": 0
+          },
+          "review": {
+            "available": true,
+            "infrastructure_failure": false,
+            "integrity_failure": false
+          },
+          "tokens_last_observed_sum": {
+            "input_tokens": 2560275,
+            "cached_input_tokens": 2344704,
+            "cache_write_input_tokens": 0,
+            "output_tokens": 69186,
+            "reasoning_output_tokens": 12773,
+            "total_tokens": 2629461
+          },
+          "token_totals_include_partial_timeout": false
+        },
+        {
+          "label": "B2",
+          "condition": "B",
+          "status": "completed_reviewed",
+          "accepted": true,
+          "autonomous_complete": true,
+          "native_identity_verified": true,
+          "workers": [
+            {
+              "role": "catalog",
+              "started_at": "2026-09-09T10:01:00.054849+00:00",
+              "finished_at": "2026-09-09T10:08:59.073859+00:00",
+              "duration_seconds": 479.019016177,
+              "start_seconds": 0.0,
+              "end_seconds": 479.019016177,
+              "exit_code": 0,
+              "timed_out": false,
+              "stream_complete": true,
+              "native_identity_verified": true,
+              "tokens": {
+                "input_tokens": 666372,
+                "cached_input_tokens": 621568,
+                "cache_write_input_tokens": 0,
+                "output_tokens": 13830,
+                "reasoning_output_tokens": 2964,
+                "total_tokens": 680202
+              },
+              "token_usage_status": "last_observed_cumulative",
+              "tools": {
+                "native_paired_call_count": 16,
+                "pi_tagged_native_call_count": 0,
+                "pi_tagged_command_count": 0,
+                "pi_tagged_native_seconds": 0,
+                "pi_tagged_command_output_bytes": 0,
+                "pi_tagged_native_output_bytes": 0,
+                "enrollment_completed_seconds": null,
+                "onboarding_observed_span_seconds": null,
+                "pi_failed_commands": 0,
+                "pi_operation_candidates": {}
+              },
+              "edits": {
+                "patch_call_candidates": 5,
+                "file_change_events": 4,
+                "completed_file_change_events": 4,
+                "failed_file_change_events": 0,
+                "reported_relative_paths": [
+                  "catalog/CONTRACT.md",
+                  "catalog/__init__.py",
+                  "catalog/test_catalog.py"
+                ],
+                "omitted_path_entries": 0
+              },
+              "native_sha256_declared_by_analysis": "3bb0b4137f7880803e18b8ae1a12ee46a1d271fb3bd8d3d8d2c4218a0b96b7df"
+            },
+            {
+              "role": "orders",
+              "started_at": "2026-09-09T10:01:00.056099+00:00",
+              "finished_at": "2026-09-09T10:10:42.879347+00:00",
+              "duration_seconds": 582.823254064,
+              "start_seconds": 0.001253728,
+              "end_seconds": 582.824507792,
+              "exit_code": 0,
+              "timed_out": false,
+              "stream_complete": true,
+              "native_identity_verified": true,
+              "tokens": {
+                "input_tokens": 657160,
+                "cached_input_tokens": 609408,
+                "cache_write_input_tokens": 0,
+                "output_tokens": 16244,
+                "reasoning_output_tokens": 3412,
+                "total_tokens": 673404
+              },
+              "token_usage_status": "last_observed_cumulative",
+              "tools": {
+                "native_paired_call_count": 16,
+                "pi_tagged_native_call_count": 0,
+                "pi_tagged_command_count": 0,
+                "pi_tagged_native_seconds": 0,
+                "pi_tagged_command_output_bytes": 0,
+                "pi_tagged_native_output_bytes": 0,
+                "enrollment_completed_seconds": null,
+                "onboarding_observed_span_seconds": null,
+                "pi_failed_commands": 0,
+                "pi_operation_candidates": {}
+              },
+              "edits": {
+                "patch_call_candidates": 6,
+                "file_change_events": 5,
+                "completed_file_change_events": 5,
+                "failed_file_change_events": 0,
+                "reported_relative_paths": [
+                  "orders/CONTRACT.md",
+                  "orders/__init__.py",
+                  "orders/test_orders.py"
+                ],
+                "omitted_path_entries": 0
+              },
+              "native_sha256_declared_by_analysis": "fa77e18ec994115e56e5b0cd49d159089fcde5dc4d9e014ef0fefe5a51b6e231"
+            },
+            {
+              "role": "settlement",
+              "started_at": "2026-09-09T10:01:00.056757+00:00",
+              "finished_at": "2026-09-09T10:11:06.862628+00:00",
+              "duration_seconds": 606.805873332,
+              "start_seconds": 0.001913232,
+              "end_seconds": 606.807786564,
+              "exit_code": 0,
+              "timed_out": false,
+              "stream_complete": true,
+              "native_identity_verified": true,
+              "tokens": {
+                "input_tokens": 610945,
+                "cached_input_tokens": 549632,
+                "cache_write_input_tokens": 0,
+                "output_tokens": 17563,
+                "reasoning_output_tokens": 4141,
+                "total_tokens": 628508
+              },
+              "token_usage_status": "last_observed_cumulative",
+              "tools": {
+                "native_paired_call_count": 14,
+                "pi_tagged_native_call_count": 0,
+                "pi_tagged_command_count": 0,
+                "pi_tagged_native_seconds": 0,
+                "pi_tagged_command_output_bytes": 0,
+                "pi_tagged_native_output_bytes": 0,
+                "enrollment_completed_seconds": null,
+                "onboarding_observed_span_seconds": null,
+                "pi_failed_commands": 0,
+                "pi_operation_candidates": {}
+              },
+              "edits": {
+                "patch_call_candidates": 4,
+                "file_change_events": 3,
+                "completed_file_change_events": 3,
+                "failed_file_change_events": 0,
+                "reported_relative_paths": [
+                  "settlement/CONTRACT.md",
+                  "settlement/__init__.py",
+                  "settlement/test_settlement.py"
+                ],
+                "omitted_path_entries": 0
+              },
+              "native_sha256_declared_by_analysis": "ad7b8ae9a2b9495e6a4e94679ec066a76aa6738cddfac1570af35843432bc95f"
+            },
+            {
+              "role": "reporting",
+              "started_at": "2026-09-09T10:01:00.056636+00:00",
+              "finished_at": "2026-09-09T10:11:32.532589+00:00",
+              "duration_seconds": 632.475954306,
+              "start_seconds": 0.001791248,
+              "end_seconds": 632.477745554,
+              "exit_code": 0,
+              "timed_out": false,
+              "stream_complete": true,
+              "native_identity_verified": true,
+              "tokens": {
+                "input_tokens": 1139634,
+                "cached_input_tokens": 1088256,
+                "cache_write_input_tokens": 0,
+                "output_tokens": 18207,
+                "reasoning_output_tokens": 3328,
+                "total_tokens": 1157841
+              },
+              "token_usage_status": "last_observed_cumulative",
+              "tools": {
+                "native_paired_call_count": 27,
+                "pi_tagged_native_call_count": 0,
+                "pi_tagged_command_count": 0,
+                "pi_tagged_native_seconds": 0,
+                "pi_tagged_command_output_bytes": 0,
+                "pi_tagged_native_output_bytes": 0,
+                "enrollment_completed_seconds": null,
+                "onboarding_observed_span_seconds": null,
+                "pi_failed_commands": 0,
+                "pi_operation_candidates": {}
+              },
+              "edits": {
+                "patch_call_candidates": 9,
+                "file_change_events": 6,
+                "completed_file_change_events": 6,
+                "failed_file_change_events": 0,
+                "reported_relative_paths": [
+                  "reporting/CONTRACT.md",
+                  "reporting/__init__.py",
+                  "reporting/test_reporting.py"
+                ],
+                "omitted_path_entries": 0
+              },
+              "native_sha256_declared_by_analysis": "ba39773868d12a9f9f053de899ac128fdf83e95ea02a9eed9eb0829b0576ed92"
+            }
+          ],
+          "provenance": {
+            "plan_sha256": "6503c26a9b418fd60e13c9b30cac69b810eb24749236e8b9c0cef5b4ba9068ca",
+            "result_sha256": "7aaa564fb50c4f43a7e4a201a9e2ff5d3fafc9b49235bec6b7a164bcd164ca3e",
+            "worker_analysis_sha256": "4ede77ed2faf1d665970af8b5459c190d59e2b265cb34cae1cdbb15ea3b4500f",
+            "replay_sha256": "8801175f3733edb3419a1f895ad3ff57d76a6ccefc3b4a99473cc51bf162c4d0",
+            "review_sha256": "1402053b029f96c8dd94410923ec8dafad2e9066e65b7ceafdacfee168dd15e5",
+            "history_sha256_declared_by_review": "faee276504f726f804687fb44ba21d593729c829bcc6e67532b4bf1c78eb1f9c",
+            "native_sha256_declared_by_review": {
+              "catalog": "3bb0b4137f7880803e18b8ae1a12ee46a1d271fb3bd8d3d8d2c4218a0b96b7df",
+              "orders": "fa77e18ec994115e56e5b0cd49d159089fcde5dc4d9e014ef0fefe5a51b6e231",
+              "settlement": "ad7b8ae9a2b9495e6a4e94679ec066a76aa6738cddfac1570af35843432bc95f",
+              "reporting": "ba39773868d12a9f9f053de899ac128fdf83e95ea02a9eed9eb0829b0576ed92"
+            },
+            "before_sha256_declared_by_plan": "09c6e4c6e795bebda5539fe1696e60cd5e7d2d102e43942a9d81ad80e20ba71c",
+            "recorder_sha256_declared_by_plan": "a60be3c061db37454bc45b3ede64c78a1c77ce5427c01d5b74c3fc49908445a8",
+            "pi_commit": "689a91979e313ac295e2e9277d82b4c9d0dff573",
+            "input_hashes_declared_by_plan": {
+              "catalog.txt": "133233c158f40cbad961b66a61fd4a6d6ad96b93713d5f96409e49e9e0eb9e97",
+              "orders.txt": "11e898c1b076c14820495b60dc81abf1277f63d00dccd8ddd905fe1641c5708e",
+              "settlement.txt": "9d1b882515372f67dd1c027ddae40b961a2d06a88c9475d9bef7a50db055d676",
+              "reporting.txt": "2131b446c2e5e772db156aa7f81520ae3bb2000107da67a589326546f610b3c7",
+              "check_contract.py": "4038acf5a9a839cee9e131d2b774d5f7bb1ae4d5dba2b1e46814a8a6bec572f0"
+            }
+          },
+          "model": "gpt-5.6-sol",
+          "effort": "medium",
+          "pi_enabled": false,
+          "started_at": "2026-09-09T10:01:00.054849+00:00",
+          "finished_at": "2026-09-09T10:11:32.532589+00:00",
+          "outcomes": {
+            "groups": [
+              {
+                "name": "cancellation_reordering",
+                "passed": true,
+                "tests_run": null,
+                "failures": null,
+                "errors": null,
+                "details_omitted": false
+              },
+              {
+                "name": "deferred_settlement",
+                "passed": true,
+                "tests_run": null,
+                "failures": null,
+                "errors": null,
+                "details_omitted": false
+              },
+              {
+                "name": "durable_order_outbox",
+                "passed": true,
+                "tests_run": null,
+                "failures": null,
+                "errors": null,
+                "details_omitted": false
+              },
+              {
+                "name": "integrated_replay",
+                "passed": true,
+                "tests_run": null,
+                "failures": null,
+                "errors": null,
+                "details_omitted": false
+              },
+              {
+                "name": "legacy_workflow",
+                "passed": true,
+                "tests_run": null,
+                "failures": null,
+                "errors": null,
+                "details_omitted": false
+              },
+              {
+                "name": "migration_and_restart",
+                "passed": true,
+                "tests_run": null,
+                "failures": null,
+                "errors": null,
+                "details_omitted": false
+              },
+              {
+                "name": "mixed_wire_versions",
+                "passed": true,
+                "tests_run": null,
+                "failures": null,
+                "errors": null,
+                "details_omitted": false
+              },
+              {
+                "name": "money_and_quotes",
+                "passed": true,
+                "tests_run": null,
+                "failures": null,
+                "errors": null,
+                "details_omitted": false
+              },
+              {
+                "name": "order_recovery",
+                "passed": true,
+                "tests_run": null,
+                "failures": null,
+                "errors": null,
+                "details_omitted": false
+              },
+              {
+                "name": "partial_return_cancellation",
+                "passed": true,
+                "tests_run": null,
+                "failures": null,
+                "errors": null,
+                "details_omitted": false
+              },
+              {
+                "name": "partial_return_pipeline",
+                "passed": true,
+                "tests_run": null,
+                "failures": null,
+                "errors": null,
+                "details_omitted": false
+              },
+              {
+                "name": "partial_return_recovery",
+                "passed": true,
+                "tests_run": null,
+                "failures": null,
+                "errors": null,
+                "details_omitted": false
+              },
+              {
+                "name": "reporting_late_join",
+                "passed": true,
+                "tests_run": null,
+                "failures": null,
+                "errors": null,
+                "details_omitted": false
+              },
+              {
+                "name": "reservation_atomicity",
+                "passed": true,
+                "tests_run": null,
+                "failures": null,
+                "errors": null,
+                "details_omitted": false
+              },
+              {
+                "name": "validation_is_atomic",
+                "passed": true,
+                "tests_run": null,
+                "failures": null,
+                "errors": null,
+                "details_omitted": false
+              }
+            ],
+            "components": [
+              {
+                "name": "catalog",
+                "passed": true,
+                "tests_run": 4,
+                "failures": 0,
+                "errors": 0,
+                "details_omitted": false
+              },
+              {
+                "name": "orders",
+                "passed": true,
+                "tests_run": 4,
+                "failures": 0,
+                "errors": 0,
+                "details_omitted": false
+              },
+              {
+                "name": "reporting",
+                "passed": true,
+                "tests_run": 4,
+                "failures": 0,
+                "errors": 0,
+                "details_omitted": false
+              },
+              {
+                "name": "settlement",
+                "passed": true,
+                "tests_run": 5,
+                "failures": 0,
+                "errors": 0,
+                "details_omitted": false
+              }
+            ],
+            "failed_contracts": [],
+            "evaluation_error_present": false
+          },
+          "timing": {
+            "setup_seconds": 0.01692851199186407,
+            "archive_seconds": 0.021721859,
+            "verification_seconds": 0.288471095,
+            "project_seconds": 632.789557403
+          },
+          "concurrency": {
+            "worker_interval_seconds": 632.477745554,
+            "worker_seconds": 2301.124097879,
+            "factor": 3.63826887831982,
+            "max_simultaneous": 4,
+            "active_intervals": [
+              {
+                "start_seconds": 0.0,
+                "end_seconds": 0.001253728,
+                "active": 1
+              },
+              {
+                "start_seconds": 0.001253728,
+                "end_seconds": 0.001791248,
+                "active": 2
+              },
+              {
+                "start_seconds": 0.001791248,
+                "end_seconds": 0.001913232,
+                "active": 3
+              },
+              {
+                "start_seconds": 0.001913232,
+                "end_seconds": 479.019016177,
+                "active": 4
+              },
+              {
+                "start_seconds": 479.019016177,
+                "end_seconds": 582.824507792,
+                "active": 3
+              },
+              {
+                "start_seconds": 582.824507792,
+                "end_seconds": 606.807786564,
+                "active": 2
+              },
+              {
+                "start_seconds": 606.807786564,
+                "end_seconds": 632.477745554,
+                "active": 1
+              }
+            ]
+          },
+          "replay": {
+            "first_accepted_sample_seconds": 504.89175691,
+            "durable_accepted_sample_seconds": 504.89175691,
+            "final_sample_matches_final_score": true,
+            "sampled_state_count": 19,
+            "evaluation_error_state_count": 0
+          },
+          "review": {
+            "available": true,
+            "infrastructure_failure": false,
+            "integrity_failure": false
+          },
+          "tokens_last_observed_sum": {
+            "input_tokens": 3074111,
+            "cached_input_tokens": 2868864,
+            "cache_write_input_tokens": 0,
+            "output_tokens": 65844,
+            "reasoning_output_tokens": 13845,
+            "total_tokens": 3139955
+          },
+          "token_totals_include_partial_timeout": false
+        },
+        {
+          "label": "B3",
+          "condition": "B",
+          "status": "completed_reviewed",
+          "accepted": true,
+          "autonomous_complete": true,
+          "native_identity_verified": true,
+          "workers": [
+            {
+              "role": "catalog",
+              "started_at": "2026-09-09T10:13:57.303311+00:00",
+              "finished_at": "2026-09-09T10:23:00.704849+00:00",
+              "duration_seconds": 543.401542301,
+              "start_seconds": 0.000114528,
+              "end_seconds": 543.401656829,
+              "exit_code": 0,
+              "timed_out": false,
+              "stream_complete": true,
+              "native_identity_verified": true,
+              "tokens": {
+                "input_tokens": 676736,
+                "cached_input_tokens": 615936,
+                "cache_write_input_tokens": 0,
+                "output_tokens": 15931,
+                "reasoning_output_tokens": 3082,
+                "total_tokens": 692667
+              },
+              "token_usage_status": "last_observed_cumulative",
+              "tools": {
+                "native_paired_call_count": 16,
+                "pi_tagged_native_call_count": 0,
+                "pi_tagged_command_count": 0,
+                "pi_tagged_native_seconds": 0,
+                "pi_tagged_command_output_bytes": 0,
+                "pi_tagged_native_output_bytes": 0,
+                "enrollment_completed_seconds": null,
+                "onboarding_observed_span_seconds": null,
+                "pi_failed_commands": 0,
+                "pi_operation_candidates": {}
+              },
+              "edits": {
+                "patch_call_candidates": 6,
+                "file_change_events": 6,
+                "completed_file_change_events": 6,
+                "failed_file_change_events": 0,
+                "reported_relative_paths": [
+                  "catalog/CONTRACT.md",
+                  "catalog/__init__.py",
+                  "catalog/test_catalog.py"
+                ],
+                "omitted_path_entries": 0
+              },
+              "native_sha256_declared_by_analysis": "02921462d6db9db6812ea4bc70cea0186537cc53d13d0c0d9f3556645c666db8"
+            },
+            {
+              "role": "orders",
+              "started_at": "2026-09-09T10:13:57.303196+00:00",
+              "finished_at": "2026-09-09T10:23:11.539982+00:00",
+              "duration_seconds": 554.236790709,
+              "start_seconds": 0.0,
+              "end_seconds": 554.236790709,
+              "exit_code": 0,
+              "timed_out": false,
+              "stream_complete": true,
+              "native_identity_verified": true,
+              "tokens": {
+                "input_tokens": 753320,
+                "cached_input_tokens": 700928,
+                "cache_write_input_tokens": 0,
+                "output_tokens": 16252,
+                "reasoning_output_tokens": 3312,
+                "total_tokens": 769572
+              },
+              "token_usage_status": "last_observed_cumulative",
+              "tools": {
+                "native_paired_call_count": 16,
+                "pi_tagged_native_call_count": 0,
+                "pi_tagged_command_count": 0,
+                "pi_tagged_native_seconds": 0,
+                "pi_tagged_command_output_bytes": 0,
+                "pi_tagged_native_output_bytes": 0,
+                "enrollment_completed_seconds": null,
+                "onboarding_observed_span_seconds": null,
+                "pi_failed_commands": 0,
+                "pi_operation_candidates": {}
+              },
+              "edits": {
+                "patch_call_candidates": 6,
+                "file_change_events": 5,
+                "completed_file_change_events": 5,
+                "failed_file_change_events": 0,
+                "reported_relative_paths": [
+                  "orders/CONTRACT.md",
+                  "orders/__init__.py",
+                  "orders/test_orders.py"
+                ],
+                "omitted_path_entries": 0
+              },
+              "native_sha256_declared_by_analysis": "91a7aa49eec980ebe3119b91bffbd5e6ef155fac625d601e9f3b813e03e6a2be"
+            },
+            {
+              "role": "settlement",
+              "started_at": "2026-09-09T10:13:57.304896+00:00",
+              "finished_at": "2026-09-09T10:24:11.267450+00:00",
+              "duration_seconds": 613.962555136,
+              "start_seconds": 0.001704447,
+              "end_seconds": 613.964259583,
+              "exit_code": 0,
+              "timed_out": false,
+              "stream_complete": true,
+              "native_identity_verified": true,
+              "tokens": {
+                "input_tokens": 726903,
+                "cached_input_tokens": 667776,
+                "cache_write_input_tokens": 0,
+                "output_tokens": 18039,
+                "reasoning_output_tokens": 4644,
+                "total_tokens": 744942
+              },
+              "token_usage_status": "last_observed_cumulative",
+              "tools": {
+                "native_paired_call_count": 16,
+                "pi_tagged_native_call_count": 0,
+                "pi_tagged_command_count": 0,
+                "pi_tagged_native_seconds": 0,
+                "pi_tagged_command_output_bytes": 0,
+                "pi_tagged_native_output_bytes": 0,
+                "enrollment_completed_seconds": null,
+                "onboarding_observed_span_seconds": null,
+                "pi_failed_commands": 0,
+                "pi_operation_candidates": {}
+              },
+              "edits": {
+                "patch_call_candidates": 5,
+                "file_change_events": 5,
+                "completed_file_change_events": 5,
+                "failed_file_change_events": 0,
+                "reported_relative_paths": [
+                  "settlement/CONTRACT.md",
+                  "settlement/__init__.py",
+                  "settlement/test_settlement.py"
+                ],
+                "omitted_path_entries": 0
+              },
+              "native_sha256_declared_by_analysis": "a2eba7c4a07ea43a712bf15ae0d69e13138927a61cd80858126b9b900908d769"
+            },
+            {
+              "role": "reporting",
+              "started_at": "2026-09-09T10:13:57.304833+00:00",
+              "finished_at": "2026-09-09T10:25:02.171742+00:00",
+              "duration_seconds": 664.86691551,
+              "start_seconds": 0.001637631,
+              "end_seconds": 664.868553141,
+              "exit_code": 0,
+              "timed_out": false,
+              "stream_complete": true,
+              "native_identity_verified": true,
+              "tokens": {
+                "input_tokens": 739044,
+                "cached_input_tokens": 682880,
+                "cache_write_input_tokens": 0,
+                "output_tokens": 19439,
+                "reasoning_output_tokens": 3675,
+                "total_tokens": 758483
+              },
+              "token_usage_status": "last_observed_cumulative",
+              "tools": {
+                "native_paired_call_count": 17,
+                "pi_tagged_native_call_count": 0,
+                "pi_tagged_command_count": 0,
+                "pi_tagged_native_seconds": 0,
+                "pi_tagged_command_output_bytes": 0,
+                "pi_tagged_native_output_bytes": 0,
+                "enrollment_completed_seconds": null,
+                "onboarding_observed_span_seconds": null,
+                "pi_failed_commands": 0,
+                "pi_operation_candidates": {}
+              },
+              "edits": {
+                "patch_call_candidates": 5,
+                "file_change_events": 4,
+                "completed_file_change_events": 4,
+                "failed_file_change_events": 0,
+                "reported_relative_paths": [
+                  "reporting/CONTRACT.md",
+                  "reporting/__init__.py",
+                  "reporting/test_reporting.py"
+                ],
+                "omitted_path_entries": 0
+              },
+              "native_sha256_declared_by_analysis": "daf81888e61b0799f9c55c3a73a5e006c5d6602ad2b5559047f1c700565e9bfe"
+            }
+          ],
+          "provenance": {
+            "plan_sha256": "c29c157a20c19a21379e8a414ba415ed3ecf7b4b7e28efc8e762cde0616843d5",
+            "result_sha256": "344a717f70e267734fb137b91329d1f5b1789d1576067c47ac8defa97b9a5aae",
+            "worker_analysis_sha256": "663751352a1ada52eb0e3f1b8d5474a26f6b7846981305c771853cde35237408",
+            "replay_sha256": "fe412a4311bfa52763ae31477c34a7142b9c83ebb7b5da2b766b1dd5ebb2cbaf",
+            "review_sha256": "95e1fd248823b3ddffeb74284fab38b610e4ac18c75cd9ae21a45fde1de71b29",
+            "history_sha256_declared_by_review": "175d4649db18897c1c863f44ec6e513cc7a5981d7d0587c9b457cdf66b83c8ee",
+            "native_sha256_declared_by_review": {
+              "catalog": "02921462d6db9db6812ea4bc70cea0186537cc53d13d0c0d9f3556645c666db8",
+              "orders": "91a7aa49eec980ebe3119b91bffbd5e6ef155fac625d601e9f3b813e03e6a2be",
+              "settlement": "a2eba7c4a07ea43a712bf15ae0d69e13138927a61cd80858126b9b900908d769",
+              "reporting": "daf81888e61b0799f9c55c3a73a5e006c5d6602ad2b5559047f1c700565e9bfe"
+            },
+            "before_sha256_declared_by_plan": "09c6e4c6e795bebda5539fe1696e60cd5e7d2d102e43942a9d81ad80e20ba71c",
+            "recorder_sha256_declared_by_plan": "a60be3c061db37454bc45b3ede64c78a1c77ce5427c01d5b74c3fc49908445a8",
+            "pi_commit": "689a91979e313ac295e2e9277d82b4c9d0dff573",
+            "input_hashes_declared_by_plan": {
+              "catalog.txt": "133233c158f40cbad961b66a61fd4a6d6ad96b93713d5f96409e49e9e0eb9e97",
+              "orders.txt": "11e898c1b076c14820495b60dc81abf1277f63d00dccd8ddd905fe1641c5708e",
+              "settlement.txt": "9d1b882515372f67dd1c027ddae40b961a2d06a88c9475d9bef7a50db055d676",
+              "reporting.txt": "2131b446c2e5e772db156aa7f81520ae3bb2000107da67a589326546f610b3c7",
+              "check_contract.py": "4038acf5a9a839cee9e131d2b774d5f7bb1ae4d5dba2b1e46814a8a6bec572f0"
+            }
+          },
+          "model": "gpt-5.6-sol",
+          "effort": "medium",
+          "pi_enabled": false,
+          "started_at": "2026-09-09T10:13:57.303196+00:00",
+          "finished_at": "2026-09-09T10:25:02.171742+00:00",
+          "outcomes": {
+            "groups": [
+              {
+                "name": "cancellation_reordering",
+                "passed": true,
+                "tests_run": null,
+                "failures": null,
+                "errors": null,
+                "details_omitted": false
+              },
+              {
+                "name": "deferred_settlement",
+                "passed": true,
+                "tests_run": null,
+                "failures": null,
+                "errors": null,
+                "details_omitted": false
+              },
+              {
+                "name": "durable_order_outbox",
+                "passed": true,
+                "tests_run": null,
+                "failures": null,
+                "errors": null,
+                "details_omitted": false
+              },
+              {
+                "name": "integrated_replay",
+                "passed": true,
+                "tests_run": null,
+                "failures": null,
+                "errors": null,
+                "details_omitted": false
+              },
+              {
+                "name": "legacy_workflow",
+                "passed": true,
+                "tests_run": null,
+                "failures": null,
+                "errors": null,
+                "details_omitted": false
+              },
+              {
+                "name": "migration_and_restart",
+                "passed": true,
+                "tests_run": null,
+                "failures": null,
+                "errors": null,
+                "details_omitted": false
+              },
+              {
+                "name": "mixed_wire_versions",
+                "passed": true,
+                "tests_run": null,
+                "failures": null,
+                "errors": null,
+                "details_omitted": false
+              },
+              {
+                "name": "money_and_quotes",
+                "passed": true,
+                "tests_run": null,
+                "failures": null,
+                "errors": null,
+                "details_omitted": false
+              },
+              {
+                "name": "order_recovery",
+                "passed": true,
+                "tests_run": null,
+                "failures": null,
+                "errors": null,
+                "details_omitted": false
+              },
+              {
+                "name": "partial_return_cancellation",
+                "passed": true,
+                "tests_run": null,
+                "failures": null,
+                "errors": null,
+                "details_omitted": false
+              },
+              {
+                "name": "partial_return_pipeline",
+                "passed": true,
+                "tests_run": null,
+                "failures": null,
+                "errors": null,
+                "details_omitted": false
+              },
+              {
+                "name": "partial_return_recovery",
+                "passed": true,
+                "tests_run": null,
+                "failures": null,
+                "errors": null,
+                "details_omitted": false
+              },
+              {
+                "name": "reporting_late_join",
+                "passed": true,
+                "tests_run": null,
+                "failures": null,
+                "errors": null,
+                "details_omitted": false
+              },
+              {
+                "name": "reservation_atomicity",
+                "passed": true,
+                "tests_run": null,
+                "failures": null,
+                "errors": null,
+                "details_omitted": false
+              },
+              {
+                "name": "validation_is_atomic",
+                "passed": true,
+                "tests_run": null,
+                "failures": null,
+                "errors": null,
+                "details_omitted": false
+              }
+            ],
+            "components": [
+              {
+                "name": "catalog",
+                "passed": true,
+                "tests_run": 4,
+                "failures": 0,
+                "errors": 0,
+                "details_omitted": false
+              },
+              {
+                "name": "orders",
+                "passed": true,
+                "tests_run": 4,
+                "failures": 0,
+                "errors": 0,
+                "details_omitted": false
+              },
+              {
+                "name": "reporting",
+                "passed": true,
+                "tests_run": 4,
+                "failures": 0,
+                "errors": 0,
+                "details_omitted": false
+              },
+              {
+                "name": "settlement",
+                "passed": true,
+                "tests_run": 5,
+                "failures": 0,
+                "errors": 0,
+                "details_omitted": false
+              }
+            ],
+            "failed_contracts": [],
+            "evaluation_error_present": false
+          },
+          "timing": {
+            "setup_seconds": 0.018527821986936033,
+            "archive_seconds": 0.023624431,
+            "verification_seconds": 0.283294672,
+            "project_seconds": 665.177187891
+          },
+          "concurrency": {
+            "worker_interval_seconds": 664.868553141,
+            "worker_seconds": 2376.467803656,
+            "factor": 3.5743423153779657,
+            "max_simultaneous": 4,
+            "active_intervals": [
+              {
+                "start_seconds": 0.0,
+                "end_seconds": 0.000114528,
+                "active": 1
+              },
+              {
+                "start_seconds": 0.000114528,
+                "end_seconds": 0.001637631,
+                "active": 2
+              },
+              {
+                "start_seconds": 0.001637631,
+                "end_seconds": 0.001704447,
+                "active": 3
+              },
+              {
+                "start_seconds": 0.001704447,
+                "end_seconds": 543.401656829,
+                "active": 4
+              },
+              {
+                "start_seconds": 543.401656829,
+                "end_seconds": 554.236790709,
+                "active": 3
+              },
+              {
+                "start_seconds": 554.236790709,
+                "end_seconds": 613.964259583,
+                "active": 2
+              },
+              {
+                "start_seconds": 613.964259583,
+                "end_seconds": 664.868553141,
+                "active": 1
+              }
+            ]
+          },
+          "replay": {
+            "first_accepted_sample_seconds": 487.241503436,
+            "durable_accepted_sample_seconds": 487.241503436,
+            "final_sample_matches_final_score": true,
+            "sampled_state_count": 21,
+            "evaluation_error_state_count": 0
+          },
+          "review": {
+            "available": true,
+            "infrastructure_failure": false,
+            "integrity_failure": false
+          },
+          "tokens_last_observed_sum": {
+            "input_tokens": 2896003,
+            "cached_input_tokens": 2667520,
+            "cache_write_input_tokens": 0,
+            "output_tokens": 69661,
+            "reasoning_output_tokens": 14713,
+            "total_tokens": 2965664
+          },
+          "token_totals_include_partial_timeout": false
+        }
+      ],
+      "status_counts": {
+        "completed_reviewed": 3
+      },
+      "provenance": {
+        "freeze_sha256": "77e7f8e2c47059e8f06752aec900c7ab9092ed7f377233a1b0657d4cc26431ea",
+        "protocol_sha256_declared": "72bc2e5591d86e1e08678926dbda1c88bb14f8894d91a93d8130c926c195a64d",
+        "code_sha256_declared": {
+          "experiments/__init__.py": "640c5ec857918624357de75677b1802ed866d14ddbb18832e1f77b38f6f592f6",
+          "experiments/concurrency_study.py": "158e364406791ed6efae0de9cac7d26a2bec2c17f197e59955dedee5b547c967",
+          "experiments/distributed_check.py": "930bfa5f3273c94641f55c573cbf67a9f84c01041460b8d16fc83135358ae3bb",
+          "experiments/distributed_study.py": "a60be3c061db37454bc45b3ede64c78a1c77ce5427c01d5b74c3fc49908445a8",
+          "experiments/self_organizing_analysis.py": "31afa9f3654582220d75dd3f2c3ee49a78f1e8b862771ed831ec2a992108f95d",
+          "experiments/seven_seams.py": "7185c16ff9a45f3a36d432c36c9a784cca88d2fd1ef74a641e81a825f0e35d67",
+          "experiments/seven_seams_self_organizing.py": "6b4b4f512900b843a14a38a7044c5893d93ad6da2a51999123c16b3eaa6c6672"
+        },
+        "fixture_sha256_declared": {
+          "OBJECTIVE.md": "5fc121d6b3380cd4cd5967a0f953e25428c013d8034ec67bbdf02d144c9af410",
+          "README.md": "878de4c10ec682ccabb062d7af0da1bb3e58d8e01d938e37be4d9e8df0aca80a",
+          "acceptance.py": "4038acf5a9a839cee9e131d2b774d5f7bb1ae4d5dba2b1e46814a8a6bec572f0",
+          "architecture.json": "d65b7108780073028c3996101fc3baf27dff9cc5b397c75643c66a4b86967cf3",
+          "catalog/CONTRACT.md": "305b075feeb9a2cdef36fd3cb96e53c1efffd0e2b50877615aec6bc7ffba33c5",
+          "catalog/__init__.py": "827e3658ba73affd0b8b53657779f4e64c2b82d0926d1919071cd8bb79c5ab39",
+          "catalog/test_catalog.py": "2216f8660d066be59e92490cc91f876a437377d84730b798285f8df18c406014",
+          "orders/CONTRACT.md": "3257d2cdc4ab69d5427bb23578752aad424035d83045cc47ee89f5b2e0142f84",
+          "orders/__init__.py": "669507236e18c0d4d7bd764643eea3f7f2c89390cc67db0e639a09ae891774ee",
+          "orders/test_orders.py": "8f731aad6edd9722a23bd7d1685e531607f39ec987e0c95a537ee93e185360f6",
+          "reporting/CONTRACT.md": "6497b89d4ccefd69600c35ead66aa1573e937e946bd1c3c9458914f76f2de3e5",
+          "reporting/__init__.py": "396e0261b8a6bebb26b338d4bb76e5cd69e0aec711b6e4a01ed5997b7e6413a7",
+          "reporting/test_reporting.py": "93bfddece2ee590a586aec32bb6361c1f2d560b46e2e46bca3c38695a61cf73d",
+          "settlement/CONTRACT.md": "f31aa95107abc77e036ea4f5ee8ce5f37bf18368f71be0e65c41501b9f724cca",
+          "settlement/__init__.py": "1b82705ccad05bd5f5a7210d3752915de86fe7f0ad8dd6136901719faf972710",
+          "settlement/test_settlement.py": "08e84fc1ee13c1ff9d832159c556f87527385e162b6551e9d6e9e015fa9d2d1c",
+          "tasks/catalog.txt": "133233c158f40cbad961b66a61fd4a6d6ad96b93713d5f96409e49e9e0eb9e97",
+          "tasks/orders.txt": "11e898c1b076c14820495b60dc81abf1277f63d00dccd8ddd905fe1641c5708e",
+          "tasks/reporting.txt": "2131b446c2e5e772db156aa7f81520ae3bb2000107da67a589326546f610b3c7",
+          "tasks/settlement.txt": "9d1b882515372f67dd1c027ddae40b961a2d06a88c9475d9bef7a50db055d676"
+        },
+        "tests_sha256_declared": {
+          "test_distributed_fixture.py": "c0046798cc6186bf84cfe74fbeccf883d9b5c5badba4610c2536f5d70561a475",
+          "test_distributed_study.py": "9491ee11e85a16dea7e099c11146fd6a9475d4c2e29813029ad9f10906315a33"
+        }
+      }
+    }
+  ],
+  "limitations": {
+    "scope": "Registered software batches only; no invented rows for unallocated stages. Unregistered prelaunch rejections need a separate curated report.",
+    "unfinished": "Started without complete result and analysis is unfinished, not a verified live process or a failure. Only marker existence is checked.",
+    "privacy": "Free-form details, commands, messages, session IDs and raw logs are omitted. Output paths are filtered lexical checkout-relative names, not resolved files.",
+    "tokens": "Cached input is a subset of input; reasoning output is a subset of output. Missing fields remain null. Totals require every planned worker field. Last cumulative samples include post-probe work; timeout usage is partial.",
+    "pi": "PI tags and operation names are textual candidates, not successful invocations or causal influence. Native paired call time includes mixed work and excludes intervening reasoning. Command output bytes and native output bytes are distinct; neither is an exact PI token counter. Onboarding span includes intervening work.",
+    "edits": "Patch-call candidates and file-change events are recorded attempts, not retained contributions or all shell writes. Relative paths do not establish ownership. No duplication, rework or efficiency score is inferred.",
+    "timing": "Worker/process window, final project verification and sampled first/durable source acceptance are separate. Replay is non-atomic and already recorded; this exporter never runs it. Active intervals count processes, not useful work.",
+    "provenance": "Registry/freeze/plan/result/analysis/replay/review JSON digests are computed from read bytes. Code/fixture manifests and history/native digests are copied declarations, not independently rehashed source or logs. Review result/analysis bindings are checked; qualitative review text is omitted."
+  },
+  "provenance": {
+    "registry_sha256": "a4409384465c5a900e80ec5ab23a350340f5bc32888e130bef5f87ad1dc176b1",
+    "protocol_freeze_sha256_declared": "7085277311b2ccf2205b7c253adb103f5d0975935929acc1d73867b2ab104ecd",
+    "native_version_declared": "codex-cli 0.153.4",
+    "native_entry_sha256_declared": "61b0194f3bb6534439c8d26a3ed57d0805f84b884588b761795323eeb92fcf70",
+    "pi_sha256_declared": {
+      "pyproject.toml": "5dff4b8d567b614b2d9b285e39cf8494af76b4b9cfcdac6fe1f48fd8a8859277",
+      "docs/ARCHITECTURE.md": "b82de9e4e2fb4ef3f3d43dff00b58d20fa96622ec7e42108526df087bf94ee0d",
+      "docs/OPERATIONS.md": "67567495b96db14f9afaef7e018c447be396fd43aa5c32f8c281e57746a341be",
+      "docs/READ_MODEL.md": "b79d3f0d34495c98f3b4beff54056117284b623c9bc318191affa423e8cf313b",
+      "docs/REPAIR_COORDINATION.md": "07bfc1e11428d10391f454836b973f502bc7698055ff3392d1205eafb806d102",
+      "docs/REPORTING.md": "82b50dc77d70d1e149b1dd0db77317ab7b1e6b7b538ee8a7fbeb565984505b90",
+      "docs/SESSION_CONNECTOR.md": "9b0ebe85c62411d738480a54d3d8c241204ae3d805a1b2a1f00c0742a9be9519",
+      "docs/TASK_REGISTRATION.md": "7744348589b5c1b8831568d631105a9f76259f30ed688989a63cd38ff888e70c",
+      "project_intent/__init__.py": "7bde1f1a688239e59dddcbc8fa8146e6f143691a07f79fad1aa3ae2afe305bd4",
+      "project_intent/_worker_cli.py": "42a0d2d49ff74fd2f5c7108197c989815825a946eae1efd3294efdb80a3c3684",
+      "project_intent/activity.py": "73ff143176ccff4f474b32021f987c758b62ecae93f463fe01c22f111a8de001",
+      "project_intent/activity_history.py": "32bc5b36f0dd368189d2d8c6daf909bb22d86308129f110393e32939f33c7707",
+      "project_intent/cli.py": "a120d68a6408b794ab33eb19862f3c144daae5df7c448dcdfed60462e259c0df",
+      "project_intent/enrollment.py": "b27eae551ee820987747992da19816fe2cd0654b3f488de07ab6123746b3410d",
+      "project_intent/model.py": "3f19bb2ed5d041b15d29ef58f31774adee9dd348bd1fc554daf3e9d7fc0f6128",
+      "project_intent/onboarding.py": "2509dc848984aea6a1855c2ac6a978ec7835aa9abf7e892e820dbf6e26c93fad",
+      "project_intent/provider.py": "eff2b8dd4c6704a24a9f9052ed96a37d102f4918e5ebbcdba837557aa6ac68f1",
+      "project_intent/provider_write.py": "5200c44c1ac719c9880b2489940f1708f01e874ce5d4eb5c442f474c4bc3ca63",
+      "project_intent/repairs.py": "1951f412deb41c09dbc22fd244c74fac5671698037ec2a61df4fed91dbe60f65",
+      "project_intent/reporting.py": "ca5d49f457d1c086d26cc8b0306a926f8b045b22e9df8b5f3ccbba6be1fc2ea5",
+      "project_intent/runtime.py": "5cdcb6393da0925e439b5dc08ddb97605f8a7b92236ac926a79957b2435036d4",
+      "project_intent/server.py": "afac0701070c0b9cfb625839c8f9dfad5732cb8ee78afc00eba1d2ef60e3169c",
+      "project_intent/session_connector.py": "8ff44f813d4af97110a1fb6480c5ac227ab02953360062c914d6514cd4f939ba",
+      "project_intent/task_registration.py": "ec552852c14fd5b1ed9fba9b88520011651585244865cecb1fc9e8124d899f00",
+      "project_intent/worker_context.py": "0897ea931489efadf238a9deb92da5a914d705b5d22077c48857606beb866211",
+      "project_intent/workspace_inventory.py": "6d6605ab1b372f242c4486b249ed53971d801bccbd73b7587b8ca677b2562395",
+      "project_intent/web/app.js": "4a1a5c0673bba7bde0e468e30587432f13f2ea920ec75203fa855a5db5599ea4",
+      "project_intent/web/design-lab.css": "3c2c7cff432984324a920408bfa7632c4787f36ed1f59f526e6926c8cfba9b03",
+      "project_intent/web/design-lab.js": "78911fc1f2fd5c96350ebc7d2f6e2cd82f94de68b26bd7f35e78e05c76ef8198",
+      "project_intent/web/identity-facts.js": "915884edaebc5c9dca41871e0d7bd77f7932696380ec932b5fd05eaa2492cf3c",
+      "project_intent/web/index.html": "6c4c52a829447b5f5758176c1706b91a3abe96a3c83b5346085b4ee51840b966",
+      "project_intent/web/minimap.css": "019b65a3ddc37cfce88eb35f96406362a3d4813b122b81dcebfb3f0675edcebc",
+      "project_intent/web/minimap.js": "3f6196a83a22555a26f6ffd6945e3bce8448eabb2bdb2cbcd730d0baa002f88d",
+      "project_intent/web/observatory.css": "e8822f6701a1cce1e4a5f7c9bc152b8a79c07cc484e127eedb7dbb1294a250fd",
+      "project_intent/web/observatory.html": "09926c0bff2520bdffc3c30756fdd91ea35eca5e52ca9c70dd048850d8262119",
+      "project_intent/web/observatory.js": "23bd64ea53d9b9e20329968d5423120087358845b056b29cc456166a3b41cdb4",
+      "project_intent/web/style.css": "df38750b6509555880abc04ba565f5def4af961ca6f4cfb8e87d4c106378b471",
+      "project_intent/web/theme.js": "9156c66bcd034080cb3e747cb917f2ea21ca9e752f52988500552d1ca43a3afc",
+      "project_intent/web/worker-group-facts.js": "5accb07b20171c8861bdc7a02675cb5282464c044ecdf5f8fd2728671dac3ac3",
+      "project_intent/web/worker-groups.css": "915fcac8e10c7b5d992567d62619196aaecf3ac9ff04803b8e06d65e869e3ac9",
+      "project_intent/web/worker-groups.js": "5a0af09cec0b5474a767ab52eddacb9097ac9152aba62a695cd2fd9fa0883adc",
+      "project_intent/web/workstream-map-facts.js": "7f0397906c661ee4c9b8b004022be56ed2e0bf7165fc29ab5c4b4daf3504f88d",
+      "project_intent/web/workstream-map.css": "39354de8966bc50b713195e76140cdbc68ccac00be6620ecbb7ef08f711deb49",
+      "project_intent/web/workstream-map.js": "66b5a3f54e1cfbc163daad66c38700265cb0cbc7672eba41c8acaebcfc87d693",
+      "skills/project-intent/SKILL.md": "a144e2d41032b3c459ac3c328ca633b952f37f6e64c07845f06dc56cd5cf2625",
+      "skills/project-intent/agents/openai.yaml": "383c27c5439810fe4a3d5789ed55ed4eb4df6aa4a9c92e7b9358ce5c2c1c5653",
+      "skills/project-intent/assets/worker-instructions.md": "15af12c8cc606c264b06b5ae2008cb8f6816ce72ba961b29cb39c13383942863",
+      "skills/project-intent/references/orchestrator.md": "68973b6eaa10c719e6a759db2d8172265b881948143bc3fdab042d07918eb807",
+      "skills/project-intent/references/worker.md": "24356d7490d09ec8e31b82fcfc9fed32c265798085febbfd6aa7db06f878080a",
+      "skills/project-intent/scripts/seal_source.py": "b886dfe1f36c59dee7e71bcc271bf21618f28b8b7128c3d676ffc1fe93c86f56"
+    }
+  }
+}

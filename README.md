@@ -147,7 +147,13 @@ Our working hypothesis is that the cleanest evaluation regime looks like this:
 
 In other words, if Sol Medium can follow PI correctly but also solves the fixture 10/10 without it, **the fixture is too easy**. The answer is not to drop to a dumber model until something breaks. The answer is to build a harder project.
 
-We are currently designing that benchmark: a longer, genuinely distributed task where one capable worker can understand the system, several capable workers have meaningful work to do in parallel, and the shared seams are difficult enough that project state—not basic coding ability—becomes the variable under test.
+We built and calibrated two four-component candidates with Sol Medium. It first passed **8/9 PI protocol scenarios**, with one reporting/release timeout and transcription friction—not perfect compliance.
+
+Then ordinary concurrent workers passed **3/3 projects on each candidate**, retaining four distinct component implementations per project. Even the second candidate's producer-designed payloads and durable partial returns did not create observed correctness headroom.
+
+**The bounded study stopped before the single-worker ceiling or matched PI comparison. No PI effect was measured.** Normal source inspection still handled these seams; a future version must test genuinely unresolved cross-component assumptions without weakening the worker or crippling ordinary tools.
+
+[Distributed calibration results →](docs/results/sol-distributed.md) · [Protocol calibration →](docs/results/sol-protocol.md)
 
 > **Do not make the worker less capable to make Project Intent look useful. Make the coordination problem harder while keeping the worker capable.**
 

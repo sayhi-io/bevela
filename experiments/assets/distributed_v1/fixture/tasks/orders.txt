@@ -1,0 +1,3 @@
+Implement Orders' OBJECTIVE.md contract within orders/: consume Catalog reservations, preserve immutable snapshots/legacy summaries, recover the specified reserve/persist interruption, enforce canonical retry identity, and persist cancellation plus stable acknowledged outbox events. Migrate old orders without reserving twice.
+
+The complete objective, other component tasks and unchanged public acceptance checker are available to every worker. Implement only your assigned root; you may add focused tests there. Do not edit other roots, OBJECTIVE.md, architecture.json, role tasks, or acceptance.py. Preserve existing local tests. No prescribed coordination sequence or waiting is part of the task.

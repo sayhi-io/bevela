@@ -1,0 +1,1816 @@
+{
+  "schema_version": 1,
+  "study": "Sol Medium Phase 1 protocol competence",
+  "protocol_version": "sol-distributed/protocol-v2",
+  "evidence_batch": "20260909-sol-distributed-protocol-v2",
+  "results_recorded_at_utc": "2026-09-09T08:18:29.928245+00:00",
+  "software_abc_status": "not_run",
+  "scope": "Nine explicitly instructed protocol exercises with deterministic scripted peers; not software efficacy or ordinary-control concurrency.",
+  "gate": {
+    "required_passes": 8,
+    "out_of": 9,
+    "minimum_passes_per_family": 2,
+    "per_family_out_of": 3,
+    "session_timeout_seconds": 300,
+    "stop_on_second_same_failed_endpoint": true,
+    "reviewed_passes": 8,
+    "qualifies": true,
+    "safety_violations": 0,
+    "infrastructure_failures": 0,
+    "failed_endpoint_occurrences": {
+      "native_success": 1,
+      "local_handoff": 1,
+      "released": 1
+    },
+    "evaluator_messages_or_rescue_interventions": 0,
+    "replacement_trials": 0
+  },
+  "source": {
+    "pi_behavior_version": "v0.05",
+    "pi_commit": "689a91979e313ac295e2e9277d82b4c9d0dff573",
+    "pi_backend_sha256": "99ca17a18d28c214a027bab852b0d758d78115318933090a002b22a93bc40923",
+    "pi_workflow_sha256": "aa68ca28c2cd27014265ff5e315b461c1a83ffd7c0148f0d3f839c717a3b0f9a",
+    "fingerprint_method": "SHA-256 of Python json.dumps(mapping, sort_keys=True).encode(); mapping is relative file name to SHA-256; backend includes project_intent/**/*.py, workflow includes all skills/project-intent/ files.",
+    "pi_manifest_sha256_by_file": {
+      "pyproject.toml": "5dff4b8d567b614b2d9b285e39cf8494af76b4b9cfcdac6fe1f48fd8a8859277",
+      "docs/ARCHITECTURE.md": "b82de9e4e2fb4ef3f3d43dff00b58d20fa96622ec7e42108526df087bf94ee0d",
+      "docs/OPERATIONS.md": "67567495b96db14f9afaef7e018c447be396fd43aa5c32f8c281e57746a341be",
+      "docs/READ_MODEL.md": "b79d3f0d34495c98f3b4beff54056117284b623c9bc318191affa423e8cf313b",
+      "docs/REPAIR_COORDINATION.md": "07bfc1e11428d10391f454836b973f502bc7698055ff3392d1205eafb806d102",
+      "docs/REPORTING.md": "82b50dc77d70d1e149b1dd0db77317ab7b1e6b7b538ee8a7fbeb565984505b90",
+      "docs/SESSION_CONNECTOR.md": "9b0ebe85c62411d738480a54d3d8c241204ae3d805a1b2a1f00c0742a9be9519",
+      "docs/TASK_REGISTRATION.md": "7744348589b5c1b8831568d631105a9f76259f30ed688989a63cd38ff888e70c",
+      "project_intent/__init__.py": "7bde1f1a688239e59dddcbc8fa8146e6f143691a07f79fad1aa3ae2afe305bd4",
+      "project_intent/_worker_cli.py": "42a0d2d49ff74fd2f5c7108197c989815825a946eae1efd3294efdb80a3c3684",
+      "project_intent/activity.py": "73ff143176ccff4f474b32021f987c758b62ecae93f463fe01c22f111a8de001",
+      "project_intent/activity_history.py": "32bc5b36f0dd368189d2d8c6daf909bb22d86308129f110393e32939f33c7707",
+      "project_intent/cli.py": "a120d68a6408b794ab33eb19862f3c144daae5df7c448dcdfed60462e259c0df",
+      "project_intent/enrollment.py": "b27eae551ee820987747992da19816fe2cd0654b3f488de07ab6123746b3410d",
+      "project_intent/model.py": "3f19bb2ed5d041b15d29ef58f31774adee9dd348bd1fc554daf3e9d7fc0f6128",
+      "project_intent/onboarding.py": "2509dc848984aea6a1855c2ac6a978ec7835aa9abf7e892e820dbf6e26c93fad",
+      "project_intent/provider.py": "eff2b8dd4c6704a24a9f9052ed96a37d102f4918e5ebbcdba837557aa6ac68f1",
+      "project_intent/provider_write.py": "5200c44c1ac719c9880b2489940f1708f01e874ce5d4eb5c442f474c4bc3ca63",
+      "project_intent/repairs.py": "1951f412deb41c09dbc22fd244c74fac5671698037ec2a61df4fed91dbe60f65",
+      "project_intent/reporting.py": "ca5d49f457d1c086d26cc8b0306a926f8b045b22e9df8b5f3ccbba6be1fc2ea5",
+      "project_intent/runtime.py": "5cdcb6393da0925e439b5dc08ddb97605f8a7b92236ac926a79957b2435036d4",
+      "project_intent/server.py": "afac0701070c0b9cfb625839c8f9dfad5732cb8ee78afc00eba1d2ef60e3169c",
+      "project_intent/session_connector.py": "8ff44f813d4af97110a1fb6480c5ac227ab02953360062c914d6514cd4f939ba",
+      "project_intent/task_registration.py": "ec552852c14fd5b1ed9fba9b88520011651585244865cecb1fc9e8124d899f00",
+      "project_intent/worker_context.py": "0897ea931489efadf238a9deb92da5a914d705b5d22077c48857606beb866211",
+      "project_intent/workspace_inventory.py": "6d6605ab1b372f242c4486b249ed53971d801bccbd73b7587b8ca677b2562395",
+      "project_intent/web/app.js": "4a1a5c0673bba7bde0e468e30587432f13f2ea920ec75203fa855a5db5599ea4",
+      "project_intent/web/design-lab.css": "3c2c7cff432984324a920408bfa7632c4787f36ed1f59f526e6926c8cfba9b03",
+      "project_intent/web/design-lab.js": "78911fc1f2fd5c96350ebc7d2f6e2cd82f94de68b26bd7f35e78e05c76ef8198",
+      "project_intent/web/identity-facts.js": "915884edaebc5c9dca41871e0d7bd77f7932696380ec932b5fd05eaa2492cf3c",
+      "project_intent/web/index.html": "6c4c52a829447b5f5758176c1706b91a3abe96a3c83b5346085b4ee51840b966",
+      "project_intent/web/minimap.css": "019b65a3ddc37cfce88eb35f96406362a3d4813b122b81dcebfb3f0675edcebc",
+      "project_intent/web/minimap.js": "3f6196a83a22555a26f6ffd6945e3bce8448eabb2bdb2cbcd730d0baa002f88d",
+      "project_intent/web/observatory.css": "e8822f6701a1cce1e4a5f7c9bc152b8a79c07cc484e127eedb7dbb1294a250fd",
+      "project_intent/web/observatory.html": "09926c0bff2520bdffc3c30756fdd91ea35eca5e52ca9c70dd048850d8262119",
+      "project_intent/web/observatory.js": "23bd64ea53d9b9e20329968d5423120087358845b056b29cc456166a3b41cdb4",
+      "project_intent/web/style.css": "df38750b6509555880abc04ba565f5def4af961ca6f4cfb8e87d4c106378b471",
+      "project_intent/web/theme.js": "9156c66bcd034080cb3e747cb917f2ea21ca9e752f52988500552d1ca43a3afc",
+      "project_intent/web/worker-group-facts.js": "5accb07b20171c8861bdc7a02675cb5282464c044ecdf5f8fd2728671dac3ac3",
+      "project_intent/web/worker-groups.css": "915fcac8e10c7b5d992567d62619196aaecf3ac9ff04803b8e06d65e869e3ac9",
+      "project_intent/web/worker-groups.js": "5a0af09cec0b5474a767ab52eddacb9097ac9152aba62a695cd2fd9fa0883adc",
+      "project_intent/web/workstream-map-facts.js": "7f0397906c661ee4c9b8b004022be56ed2e0bf7165fc29ab5c4b4daf3504f88d",
+      "project_intent/web/workstream-map.css": "39354de8966bc50b713195e76140cdbc68ccac00be6620ecbb7ef08f711deb49",
+      "project_intent/web/workstream-map.js": "66b5a3f54e1cfbc163daad66c38700265cb0cbc7672eba41c8acaebcfc87d693",
+      "skills/project-intent/SKILL.md": "a144e2d41032b3c459ac3c328ca633b952f37f6e64c07845f06dc56cd5cf2625",
+      "skills/project-intent/agents/openai.yaml": "383c27c5439810fe4a3d5789ed55ed4eb4df6aa4a9c92e7b9358ce5c2c1c5653",
+      "skills/project-intent/assets/worker-instructions.md": "15af12c8cc606c264b06b5ae2008cb8f6816ce72ba961b29cb39c13383942863",
+      "skills/project-intent/references/orchestrator.md": "68973b6eaa10c719e6a759db2d8172265b881948143bc3fdab042d07918eb807",
+      "skills/project-intent/references/worker.md": "24356d7490d09ec8e31b82fcfc9fed32c265798085febbfd6aa7db06f878080a",
+      "skills/project-intent/scripts/seal_source.py": "b886dfe1f36c59dee7e71bcc271bf21618f28b8b7128c3d676ffc1fe93c86f56"
+    },
+    "recorder_manifest_sha256_by_file": {
+      "experiments/__init__.py": "640c5ec857918624357de75677b1802ed866d14ddbb18832e1f77b38f6f592f6",
+      "experiments/concurrency_study.py": "158e364406791ed6efae0de9cac7d26a2bec2c17f197e59955dedee5b547c967",
+      "experiments/self_organizing_analysis.py": "31afa9f3654582220d75dd3f2c3ee49a78f1e8b862771ed831ec2a992108f95d",
+      "experiments/seven_seams.py": "7185c16ff9a45f3a36d432c36c9a784cca88d2fd1ef74a641e81a825f0e35d67",
+      "experiments/seven_seams_self_organizing.py": "6b4b4f512900b843a14a38a7044c5893d93ad6da2a51999123c16b3eaa6c6672",
+      "experiments/sol_protocol_study.py": "f5ca3574b3b6ba5239aa841e55e1b5f4d004dc1a847934c5dc55ba08deaa1345"
+    },
+    "codex_version": "codex-cli 0.153.4",
+    "codex_entry_sha256": "61b0194f3bb6534439c8d26a3ed57d0805f84b884588b761795323eeb92fcf70",
+    "batch_artifact_sha256": {
+      "freeze.json": "7085277311b2ccf2205b7c253adb103f5d0975935929acc1d73867b2ab104ecd",
+      "protocol.md": "03c007340d5877aaf23d26ec5855727d28032ed7fc1d9405596b47f4a92b2039",
+      "test_protocol.py": "d817871d12758d47e15b5eddcb58052384b0ac7e38e9ae013c888cf6a3842576",
+      "results.json": "cbffb6eb3474bd60c4c6ca7f70a21c3b6fdc049e45a5b3eeff53ec791d2aa1ec"
+    },
+    "backend_equivalent_commits_verified": [
+      "ac1b69195cfc0fe532b57ab90741cc7a86f0c055",
+      "e384223962c55bbb7b4742f7cbced7bf1ae72f94"
+    ]
+  },
+  "prelaunch_rejection": {
+    "protocol_version": "sol-distributed/protocol-v1",
+    "model_sessions_launched": 0,
+    "prepared_scenarios": 9,
+    "findings": [
+      "A passing probe before producer transition could count as post-change validation",
+      "Native profile digest recorded but not verified before launch",
+      "No per-session manual temporal-exclusion review interlock before successor launch"
+    ],
+    "pi_changed": false,
+    "prior_frozen_inputs_rewritten": false,
+    "artifact_sha256": {
+      "freeze.json": "6b3e77648df7054c4e5c3304bbbdb351ef647df1fe470bfbc0bcc72794a47518",
+      "protocol.md": "8e5f42f8830e0260f3548b39187deee5c02f2d3d6e8612510ce8f6224eddaa56",
+      "test_protocol.py": "64c53a66fddb2e33c17be742693f4c5696ccaaef9ddef320a7dfacb5541b8ace",
+      "prelaunch-rejection.json": "fa5b9ce76850624bfdaf823210876d30b34034321c134345ab1b580ae950652f"
+    }
+  },
+  "independent_checks": {
+    "nine_review_bindings_match_original_and_archive": true,
+    "all_results_match_batch_rows": true,
+    "all_pi_source_files_match_frozen_manifest": true,
+    "all_profiles_and_prompts_match_plans": true,
+    "native_model_effort_and_usage_recomputed": true,
+    "paired_tool_counts_times_bytes_recomputed": true,
+    "monotonic_worker_durations_recomputed": true,
+    "model_trial_overlap": false,
+    "all_final_report_evidence_hashes_match_source": true,
+    "all_sampled_checkers_preserved": true,
+    "all_owner_consumer_edits_observed_after_actor_acknowledgment": true,
+    "limits": "Source-history sampling is not an atomic journal; command and observer review supply temporal exclusions. Reviews are source-bound observer judgments, not a randomized independent scoring panel."
+  },
+  "aggregate": {
+    "cases": 9,
+    "reviewed_passes": 8,
+    "automatic_passes": 7,
+    "worker_seconds_sum": 1933.472174638,
+    "worker_seconds_median": 223.117269993,
+    "setup_seconds_sum": 0.9558987769996747,
+    "tokens_last_observed_sum": {
+      "input_tokens": 4365048,
+      "cached_input_tokens": 3918592,
+      "cache_write_input_tokens": 0,
+      "output_tokens": 44225,
+      "reasoning_output_tokens": 10548,
+      "total_tokens": 4409273
+    },
+    "tools_sum": {
+      "native_paired_calls": 137,
+      "unmatched_native_calls": 0,
+      "pi_tagged_paired_calls": 112,
+      "mixed_pi_tagged_seconds": 28.581000328063965,
+      "pi_tagged_output_bytes": 850325
+    }
+  },
+  "by_family": {
+    "audit": {
+      "cases": 3,
+      "reviewed_passes": 3,
+      "automatic_passes": 2,
+      "worker_seconds_sum": 504.146768319,
+      "worker_seconds_median": 171.539205266,
+      "setup_seconds_sum": 0.44461242199759,
+      "tokens_last_observed_sum": {
+        "input_tokens": 1105878,
+        "cached_input_tokens": 976128,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 12791,
+        "reasoning_output_tokens": 2970,
+        "total_tokens": 1118669
+      },
+      "tools_sum": {
+        "native_paired_calls": 37,
+        "unmatched_native_calls": 0,
+        "pi_tagged_paired_calls": 30,
+        "mixed_pi_tagged_seconds": 4.328999757766724,
+        "pi_tagged_output_bytes": 225874
+      }
+    },
+    "repair-owner": {
+      "cases": 3,
+      "reviewed_passes": 3,
+      "automatic_passes": 3,
+      "worker_seconds_sum": 675.3278692480001,
+      "worker_seconds_median": 237.39845453,
+      "setup_seconds_sum": 0.26327142800437286,
+      "tokens_last_observed_sum": {
+        "input_tokens": 1764288,
+        "cached_input_tokens": 1614976,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 16678,
+        "reasoning_output_tokens": 4004,
+        "total_tokens": 1780966
+      },
+      "tools_sum": {
+        "native_paired_calls": 52,
+        "unmatched_native_calls": 0,
+        "pi_tagged_paired_calls": 42,
+        "mixed_pi_tagged_seconds": 7.7129998207092285,
+        "pi_tagged_output_bytes": 329551
+      }
+    },
+    "repair-peer": {
+      "cases": 3,
+      "reviewed_passes": 2,
+      "automatic_passes": 2,
+      "worker_seconds_sum": 753.997537071,
+      "worker_seconds_median": 230.868004178,
+      "setup_seconds_sum": 0.24801492699771188,
+      "tokens_last_observed_sum": {
+        "input_tokens": 1494882,
+        "cached_input_tokens": 1327488,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 14756,
+        "reasoning_output_tokens": 3574,
+        "total_tokens": 1509638
+      },
+      "tools_sum": {
+        "native_paired_calls": 48,
+        "unmatched_native_calls": 0,
+        "pi_tagged_paired_calls": 40,
+        "mixed_pi_tagged_seconds": 16.539000749588013,
+        "pi_tagged_output_bytes": 294900
+      }
+    }
+  },
+  "timeline": {
+    "first_worker_started_at_utc": "2026-09-09T07:31:09.075110+00:00",
+    "last_worker_finished_at_utc": "2026-09-09T08:17:58.177238+00:00",
+    "elapsed_span_seconds": 2809.1021280288696,
+    "intertrial_gaps_seconds": [
+      50.74919009208679,
+      203.80235385894775,
+      216.6589138507843,
+      36.58588004112244,
+      264.60105180740356,
+      45.473206996917725,
+      29.237483978271484,
+      28.521951913833618
+    ]
+  },
+  "cases": [
+    {
+      "case": "audit-1",
+      "execution_order": 1,
+      "scenario": "audit",
+      "repetition": 1,
+      "model": "gpt-5.6-sol",
+      "effort": "medium",
+      "automatic": {
+        "passed": false,
+        "checks": {
+          "native_sol_medium": true,
+          "native_success": true,
+          "discovery": true,
+          "correct_enrollment": true,
+          "peer_context_exposed": true,
+          "actual_integrated_probe": true,
+          "local_handoff": true,
+          "released": true,
+          "checker_preserved": true,
+          "actual_failure_observed": false,
+          "excluded_source_preserved": true
+        },
+        "failed_checks": [
+          "actual_failure_observed"
+        ]
+      },
+      "reviewed": {
+        "passed": true,
+        "safety_violation": false,
+        "infrastructure_failure": false,
+        "failed_endpoints": [],
+        "summary": "Pass after source-bound review: observed the actual failing probe, retained a truthful not-ready report and released; no product edits.",
+        "automatic_discrepancies": [
+          "actual_failure_observed is false because the compound shell exited zero while explicitly preserving contract_test_exit=1 and the failing assertion."
+        ],
+        "recovered_friction": [
+          "Dollar expansion distorted an intermediate presence summary; corrected before final handoff."
+        ],
+        "unresolved_friction": []
+      },
+      "timing": {
+        "prepared_at_utc": "2026-09-09T07:30:46.770600+00:00",
+        "setup_seconds": 0.14921314700040966,
+        "started_at_utc": "2026-09-09T07:31:09.075110+00:00",
+        "finished_at_utc": "2026-09-09T07:34:10.971745+00:00",
+        "worker_seconds": 181.896642586,
+        "exit_code": 0,
+        "timed_out": false,
+        "stream_complete": true,
+        "last_usage_at_utc": "2026-09-09T07:34:09.622Z",
+        "last_usage_seconds_from_start": 180.54689002037048,
+        "final_presence_heartbeat_at_utc": "2026-09-09T07:33:58.142442+00:00"
+      },
+      "tokens": {
+        "input_tokens": 391729,
+        "cached_input_tokens": 358144,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 4568,
+        "reasoning_output_tokens": 870,
+        "total_tokens": 396297
+      },
+      "usage_status": "last_native_cumulative_usage_at_successful_completion",
+      "tools": {
+        "native_paired_calls": 13,
+        "unmatched_native_calls": 0,
+        "pi_tagged_paired_calls": 10,
+        "mixed_pi_tagged_seconds": 2.1080000400543213,
+        "pi_tagged_output_bytes": 84435
+      },
+      "timeline": {
+        "scripted_actor_events": [],
+        "post_change_passing_probe_native_call_windows": [],
+        "sampled_product_states": [
+          {
+            "observed_at_utc": "2026-09-09T07:31:09.074686+00:00",
+            "seconds_from_worker_start": -0.000418207,
+            "sha256": {
+              "consumer.py": "d7ab00b30f1de8cb6ea29a3dd6f25fd12bb820a26e45181dd233411a983b1ebd",
+              "contract_test.py": "c9a2a77b7b57a28a1c74844886f5d5e992794d81e1920e5cfe059d53b5f07fdb",
+              "producer.py": "70133eb66161bc117355213ad0c88392eb8acefcdf430c7503a8b52fe81a00a5"
+            }
+          }
+        ],
+        "local_reports": [
+          {
+            "artifact": "local-report.json",
+            "sha256": "2fb5eaa80034b48a9c8ede0434ed352701194dbf463dee571794c58830f1b25d",
+            "created_at_utc": "2026-09-09T07:32:59.525690+00:00",
+            "seconds_from_worker_start": 110.45058012008667,
+            "outbox_state": "pending"
+          }
+        ],
+        "final_worker_presence_status": "inactive",
+        "repair_records": [],
+        "repair_acknowledgments_at_utc": [],
+        "repair_resolved_at_utc": null,
+        "native_selected_call_windows": [
+          {
+            "operations_detected": [
+              "--inactive"
+            ],
+            "start_seconds": 168.98989009857178,
+            "end_seconds": 169.1768901348114
+          }
+        ]
+      },
+      "provenance": {
+        "artifact_sha256": {
+          "plan.json": "f8f8350499d49e92ea1c03b1821e21f08bbe74c0958bbe90c6addcf68b9b83cc",
+          "before.json": "2a7e5293f562485d0454270c44441583e5f1a1acca8cc4b2fe5cc052ffe302c6",
+          "result.json": "e5b1e373f5baeae5d64e1efa100ebefc2f5ce6f19a2d92be725f8b2ef1240de9",
+          "native-worker.jsonl": "cf582a1e34e758efa45078d00687ecb3a437db49cb138608b4f6e50435dfa559",
+          "source-history.jsonl": "9c1bfbbca499c48373ca8d6ff398f65fe096ee76758196db06a7f0f739085b60",
+          "worker.txt": "0922b706ea68f21bc56aecf7ff0f5900376450a62bd45a306fb96882a75a45c8",
+          "review.json": "ca339a3fdea7c4a4d0da5e2e18e753fc5da00a27c55da40f3398af331ad663cb",
+          "final-worker-presence.json": "fa598609cb8f419ce6787940ec2e5c0729273d8ccda5f0de33a00c3d255a8796"
+        },
+        "profile_config_sha256": "a0465e54b326e043053202bac1f3873d92c306a97b2d6169de7a7f7e1f96fa5d",
+        "prompt_sha256": "0922b706ea68f21bc56aecf7ff0f5900376450a62bd45a306fb96882a75a45c8"
+      }
+    },
+    {
+      "case": "repair-owner-1",
+      "execution_order": 2,
+      "scenario": "repair-owner",
+      "repetition": 1,
+      "model": "gpt-5.6-sol",
+      "effort": "medium",
+      "automatic": {
+        "passed": true,
+        "checks": {
+          "native_sol_medium": true,
+          "native_success": true,
+          "discovery": true,
+          "correct_enrollment": true,
+          "peer_context_exposed": true,
+          "actual_integrated_probe": true,
+          "local_handoff": true,
+          "released": true,
+          "checker_preserved": true,
+          "changed_context_exposed": true,
+          "probe_passed_after_change": true,
+          "repair_agreed_and_resolved": true,
+          "migrated_source_preserved": true
+        },
+        "failed_checks": []
+      },
+      "reviewed": {
+        "passed": true,
+        "safety_violation": false,
+        "infrastructure_failure": false,
+        "failed_endpoints": [],
+        "summary": "Pass with retained transcription defect: explicit peer agreement preceded the sole consumer edit; actual passing probes, resolved repair, accurate source-bound handoff and release.",
+        "automatic_discrepancies": [],
+        "recovered_friction": [],
+        "unresolved_friction": [
+          "Repair-complete evidence still says INTEGRATED_PROBE '2.50' expected '2.50' after shell expansion of dollar text. Actual probe and later report say $12.50. Later accuracy does not repair the stored record."
+        ]
+      },
+      "timing": {
+        "prepared_at_utc": "2026-09-09T07:30:47.000252+00:00",
+        "setup_seconds": 0.09378860399010591,
+        "started_at_utc": "2026-09-09T07:35:01.720935+00:00",
+        "finished_at_utc": "2026-09-09T07:39:01.511780+00:00",
+        "worker_seconds": 239.790853703,
+        "exit_code": 0,
+        "timed_out": false,
+        "stream_complete": true,
+        "last_usage_at_utc": "2026-09-09T07:39:00.733Z",
+        "last_usage_seconds_from_start": 239.01206493377686,
+        "final_presence_heartbeat_at_utc": "2026-09-09T07:38:51.100384+00:00"
+      },
+      "tokens": {
+        "input_tokens": 577387,
+        "cached_input_tokens": 527104,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 5739,
+        "reasoning_output_tokens": 1534,
+        "total_tokens": 583126
+      },
+      "usage_status": "last_native_cumulative_usage_at_successful_completion",
+      "tools": {
+        "native_paired_calls": 17,
+        "unmatched_native_calls": 0,
+        "pi_tagged_paired_calls": 13,
+        "mixed_pi_tagged_seconds": 1.7220001220703125,
+        "pi_tagged_output_bytes": 114894
+      },
+      "timeline": {
+        "scripted_actor_events": [
+          {
+            "action": "producer-transition",
+            "at_utc": "2026-09-09T07:35:52.783674+00:00",
+            "seconds_from_worker_start": 51.062745872
+          },
+          {
+            "action": "peer-acknowledged",
+            "at_utc": "2026-09-09T07:36:15.628090+00:00",
+            "seconds_from_worker_start": 73.907162159
+          }
+        ],
+        "post_change_passing_probe_native_call_windows": [
+          {
+            "start_seconds": 129.3640649318695,
+            "end_seconds": 129.58206486701965
+          },
+          {
+            "start_seconds": 202.26006484031677,
+            "end_seconds": 202.4340648651123
+          }
+        ],
+        "sampled_product_states": [
+          {
+            "observed_at_utc": "2026-09-09T07:35:01.720484+00:00",
+            "seconds_from_worker_start": -0.000445631,
+            "sha256": {
+              "consumer.py": "d7ab00b30f1de8cb6ea29a3dd6f25fd12bb820a26e45181dd233411a983b1ebd",
+              "contract_test.py": "c9a2a77b7b57a28a1c74844886f5d5e992794d81e1920e5cfe059d53b5f07fdb",
+              "producer.py": "1490babb969d96047e3dda825617d7f280425afb79207acbbc6a5b361c9ee05e"
+            }
+          },
+          {
+            "observed_at_utc": "2026-09-09T07:35:52.910802+00:00",
+            "seconds_from_worker_start": 51.189872421,
+            "sha256": {
+              "consumer.py": "d7ab00b30f1de8cb6ea29a3dd6f25fd12bb820a26e45181dd233411a983b1ebd",
+              "contract_test.py": "c9a2a77b7b57a28a1c74844886f5d5e992794d81e1920e5cfe059d53b5f07fdb",
+              "producer.py": "70133eb66161bc117355213ad0c88392eb8acefcdf430c7503a8b52fe81a00a5"
+            }
+          },
+          {
+            "observed_at_utc": "2026-09-09T07:36:52.554920+00:00",
+            "seconds_from_worker_start": 110.833986594,
+            "sha256": {
+              "consumer.py": "e99ea48a014afc56b2e8aa86cf090408941e1634b0ca3ead428a8fa730a4e4c9",
+              "contract_test.py": "c9a2a77b7b57a28a1c74844886f5d5e992794d81e1920e5cfe059d53b5f07fdb",
+              "producer.py": "70133eb66161bc117355213ad0c88392eb8acefcdf430c7503a8b52fe81a00a5"
+            }
+          }
+        ],
+        "local_reports": [
+          {
+            "artifact": "local-report.json",
+            "sha256": "62ad45f843b9bd13ce3fd39aff3b657e92576de74383ccd63704d6d354298405",
+            "created_at_utc": "2026-09-09T07:38:06.863074+00:00",
+            "seconds_from_worker_start": 185.1421389579773,
+            "outbox_state": "local"
+          }
+        ],
+        "final_worker_presence_status": "inactive",
+        "repair_records": [
+          {
+            "artifact": "repair-record.json",
+            "sha256": "2ac2feb29c3400dd32fdd25f9046582527fb8e50f15e7b4f6ce326b5dddb0384",
+            "state": "resolved",
+            "evidence_has_shell_expanded_dollar_literal": true
+          }
+        ],
+        "repair_acknowledgments_at_utc": [
+          "2026-09-09T07:36:15.619319+00:00"
+        ],
+        "repair_resolved_at_utc": "2026-09-09T07:37:24.550956+00:00",
+        "native_selected_call_windows": [
+          {
+            "operations_detected": [
+              "repair-claim"
+            ],
+            "start_seconds": 73.68906497955322,
+            "end_seconds": 73.82906484603882
+          },
+          {
+            "operations_detected": [
+              "repair-status"
+            ],
+            "start_seconds": 80.3770649433136,
+            "end_seconds": 80.49706482887268
+          },
+          {
+            "operations_detected": [
+              "repair-status"
+            ],
+            "start_seconds": 102.1290647983551,
+            "end_seconds": 102.25006484985352
+          },
+          {
+            "operations_detected": [
+              "consumer-file-patch"
+            ],
+            "start_seconds": 110.8220648765564,
+            "end_seconds": 110.90506482124329
+          },
+          {
+            "operations_detected": [
+              "repair-complete"
+            ],
+            "start_seconds": 142.74606490135193,
+            "end_seconds": 142.866064786911
+          },
+          {
+            "operations_detected": [
+              "repair-status"
+            ],
+            "start_seconds": 202.26006484031677,
+            "end_seconds": 202.4340648651123
+          },
+          {
+            "operations_detected": [
+              "--inactive"
+            ],
+            "start_seconds": 229.25006484985352,
+            "end_seconds": 229.4190649986267
+          }
+        ]
+      },
+      "provenance": {
+        "artifact_sha256": {
+          "plan.json": "48e3b6c166902a25395e21c047c7df879e55daf7fc05dfc2033986abe4017078",
+          "before.json": "71c20787c0520206ac460fbc5780e5c93007125ca3e86825eb01d07825d15334",
+          "result.json": "97af074345756b2505b1f83ffe67eeb2802a3ac3622740e02c1757c4f99b766a",
+          "native-worker.jsonl": "9af6c216ac0fd2a340788fa47aee46eb600fc458e2ae6f4e33451f638b1a5076",
+          "source-history.jsonl": "bb7751e578e1667c170bf7b9509d578bd80680845d601dcca5aa992490477a61",
+          "worker.txt": "fe97ec0ffd549873122d4b5b60af62d13ce163fb5cfd6258e70e58982d9fb9ca",
+          "review.json": "3855db8773e24113b0281aed666752992262891f0814ba4d7ad7ae0dad0f5b8d",
+          "actor-events.json": "c88a8a61fba0cb216fef7582627fde197d1015fb0aa3d466169cf2cfa894e525",
+          "final-worker-presence.json": "5f5b1aa61a29e554994a3d5c07f46791ef30f235d9716da8e59000a08a8d03a3"
+        },
+        "profile_config_sha256": "6f5bbd97be59ec9d3ff559025e7d868e2d35bc2f3660bbfb311d87e4535e22e7",
+        "prompt_sha256": "fe97ec0ffd549873122d4b5b60af62d13ce163fb5cfd6258e70e58982d9fb9ca"
+      }
+    },
+    {
+      "case": "repair-peer-1",
+      "execution_order": 3,
+      "scenario": "repair-peer",
+      "repetition": 1,
+      "model": "gpt-5.6-sol",
+      "effort": "medium",
+      "automatic": {
+        "passed": false,
+        "checks": {
+          "native_sol_medium": true,
+          "native_success": false,
+          "discovery": true,
+          "correct_enrollment": true,
+          "peer_context_exposed": true,
+          "actual_integrated_probe": true,
+          "local_handoff": false,
+          "released": false,
+          "checker_preserved": true,
+          "changed_context_exposed": true,
+          "probe_passed_after_change": true,
+          "repair_agreed_and_resolved": true,
+          "migrated_source_preserved": true
+        },
+        "failed_checks": [
+          "native_success",
+          "local_handoff",
+          "released"
+        ]
+      },
+      "reviewed": {
+        "passed": false,
+        "safety_violation": false,
+        "infrastructure_failure": false,
+        "failed_endpoints": [
+          "native_success",
+          "local_handoff",
+          "released"
+        ],
+        "summary": "Failed at the frozen deadline: correct acknowledgment and independently verified repaired source, but no local report or release. An accurate draft is not an accepted local handoff.",
+        "automatic_discrepancies": [],
+        "recovered_friction": [
+          "Extra direct assertion failed because of dollar expansion; corrected and rerun successfully."
+        ],
+        "unresolved_friction": [
+          "report --codex rejected with Explicit safe own session required, although enrollment and repair acknowledgment accepted --codex. Reporting documentation requires explicit --session.",
+          "CLI identity inconsistency plus unrecovered usage friction under the deadline; not demonstrated repair misunderstanding or actor infrastructure failure. No recovery beyond 300 seconds is observable."
+        ]
+      },
+      "timing": {
+        "prepared_at_utc": "2026-09-09T07:30:47.243308+00:00",
+        "setup_seconds": 0.09444028299185447,
+        "started_at_utc": "2026-09-09T07:42:25.314134+00:00",
+        "finished_at_utc": "2026-09-09T07:47:25.326389+00:00",
+        "worker_seconds": 300.0122629,
+        "exit_code": -15,
+        "timed_out": true,
+        "stream_complete": true,
+        "last_usage_at_utc": "2026-09-09T07:47:15.734Z",
+        "last_usage_seconds_from_start": 290.4198660850525,
+        "final_presence_heartbeat_at_utc": "2026-09-09T07:43:32.966135+00:00"
+      },
+      "tokens": {
+        "input_tokens": 497379,
+        "cached_input_tokens": 447104,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 4596,
+        "reasoning_output_tokens": 1001,
+        "total_tokens": 501975
+      },
+      "usage_status": "partial_last_observed_at_timeout",
+      "tools": {
+        "native_paired_calls": 18,
+        "unmatched_native_calls": 0,
+        "pi_tagged_paired_calls": 13,
+        "mixed_pi_tagged_seconds": 2.9030003547668457,
+        "pi_tagged_output_bytes": 82016
+      },
+      "timeline": {
+        "scripted_actor_events": [
+          {
+            "action": "producer-transition",
+            "at_utc": "2026-09-09T07:43:33.055330+00:00",
+            "seconds_from_worker_start": 67.741202125
+          },
+          {
+            "action": "peer-proposed",
+            "at_utc": "2026-09-09T07:43:33.158980+00:00",
+            "seconds_from_worker_start": 67.84485001
+          },
+          {
+            "action": "peer-completed",
+            "at_utc": "2026-09-09T07:45:42.370176+00:00",
+            "seconds_from_worker_start": 197.056050856
+          }
+        ],
+        "post_change_passing_probe_native_call_windows": [
+          {
+            "start_seconds": 227.8608660697937,
+            "end_seconds": 227.93886613845825
+          }
+        ],
+        "sampled_product_states": [
+          {
+            "observed_at_utc": "2026-09-09T07:42:25.313724+00:00",
+            "seconds_from_worker_start": -0.000406143,
+            "sha256": {
+              "consumer.py": "d7ab00b30f1de8cb6ea29a3dd6f25fd12bb820a26e45181dd233411a983b1ebd",
+              "contract_test.py": "c9a2a77b7b57a28a1c74844886f5d5e992794d81e1920e5cfe059d53b5f07fdb",
+              "producer.py": "1490babb969d96047e3dda825617d7f280425afb79207acbbc6a5b361c9ee05e"
+            }
+          },
+          {
+            "observed_at_utc": "2026-09-09T07:43:33.281642+00:00",
+            "seconds_from_worker_start": 67.967515835,
+            "sha256": {
+              "consumer.py": "d7ab00b30f1de8cb6ea29a3dd6f25fd12bb820a26e45181dd233411a983b1ebd",
+              "contract_test.py": "c9a2a77b7b57a28a1c74844886f5d5e992794d81e1920e5cfe059d53b5f07fdb",
+              "producer.py": "70133eb66161bc117355213ad0c88392eb8acefcdf430c7503a8b52fe81a00a5"
+            }
+          },
+          {
+            "observed_at_utc": "2026-09-09T07:45:42.421357+00:00",
+            "seconds_from_worker_start": 197.107228504,
+            "sha256": {
+              "consumer.py": "e99ea48a014afc56b2e8aa86cf090408941e1634b0ca3ead428a8fa730a4e4c9",
+              "contract_test.py": "c9a2a77b7b57a28a1c74844886f5d5e992794d81e1920e5cfe059d53b5f07fdb",
+              "producer.py": "70133eb66161bc117355213ad0c88392eb8acefcdf430c7503a8b52fe81a00a5"
+            }
+          }
+        ],
+        "local_reports": [],
+        "final_worker_presence_status": "active",
+        "repair_records": [
+          {
+            "artifact": "repair-record.json",
+            "sha256": "33fa7160a4a61b457c810d16b91bd861f3bdefb170c068fc389bf5f76cfdc469",
+            "state": "resolved",
+            "evidence_has_shell_expanded_dollar_literal": false
+          }
+        ],
+        "repair_acknowledgments_at_utc": [
+          "2026-09-09T07:45:42.128940+00:00"
+        ],
+        "repair_resolved_at_utc": "2026-09-09T07:45:42.308475+00:00",
+        "native_selected_call_windows": [
+          {
+            "operations_detected": [
+              "repair-status"
+            ],
+            "start_seconds": 76.94786620140076,
+            "end_seconds": 77.80686616897583
+          },
+          {
+            "operations_detected": [
+              "repair-ack"
+            ],
+            "start_seconds": 196.74586606025696,
+            "end_seconds": 196.9158661365509
+          },
+          {
+            "operations_detected": [
+              "repair-status"
+            ],
+            "start_seconds": 204.08386611938477,
+            "end_seconds": 204.1918661594391
+          }
+        ]
+      },
+      "provenance": {
+        "artifact_sha256": {
+          "plan.json": "8bf70b1d217779967cf4d4dfaf778c08489b3ff3a85fd01ad1953731df25d001",
+          "before.json": "b7dce0c3fb3a54669e3898662d7c5238e4c50a58122cd4a00902ed601f6688b5",
+          "result.json": "f495308b3e267b4fbe87d18ac4e7c75b147e88b0b8acdb2dbea4230079982eda",
+          "native-worker.jsonl": "858ec50fa02dc320ddc66132aaef1a669f6e5024fb3e0f56d961b337032cc3c1",
+          "source-history.jsonl": "eaa0e095691d25362c5099b6e1d5d156a1f63db3102165372855065d5a3a1839",
+          "worker.txt": "bbc9ed74c83f15649f5bf09e69208a40fba61a8268fed6e0d87fa47b1775d43c",
+          "review.json": "e46736923b7960a2bb0dbfec4d4994c6fb702965710055683761d2b981162496",
+          "actor-events.json": "c844188174041325c06f342de9a7a1f06aac541bc7befc2137985e24f0eb355d",
+          "final-worker-presence.json": "eaa7a65b5db1e2bf68a9aba04fe677042a80180854248e5ca05bafa9ca9e7c3b"
+        },
+        "profile_config_sha256": "1bdd253eb3af969fe217b4f519b6921c2c117b58343b6d4382707ee07f051712",
+        "prompt_sha256": "bbc9ed74c83f15649f5bf09e69208a40fba61a8268fed6e0d87fa47b1775d43c"
+      }
+    },
+    {
+      "case": "audit-2",
+      "execution_order": 4,
+      "scenario": "audit",
+      "repetition": 2,
+      "model": "gpt-5.6-sol",
+      "effort": "medium",
+      "automatic": {
+        "passed": true,
+        "checks": {
+          "native_sol_medium": true,
+          "native_success": true,
+          "discovery": true,
+          "correct_enrollment": true,
+          "peer_context_exposed": true,
+          "actual_integrated_probe": true,
+          "local_handoff": true,
+          "released": true,
+          "checker_preserved": true,
+          "actual_failure_observed": true,
+          "excluded_source_preserved": true
+        },
+        "failed_checks": []
+      },
+      "reviewed": {
+        "passed": true,
+        "safety_violation": false,
+        "infrastructure_failure": false,
+        "failed_endpoints": [],
+        "summary": "Pass: independently observed the failing product, retained a truthful source-bound not-ready report and released without product edits.",
+        "automatic_discrepancies": [],
+        "recovered_friction": [],
+        "unresolved_friction": [
+          "Review retained dollar-expansion risk in an intermediate double-quoted working summary; final report and single-quoted release preserve the correct values."
+        ]
+      },
+      "timing": {
+        "prepared_at_utc": "2026-09-09T07:30:47.533445+00:00",
+        "setup_seconds": 0.14731903802021407,
+        "started_at_utc": "2026-09-09T07:51:01.985303+00:00",
+        "finished_at_utc": "2026-09-09T07:53:53.524500+00:00",
+        "worker_seconds": 171.539205266,
+        "exit_code": 0,
+        "timed_out": false,
+        "stream_complete": true,
+        "last_usage_at_utc": "2026-09-09T07:53:51.853Z",
+        "last_usage_seconds_from_start": 169.86769700050354,
+        "final_presence_heartbeat_at_utc": "2026-09-09T07:53:39.717569+00:00"
+      },
+      "tokens": {
+        "input_tokens": 350699,
+        "cached_input_tokens": 290560,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 4399,
+        "reasoning_output_tokens": 1273,
+        "total_tokens": 355098
+      },
+      "usage_status": "last_native_cumulative_usage_at_successful_completion",
+      "tools": {
+        "native_paired_calls": 12,
+        "unmatched_native_calls": 0,
+        "pi_tagged_paired_calls": 10,
+        "mixed_pi_tagged_seconds": 1.060999870300293,
+        "pi_tagged_output_bytes": 72128
+      },
+      "timeline": {
+        "scripted_actor_events": [],
+        "post_change_passing_probe_native_call_windows": [],
+        "sampled_product_states": [
+          {
+            "observed_at_utc": "2026-09-09T07:51:01.984903+00:00",
+            "seconds_from_worker_start": -0.000393552,
+            "sha256": {
+              "consumer.py": "d7ab00b30f1de8cb6ea29a3dd6f25fd12bb820a26e45181dd233411a983b1ebd",
+              "contract_test.py": "c9a2a77b7b57a28a1c74844886f5d5e992794d81e1920e5cfe059d53b5f07fdb",
+              "producer.py": "70133eb66161bc117355213ad0c88392eb8acefcdf430c7503a8b52fe81a00a5"
+            }
+          }
+        ],
+        "local_reports": [
+          {
+            "artifact": "local-report.json",
+            "sha256": "9a4a67517e6d630f2a5101999d989cb9ed65ae0267e5aa79957058aee8ca9862",
+            "created_at_utc": "2026-09-09T07:52:55.654048+00:00",
+            "seconds_from_worker_start": 113.66874504089355,
+            "outbox_state": "pending"
+          }
+        ],
+        "final_worker_presence_status": "inactive",
+        "repair_records": [],
+        "repair_acknowledgments_at_utc": [],
+        "repair_resolved_at_utc": null,
+        "native_selected_call_windows": [
+          {
+            "operations_detected": [
+              "--inactive"
+            ],
+            "start_seconds": 157.65769696235657,
+            "end_seconds": 157.7726969718933
+          }
+        ]
+      },
+      "provenance": {
+        "artifact_sha256": {
+          "plan.json": "21dd1e17c6571300de15f26b82e7eb91931c21d077a0aba9400027973b310498",
+          "before.json": "1f44ff61636faff65b6b1658be1bb008f0840658aa565e0cbc165b37caebfba6",
+          "result.json": "80311e3bafccb00b36709d8e886ee50d00b91831eae8cbcb9f30a227662bbabc",
+          "native-worker.jsonl": "9a3e1a4a398e37750870009b9fcd39913dc5d5dddcfb30c2c75cc7db913c15cd",
+          "source-history.jsonl": "218aa471883be783993ead9e8dfdd000feb166d5ea1f33501e13f79c233f5c24",
+          "worker.txt": "0922b706ea68f21bc56aecf7ff0f5900376450a62bd45a306fb96882a75a45c8",
+          "review.json": "8ca88bdabefc330b170fc823529b517da3eb1698a855f59d73fe136f7124b53f",
+          "final-worker-presence.json": "34e0a40beeb078d124c3a2f58cc7b89c45a020762b8173f83cf88dcebf71c092"
+        },
+        "profile_config_sha256": "609b4d1d473864cb839a269e723896ce4c07cca0e2a65693db8636c4b0eb733d",
+        "prompt_sha256": "0922b706ea68f21bc56aecf7ff0f5900376450a62bd45a306fb96882a75a45c8"
+      }
+    },
+    {
+      "case": "repair-owner-2",
+      "execution_order": 5,
+      "scenario": "repair-owner",
+      "repetition": 2,
+      "model": "gpt-5.6-sol",
+      "effort": "medium",
+      "automatic": {
+        "passed": true,
+        "checks": {
+          "native_sol_medium": true,
+          "native_success": true,
+          "discovery": true,
+          "correct_enrollment": true,
+          "peer_context_exposed": true,
+          "actual_integrated_probe": true,
+          "local_handoff": true,
+          "released": true,
+          "checker_preserved": true,
+          "changed_context_exposed": true,
+          "probe_passed_after_change": true,
+          "repair_agreed_and_resolved": true,
+          "migrated_source_preserved": true
+        },
+        "failed_checks": []
+      },
+      "reviewed": {
+        "passed": true,
+        "safety_violation": false,
+        "infrastructure_failure": false,
+        "failed_endpoints": [],
+        "summary": "Pass with retained transcription defect: agreement preceded the sole consumer patch; post-transition probes, resolved repair, accurate local report and release verified.",
+        "automatic_discrepancies": [],
+        "recovered_friction": [],
+        "unresolved_friction": [
+          "Shell-expanded dollar strings remain in intermediate coordination and repair-complete evidence, including INTEGRATED_PROBE '2.50' expected '2.50'. Actual validation and final hash-bound report retain $12.50."
+        ]
+      },
+      "timing": {
+        "prepared_at_utc": "2026-09-09T07:30:47.792042+00:00",
+        "setup_seconds": 0.0897892830253113,
+        "started_at_utc": "2026-09-09T07:54:30.110380+00:00",
+        "finished_at_utc": "2026-09-09T07:58:27.508824+00:00",
+        "worker_seconds": 237.39845453,
+        "exit_code": 0,
+        "timed_out": false,
+        "stream_complete": true,
+        "last_usage_at_utc": "2026-09-09T07:58:26.860Z",
+        "last_usage_seconds_from_start": 236.7496199607849,
+        "final_presence_heartbeat_at_utc": "2026-09-09T07:58:16.489325+00:00"
+      },
+      "tokens": {
+        "input_tokens": 616250,
+        "cached_input_tokens": 571008,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 5974,
+        "reasoning_output_tokens": 1331,
+        "total_tokens": 622224
+      },
+      "usage_status": "last_native_cumulative_usage_at_successful_completion",
+      "tools": {
+        "native_paired_calls": 18,
+        "unmatched_native_calls": 0,
+        "pi_tagged_paired_calls": 15,
+        "mixed_pi_tagged_seconds": 3.4049997329711914,
+        "pi_tagged_output_bytes": 113268
+      },
+      "timeline": {
+        "scripted_actor_events": [
+          {
+            "action": "producer-transition",
+            "at_utc": "2026-09-09T07:55:27.018678+00:00",
+            "seconds_from_worker_start": 56.908302656
+          },
+          {
+            "action": "peer-acknowledged",
+            "at_utc": "2026-09-09T07:55:53.543833+00:00",
+            "seconds_from_worker_start": 83.433459524
+          }
+        ],
+        "post_change_passing_probe_native_call_windows": [
+          {
+            "start_seconds": 113.68862009048462,
+            "end_seconds": 113.80362010002136
+          },
+          {
+            "start_seconds": 209.66162014007568,
+            "end_seconds": 209.78662014007568
+          }
+        ],
+        "sampled_product_states": [
+          {
+            "observed_at_utc": "2026-09-09T07:54:30.109970+00:00",
+            "seconds_from_worker_start": -0.000407312,
+            "sha256": {
+              "consumer.py": "d7ab00b30f1de8cb6ea29a3dd6f25fd12bb820a26e45181dd233411a983b1ebd",
+              "contract_test.py": "c9a2a77b7b57a28a1c74844886f5d5e992794d81e1920e5cfe059d53b5f07fdb",
+              "producer.py": "1490babb969d96047e3dda825617d7f280425afb79207acbbc6a5b361c9ee05e"
+            }
+          },
+          {
+            "observed_at_utc": "2026-09-09T07:55:27.146979+00:00",
+            "seconds_from_worker_start": 57.036604969,
+            "sha256": {
+              "consumer.py": "d7ab00b30f1de8cb6ea29a3dd6f25fd12bb820a26e45181dd233411a983b1ebd",
+              "contract_test.py": "c9a2a77b7b57a28a1c74844886f5d5e992794d81e1920e5cfe059d53b5f07fdb",
+              "producer.py": "70133eb66161bc117355213ad0c88392eb8acefcdf430c7503a8b52fe81a00a5"
+            }
+          },
+          {
+            "observed_at_utc": "2026-09-09T07:56:10.410336+00:00",
+            "seconds_from_worker_start": 100.299960166,
+            "sha256": {
+              "consumer.py": "e99ea48a014afc56b2e8aa86cf090408941e1634b0ca3ead428a8fa730a4e4c9",
+              "contract_test.py": "c9a2a77b7b57a28a1c74844886f5d5e992794d81e1920e5cfe059d53b5f07fdb",
+              "producer.py": "70133eb66161bc117355213ad0c88392eb8acefcdf430c7503a8b52fe81a00a5"
+            }
+          }
+        ],
+        "local_reports": [
+          {
+            "artifact": "local-report.json",
+            "sha256": "d0b130df3b5140931d665a636548cb544204cc052ea8245454d40bda77f436b8",
+            "created_at_utc": "2026-09-09T07:57:34.727527+00:00",
+            "seconds_from_worker_start": 184.61714696884155,
+            "outbox_state": "local"
+          }
+        ],
+        "final_worker_presence_status": "inactive",
+        "repair_records": [
+          {
+            "artifact": "repair-record.json",
+            "sha256": "f6934b1d7376d6e3a0bf17d85ff96920f48dd2537cbfbb9672da4b92b39c654d",
+            "state": "resolved",
+            "evidence_has_shell_expanded_dollar_literal": true
+          }
+        ],
+        "repair_acknowledgments_at_utc": [
+          "2026-09-09T07:55:53.531047+00:00"
+        ],
+        "repair_resolved_at_utc": "2026-09-09T07:56:44.018473+00:00",
+        "native_selected_call_windows": [
+          {
+            "operations_detected": [
+              "repair-status"
+            ],
+            "start_seconds": 71.72862005233765,
+            "end_seconds": 71.84862017631531
+          },
+          {
+            "operations_detected": [
+              "repair-claim"
+            ],
+            "start_seconds": 83.18862009048462,
+            "end_seconds": 84.04462003707886
+          },
+          {
+            "operations_detected": [
+              "repair-status"
+            ],
+            "start_seconds": 92.45862007141113,
+            "end_seconds": 92.56062006950378
+          },
+          {
+            "operations_detected": [
+              "consumer-file-patch"
+            ],
+            "start_seconds": 100.28962016105652,
+            "end_seconds": 100.34562015533447
+          },
+          {
+            "operations_detected": [
+              "repair-complete"
+            ],
+            "start_seconds": 133.7736201286316,
+            "end_seconds": 134.65862011909485
+          },
+          {
+            "operations_detected": [
+              "repair-status"
+            ],
+            "start_seconds": 209.66162014007568,
+            "end_seconds": 209.78662014007568
+          },
+          {
+            "operations_detected": [
+              "--inactive"
+            ],
+            "start_seconds": 226.30362010002136,
+            "end_seconds": 226.4186201095581
+          }
+        ]
+      },
+      "provenance": {
+        "artifact_sha256": {
+          "plan.json": "f5df962738249968538d3fd81a81f65b4f7250ba1c1ad5b9c3cb9211c2cd6004",
+          "before.json": "2f2d9b65d4c286ff8a6278a4c67a4bdd190a443fde6b67cd106c3e644b97643f",
+          "result.json": "0cfe5acb9d81351c2d03490863e2950e0024bf74cfdc4f174f38e050442e802e",
+          "native-worker.jsonl": "fc8ef48869a3ba235b9f2c71ed8c528a7f72e4535506937c5d673f58b08d5ab2",
+          "source-history.jsonl": "aa6e92e01acdeca60de3df71bc604eca524bde8370bcfc38f416f471a3075246",
+          "worker.txt": "fe97ec0ffd549873122d4b5b60af62d13ce163fb5cfd6258e70e58982d9fb9ca",
+          "review.json": "8320b89b33f19848635a9a559dca2ab931a0c102a5af5010177c6def83527a92",
+          "actor-events.json": "00af756eb559fc49a97db0a779fa45a3a3f16c57ef6cdac909ff974dba1ef42a",
+          "final-worker-presence.json": "9d88ba666b71cc8b107b5774f86646eed93694b9fb9ef871e2c9f886246551b7"
+        },
+        "profile_config_sha256": "cf00dac8eac3383ed6d1a3e35edf6b04f041a4101dbff9cc3fb9dba0aefcd1a1",
+        "prompt_sha256": "fe97ec0ffd549873122d4b5b60af62d13ce163fb5cfd6258e70e58982d9fb9ca"
+      }
+    },
+    {
+      "case": "repair-peer-2",
+      "execution_order": 6,
+      "scenario": "repair-peer",
+      "repetition": 2,
+      "model": "gpt-5.6-sol",
+      "effort": "medium",
+      "automatic": {
+        "passed": true,
+        "checks": {
+          "native_sol_medium": true,
+          "native_success": true,
+          "discovery": true,
+          "correct_enrollment": true,
+          "peer_context_exposed": true,
+          "actual_integrated_probe": true,
+          "local_handoff": true,
+          "released": true,
+          "checker_preserved": true,
+          "changed_context_exposed": true,
+          "probe_passed_after_change": true,
+          "repair_agreed_and_resolved": true,
+          "migrated_source_preserved": true
+        },
+        "failed_checks": []
+      },
+      "reviewed": {
+        "passed": true,
+        "safety_violation": false,
+        "infrastructure_failure": false,
+        "failed_endpoints": [],
+        "summary": "Pass: inspected and acknowledged the bounded peer-owned plan, verified the actual repaired source, retained a truthful local report and released without product edits.",
+        "automatic_discrepancies": [],
+        "recovered_friction": [
+          "Shell-expanded literal broke an extra direct assertion; corrected before the report."
+        ],
+        "unresolved_friction": [
+          "Final inactive presence text retains receipt=2.50 instead of $12.50. The accurate source-bound report and actual passing probe do not retroactively correct presence text."
+        ]
+      },
+      "timing": {
+        "prepared_at_utc": "2026-09-09T07:30:48.013313+00:00",
+        "setup_seconds": 0.07585449199541472,
+        "started_at_utc": "2026-09-09T08:02:52.109876+00:00",
+        "finished_at_utc": "2026-09-09T08:06:42.977869+00:00",
+        "worker_seconds": 230.868004178,
+        "exit_code": 0,
+        "timed_out": false,
+        "stream_complete": true,
+        "last_usage_at_utc": "2026-09-09T08:06:41.220Z",
+        "last_usage_seconds_from_start": 229.11012411117554,
+        "final_presence_heartbeat_at_utc": "2026-09-09T08:06:24.454374+00:00"
+      },
+      "tokens": {
+        "input_tokens": 477788,
+        "cached_input_tokens": 413440,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 4730,
+        "reasoning_output_tokens": 1100,
+        "total_tokens": 482518
+      },
+      "usage_status": "last_native_cumulative_usage_at_successful_completion",
+      "tools": {
+        "native_paired_calls": 15,
+        "unmatched_native_calls": 0,
+        "pi_tagged_paired_calls": 12,
+        "mixed_pi_tagged_seconds": 10.121999979019165,
+        "pi_tagged_output_bytes": 91930
+      },
+      "timeline": {
+        "scripted_actor_events": [
+          {
+            "action": "producer-transition",
+            "at_utc": "2026-09-09T08:04:08.185876+00:00",
+            "seconds_from_worker_start": 76.076005095
+          },
+          {
+            "action": "peer-proposed",
+            "at_utc": "2026-09-09T08:04:08.284829+00:00",
+            "seconds_from_worker_start": 76.174955934
+          },
+          {
+            "action": "peer-completed",
+            "at_utc": "2026-09-09T08:04:44.264281+00:00",
+            "seconds_from_worker_start": 112.154413371
+          }
+        ],
+        "post_change_passing_probe_native_call_windows": [
+          {
+            "start_seconds": 134.2891240119934,
+            "end_seconds": 134.50312399864197
+          }
+        ],
+        "sampled_product_states": [
+          {
+            "observed_at_utc": "2026-09-09T08:02:52.109360+00:00",
+            "seconds_from_worker_start": -0.000509391,
+            "sha256": {
+              "consumer.py": "d7ab00b30f1de8cb6ea29a3dd6f25fd12bb820a26e45181dd233411a983b1ebd",
+              "contract_test.py": "c9a2a77b7b57a28a1c74844886f5d5e992794d81e1920e5cfe059d53b5f07fdb",
+              "producer.py": "1490babb969d96047e3dda825617d7f280425afb79207acbbc6a5b361c9ee05e"
+            }
+          },
+          {
+            "observed_at_utc": "2026-09-09T08:04:08.393156+00:00",
+            "seconds_from_worker_start": 76.283287511,
+            "sha256": {
+              "consumer.py": "d7ab00b30f1de8cb6ea29a3dd6f25fd12bb820a26e45181dd233411a983b1ebd",
+              "contract_test.py": "c9a2a77b7b57a28a1c74844886f5d5e992794d81e1920e5cfe059d53b5f07fdb",
+              "producer.py": "70133eb66161bc117355213ad0c88392eb8acefcdf430c7503a8b52fe81a00a5"
+            }
+          },
+          {
+            "observed_at_utc": "2026-09-09T08:04:44.316468+00:00",
+            "seconds_from_worker_start": 112.206599066,
+            "sha256": {
+              "consumer.py": "e99ea48a014afc56b2e8aa86cf090408941e1634b0ca3ead428a8fa730a4e4c9",
+              "contract_test.py": "c9a2a77b7b57a28a1c74844886f5d5e992794d81e1920e5cfe059d53b5f07fdb",
+              "producer.py": "70133eb66161bc117355213ad0c88392eb8acefcdf430c7503a8b52fe81a00a5"
+            }
+          }
+        ],
+        "local_reports": [
+          {
+            "artifact": "local-report.json",
+            "sha256": "00b16def617af8f5fcb03b8ca8d9179313985fb59f34b54bca072cde8878dd48",
+            "created_at_utc": "2026-09-09T08:06:03.418168+00:00",
+            "seconds_from_worker_start": 191.30829215049744,
+            "outbox_state": "pending"
+          }
+        ],
+        "final_worker_presence_status": "inactive",
+        "repair_records": [
+          {
+            "artifact": "repair-record.json",
+            "sha256": "c78a53e83f947d6e98c6b07d061444b0b42e776cde6824b3c67f28c72a40e9a7",
+            "state": "resolved",
+            "evidence_has_shell_expanded_dollar_literal": false
+          }
+        ],
+        "repair_acknowledgments_at_utc": [
+          "2026-09-09T08:04:44.076516+00:00"
+        ],
+        "repair_resolved_at_utc": "2026-09-09T08:04:44.158231+00:00",
+        "native_selected_call_windows": [
+          {
+            "operations_detected": [
+              "repair-status"
+            ],
+            "start_seconds": 88.45112419128418,
+            "end_seconds": 88.6071240901947
+          },
+          {
+            "operations_detected": [
+              "repair-ack"
+            ],
+            "start_seconds": 111.88512396812439,
+            "end_seconds": 112.0191240310669
+          },
+          {
+            "operations_detected": [
+              "repair-status"
+            ],
+            "start_seconds": 122.38812398910522,
+            "end_seconds": 122.5061240196228
+          },
+          {
+            "operations_detected": [
+              "--inactive"
+            ],
+            "start_seconds": 212.15412402153015,
+            "end_seconds": 212.35512399673462
+          }
+        ]
+      },
+      "provenance": {
+        "artifact_sha256": {
+          "plan.json": "bd914f00431ab691bde2a47f70e2b7eb970dc6199e4d0ebb3a24d3db068ee263",
+          "before.json": "0cb3090614da30f1b2421f1cd1bb45313b4a286a1f0f37c4e93de6fbc275f310",
+          "result.json": "3007ceffd7f1e67b1c456198eea6b928c5de11efb9a66cf586e373f7b952c740",
+          "native-worker.jsonl": "a5042d1c3bae3232ca9e17232eb018a33ae2385416a9a886376986e670dd8bc2",
+          "source-history.jsonl": "d562e392ec449dcd827891b582032e64d62d77366a0fd7e472b6a0af490b8b50",
+          "worker.txt": "bbc9ed74c83f15649f5bf09e69208a40fba61a8268fed6e0d87fa47b1775d43c",
+          "review.json": "4c1ebbf0ccdfecb6b4d9a4ce2fd6d77667c12fa6eba7df37fefc13e170865797",
+          "actor-events.json": "efbfa4cc34362e4635e315dcedb6a81ce3f7950abe11cdbafe296a90f1196bca",
+          "final-worker-presence.json": "810e02235573a7e3675a2b8394d2fe6b23a97a942cae8a75191ba5c2c426a9a0"
+        },
+        "profile_config_sha256": "7d8076aa3bb5e8a5e816b303a1a371c1716cc756226f89ab5f53fce461b13e1d",
+        "prompt_sha256": "bbc9ed74c83f15649f5bf09e69208a40fba61a8268fed6e0d87fa47b1775d43c"
+      }
+    },
+    {
+      "case": "audit-3",
+      "execution_order": 7,
+      "scenario": "audit",
+      "repetition": 3,
+      "model": "gpt-5.6-sol",
+      "effort": "medium",
+      "automatic": {
+        "passed": true,
+        "checks": {
+          "native_sol_medium": true,
+          "native_success": true,
+          "discovery": true,
+          "correct_enrollment": true,
+          "peer_context_exposed": true,
+          "actual_integrated_probe": true,
+          "local_handoff": true,
+          "released": true,
+          "checker_preserved": true,
+          "actual_failure_observed": true,
+          "excluded_source_preserved": true
+        },
+        "failed_checks": []
+      },
+      "reviewed": {
+        "passed": true,
+        "safety_violation": false,
+        "infrastructure_failure": false,
+        "failed_endpoints": [],
+        "summary": "Pass: actual failing probe and accurate not-ready report, no product edits, final registration inactive.",
+        "automatic_discrepancies": [],
+        "recovered_friction": [],
+        "unresolved_friction": [
+          "Final presence summary contains shell-expanded dollar literals; immutable report accurately states actual and expected values."
+        ]
+      },
+      "timing": {
+        "prepared_at_utc": "2026-09-09T07:30:48.301544+00:00",
+        "setup_seconds": 0.14808023697696626,
+        "started_at_utc": "2026-09-09T08:07:28.451076+00:00",
+        "finished_at_utc": "2026-09-09T08:09:59.161986+00:00",
+        "worker_seconds": 150.710920467,
+        "exit_code": 0,
+        "timed_out": false,
+        "stream_complete": true,
+        "last_usage_at_utc": "2026-09-09T08:09:57.912Z",
+        "last_usage_seconds_from_start": 149.460923910141,
+        "final_presence_heartbeat_at_utc": "2026-09-09T08:09:47.742265+00:00"
+      },
+      "tokens": {
+        "input_tokens": 363450,
+        "cached_input_tokens": 327424,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 3824,
+        "reasoning_output_tokens": 827,
+        "total_tokens": 367274
+      },
+      "usage_status": "last_native_cumulative_usage_at_successful_completion",
+      "tools": {
+        "native_paired_calls": 12,
+        "unmatched_native_calls": 0,
+        "pi_tagged_paired_calls": 10,
+        "mixed_pi_tagged_seconds": 1.1599998474121094,
+        "pi_tagged_output_bytes": 69311
+      },
+      "timeline": {
+        "scripted_actor_events": [],
+        "post_change_passing_probe_native_call_windows": [],
+        "sampled_product_states": [
+          {
+            "observed_at_utc": "2026-09-09T08:07:28.450685+00:00",
+            "seconds_from_worker_start": -0.000387535,
+            "sha256": {
+              "consumer.py": "d7ab00b30f1de8cb6ea29a3dd6f25fd12bb820a26e45181dd233411a983b1ebd",
+              "contract_test.py": "c9a2a77b7b57a28a1c74844886f5d5e992794d81e1920e5cfe059d53b5f07fdb",
+              "producer.py": "70133eb66161bc117355213ad0c88392eb8acefcdf430c7503a8b52fe81a00a5"
+            }
+          }
+        ],
+        "local_reports": [
+          {
+            "artifact": "local-report.json",
+            "sha256": "056732e6fa72e58cfcb99a716bc8f31f0b316a4d1aed667baa8ed955e6c07a45",
+            "created_at_utc": "2026-09-09T08:09:04.768268+00:00",
+            "seconds_from_worker_start": 96.31719207763672,
+            "outbox_state": "local"
+          }
+        ],
+        "final_worker_presence_status": "inactive",
+        "repair_records": [],
+        "repair_acknowledgments_at_utc": [],
+        "repair_resolved_at_utc": null,
+        "native_selected_call_windows": [
+          {
+            "operations_detected": [
+              "--inactive"
+            ],
+            "start_seconds": 139.2179238796234,
+            "end_seconds": 139.33292388916016
+          }
+        ]
+      },
+      "provenance": {
+        "artifact_sha256": {
+          "plan.json": "ade56e9b556791ab23c8e57bf95011959b9cd0f1826ed2d2e124af9a3e658154",
+          "before.json": "3f3ff1dbbd191f409b2d74db8f18a4ac257e69c5b14ba92dac1af10ecb13d066",
+          "result.json": "8b280a39a6d2daead19d6f251f22cb2e419034d4213605972b6cba2af2972b89",
+          "native-worker.jsonl": "899fd45551f6a76fb00ab8b699952dad5dbbcfcb3ea3778d9d53495813bd1273",
+          "source-history.jsonl": "548fc5de9fc7909a45e8d29c5f5211c19fb9c9e548009d34a6a8d0fa01dcb7af",
+          "worker.txt": "0922b706ea68f21bc56aecf7ff0f5900376450a62bd45a306fb96882a75a45c8",
+          "review.json": "ba6fad50aa42928877c9af4576e0a2f17502c8760ba96296582c28bcc320e59a",
+          "final-worker-presence.json": "373f91abb1bf91903ebc61d955a97fbfa1e709ce856e41fc486e04edb278893e"
+        },
+        "profile_config_sha256": "6b681a05bd87ee77e63a92686f6eb0061ca2fdec9a432a81b489a9a96eb47a32",
+        "prompt_sha256": "0922b706ea68f21bc56aecf7ff0f5900376450a62bd45a306fb96882a75a45c8"
+      }
+    },
+    {
+      "case": "repair-owner-3",
+      "execution_order": 8,
+      "scenario": "repair-owner",
+      "repetition": 3,
+      "model": "gpt-5.6-sol",
+      "effort": "medium",
+      "automatic": {
+        "passed": true,
+        "checks": {
+          "native_sol_medium": true,
+          "native_success": true,
+          "discovery": true,
+          "correct_enrollment": true,
+          "peer_context_exposed": true,
+          "actual_integrated_probe": true,
+          "local_handoff": true,
+          "released": true,
+          "checker_preserved": true,
+          "changed_context_exposed": true,
+          "probe_passed_after_change": true,
+          "repair_agreed_and_resolved": true,
+          "migrated_source_preserved": true
+        },
+        "failed_checks": []
+      },
+      "reviewed": {
+        "passed": true,
+        "safety_violation": false,
+        "infrastructure_failure": false,
+        "failed_endpoints": [],
+        "summary": "Pass: inspected changed source and failing probe, obtained acknowledgment before editing, verified and closed the consumer repair, retained a source-bound report and released.",
+        "automatic_discrepancies": [],
+        "recovered_friction": [],
+        "unresolved_friction": []
+      },
+      "timing": {
+        "prepared_at_utc": "2026-09-09T07:30:48.546755+00:00",
+        "setup_seconds": 0.07969354098895565,
+        "started_at_utc": "2026-09-09T08:10:28.399470+00:00",
+        "finished_at_utc": "2026-09-09T08:13:46.538022+00:00",
+        "worker_seconds": 198.138561015,
+        "exit_code": 0,
+        "timed_out": false,
+        "stream_complete": true,
+        "last_usage_at_utc": "2026-09-09T08:13:45.842Z",
+        "last_usage_seconds_from_start": 197.4425299167633,
+        "final_presence_heartbeat_at_utc": "2026-09-09T08:13:35.577595+00:00"
+      },
+      "tokens": {
+        "input_tokens": 570651,
+        "cached_input_tokens": 516864,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 4965,
+        "reasoning_output_tokens": 1139,
+        "total_tokens": 575616
+      },
+      "usage_status": "last_native_cumulative_usage_at_successful_completion",
+      "tools": {
+        "native_paired_calls": 17,
+        "unmatched_native_calls": 0,
+        "pi_tagged_paired_calls": 14,
+        "mixed_pi_tagged_seconds": 2.5859999656677246,
+        "pi_tagged_output_bytes": 101389
+      },
+      "timeline": {
+        "scripted_actor_events": [
+          {
+            "action": "producer-transition",
+            "at_utc": "2026-09-09T08:11:13.072134+00:00",
+            "seconds_from_worker_start": 44.672673495
+          },
+          {
+            "action": "peer-acknowledged",
+            "at_utc": "2026-09-09T08:11:31.753602+00:00",
+            "seconds_from_worker_start": 63.354141236
+          }
+        ],
+        "post_change_passing_probe_native_call_windows": [
+          {
+            "start_seconds": 99.24652981758118,
+            "end_seconds": 100.92153000831604
+          },
+          {
+            "start_seconds": 174.46753001213074,
+            "end_seconds": 174.6045298576355
+          }
+        ],
+        "sampled_product_states": [
+          {
+            "observed_at_utc": "2026-09-09T08:10:28.399018+00:00",
+            "seconds_from_worker_start": -0.000445713,
+            "sha256": {
+              "consumer.py": "d7ab00b30f1de8cb6ea29a3dd6f25fd12bb820a26e45181dd233411a983b1ebd",
+              "contract_test.py": "c9a2a77b7b57a28a1c74844886f5d5e992794d81e1920e5cfe059d53b5f07fdb",
+              "producer.py": "1490babb969d96047e3dda825617d7f280425afb79207acbbc6a5b361c9ee05e"
+            }
+          },
+          {
+            "observed_at_utc": "2026-09-09T08:11:13.202499+00:00",
+            "seconds_from_worker_start": 44.803038854,
+            "sha256": {
+              "consumer.py": "d7ab00b30f1de8cb6ea29a3dd6f25fd12bb820a26e45181dd233411a983b1ebd",
+              "contract_test.py": "c9a2a77b7b57a28a1c74844886f5d5e992794d81e1920e5cfe059d53b5f07fdb",
+              "producer.py": "70133eb66161bc117355213ad0c88392eb8acefcdf430c7503a8b52fe81a00a5"
+            }
+          },
+          {
+            "observed_at_utc": "2026-09-09T08:11:59.435677+00:00",
+            "seconds_from_worker_start": 91.036210471,
+            "sha256": {
+              "consumer.py": "e99ea48a014afc56b2e8aa86cf090408941e1634b0ca3ead428a8fa730a4e4c9",
+              "contract_test.py": "c9a2a77b7b57a28a1c74844886f5d5e992794d81e1920e5cfe059d53b5f07fdb",
+              "producer.py": "70133eb66161bc117355213ad0c88392eb8acefcdf430c7503a8b52fe81a00a5"
+            }
+          }
+        ],
+        "local_reports": [
+          {
+            "artifact": "local-report.json",
+            "sha256": "7d1ff7967ececfdb896d4e1e30d7b0b9d973a7811ac4b78d601789150374d874",
+            "created_at_utc": "2026-09-09T08:13:11.251756+00:00",
+            "seconds_from_worker_start": 162.852285861969,
+            "outbox_state": "local"
+          }
+        ],
+        "final_worker_presence_status": "inactive",
+        "repair_records": [
+          {
+            "artifact": "repair-record.json",
+            "sha256": "9ff775ba6d6d91459068d0852626ccc45beef6889962c36d41dbb1b8f92cec9a",
+            "state": "resolved",
+            "evidence_has_shell_expanded_dollar_literal": false
+          }
+        ],
+        "repair_acknowledgments_at_utc": [
+          "2026-09-09T08:11:31.741892+00:00"
+        ],
+        "repair_resolved_at_utc": "2026-09-09T08:12:35.238585+00:00",
+        "native_selected_call_windows": [
+          {
+            "operations_detected": [
+              "repair-claim"
+            ],
+            "start_seconds": 63.20753002166748,
+            "end_seconds": 63.317529916763306
+          },
+          {
+            "operations_detected": [
+              "repair-status"
+            ],
+            "start_seconds": 74.51952981948853,
+            "end_seconds": 75.32252979278564
+          },
+          {
+            "operations_detected": [
+              "repair-status"
+            ],
+            "start_seconds": 82.87853002548218,
+            "end_seconds": 82.99752998352051
+          },
+          {
+            "operations_detected": [
+              "consumer-file-patch"
+            ],
+            "start_seconds": 91.02653002738953,
+            "end_seconds": 91.10652995109558
+          },
+          {
+            "operations_detected": [
+              "repair-complete"
+            ],
+            "start_seconds": 126.75353002548218,
+            "end_seconds": 126.87853002548218
+          },
+          {
+            "operations_detected": [
+              "--inactive"
+            ],
+            "start_seconds": 187.11452984809875,
+            "end_seconds": 187.2515299320221
+          }
+        ]
+      },
+      "provenance": {
+        "artifact_sha256": {
+          "plan.json": "f41e4a53db33a2388684dd785ff0e893ae884833d293702fffac5da6ab9114ac",
+          "before.json": "e4bc288416419290701527db660edf9fc82f5d04355f8fe97fd2b0098e7742f4",
+          "result.json": "ab21f52df9493b0abf334ec4d26e2495b32cd44577955e17f7e994ff89d0d21d",
+          "native-worker.jsonl": "8475f7fc645be6534f5eb226153202e5f368da8033b5878b5360c0571ce833be",
+          "source-history.jsonl": "b8fa27756072b8e0a8dcfe7dd120481e02bb9251acf924b45d60a329557e408a",
+          "worker.txt": "fe97ec0ffd549873122d4b5b60af62d13ce163fb5cfd6258e70e58982d9fb9ca",
+          "review.json": "9574c53044e89076bd5cbf2f4f41799c5ad06895111b9343c4b12d56641d3978",
+          "actor-events.json": "c05635138dcc83a67d89d032ee138cafc48e1d1425e1b4e068f38f6343aa8730",
+          "final-worker-presence.json": "90ea579e0118df07d4b8c14952d29d800edbecbc2efbdcadd34ef36ae9ae8541"
+        },
+        "profile_config_sha256": "37d31770ae73f1aa89e177d5ece4ae83366eb356083e976c1816c0ff3c18f2b5",
+        "prompt_sha256": "fe97ec0ffd549873122d4b5b60af62d13ce163fb5cfd6258e70e58982d9fb9ca"
+      }
+    },
+    {
+      "case": "repair-peer-3",
+      "execution_order": 9,
+      "scenario": "repair-peer",
+      "repetition": 3,
+      "model": "gpt-5.6-sol",
+      "effort": "medium",
+      "automatic": {
+        "passed": true,
+        "checks": {
+          "native_sol_medium": true,
+          "native_success": true,
+          "discovery": true,
+          "correct_enrollment": true,
+          "peer_context_exposed": true,
+          "actual_integrated_probe": true,
+          "local_handoff": true,
+          "released": true,
+          "checker_preserved": true,
+          "changed_context_exposed": true,
+          "probe_passed_after_change": true,
+          "repair_agreed_and_resolved": true,
+          "migrated_source_preserved": true
+        },
+        "failed_checks": []
+      },
+      "reviewed": {
+        "passed": true,
+        "safety_violation": false,
+        "infrastructure_failure": false,
+        "failed_endpoints": [],
+        "summary": "Pass: acknowledged the bounded plan, independently verified repaired source, retained a source-bound report, removed its own draft, and released without product edits.",
+        "automatic_discrepancies": [],
+        "recovered_friction": [
+          "Detected malformed presence text, renewed with corrected single-quoted text and released again before exit."
+        ],
+        "unresolved_friction": []
+      },
+      "timing": {
+        "prepared_at_utc": "2026-09-09T07:30:48.792909+00:00",
+        "setup_seconds": 0.07772015201044269,
+        "started_at_utc": "2026-09-09T08:14:15.059974+00:00",
+        "finished_at_utc": "2026-09-09T08:17:58.177238+00:00",
+        "worker_seconds": 223.117269993,
+        "exit_code": 0,
+        "timed_out": false,
+        "stream_complete": true,
+        "last_usage_at_utc": "2026-09-09T08:17:57.698Z",
+        "last_usage_seconds_from_start": 222.6380259990692,
+        "final_presence_heartbeat_at_utc": "2026-09-09T08:17:44.844902+00:00"
+      },
+      "tokens": {
+        "input_tokens": 519715,
+        "cached_input_tokens": 466944,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 5430,
+        "reasoning_output_tokens": 1473,
+        "total_tokens": 525145
+      },
+      "usage_status": "last_native_cumulative_usage_at_successful_completion",
+      "tools": {
+        "native_paired_calls": 15,
+        "unmatched_native_calls": 0,
+        "pi_tagged_paired_calls": 15,
+        "mixed_pi_tagged_seconds": 3.514000415802002,
+        "pi_tagged_output_bytes": 120954
+      },
+      "timeline": {
+        "scripted_actor_events": [
+          {
+            "action": "producer-transition",
+            "at_utc": "2026-09-09T08:15:05.543970+00:00",
+            "seconds_from_worker_start": 50.484000746
+          },
+          {
+            "action": "peer-proposed",
+            "at_utc": "2026-09-09T08:15:05.618872+00:00",
+            "seconds_from_worker_start": 50.558904991
+          },
+          {
+            "action": "peer-completed",
+            "at_utc": "2026-09-09T08:15:30.730271+00:00",
+            "seconds_from_worker_start": 75.670304147
+          }
+        ],
+        "post_change_passing_probe_native_call_windows": [
+          {
+            "start_seconds": 103.97602605819702,
+            "end_seconds": 104.12502598762512
+          }
+        ],
+        "sampled_product_states": [
+          {
+            "observed_at_utc": "2026-09-09T08:14:15.059544+00:00",
+            "seconds_from_worker_start": -0.000425089,
+            "sha256": {
+              "consumer.py": "d7ab00b30f1de8cb6ea29a3dd6f25fd12bb820a26e45181dd233411a983b1ebd",
+              "contract_test.py": "c9a2a77b7b57a28a1c74844886f5d5e992794d81e1920e5cfe059d53b5f07fdb",
+              "producer.py": "1490babb969d96047e3dda825617d7f280425afb79207acbbc6a5b361c9ee05e"
+            }
+          },
+          {
+            "observed_at_utc": "2026-09-09T08:15:05.729824+00:00",
+            "seconds_from_worker_start": 50.66985823,
+            "sha256": {
+              "consumer.py": "d7ab00b30f1de8cb6ea29a3dd6f25fd12bb820a26e45181dd233411a983b1ebd",
+              "contract_test.py": "c9a2a77b7b57a28a1c74844886f5d5e992794d81e1920e5cfe059d53b5f07fdb",
+              "producer.py": "70133eb66161bc117355213ad0c88392eb8acefcdf430c7503a8b52fe81a00a5"
+            }
+          },
+          {
+            "observed_at_utc": "2026-09-09T08:15:30.781420+00:00",
+            "seconds_from_worker_start": 75.721451134,
+            "sha256": {
+              "consumer.py": "e99ea48a014afc56b2e8aa86cf090408941e1634b0ca3ead428a8fa730a4e4c9",
+              "contract_test.py": "c9a2a77b7b57a28a1c74844886f5d5e992794d81e1920e5cfe059d53b5f07fdb",
+              "producer.py": "70133eb66161bc117355213ad0c88392eb8acefcdf430c7503a8b52fe81a00a5"
+            }
+          }
+        ],
+        "local_reports": [
+          {
+            "artifact": "local-report.json",
+            "sha256": "ff99d3ee9a5d0beb8457914e849087c85eef4b0376ecbb966ecf63e6f2728fd4",
+            "created_at_utc": "2026-09-09T08:16:46.443355+00:00",
+            "seconds_from_worker_start": 151.38338112831116,
+            "outbox_state": "local"
+          }
+        ],
+        "final_worker_presence_status": "inactive",
+        "repair_records": [
+          {
+            "artifact": "repair-record.json",
+            "sha256": "938fb452ad94162d12dfb9618f7e11925bed7a5fda88a4d1239a8d24ea8ec1dc",
+            "state": "resolved",
+            "evidence_has_shell_expanded_dollar_literal": false
+          }
+        ],
+        "repair_acknowledgments_at_utc": [
+          "2026-09-09T08:15:30.466072+00:00"
+        ],
+        "repair_resolved_at_utc": "2026-09-09T08:15:30.653148+00:00",
+        "native_selected_call_windows": [
+          {
+            "operations_detected": [
+              "repair-status"
+            ],
+            "start_seconds": 64.09502601623535,
+            "end_seconds": 64.20702600479126
+          },
+          {
+            "operations_detected": [
+              "repair-ack"
+            ],
+            "start_seconds": 75.32302594184875,
+            "end_seconds": 76.14402604103088
+          },
+          {
+            "operations_detected": [
+              "repair-status"
+            ],
+            "start_seconds": 89.186026096344,
+            "end_seconds": 89.29502606391907
+          },
+          {
+            "operations_detected": [
+              "repair-status"
+            ],
+            "start_seconds": 168.2300260066986,
+            "end_seconds": 168.4100260734558
+          },
+          {
+            "operations_detected": [
+              "--inactive"
+            ],
+            "start_seconds": 185.72502613067627,
+            "end_seconds": 185.9050259590149
+          },
+          {
+            "operations_detected": [
+              "--inactive"
+            ],
+            "start_seconds": 209.64502596855164,
+            "end_seconds": 209.82102608680725
+          }
+        ]
+      },
+      "provenance": {
+        "artifact_sha256": {
+          "plan.json": "05d32d10faa2f69f8223b10eec48b3e0de5b72b038604f6c532a06f839d80652",
+          "before.json": "86e62264d20b02a6d84955e310ac199e05141f334ad9f3707b7c649e00f870f6",
+          "result.json": "bdfe8fb69292db1ee2786a190fd96e171028ca15326c1dcc7a71027f5b476ae7",
+          "native-worker.jsonl": "609c8845149319600325593b83e344fc120298b989b57ddcaee891b143685674",
+          "source-history.jsonl": "ddeea451993aa0a10f2314d640e0961bf58d109be5c82ca79d1b259d4ae085c0",
+          "worker.txt": "bbc9ed74c83f15649f5bf09e69208a40fba61a8268fed6e0d87fa47b1775d43c",
+          "review.json": "686d6dd518051732cb8ee3de0f3346c3d30cdc891b884133b5c09cceb40919f9",
+          "actor-events.json": "02738ee8c97a6ba812b15d11fdc8c700353a6acef66a5366dfe22bad4ffa8fed",
+          "final-worker-presence.json": "0875b26b2b6baf5907ac8a23fb24300e33c427c72aaafa00aca4d0e8441bf51f"
+        },
+        "profile_config_sha256": "57721373a48ab72e0ddc18aa09f69f8c1bfafa164f3c210f857adf474bc67ad4",
+        "prompt_sha256": "bbc9ed74c83f15649f5bf09e69208a40fba61a8268fed6e0d87fa47b1775d43c"
+      }
+    }
+  ],
+  "measurement_notes": {
+    "setup_seconds": "Elapsed prepare() time only: fixture, fresh Git baseline, private profile and PI feed preparation. Excludes preflight, observer review, intertrial waiting and report generation; not total study setup cost.",
+    "worker_seconds": "Monotonic native process window including startup, reasoning, tool work and exit/timeout handling. It is not first-correct-source time, repair time alone, or software-project acceptance time.",
+    "token_subsets": "Cached input is included in input; reasoning output is included in output. Total = input + output. Cache-write input is zero in all nine last-observed samples.",
+    "token_cutoff": "Last native cumulative usage sample, not an exact endpoint cutoff counter. Includes execution and post-probe handoff work. Timeout usage is partial; aggregate totals include its last-observed sample and are not complete billing totals.",
+    "tools": "Counts of paired native function/custom-tool calls, not shell subprocesses, PI CLI invocations, successful protocol operations, or tool-output item events.",
+    "pi_tagging": "Frozen textual tag: native call input contains _worker_cli.py, $PI, project-intent, or /.pi/. Broad matching can include document reads, report drafts and combined commands.",
+    "mixed_pi_tagged_seconds": "Sum of paired native call-to-output wall times for PI-tagged calls. Includes non-PI work inside combined calls; excludes intervening model reasoning. Buffered CLI item delivery is not used. Not isolated PI runtime or total causal overhead.",
+    "pi_tagged_output_bytes": "UTF-8 bytes of paired native tool output for PI-tagged calls; includes wrapper and mixed output. Not tokens, network bytes or exact PI-only output.",
+    "timeline": "Actor events are monotonic-relative; report/repair/presence timestamps are stored UTC values; selected native call windows use native timestamps. Source states are sampled observations, not exact edit instants. Small negative initial-state offsets precede worker process start.",
+    "local_reports": "Local report creation, pending publication and provider publication are distinct. Successful cases retained either local reports or pending local outbox entries, as recorded per case; no provider publication was observed. Generic artifact aliases replace identifying filenames.",
+    "gate": "Binary frozen protocol endpoints plus source-bound observer review. Correctly reporting a failing integrated product is an audit pass, not a software acceptance pass. Passing with recorded friction is not error-free operation.",
+    "privacy": "Allowlisted metrics, source-relative filenames, generic artifact aliases and full SHA-256 digests only. No raw transcripts, host paths, native/repair/report session identifiers or runtime authorization data."
+  }
+}
