@@ -51,7 +51,7 @@ Project Intent does **not** grant code authority, infer hidden edits, replace Gi
 
 The repository includes matched worker studies because the central question is empirical: **does structured shared project state actually help concurrent workers produce a correct combined result?**
 
-The first paired pilot did not show a clear quality advantage: ordinary and PI-aware Astra/Medium teams both completed the requested Status features and passed the same 11/11 independent acceptance checks. Timing and aggregate token totals were recorded, but they should not be interpreted as a simple efficiency comparison: Project Intent is designed to make coordinated concurrent work possible, and project wall-clock time, aggregate worker compute, effective parallelism, and final integrated correctness are separate measurements. See [Pilot 01](docs/CLI_AB_PILOT_01.md).
+The first paired pilot did not show a clear quality advantage: ordinary and PI-aware Astra/Medium teams both completed the requested Status features and passed the same 11/11 independent acceptance checks. See [Pilot 01](docs/CLI_AB_PILOT_01.md).
 
 A newer **seven-seam** fixture increases the concurrency pressure. Two native workers share a disposable checkout. One migrates seven data representations while the other builds seven consumers of those changing contracts:
 
@@ -67,28 +67,34 @@ A newer **seven-seam** fixture increases the concurrency pressure. Two native wo
 
 The checker scores whether **both sides of each seam survive together**, from 0/7 to 7/7. Workers receive their complete tasks up front; there is no hidden model adjudicator, prescribed task order, injected failure notification, or automatic repair owner. See [Seven-seam study](docs/CLI_SEVEN_SEAMS.md).
 
-### Latest seven-seam observations
+### Luna Medium: concurrency study
 
-> **RESULT PLACEHOLDER — replace with the committed trial summary before release.**
->
-> Recent local trials have produced the most interesting signal so far: configurations that plateau without Project Intent have reached **7/7 with Project Intent**, including low-reasoning runs. Add the exact model × effort × PI/no-PI repetitions, run counts, hashes and timing here once their evidence bundle is committed. Do not promote the observation into a generalized productivity or model-superiority claim.
+A 12-project / 18-session Luna Medium study compared four execution regimes, with three fresh project trials per condition. There were no human interventions, retries, or timeouts. **Every project reached 7/7**, so this fixture showed no correctness advantage for PI at Luna Medium.
 
-Suggested final chart once the result packet is committed:
+| Condition | Runs | 7/7 rate | Median project wall time | Aggregate worker time | Median aggregate tokens |
+| --- | ---: | ---: | ---: | ---: | ---: |
+| Single worker | 3 | 100% | **81.6s** | **81.6s** | **152,371** |
+| Concurrent ordinary | 3 | 100% | 99.6s | 156.6s | 337,743 |
+| Concurrent + PI | 3 | 100% | 141.4s | 236.9s | 949,750 |
+| Single worker + PI | 3 | 100% | 118.3s | 118.3s | 371,850 |
 
-```text
-Seven seams preserved together
+Tokens include cached input and are usage counters, not measured GPU compute or monetary cost.
 
-Luna · Low · ordinary         ████░░░  4/7   ← replace with measured aggregate
-Luna · Low · Project Intent   ███████  7/7   ← replace with measured aggregate
-Sol  · Low · ordinary         ████░░░  4/7   ← replace with measured aggregate
-Sol  · Low · Project Intent   ███████  7/7   ← replace with measured aggregate
+The project-level result is straightforward: **one Luna Medium worker was the best execution strategy for this small fixture.** It reached the same accepted result with the lowest median wall time and fewest recorded tokens. Concurrency did not pay for its coordination overhead here.
 
-Illustrative layout only — values above are placeholders until linked evidence is committed.
-```
+The concurrency behavior, however, differed materially. In all three ordinary concurrent runs, one worker attempted overlapping implementation against changes its peer had already made: there were **3 stale-patch failures** and **2 peer-label rewrites** across the three projects. In all three PI concurrent runs, both workers landed separate retained contributions while their peer was active: the producer handled the producer modules and the consumer handled `presentation.py`. Peer-stale patch failures and peer-label rewrites both fell to zero.
 
-The hypothesis worth testing is stronger than “more context helps”: **some apparent reasoning failures may actually be failures of project-state representation and worker concurrency.** We are treating that as a hypothesis, not a conclusion, until repetitions across fixtures and model strata support it.
+PI did not eliminate rework. Two PI projects required day-format integration corrections, and another encountered a self-inflicted cleanup-patch failure. PI also carried measurable overhead: enrollment completed roughly 30 seconds into each worker run, PI operations added about 1.9 aggregate seconds per concurrent project, malformed command groups required recovery, and PI-aware runs processed substantially more context.
 
-The newer studies therefore treat successful concurrent integration as the primary phenomenon rather than raw individual-agent runtime. A coordinated multi-worker run may consume more aggregate model compute while reducing project wall-clock time—or may reach a correct integrated state that independent workers never reach. Those are different outcomes and are measured separately.
+So the measured conclusion is deliberately narrower than “PI is faster”:
+
+> **On a problem one worker could already solve comfortably, PI made concurrent work less duplicative but did not make the project faster or cheaper.**
+
+That is useful product guidance. Project Intent should stay cheap or largely dormant when there is no meaningful neighboring work. Its economic case depends on tasks large or distributed enough that useful parallelism can repay coordination cost.
+
+It also motivates the next experiment: give several workers the **same complete objective**, remove harness-assigned producer/consumer ownership, and observe whether they can self-organize useful parallel work. A later, larger fixture is needed to test the wall-clock economics of parallelism when the serial critical path is long enough for concurrency to plausibly win.
+
+Timing and token totals therefore remain separate from the primary concurrency phenomenon. A multi-worker system can consume more aggregate model compute while reducing project wall time on a sufficiently parallel task; conversely, as this study shows, concurrency can be unnecessary overhead when one worker can cheaply own the whole problem.
 
 ## Mission Control
 
@@ -210,6 +216,6 @@ The local browser surface is read-only. Provider credentials stay outside the UI
 
 ## Status
 
-Development is intentionally evidence-driven. The immediate work is to commit and summarize the new seven-seam repetitions, replace the result/chart placeholder above with source-linked measurements, capture the first Mission Control screenshot, and continue testing whether the observed concurrency benefit survives across tasks and model/reasoning strata.
+Development is intentionally evidence-driven. The immediate work is to run the self-organizing seven-seam study, commit its result packet, capture the first Mission Control screenshot, and then test the economics of PI concurrency on a larger task whose serial critical path is long enough for useful parallelism to plausibly reduce project wall-clock time.
 
 Project Intent should become more complicated only where the experiments show that the complication helps workers converge.
