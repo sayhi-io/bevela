@@ -5,6 +5,7 @@ from pathlib import Path
 import re
 import os
 import fcntl
+import shlex
 from datetime import timedelta
 
 from .model import project, utcnow, validate_snapshot, date
@@ -12,6 +13,7 @@ from .runtime import Store, read_json, write_json
 from .server import serve
 from .enrollment import registration, telemetry_path, find_codex_session, SAFE_SESSION
 from .worker_context import checkout_identity, relative_paths, local_states, resolve_assignment, discovery, nearby_workers
+from .onboarding import documentation, command_argv, inventory_recovery
 
 
 def markdown(snapshot):
@@ -29,7 +31,7 @@ def markdown(snapshot):
 
 def main():
     p=argparse.ArgumentParser(description=__doc__)
-    p.add_argument('command',choices=['serve','export','discover','onboard','task-register','start','presence','enroll','report','report-status','publish-report','provider-list','reconcile','session-attach','session-continue'])
+    p.add_argument('command',choices=['serve','export','docs','discover','onboard','task-register','start','presence','enroll','report','report-status','publish-report','provider-list','reconcile','session-attach','session-continue'])
     from .session_connector import add_arguments
     add_arguments(p)
     p.add_argument('--input',help='JSON task, report or confirmed reconciliation packet')
@@ -46,13 +48,15 @@ def main():
     p.add_argument('--telemetry-file',help='Explicit own-session Codex rollout file')
     p.add_argument('--codex',action='store_true',help='Use CODEX_THREAD_ID and locate only its matching log filename')
     p.add_argument('--worker-config',default=os.environ.get('PROJECT_INTENT_WORKER_CONFIG'),help='Credential-free local scope/snapshot/enrollment-directory map')
-    p.add_argument('--query',default='',help='Filter discovery by task words')
+    p.add_argument('--query',default='',help='Rank partial task-word matches; omit for the scoped cached inventory')
     p.add_argument('--checkout',help='Actual execution checkout; default current directory')
     p.add_argument('--access',choices=['inspect','edit'],help='Declared intent, not an authorization grant')
     p.add_argument('--touching-path',action='append',default=None,help='Explicit checkout-relative file or directory')
     p.add_argument('--touching-seam',action='append',default=None,help='Opaque architectural boundary currently touched')
     p.add_argument('--avoid-path',action='append',default=None)
     args=p.parse_args()
+    if args.command=='docs':
+        print(json.dumps(documentation(),indent=2));return
     if args.command=='task-register':
         from .task_registration import register
         if not args.registration_config or not args.scope or not args.input:
@@ -109,12 +113,14 @@ def main():
         result=discovery(states,checkout,args.query);result['source_errors']=source_errors
         if args.command=='onboard':
             response={'discovery':result,
+                      'documentation':documentation(),
                       'contract':'Discovery and orientation are read-only. Candidates are not assignments; enrollment remains an explicit worker action.'}
             if not args.workstream:
                 response['next_step']='Select an exact scope and alias/native ID, then rerun onboard with --scope and --workstream.'
-                response['missing_assignment']='If no candidate fits after broadening discovery, use task-register --scope SCOPE --input TASK.json to review live native inventory and record the existing user task. See docs/TASK_REGISTRATION.md. Do not borrow unrelated work or invent new work.'
+                response['inventory_recovery']=inventory_recovery(args,entries)
+                response['missing_assignment']='Before considering task-register, run the inventory_recovery command for the task scope without a query and inspect its cached candidates. Only if none fits, use configured task-register with a task packet to review live native inventory. Use the exact task_registration documentation path. Missing source data is a tracking gap, not proof no assignment exists. Do not borrow unrelated work or invent new work.'
                 if not result['candidates']:
-                    response['next_step']='No cached candidate matched. Broaden discovery; if none fits, preview live inventory with task-register for the already user-assigned task.'
+                    response['next_step']='No cached candidate matched. Run the same-scope inventory_recovery command without a query and inspect the inventory before considering task registration. Do not search other workspaces or conversation logs.'
                 response['enrollment_required']='After inspecting the selected orientation, run enroll with explicit access, paths, seams and working summary.'
                 print(json.dumps(response,indent=2));return
             try:
@@ -128,7 +134,9 @@ def main():
                     'convergence':[c for c in view['convergence'] if work['key'] in c['workstreams']],
                     'coverage':'Offline orientation only: last-known durable snapshot plus locally registered leases. No PM mutation or provider credential required.'}
                 response['next_step']='Review the orientation against the actual task, then enroll explicitly.'
-                response['enrollment_template']='/home/meanaverage/sayhi/bin/project-intent enroll --scope '+selected_scope+' --workstream '+selected['id']+' --codex --access edit --touching-path relative/path --touching-seam current/seam --approaching next/seam --working "bounded task"'
+                response['enrollment_template']=shlex.join(command_argv(args,'enroll',selected_scope,
+                    '--workstream',selected['id'],'--codex','--access','edit','--touching-path','relative/path',
+                    '--touching-seam','current/seam','--approaching','next/seam','--working','bounded task'))
             except ValueError as exc:
                 p.error(str(exc))
             print(json.dumps(response,indent=2));return

@@ -40,6 +40,12 @@ checkout, then rerun `onboard --scope SCOPE --workstream ID` for the exact candi
 It is read-only and prints the explicit enrollment step; then run `enroll` yourself.
 The lower-level `discover` and `start` commands remain available for debugging or
 offline packet handling.
+Before concluding no candidate fits, run `discover --scope SCOPE` without a query,
+preserving local worker-config/checkout options, and inspect the scoped inventory.
+Use `project-intent docs` (or onboarding's exact installed paths) for documentation.
+Do not troubleshoot onboarding by searching other sessions, transcripts, evaluation
+archives, home directories or private service configuration. Missing documentation
+is an installation gap, not permission to widen a search.
 Do not ask the human to look up an ID. Use task text, exact reference match and
 native delegate information to identify candidates; inspect scope/avoid/acceptance
 with `start`, then select the existing alias or native identifier. Similarity is

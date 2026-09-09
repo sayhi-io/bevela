@@ -1,5 +1,6 @@
 """Worker-side checkout observation and local discovery; no assignment authority."""
 import os
+import re
 from pathlib import Path, PurePosixPath
 import socket
 import subprocess
@@ -77,16 +78,22 @@ def resolve_assignment(states,reference,scope=None):
 
 
 def discovery(states,checkout=None,query=''):
-    view=project(states,[s['id'] for s in states]);tokens=query.casefold().split();candidates=[]
+    view=project(states,[s['id'] for s in states])
+    tokens=list(dict.fromkeys(re.findall(r'[\w]+(?:[-/][\w]+)*',query.casefold())))
+    candidates=[]
     for work in view['workstreams']:
-        text=' '.join(str(work.get(k,'')) for k in ('id','provider_identifier','statement','scope','source_checkout','delegate_name')).casefold()
-        if tokens and not all(t in text for t in tokens):continue
+        text=' '.join(str(work.get(k) or '') for k in ('id','provider_identifier','statement','scope','source_checkout','delegate_name')).casefold()
+        matched=[t for t in tokens if t in text]
+        if tokens and not matched:continue
         reference=work.get('source_checkout')
         match=bool(checkout and reference and str(Path(reference).resolve())==checkout['root'])
         candidates.append({k:work.get(k) for k in ('key','id','scope_id','provider_identifier','statement','state','provider_lifecycle','delegate_name','assignee_name','source_checkout','scope','avoid')})
-        candidates[-1].update(checkout_reference_match=match,workers=work['workers'])
-    candidates.sort(key=lambda w:(not w['checkout_reference_match'],w['key']))
+        candidates[-1].update(checkout_reference_match=match,workers=work['workers'],
+            query_match={'matched_terms':matched,'unmatched_terms':[t for t in tokens if t not in matched],
+                         'matched_count':len(matched),'query_term_count':len(tokens)})
+    candidates.sort(key=lambda w:(-w['query_match']['matched_count'],not w['checkout_reference_match'],w['key']))
     return {'checkout':checkout,'candidates':candidates,'sources':view['scopes'],
+            'matching':'Ranked partial keyword matches, then checkout reference and stable key. Query match is not assignment confidence. An empty query lists the scoped cached inventory.',
             'instruction':'Candidates are not assignments. Inspect with start; confirm against your user task and declared delegate. Do not take over mismatched ownership. Use enroll only after inspection.',
             'coverage':'Last-known enrolled provider subset plus live local leases. Missing candidates are not proof no PM issue exists. No PM mutation or provider credential required.'}
 

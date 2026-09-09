@@ -369,13 +369,17 @@ class RegistrationTests(unittest.TestCase):
                      '--scope', 'scope', '--input', str(task), '--submit')
         self.assertEqual(self.provider.creates, 0)
 
-    def test_empty_onboard_offers_registration_without_enrolling(self):
+    def test_empty_onboard_offers_scoped_inventory_before_registration(self):
         worker = self.root/'worker.json'
         write_json(self.entry['cache'], dict(self.provider.snapshot(), scope_id='scope'))
         write_json(worker, {'scopes': {'scope': {'snapshot': self.entry['cache'],
                                                'enrollment_directory': str(self.root/'leases')}}})
         result = self.cli('onboard', '--worker-config', str(worker), '--scope', 'scope', '--query', 'missing task')
         self.assertEqual(result['discovery']['candidates'], [])
-        self.assertIn('task-register', result['next_step'])
+        recovery, = result['inventory_recovery']
+        self.assertEqual(recovery['scope'], 'scope')
+        self.assertIn('discover', recovery['argv'])
+        self.assertNotIn('--query', recovery['argv'])
+        self.assertNotIn('task-register', recovery['argv'])
         self.assertNotIn('enrollment_template', result)
         self.assertFalse((self.root/'leases').exists())
