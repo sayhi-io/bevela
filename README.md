@@ -1,12 +1,14 @@
 # Project Intent
 
-### Shared project state for concurrent AI software workers.
+### Coordination infrastructure for concurrent AI software workers.
 
 Project Intent helps independent coding workers understand **what other workers are changing, where their work intersects, what must remain true, and how to reconcile a shared boundary before declaring success**.
 
-It began as a way to expose project intent to AI workers. In practice, the harder problem turned out to be concurrency: capable workers can each complete a locally reasonable task while producing an incompatible combined system. Project Intent is evolving into a coordination substrate for that problem.
+Project Intent began with a concurrency problem: SayHi is one product assembled from nearly a dozen repositories, often with AI workers changing several of them at the same time. Those repositories are independently owned and developed, but they are not truly independent. Their APIs, schemas, security boundaries, runtime assumptions, and product behavior meet at seams that no single repository fully owns.
 
-> **The goal is not to make agents talk more. The goal is to let concurrent workers converge on a coherent project.**
+The original goal was to let workers in different repositories understand those shared seams—to anticipate incompatible changes, discover neighboring work, and help mend cross-repository breaks without requiring a human to continuously coordinate every interaction. As we built and tested that idea, the same failure mode became visible between workers in different worktrees and different parts of one repository: individually reasonable changes can still produce an incoherent combined system.
+
+> **The goal is not to make agents talk more. The goal is to let concurrent workers converge on a coherent product.**
 
 [Architecture](docs/ARCHITECTURE.md) · [Worker protocol](skills/project-intent/SKILL.md) · [Experiments](docs/CLI_AB_EVALUATION.md) · [Operations](docs/OPERATIONS.md)
 
@@ -14,9 +16,9 @@ It began as a way to expose project intent to AI workers. In practice, the harde
 
 ## Why this exists
 
-Modern coding agents are increasingly capable in isolation. A repository with several of them working at once introduces a different class of failure.
+Modern coding agents are increasingly capable in isolation. A product with several of them working across repositories, worktrees, and architectural boundaries at once introduces a different class of failure.
 
-One worker changes a representation. Another consumes the old representation. Both implementations can look reasonable locally. Both can pass focused tests. The project still breaks at the seam.
+One worker changes a representation. Another consumes the old representation. Both implementations can look reasonable locally. Both can pass focused tests. The product still breaks at the seam.
 
 Giving the workers more reasoning time does not necessarily repair the missing shared state. They need a durable way to discover neighboring work and answer questions such as:
 
@@ -49,7 +51,7 @@ Project Intent does **not** grant code authority, infer hidden edits, replace Gi
 
 The repository includes matched worker studies because the central question is empirical: **does structured shared project state actually help concurrent workers produce a correct combined result?**
 
-The first paired pilot was intentionally inconclusive. Ordinary and PI-aware Astra/Medium teams both completed the requested Status features and passed the same 11/11 independent acceptance checks. The PI-aware arm was not faster and used more reported input tokens. That result prevented us from claiming a benefit simply because the system looked useful. See [Pilot 01](docs/CLI_AB_PILOT_01.md).
+The first paired pilot did not show a clear quality advantage: ordinary and PI-aware Astra/Medium teams both completed the requested Status features and passed the same 11/11 independent acceptance checks. Timing and aggregate token totals were recorded, but they should not be interpreted as a simple efficiency comparison: Project Intent is designed to make coordinated concurrent work possible, and project wall-clock time, aggregate worker compute, effective parallelism, and final integrated correctness are separate measurements. See [Pilot 01](docs/CLI_AB_PILOT_01.md).
 
 A newer **seven-seam** fixture increases the concurrency pressure. Two native workers share a disposable checkout. One migrates seven data representations while the other builds seven consumers of those changing contracts:
 
@@ -76,15 +78,17 @@ Suggested final chart once the result packet is committed:
 ```text
 Seven seams preserved together
 
-Luna · Low · ordinary        ████░░░  4/7   ← replace with measured aggregate
-Luna · Low · Project Intent  ███████  7/7   ← replace with measured aggregate
-Sol  · Low · ordinary        ████░░░  4/7   ← replace with measured aggregate
-Sol  · Low · Project Intent  ███████  7/7   ← replace with measured aggregate
+Luna · Low · ordinary         ████░░░  4/7   ← replace with measured aggregate
+Luna · Low · Project Intent   ███████  7/7   ← replace with measured aggregate
+Sol  · Low · ordinary         ████░░░  4/7   ← replace with measured aggregate
+Sol  · Low · Project Intent   ███████  7/7   ← replace with measured aggregate
 
 Illustrative layout only — values above are placeholders until linked evidence is committed.
 ```
 
 The hypothesis worth testing is stronger than “more context helps”: **some apparent reasoning failures may actually be failures of project-state representation and worker concurrency.** We are treating that as a hypothesis, not a conclusion, until repetitions across fixtures and model strata support it.
+
+The newer studies therefore treat successful concurrent integration as the primary phenomenon rather than raw individual-agent runtime. A coordinated multi-worker run may consume more aggregate model compute while reducing project wall-clock time—or may reach a correct integrated state that independent workers never reach. Those are different outcomes and are measured separately.
 
 ## Mission Control
 
@@ -121,7 +125,7 @@ At handoff, last-known summaries survive the worker session so a successor can r
                  repair / validate
                        │
                        ▼
-                coherent project
+                 coherent product
 ```
 
 ## Quick start
@@ -159,9 +163,9 @@ For the complete worker workflow, use the [Project Intent skill](skills/project-
 
 **Coordination is not authority.** Presence, a Workstream ID, a repair claim or a UI state never grants permission to edit or deploy.
 
-**The project is larger than the conversation.** Important task, architecture, peer and handoff state should survive individual model sessions.
+**The product is larger than any repository or conversation.** Important task, architecture, peer and handoff state should survive individual model sessions and repository boundaries.
 
-**Seams matter more than file collisions.** Concurrent workers can conflict semantically without touching the same file. Project Intent records architectural boundaries as first-class coordination state.
+**Seams matter more than file collisions.** Concurrent workers can conflict semantically without touching the same file—or even the same repository. Project Intent records architectural boundaries as first-class coordination state.
 
 **Evidence beats ceremony.** Enrollment counts, messages and claims are not success. The relevant combined behavior still has to work.
 
@@ -171,13 +175,13 @@ For the complete worker workflow, use the [Project Intent skill](skills/project-
 
 ## Origin
 
-Project Intent started inside SayHi while several increasingly autonomous coding workers were operating across projects such as SparkOps, Verify and the broader SayHi platform.
+Project Intent started inside SayHi because the product is assembled from nearly a dozen repositories that nevertheless share product, API, schema, runtime and security seams. AI coding workers were increasingly able to work independently inside those repositories, and we wanted them to work on different parts of the product simultaneously without requiring a human to act as the permanent cross-repository coordinator.
 
-The original problem looked like **intent preservation**: give a worker enough durable project context that it could understand its assignment, architectural constraints and neighboring work without a human repeatedly reconstructing that context in chat.
+The original problem was therefore concurrency across **shared seams**. A worker changing one repository needed a way to know that another worker was approaching a related boundary elsewhere, understand the intent and constraints on both sides, avoid preventable incompatibilities, and help repair a cross-repository break when one occurred.
 
-Dogfooding exposed a more consequential problem. The workers were often individually capable; the fragile part was the **space between them**. Parallel changes could be locally correct and globally incompatible. Conversation history was ephemeral. Git showed what had changed, but not necessarily what another worker was about to change or which architectural contract it believed it was preserving.
+Git could tell us what had already changed inside a repository, but not necessarily what a neighboring worker intended to change, which architectural contract it believed it was preserving, or how work in another repository related to the same product boundary. Conversation history could carry some of that information, but it was ephemeral and isolated to individual workers.
 
-That shifted the project from a passive intent record toward a bounded concurrency and convergence substrate: presence, semantic seams, integration context, successor handoffs, repair agreement and source-bound evidence. “Project Intent” remains the name because intent is still the foundation—but the system increasingly exists to help many workers preserve that intent **together**.
+Building the system clarified that the same coordination problem exists at several scales: between repositories, between worktrees, and between independently owned areas of one codebase. That led to the current primitives—intent, presence, semantic seams, integration context, successor handoffs, repair agreement and source-bound evidence. Project Intent is the shared substrate intended to let concurrent workers preserve the coherence of **one product across many boundaries**.
 
 ## Current maturity
 
