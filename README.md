@@ -229,9 +229,9 @@ See [Operations](docs/OPERATIONS.md) for configuration, recovery and deployment 
 
 ## What PI does not magically solve
 
-**It does not read minds.** PI is declaration-based. Hidden edits remain hidden until a worker reports or discovers them.
-
 **It is not your orchestrator.** PI currently does not decide who should work on what. That may belong to a separate orchestrator agent.
+
+**It does not read minds.** PI is declaration-based. Hidden edits remain hidden until a worker reports or discovers them.
 
 **It does not grant authority.** A lease, repair claim or “done” report is neither editing permission nor proof of correctness.
 
