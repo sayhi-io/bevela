@@ -15,8 +15,15 @@ proof of current inference, and delivery of a continuation is not completion.
 Read the task checkout's AGENTS.md. Discover the installed `project-intent` command;
 in the SayHi workspace use `/home/meanaverage/sayhi/bin/project-intent`. Run `--help`
 and command-specific help before relying on flags. Use the checkout's Project Intent
-README and linked operational docs for the installed version. Do not search private
-service configuration or old provisioning scripts for credentials.
+README and linked operational docs for the installed version. Run `project-intent docs`
+for exact installed document paths (also returned by `onboard`). Read only available
+paths. On older installations without `docs`, resolve this skill directory's symlink
+and use its source release's `../../docs/`; do not append `docs/` inside the skill.
+Missing documents are an installation gap, not a reason for a workspace-wide search.
+For onboarding troubleshooting, restrict searches to the task checkout's documentation
+and these installed paths. Do not search other sessions, transcripts, evaluation
+archives, home directories, private service configuration or provisioning scripts.
+An explicitly assigned audit of such evidence is a separate task, not this fallback.
 
 From the actual execution checkout, prefer `onboard --query "task keywords"` for the
 read-only first pass, then rerun `onboard --scope SCOPE --workstream
@@ -25,9 +32,14 @@ same orientation that `start` provides and prints an explicit enrollment templat
 it never enrolls or assigns a worker automatically. `discover` and `start` remain
 available as lower-level commands. Add `--scope` when needed. Select candidates
 against the existing user task, ownership, scope, exclusions and acceptance criteria;
-a matching title or reference checkout does not grant ownership. Broaden an overly
-specific search before concluding enrollment is missing. Missing snapshot candidates
-do not prove no provider issue exists. If no candidate fits, use the configured
+a matching title or reference checkout does not grant ownership. Ranked partial
+matches include matched/unmatched terms; they are suggestions, not confidence or
+assignment. If the query is empty of useful matches, run `discover --scope SCOPE`
+**without --query**, preserving the same `--worker-config` and `--checkout` options,
+and inspect that scope's cached inventory before considering task registration.
+Use the returned `inventory_recovery` command when available. Do not drop the scope
+to broaden a search. Missing snapshot candidates do not prove no provider issue
+exists. Only if no inspected candidate fits, use the configured
 `task-register` route to inspect live native inventory and record the task the user
 already assigned. Read [task registration](../../docs/TASK_REGISTRATION.md) in this
 skill's source release for its packet and preview/submit flow. Reuse an existing native
@@ -56,3 +68,8 @@ Follow the user's existing authorization. Routine continuation within that scope
 does not require the human to type IDs or relay messages. Record the particular
 missing authority only when the next action actually exceeds it; enrollment,
 publication and session attachment do not independently expand it.
+
+For a checkout instruction template, adapt
+[worker instructions](assets/worker-instructions.md) with the actual CLI and local
+scope/configuration. Version new evaluation inputs separately; never rewrite prior
+trial instructions or outputs to apply this guidance retroactively.

@@ -6,8 +6,10 @@ first pass. After selecting an exact candidate, use `onboard --scope SCOPE
 environment requirements, readiness, handoffs and nearby work. It prints an
 explicit enrollment template but never enrolls automatically. `start` remains the
 lower-level orientation command.
-If no candidate fits after broadening discovery, follow the source repository's
-`docs/TASK_REGISTRATION.md`: preview live native inventory, select an existing issue
+Before concluding no candidate fits, run `discover --scope SCOPE` without a query,
+retaining the original worker-config and checkout options, and inspect the scoped
+inventory. Do not substitute a workspace/transcript search. Then use the installed
+`task_registration` path returned by `project-intent docs`: preview live native inventory, select an existing issue
 or record the already user-assigned task, submit the reviewed choice, then onboard
 and enroll. This records an assignment; it does not invent one or grant execution.
 Keep uncertain receipts explicit and retry the original packet, never a renamed task.
@@ -41,8 +43,8 @@ by expanding Project Intent.
 
 ## Reporting and successor
 
-Read `report --help`, `report-status --help` and the source repository's
-`docs/REPORTING.md` for the installed packet schema. Submit actual evidence, source
+Read `report --help`, `report-status --help` and the exact installed `reporting`
+path returned by `project-intent docs` for the packet schema. Submit actual evidence, source
 references, readiness dimensions and the next bounded action. Keep artifact hashes
 and invariant revision assertions explicit; a prose summary alone does not bind
 evidence to every applicable invariant.

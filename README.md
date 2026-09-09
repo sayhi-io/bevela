@@ -63,7 +63,12 @@ After reviewing the orientation, run the printed `enroll` command with the
 worker's actual access mode, paths, semantic seams and bounded task summary.
 `discover` and `start` remain available as lower-level commands.
 
-No candidate fits? Workers can use the opt-in `task-register` command to inspect live
+No candidate fits? First run `discover --scope SCOPE` without a query and inspect
+that scope's cached inventory. Preserve the same worker-config/checkout options;
+`onboard` returns a runnable `inventory_recovery` command. Generated recovery and
+enrollment commands bind to the originating release, not a package in the task
+checkout or `PYTHONPATH`. Only then use the opt-in
+`task-register` command to inspect live
 native inventory and record **the task the user already assigned**, then onboard and
 enroll. Repository setup does not pre-create every future task. This is synchronous
 bookkeeping, not a coordinator queue or new execution authority. See
@@ -75,6 +80,7 @@ local CLI operations, not browser mutation endpoints:
 
 | Need | Interface |
 | --- | --- |
+| Exact installed documentation paths, without searching other workspaces | `docs` |
 | Worker onboarding, orientation and presence | `onboard`, `discover`, `start`, `enroll` |
 | Record an existing user task, refresh onboarding context | `task-register` (opt-in local capability) |
 | Immutable local report and publication status | `report`, `report-status` |
@@ -100,6 +106,14 @@ the installation; already-running workers should explicitly read the linked SKIL
 when asked to use it. The managed workspace installation follows the pinned release
 through `state/project-intent/current`, not an arbitrary development branch. Report
 the resolved source and skill hash/source seal when claiming a reviewed version.
+
+`project-intent docs` and `onboard` return exact document paths with availability
+flags from the installed module's source release. Source/managed releases include
+the documentation; a Python-only distribution may report it unavailable. Do not
+search other sessions, transcripts, evaluation archives, home directories or private
+configuration to fill that gap. Use task-checkout documentation or report the missing
+package material. Adapt the maintained [worker instruction template](skills/project-intent/assets/worker-instructions.md)
+for new checkouts/evaluations; preserve prior trial inputs and evidence unchanged.
 
 ## Run and orient
 
@@ -185,7 +199,9 @@ From their actual task checkout:
 These commands are for the worker to choose and execute, not instructions for the
 human to fill in. Discovery returns task descriptions, aliases, provider-native
 identifiers, native delegate/assignee names, reference checkouts and registered
-workers. Exact current-checkout reference matches sort first, but are never automatic
+workers. Queries retain partial keyword matches and expose matched/unmatched terms.
+Matches sort by matched-term count, then current-checkout reference and stable key;
+without a query, checkout references sort first. Rankings are never automatic
 assignments. Both `PI-MISSION-01` and its native `SAYINT-5` resolve to the same intent;
 cross-scope ambiguity fails and requires explicit `--scope`. Read the assignment's
 constraints, environment and acceptance from `start` before enrolling. If no existing

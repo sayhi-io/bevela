@@ -8,10 +8,17 @@ No separate coordinator queue or human ID lookup is needed.
 
 ## Worker flow
 
-First use `onboard --query "task keywords"` from the actual checkout. Broaden the
-search and inspect candidates against the user task, native owners, scope, exclusions
+First use `onboard --query "task keywords"` from the actual checkout. Partial matches
+are ranked suggestions. Before concluding no candidate fits, run `discover --scope
+SCOPE` without a query, preserving worker-config/checkout options, and inspect that
+scope's cached inventory against the user task, native owners, scope, exclusions
 and acceptance. Already enrolled in the correct assignment? Renew your own lease.
 An empty snapshot search is not proof that native inventory has no matching issue.
+Use the exact installed documentation paths from `project-intent docs` or `onboard`.
+Do not search other sessions, transcripts, evaluation archives, home directories or
+private service configuration to troubleshoot onboarding. If documentation or the
+configured registration route is unavailable, report that gap; do not hunt for
+credentials or call task-register without its required task packet/configuration.
 
 If no cached candidate fits, prepare a bounded JSON file **outside tracked source**:
 
