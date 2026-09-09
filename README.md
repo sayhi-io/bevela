@@ -69,7 +69,7 @@ The tea bug is deliberately tiny because the failure mode is not.
 
 A worker changes a schema. Another keeps using the old one. One migrates a security boundary. Another still assumes the previous authorization model. A producer and consumer can each pass their own tests while the combined product is wrong.
 
-Project Intent began inside sayhi.io: one product assembled from many independently developed repositories, with AI workers changing APIs, schemas, runtime assumptions and security boundaries at the same time.
+Project Intent began inside sayhi.io studio: one product assembled from many independently developed repositories, with AI workers changing APIs, schemas, runtime assumptions and security boundaries at the same time.
 
 Git records what changed. **Project Intent records what workers say they are changing next, what boundaries they share, and what still has to work together.**
 
@@ -162,7 +162,7 @@ More tokens are not automatically worse; more active processes are not automatic
 
 ## One product. A dozen-ish repositories. What could go wrong?
 
-Project Intent started because SayHi is one product assembled from nearly a dozen repositories.
+Project Intent started because sayhi.io studio is one product assembled from nearly a dozen repositories.
 
 Once AI workers started changing several of them concurrently, the human operator became the world's least interesting message bus: constantly relaying what one worker was doing to another worker somewhere else.
 
