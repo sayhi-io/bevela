@@ -1,82 +1,85 @@
-# Does Project Intent help workers finish?
+# Evaluation methodology
 
-Status: first paired implementation pilot completed; see
-[pilot 01 evidence and limitations](CLI_AB_PILOT_01.md). Further paired tasks remain
-before any general productivity conclusion.
+[Results](../RESULTS.md) · [Original seven seams](CLI_SEVEN_SEAMS.md) · [Concurrency versus context](CLI_CONCURRENCY_STUDY.md) · [Self-organization](CLI_SEVEN_SEAMS_SELF_ORGANIZING.md)
 
-Project Intent supplies context and communication, not a mandatory execution graph.
-Workers investigate blockers, find alternatives and coordinate within existing
-authority. Only genuine external prerequisites or missing authority require escalation.
-Ordinary Codex CLI execution must not depend on the SparkOps consumer bridge.
+## Native workers, measured projects
 
-## First comparison
+Codex is the worker harness. Experiment machinery prepares disposable source,
+launches fresh sessions, records their execution and checks the combined result.
+It must not supply an ordinary worker with a coordination plan, staged reminders,
+peer handoff summaries or evaluator-directed correction rounds.
 
-Select a useful product feature in an isolated example repository, not a Project
-Intent feature or fabricated lifecycle. It must span multiple components and have
-an independently useful adjacent task. No production access or changes to another
-owner's worktree. Record repository, base SHA, feature request, companion request,
-architecture, environment instructions and acceptance tests before launching workers.
-The specific repository and requests remain to be selected; do not claim enrollment
-or real product demand merely because a task would make a convenient benchmark.
+Normal shell, Git, repository inspection, documentation and tests remain available.
+A complete product requirement is not a solution hint. Workers may coordinate or
+repair on their own; the observer must not do that work for them after launch.
 
-Run matched, independent teams from the same sealed source and request packets:
+Freeze the source, prompts, checker, model/effort, PI implementation and trial
+boundary before execution. Preserve failed, incomplete and timed-out trials without
+silent retries. Run projects one at a time, with the workers inside a multi-worker
+project launched concurrently. Historical deviations remain disclosed in reports;
+this policy does not retroactively change their execution.
 
-| Control | Project Intent-aware |
-| --- | --- |
-| Ordinary Codex CLI and repository instructions | Same CLI plus scoped PI orientation and communication |
-| Normal source inspection and available communication | Same freedoms; PI is an additional information channel |
-| Primary worker plus adjacent-task worker | Same team size and assignments |
-| Requirements available in ordinary repository documents | Identical facts also enrolled in PI |
+## Different studies answer different questions
 
-Keep model/version, reasoning settings, tools, permissions, resource budgets and
-validation environment equal. Count preparation/enrollment overhead, including
-operator time; do not hide it before the measurement clock starts. Keep setup and
-steady-state costs separately visible. Capture actual timing, not invented token
-or inference rates. Use fresh sessions and separate repositories, state directories
-and provider records so neither team sees the other's implementation or handoffs.
-The control must not inherit workspace-wide PI instructions or live scope maps.
-It may still use normal Git, docs and direct communication; do not cripple baseline.
+- **Original seven seams:** concurrent producer/consumer tasks test compatibility
+  across seven dependent boundaries. Historical PI workers had access to peer-task
+  context beyond the ordinary worker's own role prompt. Treat this as an observation
+  of that whole treatment, not an isolated live-coordination effect.
+- **Concurrency versus context:** the same complete task information is available
+  in every arm; single-worker baselines distinguish one coherent session from a
+  predefined producer/consumer pair. No after-launch coordination is injected.
+- **Self-organization:** every worker receives the same complete objective and
+  normal development capabilities. No ownership, file allocation, integrator or
+  repairer is assigned by the experiment. Whether a useful division emerges is
+  the outcome, not a prerequisite manufactured by the runner.
+- **Refund torture:** a different, harder fixture. Its seven-point results are not
+  interchangeable with the original seven seams.
 
-The adjacent worker implements a legitimate feature, not a scripted collision.
-Do not inject invariant revisions, findings, blockers or convergence. Let both
-teams decide whether coordination is useful. Record scheduling and resource
-contention; alternate or randomize trial order across repetitions.
+Equal task information in the later studies was deliberate context ablation, not
+a reason to exclude an unfavorable outcome. Detailed protocols and frozen inputs
+define each study; do not combine them into one success rate.
 
-## Evidence and adjudication
+## Report outcomes separately
 
-Predeclare acceptance and review rubric for each pair. Test functional behavior,
-cross-component integration, regressions, architectural consistency and successor
-usability. Give a fresh reviewer anonymized results without PI-specific execution
-transcripts; record any unavoidable unblinding. Reviewers apply the same rubric
-and bounded correction budget to both arms. No hidden extra requirements for one.
+Record integrated correctness, project elapsed time, aggregate worker time/tokens,
+retained concurrent contributions, concrete duplication/rework, human intervention
+and PI overhead. More tokens or a longer individual session do not alone imply a
+slower project. A quick failed project is not equivalent to an accepted project.
 
-Record separately:
+Use the frozen acceptance contract, not a new requirement invented during review.
+Inspect source and logs for material differences and observable mechanisms; do not
+assign a subjective coordination score. Label suspected causes as hypotheses and
+state the next question for ties or cases where PI did not help. A proposed next
+test is not a completed result.
 
-- Accepted result or unfinished outcome within the same budget.
-- End-to-end elapsed time, worker/tool usage where observable, setup overhead.
-- Human interventions and reasons, including avoidable relay work.
-- Rework, duplicated implementation and incompatible assumptions with evidence.
-- Obstacles resolved autonomously versus unnecessary stops.
-- Coordination that actually changed a decision or outcome, not note counts.
-- Missing project information versus PI retrieval/model defects.
+## Withdrawn coached controls
 
-No architecture score or unsupported precision. Retain failures and inconclusive
-trials. A pilot pair validates the procedure, not a general productivity claim.
-Repeat on at least three distinct comparable feature requests before drawing a
-directional conclusion; small samples cannot establish a one-percent improvement.
-If gains appear to come only from the architecture packet, add a later packet-only
-comparison before crediting live coordination or expanding orchestration machinery.
+Withdrawn on September 9, 2026, at the user's request:
 
-## Decision and current bridge disposition
+- **Status Pilot01:** the setup supplied named peers, an ordinary notes channel,
+  detailed handoffs and a bounded integration successor. It tested PI on top of
+  coordinator-arranged handoff machinery, not ordinary native coordination.
+- **Status Study02:** prompts prescribed ownership, named notes files and detailed
+  handoffs; the runner provided a fresh integrator and owner-correction rounds.
+- **Release Study03 v1/v2:** the runner explicitly announced revision transitions,
+  told workers to reread peer handoffs, replaced an owner at a checkpoint and
+  orchestrated integration/corrections. Its ordinary arm received coordination
+  that the intended comparison was supposed to leave to the workers. V1 also had
+  an invalidated evaluator; that is a separate defect.
+- The unexecuted **Study03 continuity draft** and its acceptance prototype are
+  retired with the same scripted study family, not counted as completed trials.
 
-Prefer the smallest capability that reduces human effort or rework without losing
-quality. If PI adds cost without demonstrable benefit, simplify or remove the added
-workflow while retaining useful observability. Evidence may support better project
-information rather than a new product feature. Neither trial arm receives authority
-from a Workstream ID, lease or UI action.
+Their case-specific protocols, fixtures, launchers, acceptance scripts and release
+harness tests have been removed from the current tree, and their outcome rows have
+been removed from the results catalog. Generic isolation/recording utilities and
+their safety tests remain; those utilities do not prescribe a task workflow.
 
-Bridge runtime expansion is paused for this evaluation. Preserve the SparkOps
-owner's standalone, unwired durability prototype and its local validation; it is
-not an admitted-execution proof. The bridge's authority/receipt invariant remains
-valid, but is not a prerequisite for these CLI trials. No service changes, releases,
-merges or production activation are part of this evaluation plan.
+This is a design-based exclusion, not filtering by winner. Native microstudies,
+seven-seam studies, refund trials and both later concurrency studies remain,
+including PI failures, ties and overhead. All 57 curated recent project measurements
+are unchanged.
+
+Original private frozen inputs and outputs were not edited or deleted. The removed
+public source and summaries remain recoverable in
+[the pre-withdrawal Git tree](https://github.com/meanaverage/sayhi-project-intent/tree/56bf4efc4c32e61911c40b92b80244bfcf90da84).
+They are withdrawn comparisons, not efficacy evidence for or against PI.

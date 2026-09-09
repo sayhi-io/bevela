@@ -1,5 +1,11 @@
 # README accuracy audit
 
+Historical audit of the README publication merged in PR #8. The subsequent
+visual makeover preserves the corrected claims. The later
+[coached-control withdrawal](CLI_AB_EVALUATION.md#withdrawn-coached-controls)
+removes the Status/release case files discussed below; this ledger records what
+was reviewed then, not a claim that those files remain in the active suite.
+
 Origin baseline: `44c77d6c25d3c4101de023299717d7e71b18e465`, fetched from GitHub
 before editing. Original README SHA-256:
 `1b7ee62d408ce965edfb701ba730bbafca2bb0e83eab7d5d6b4948b0860f0b52`.
