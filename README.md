@@ -125,6 +125,30 @@ So the next methodological shift is deliberate: **stop making the model weaker t
 
 [Refund torture study →](docs/results/refunds.md)
 
+### Yeah, yeah. You only use Codex Astra XHigh.
+
+Fair objection.
+
+A benchmark can make PI look useful simply by choosing a worker that is weak enough to lose track of a concurrent project. But that creates a nasty confound: the same weaker worker may also be worse at following PI's own coordination instructions.
+
+So we are changing the test, not weakening the model.
+
+Our working hypothesis is that the cleanest evaluation regime looks like this:
+
+- use a **strong worker whose PI protocol compliance is already reliable**;
+- make the **distributed software problem** difficult enough that concurrent ordinary workers do not succeed every time;
+- keep the programming task within that model's actual capability;
+- make the difficulty come from changing schemas, stale assumptions, cross-repository contracts, migration/versioning, retries, compatibility and integration—not puzzle tricks;
+- freeze the task decomposition so PI is tested as a coordination substrate, not as an accidental orchestrator.
+
+In other words, if Sol Medium can follow PI correctly but also solves the fixture 10/10 without it, **the fixture is too easy**. The answer is not to drop to a dumber model until something breaks. The answer is to build a harder project.
+
+We are currently designing that benchmark: a longer, genuinely distributed task where one capable worker can understand the system, several capable workers have meaningful work to do in parallel, and the shared seams are difficult enough that project state—not basic coding ability—becomes the variable under test.
+
+> **Do not make the worker less capable to make Project Intent look useful. Make the coordination problem harder while keeping the worker capable.**
+
+That is the standard we want the next round of results to meet.
+
 **Correctness. Project time. Worker effort. Useful concurrency.** We measure them separately.
 More tokens are not automatically worse; more active processes are not automatically progress.
 
