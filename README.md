@@ -69,7 +69,7 @@ The tea bug is deliberately tiny because the failure mode is not.
 
 A worker changes a schema. Another keeps using the old one. One migrates a security boundary. Another still assumes the previous authorization model. A producer and consumer can each pass their own tests while the combined product is wrong.
 
-Project Intent began inside SayHi: one product assembled from many independently developed repositories, with AI workers changing APIs, schemas, runtime assumptions and security boundaries at the same time.
+Project Intent began inside sayhi.io: one product assembled from many independently developed repositories, with AI workers changing APIs, schemas, runtime assumptions and security boundaries at the same time.
 
 Git records what changed. **Project Intent records what workers say they are changing next, what boundaries they share, and what still has to work together.**
 
