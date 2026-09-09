@@ -1,7 +1,9 @@
 # Seven-problem native Codex study — v1
 
-Status: fixture and recorder implementation only; no model result is claimed.
-This supersedes neither the old microstudy nor its frozen evidence.
+Historical v1 protocol, preserved below. The study has since run: see the
+[newest-first results](../RESULTS.md) and [per-run original-fixture results](results/seven-seams.md).
+Later no-PI and four-arm protocols are separate versions, not retroactive changes
+to these initial PI-only instructions or to frozen evidence.
 
 ## What changes
 
@@ -87,7 +89,7 @@ handoffs separately from functioning output by inspecting actual completed logs.
 Claim counts or enrollment success alone do not establish effective coordination.
 Process exit zero also does not establish preservation of the seven contracts.
 
-This remains PI-only as requested. The old one-problem control is historical context,
+This initial recorder is PI-only. The old one-problem control is historical context,
 not a matched numerical baseline for this new fixture; do not compare its success
 percentage directly with a seven-problem score or claim an A/B win. Runs are not
 hermetically read-isolated from the local host and native configuration is inherited.

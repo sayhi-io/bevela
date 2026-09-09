@@ -1,0 +1,1 @@
+Change catalog.PRICES to store integer cents instead of dollar floats. Keep checkout.total(items) returning the same dollar totals.

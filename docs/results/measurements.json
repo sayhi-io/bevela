@@ -1,0 +1,3997 @@
+{
+  "schema": "project-intent/public-results/v1",
+  "scope": "Completed original-seven-seam and refund studies; older/infrastructure attempts are catalogued separately.",
+  "timing": "project_seconds is post-exit verified time where recorded; historical worker_window_seconds excludes final verification. Null means unavailable, never zero.",
+  "tokens": "Final cumulative native counters where analyzed. Cache is a subset of input; reasoning is a subset of output. Mixed PI-tagged time is not pure PI latency.",
+  "groups": [
+    {
+      "id": "20260909-seven-seams-self-organizing-luna-medium-v4",
+      "started_at": "2026-09-09T05:51:58.541788+00:00",
+      "last_trial_started_at": "2026-09-09T06:06:28.944020+00:00",
+      "sources_sha256": {
+        "results.json": "6ff93aea7ba0507ffa7ea170cd7e0e22ee35246b9397ef140c8727a9822a10bd",
+        "analysis.json": "5c1bb1c557066b23d52c61900bfa4b3fa16c8e5a21a57e3d410e7147bf9da709",
+        "REPORT.md": "f609d6f7d693ee06dfb9a797bc40b2b4940e58e85303be13e460b4b83e5c96fb"
+      },
+      "trials": [
+        {
+          "run": "D3",
+          "started_at": "2026-09-09T06:06:28.944020+00:00",
+          "finished_at": "2026-09-09T06:07:54.970429+00:00",
+          "condition": "D",
+          "model": "gpt-5.6-luna",
+          "effort": "medium",
+          "fixture_version": "seven-seams-self-organizing/v4",
+          "pi_enabled": true,
+          "pi_backend_sha256": "99ca17a18d28c214a027bab852b0d758d78115318933090a002b22a93bc40923",
+          "pi_workflow_sha256": "aa68ca28c2cd27014265ff5e315b461c1a83ffd7c0148f0d3f839c717a3b0f9a",
+          "plan_sha256": "37e5b643a4f2e61f28653f5378a776d6ea2c1c502735b9dd9cd941a5ce2be984",
+          "input_hashes": {
+            "common.txt": "e1bf34ea66ddd96ec59ba5d900d4396561cbef5e188c5de3071c8b2e4e7ee9ba",
+            "check_contract.py": "7f7ddf4e46bf22bcb079344c5208b9af8adbcfc15b6da4c2955c70d9b162e038",
+            "worker1.txt": "e1bf34ea66ddd96ec59ba5d900d4396561cbef5e188c5de3071c8b2e4e7ee9ba"
+          },
+          "score": 7,
+          "out_of": 7,
+          "producer_seams": 7,
+          "consumer_seams": 7,
+          "failed_seams": [],
+          "accepted": true,
+          "worker_window_seconds": 86.026409838,
+          "aggregate_worker_seconds": 86.026409838,
+          "project_seconds": 86.067905039,
+          "setup_seconds": 0.019083933992078528,
+          "archive_seconds": 0.003974106,
+          "verification_seconds": 0.036536648,
+          "human_interventions": 0,
+          "concurrency_factor": 1.0,
+          "aggregate_tokens": {
+            "input_tokens": 254987,
+            "cached_input_tokens": 221952,
+            "output_tokens": 3674,
+            "reasoning_output_tokens": 521,
+            "total_tokens": 258661
+          },
+          "workers": [
+            {
+              "role": "worker1",
+              "start_seconds": 0.0,
+              "end_seconds": 86.026409838,
+              "duration_seconds": 86.026409838,
+              "exit_code": 0,
+              "tokens": {
+                "input_tokens": 254987,
+                "cached_input_tokens": 221952,
+                "output_tokens": 3674,
+                "reasoning_output_tokens": 521,
+                "total_tokens": 258661
+              },
+              "tool_calls": 8,
+              "enrollment_completed_seconds": 33.13797998428345,
+              "pi_tagged_tool_seconds": 0.7030000686645508,
+              "pi_tagged_output_bytes": 65158
+            }
+          ]
+        },
+        {
+          "run": "D2",
+          "started_at": "2026-09-09T06:05:07.050457+00:00",
+          "finished_at": "2026-09-09T06:06:28.818445+00:00",
+          "condition": "D",
+          "model": "gpt-5.6-luna",
+          "effort": "medium",
+          "fixture_version": "seven-seams-self-organizing/v4",
+          "pi_enabled": true,
+          "pi_backend_sha256": "99ca17a18d28c214a027bab852b0d758d78115318933090a002b22a93bc40923",
+          "pi_workflow_sha256": "aa68ca28c2cd27014265ff5e315b461c1a83ffd7c0148f0d3f839c717a3b0f9a",
+          "plan_sha256": "3e7dc609fd4d1b1f546e918557bbc8fa0ed42a8958b057f52cf01a7a6e1f4523",
+          "input_hashes": {
+            "common.txt": "e1bf34ea66ddd96ec59ba5d900d4396561cbef5e188c5de3071c8b2e4e7ee9ba",
+            "check_contract.py": "7f7ddf4e46bf22bcb079344c5208b9af8adbcfc15b6da4c2955c70d9b162e038",
+            "worker1.txt": "e1bf34ea66ddd96ec59ba5d900d4396561cbef5e188c5de3071c8b2e4e7ee9ba"
+          },
+          "score": 7,
+          "out_of": 7,
+          "producer_seams": 7,
+          "consumer_seams": 7,
+          "failed_seams": [],
+          "accepted": true,
+          "worker_window_seconds": 81.767993238,
+          "aggregate_worker_seconds": 81.767993238,
+          "project_seconds": 81.793609373,
+          "setup_seconds": 0.028059686010237783,
+          "archive_seconds": 0.003939466,
+          "verification_seconds": 0.020665471,
+          "human_interventions": 0,
+          "concurrency_factor": 1.0,
+          "aggregate_tokens": {
+            "input_tokens": 300850,
+            "cached_input_tokens": 260096,
+            "output_tokens": 3670,
+            "reasoning_output_tokens": 430,
+            "total_tokens": 304520
+          },
+          "workers": [
+            {
+              "role": "worker1",
+              "start_seconds": 0.0,
+              "end_seconds": 81.767993238,
+              "duration_seconds": 81.767993238,
+              "exit_code": 0,
+              "tokens": {
+                "input_tokens": 300850,
+                "cached_input_tokens": 260096,
+                "output_tokens": 3670,
+                "reasoning_output_tokens": 430,
+                "total_tokens": 304520
+              },
+              "tool_calls": 11,
+              "enrollment_completed_seconds": 29.291543006896973,
+              "pi_tagged_tool_seconds": 0.8459999561309814,
+              "pi_tagged_output_bytes": 64970
+            }
+          ]
+        },
+        {
+          "run": "D1",
+          "started_at": "2026-09-09T06:03:27.352695+00:00",
+          "finished_at": "2026-09-09T06:05:06.939231+00:00",
+          "condition": "D",
+          "model": "gpt-5.6-luna",
+          "effort": "medium",
+          "fixture_version": "seven-seams-self-organizing/v4",
+          "pi_enabled": true,
+          "pi_backend_sha256": "99ca17a18d28c214a027bab852b0d758d78115318933090a002b22a93bc40923",
+          "pi_workflow_sha256": "aa68ca28c2cd27014265ff5e315b461c1a83ffd7c0148f0d3f839c717a3b0f9a",
+          "plan_sha256": "fb6e4cb928f938f0378a790218f221f516414fbd012cf4a9af8d2f1cb83d6779",
+          "input_hashes": {
+            "common.txt": "e1bf34ea66ddd96ec59ba5d900d4396561cbef5e188c5de3071c8b2e4e7ee9ba",
+            "check_contract.py": "7f7ddf4e46bf22bcb079344c5208b9af8adbcfc15b6da4c2955c70d9b162e038",
+            "worker1.txt": "e1bf34ea66ddd96ec59ba5d900d4396561cbef5e188c5de3071c8b2e4e7ee9ba"
+          },
+          "score": 7,
+          "out_of": 7,
+          "producer_seams": 7,
+          "consumer_seams": 7,
+          "failed_seams": [],
+          "accepted": true,
+          "worker_window_seconds": 99.586542532,
+          "aggregate_worker_seconds": 99.586542532,
+          "project_seconds": 99.611964985,
+          "setup_seconds": 0.02796427797875367,
+          "archive_seconds": 0.004064777,
+          "verification_seconds": 0.020349646,
+          "human_interventions": 0,
+          "concurrency_factor": 1.0,
+          "aggregate_tokens": {
+            "input_tokens": 291675,
+            "cached_input_tokens": 259328,
+            "output_tokens": 3642,
+            "reasoning_output_tokens": 224,
+            "total_tokens": 295317
+          },
+          "workers": [
+            {
+              "role": "worker1",
+              "start_seconds": 0.0,
+              "end_seconds": 99.586542532,
+              "duration_seconds": 99.586542532,
+              "exit_code": 0,
+              "tokens": {
+                "input_tokens": 291675,
+                "cached_input_tokens": 259328,
+                "output_tokens": 3642,
+                "reasoning_output_tokens": 224,
+                "total_tokens": 295317
+              },
+              "tool_calls": 10,
+              "enrollment_completed_seconds": 25.843305110931396,
+              "pi_tagged_tool_seconds": 0.7899999618530273,
+              "pi_tagged_output_bytes": 54970
+            }
+          ]
+        },
+        {
+          "run": "A3",
+          "started_at": "2026-09-09T06:02:32.543311+00:00",
+          "finished_at": "2026-09-09T06:03:27.227626+00:00",
+          "condition": "A",
+          "model": "gpt-5.6-luna",
+          "effort": "medium",
+          "fixture_version": "seven-seams-self-organizing/v4",
+          "pi_enabled": false,
+          "pi_backend_sha256": null,
+          "pi_workflow_sha256": null,
+          "plan_sha256": "3221c8e27da5c082ea7b61ce2eece8db2c1cb677650e4a1244f931fe2e81c35e",
+          "input_hashes": {
+            "common.txt": "e1bf34ea66ddd96ec59ba5d900d4396561cbef5e188c5de3071c8b2e4e7ee9ba",
+            "check_contract.py": "7f7ddf4e46bf22bcb079344c5208b9af8adbcfc15b6da4c2955c70d9b162e038",
+            "worker1.txt": "e1bf34ea66ddd96ec59ba5d900d4396561cbef5e188c5de3071c8b2e4e7ee9ba"
+          },
+          "score": 7,
+          "out_of": 7,
+          "producer_seams": 7,
+          "consumer_seams": 7,
+          "failed_seams": [],
+          "accepted": true,
+          "worker_window_seconds": 54.68431952,
+          "aggregate_worker_seconds": 54.68431952,
+          "project_seconds": 54.706989511,
+          "setup_seconds": 0.012693091994151473,
+          "archive_seconds": 0.001814141,
+          "verification_seconds": 0.019862284,
+          "human_interventions": 0,
+          "concurrency_factor": 1.0,
+          "aggregate_tokens": {
+            "input_tokens": 118743,
+            "cached_input_tokens": 88320,
+            "output_tokens": 2366,
+            "reasoning_output_tokens": 294,
+            "total_tokens": 121109
+          },
+          "workers": [
+            {
+              "role": "worker1",
+              "start_seconds": 0.0,
+              "end_seconds": 54.68431952,
+              "duration_seconds": 54.68431952,
+              "exit_code": 0,
+              "tokens": {
+                "input_tokens": 118743,
+                "cached_input_tokens": 88320,
+                "output_tokens": 2366,
+                "reasoning_output_tokens": 294,
+                "total_tokens": 121109
+              },
+              "tool_calls": 6,
+              "enrollment_completed_seconds": null,
+              "pi_tagged_tool_seconds": 0,
+              "pi_tagged_output_bytes": 0
+            }
+          ]
+        },
+        {
+          "run": "C3",
+          "started_at": "2026-09-09T06:00:50.722542+00:00",
+          "finished_at": "2026-09-09T06:02:32.428966+00:00",
+          "condition": "C",
+          "model": "gpt-5.6-luna",
+          "effort": "medium",
+          "fixture_version": "seven-seams-self-organizing/v4",
+          "pi_enabled": true,
+          "pi_backend_sha256": "99ca17a18d28c214a027bab852b0d758d78115318933090a002b22a93bc40923",
+          "pi_workflow_sha256": "aa68ca28c2cd27014265ff5e315b461c1a83ffd7c0148f0d3f839c717a3b0f9a",
+          "plan_sha256": "a64e505515a8a826b6f90ce3fb9a41a672617a646576c7fe7ea1fe8bbb7d66d4",
+          "input_hashes": {
+            "common.txt": "e1bf34ea66ddd96ec59ba5d900d4396561cbef5e188c5de3071c8b2e4e7ee9ba",
+            "check_contract.py": "7f7ddf4e46bf22bcb079344c5208b9af8adbcfc15b6da4c2955c70d9b162e038",
+            "worker1.txt": "e1bf34ea66ddd96ec59ba5d900d4396561cbef5e188c5de3071c8b2e4e7ee9ba",
+            "worker2.txt": "e1bf34ea66ddd96ec59ba5d900d4396561cbef5e188c5de3071c8b2e4e7ee9ba",
+            "worker3.txt": "e1bf34ea66ddd96ec59ba5d900d4396561cbef5e188c5de3071c8b2e4e7ee9ba"
+          },
+          "score": 7,
+          "out_of": 7,
+          "producer_seams": 7,
+          "consumer_seams": 7,
+          "failed_seams": [],
+          "accepted": true,
+          "worker_window_seconds": 101.706426087,
+          "aggregate_worker_seconds": 276.167934935,
+          "project_seconds": 101.732200774,
+          "setup_seconds": 0.027101190004032105,
+          "archive_seconds": 0.00421876,
+          "verification_seconds": 0.020570009,
+          "human_interventions": 0,
+          "concurrency_factor": 2.715344010797952,
+          "aggregate_tokens": {
+            "input_tokens": 980091,
+            "cached_input_tokens": 840192,
+            "output_tokens": 11890,
+            "reasoning_output_tokens": 2023,
+            "total_tokens": 991981
+          },
+          "workers": [
+            {
+              "role": "worker1",
+              "start_seconds": 0.0,
+              "end_seconds": 101.706426087,
+              "duration_seconds": 101.706426087,
+              "exit_code": 0,
+              "tokens": {
+                "input_tokens": 383443,
+                "cached_input_tokens": 334336,
+                "output_tokens": 4440,
+                "reasoning_output_tokens": 910,
+                "total_tokens": 387883
+              },
+              "tool_calls": 13,
+              "enrollment_completed_seconds": 31.387457847595215,
+              "pi_tagged_tool_seconds": 0.740999698638916,
+              "pi_tagged_output_bytes": 76175
+            },
+            {
+              "role": "worker2",
+              "start_seconds": 0.000665647,
+              "end_seconds": 88.442082966,
+              "duration_seconds": 88.441417319,
+              "exit_code": 0,
+              "tokens": {
+                "input_tokens": 335586,
+                "cached_input_tokens": 290048,
+                "output_tokens": 3702,
+                "reasoning_output_tokens": 470,
+                "total_tokens": 339288
+              },
+              "tool_calls": 10,
+              "enrollment_completed_seconds": 33.139806032180786,
+              "pi_tagged_tool_seconds": 0.750999927520752,
+              "pi_tagged_output_bytes": 113700
+            },
+            {
+              "role": "worker3",
+              "start_seconds": 0.000106128,
+              "end_seconds": 86.020197657,
+              "duration_seconds": 86.020091529,
+              "exit_code": 0,
+              "tokens": {
+                "input_tokens": 261062,
+                "cached_input_tokens": 215808,
+                "output_tokens": 3748,
+                "reasoning_output_tokens": 643,
+                "total_tokens": 264810
+              },
+              "tool_calls": 8,
+              "enrollment_completed_seconds": 29.943350791931152,
+              "pi_tagged_tool_seconds": 0.7529997825622559,
+              "pi_tagged_output_bytes": 71791
+            }
+          ]
+        },
+        {
+          "run": "B3",
+          "started_at": "2026-09-09T05:59:46.846909+00:00",
+          "finished_at": "2026-09-09T06:00:50.599731+00:00",
+          "condition": "B",
+          "model": "gpt-5.6-luna",
+          "effort": "medium",
+          "fixture_version": "seven-seams-self-organizing/v4",
+          "pi_enabled": false,
+          "pi_backend_sha256": null,
+          "pi_workflow_sha256": null,
+          "plan_sha256": "cfcf002eab312e4bf8ebf341ea48da813d12072f2edac795a9a7c5abad74ebdd",
+          "input_hashes": {
+            "common.txt": "e1bf34ea66ddd96ec59ba5d900d4396561cbef5e188c5de3071c8b2e4e7ee9ba",
+            "check_contract.py": "7f7ddf4e46bf22bcb079344c5208b9af8adbcfc15b6da4c2955c70d9b162e038",
+            "worker1.txt": "e1bf34ea66ddd96ec59ba5d900d4396561cbef5e188c5de3071c8b2e4e7ee9ba",
+            "worker2.txt": "e1bf34ea66ddd96ec59ba5d900d4396561cbef5e188c5de3071c8b2e4e7ee9ba",
+            "worker3.txt": "e1bf34ea66ddd96ec59ba5d900d4396561cbef5e188c5de3071c8b2e4e7ee9ba"
+          },
+          "score": 7,
+          "out_of": 7,
+          "producer_seams": 7,
+          "consumer_seams": 7,
+          "failed_seams": [],
+          "accepted": true,
+          "worker_window_seconds": 63.752828282,
+          "aggregate_worker_seconds": 178.590310193,
+          "project_seconds": 63.776547417,
+          "setup_seconds": 0.016710080002667382,
+          "archive_seconds": 0.001875004,
+          "verification_seconds": 0.020792101,
+          "human_interventions": 0,
+          "concurrency_factor": 2.801292350561069,
+          "aggregate_tokens": {
+            "input_tokens": 376099,
+            "cached_input_tokens": 313088,
+            "output_tokens": 7589,
+            "reasoning_output_tokens": 1405,
+            "total_tokens": 383688
+          },
+          "workers": [
+            {
+              "role": "worker1",
+              "start_seconds": 0.0,
+              "end_seconds": 53.238572649,
+              "duration_seconds": 53.238572649,
+              "exit_code": 0,
+              "tokens": {
+                "input_tokens": 103107,
+                "cached_input_tokens": 82432,
+                "output_tokens": 2342,
+                "reasoning_output_tokens": 380,
+                "total_tokens": 105449
+              },
+              "tool_calls": 5,
+              "enrollment_completed_seconds": null,
+              "pi_tagged_tool_seconds": 0,
+              "pi_tagged_output_bytes": 0
+            },
+            {
+              "role": "worker2",
+              "start_seconds": 0.000707374,
+              "end_seconds": 63.752828282,
+              "duration_seconds": 63.752120908,
+              "exit_code": 0,
+              "tokens": {
+                "input_tokens": 149022,
+                "cached_input_tokens": 128000,
+                "output_tokens": 2754,
+                "reasoning_output_tokens": 596,
+                "total_tokens": 151776
+              },
+              "tool_calls": 7,
+              "enrollment_completed_seconds": null,
+              "pi_tagged_tool_seconds": 0,
+              "pi_tagged_output_bytes": 0
+            },
+            {
+              "role": "worker3",
+              "start_seconds": 0.000105487,
+              "end_seconds": 61.599722123,
+              "duration_seconds": 61.599616636,
+              "exit_code": 0,
+              "tokens": {
+                "input_tokens": 123970,
+                "cached_input_tokens": 102656,
+                "output_tokens": 2493,
+                "reasoning_output_tokens": 429,
+                "total_tokens": 126463
+              },
+              "tool_calls": 6,
+              "enrollment_completed_seconds": null,
+              "pi_tagged_tool_seconds": 0,
+              "pi_tagged_output_bytes": 0
+            }
+          ]
+        },
+        {
+          "run": "B2",
+          "started_at": "2026-09-09T05:58:34.460958+00:00",
+          "finished_at": "2026-09-09T05:59:46.722983+00:00",
+          "condition": "B",
+          "model": "gpt-5.6-luna",
+          "effort": "medium",
+          "fixture_version": "seven-seams-self-organizing/v4",
+          "pi_enabled": false,
+          "pi_backend_sha256": null,
+          "pi_workflow_sha256": null,
+          "plan_sha256": "eb9176cbe8169e1693b1aed44b2668c04a64da09971fb107ffe0a4021d9dcbd9",
+          "input_hashes": {
+            "common.txt": "e1bf34ea66ddd96ec59ba5d900d4396561cbef5e188c5de3071c8b2e4e7ee9ba",
+            "check_contract.py": "7f7ddf4e46bf22bcb079344c5208b9af8adbcfc15b6da4c2955c70d9b162e038",
+            "worker1.txt": "e1bf34ea66ddd96ec59ba5d900d4396561cbef5e188c5de3071c8b2e4e7ee9ba",
+            "worker2.txt": "e1bf34ea66ddd96ec59ba5d900d4396561cbef5e188c5de3071c8b2e4e7ee9ba",
+            "worker3.txt": "e1bf34ea66ddd96ec59ba5d900d4396561cbef5e188c5de3071c8b2e4e7ee9ba"
+          },
+          "score": 7,
+          "out_of": 7,
+          "producer_seams": 7,
+          "consumer_seams": 7,
+          "failed_seams": [],
+          "accepted": true,
+          "worker_window_seconds": 72.262031419,
+          "aggregate_worker_seconds": 182.691437627,
+          "project_seconds": 72.303128176,
+          "setup_seconds": 0.013568195019615814,
+          "archive_seconds": 0.001945804,
+          "verification_seconds": 0.037936156,
+          "human_interventions": 0,
+          "concurrency_factor": 2.528180208049958,
+          "aggregate_tokens": {
+            "input_tokens": 414838,
+            "cached_input_tokens": 349440,
+            "output_tokens": 7819,
+            "reasoning_output_tokens": 1485,
+            "total_tokens": 422657
+          },
+          "workers": [
+            {
+              "role": "worker1",
+              "start_seconds": 0.000897774,
+              "end_seconds": 51.439911351,
+              "duration_seconds": 51.439013577,
+              "exit_code": 0,
+              "tokens": {
+                "input_tokens": 102042,
+                "cached_input_tokens": 85504,
+                "output_tokens": 2192,
+                "reasoning_output_tokens": 354,
+                "total_tokens": 104234
+              },
+              "tool_calls": 5,
+              "enrollment_completed_seconds": null,
+              "pi_tagged_tool_seconds": 0,
+              "pi_tagged_output_bytes": 0
+            },
+            {
+              "role": "worker2",
+              "start_seconds": 0.000819998,
+              "end_seconds": 58.991212629,
+              "duration_seconds": 58.990392631,
+              "exit_code": 0,
+              "tokens": {
+                "input_tokens": 146759,
+                "cached_input_tokens": 129024,
+                "output_tokens": 2550,
+                "reasoning_output_tokens": 353,
+                "total_tokens": 149309
+              },
+              "tool_calls": 7,
+              "enrollment_completed_seconds": null,
+              "pi_tagged_tool_seconds": 0,
+              "pi_tagged_output_bytes": 0
+            },
+            {
+              "role": "worker3",
+              "start_seconds": 0.0,
+              "end_seconds": 72.262031419,
+              "duration_seconds": 72.262031419,
+              "exit_code": 0,
+              "tokens": {
+                "input_tokens": 166037,
+                "cached_input_tokens": 134912,
+                "output_tokens": 3077,
+                "reasoning_output_tokens": 778,
+                "total_tokens": 169114
+              },
+              "tool_calls": 8,
+              "enrollment_completed_seconds": null,
+              "pi_tagged_tool_seconds": 0,
+              "pi_tagged_output_bytes": 0
+            }
+          ]
+        },
+        {
+          "run": "A2",
+          "started_at": "2026-09-09T05:57:40.966449+00:00",
+          "finished_at": "2026-09-09T05:58:34.349121+00:00",
+          "condition": "A",
+          "model": "gpt-5.6-luna",
+          "effort": "medium",
+          "fixture_version": "seven-seams-self-organizing/v4",
+          "pi_enabled": false,
+          "pi_backend_sha256": null,
+          "pi_workflow_sha256": null,
+          "plan_sha256": "3094bd82b29301510a449f0491a1d063d3ad0040a2615e3cc08a97a7278f03af",
+          "input_hashes": {
+            "common.txt": "e1bf34ea66ddd96ec59ba5d900d4396561cbef5e188c5de3071c8b2e4e7ee9ba",
+            "check_contract.py": "7f7ddf4e46bf22bcb079344c5208b9af8adbcfc15b6da4c2955c70d9b162e038",
+            "worker1.txt": "e1bf34ea66ddd96ec59ba5d900d4396561cbef5e188c5de3071c8b2e4e7ee9ba"
+          },
+          "score": 7,
+          "out_of": 7,
+          "producer_seams": 7,
+          "consumer_seams": 7,
+          "failed_seams": [],
+          "accepted": true,
+          "worker_window_seconds": 53.382673821,
+          "aggregate_worker_seconds": 53.382673821,
+          "project_seconds": 53.406494853,
+          "setup_seconds": 0.013556338992202654,
+          "archive_seconds": 0.001855547,
+          "verification_seconds": 0.020849567,
+          "human_interventions": 0,
+          "concurrency_factor": 1.0,
+          "aggregate_tokens": {
+            "input_tokens": 102925,
+            "cached_input_tokens": 86528,
+            "output_tokens": 2319,
+            "reasoning_output_tokens": 311,
+            "total_tokens": 105244
+          },
+          "workers": [
+            {
+              "role": "worker1",
+              "start_seconds": 0.0,
+              "end_seconds": 53.382673821,
+              "duration_seconds": 53.382673821,
+              "exit_code": 0,
+              "tokens": {
+                "input_tokens": 102925,
+                "cached_input_tokens": 86528,
+                "output_tokens": 2319,
+                "reasoning_output_tokens": 311,
+                "total_tokens": 105244
+              },
+              "tool_calls": 5,
+              "enrollment_completed_seconds": null,
+              "pi_tagged_tool_seconds": 0,
+              "pi_tagged_output_bytes": 0
+            }
+          ]
+        },
+        {
+          "run": "C2",
+          "started_at": "2026-09-09T05:56:05.525841+00:00",
+          "finished_at": "2026-09-09T05:57:40.828295+00:00",
+          "condition": "C",
+          "model": "gpt-5.6-luna",
+          "effort": "medium",
+          "fixture_version": "seven-seams-self-organizing/v4",
+          "pi_enabled": true,
+          "pi_backend_sha256": "99ca17a18d28c214a027bab852b0d758d78115318933090a002b22a93bc40923",
+          "pi_workflow_sha256": "aa68ca28c2cd27014265ff5e315b461c1a83ffd7c0148f0d3f839c717a3b0f9a",
+          "plan_sha256": "fbd317d831d21a84beea9881ba9d41085bca364f3d32a2c36aedbbb3d527fa70",
+          "input_hashes": {
+            "common.txt": "e1bf34ea66ddd96ec59ba5d900d4396561cbef5e188c5de3071c8b2e4e7ee9ba",
+            "check_contract.py": "7f7ddf4e46bf22bcb079344c5208b9af8adbcfc15b6da4c2955c70d9b162e038",
+            "worker1.txt": "e1bf34ea66ddd96ec59ba5d900d4396561cbef5e188c5de3071c8b2e4e7ee9ba",
+            "worker2.txt": "e1bf34ea66ddd96ec59ba5d900d4396561cbef5e188c5de3071c8b2e4e7ee9ba",
+            "worker3.txt": "e1bf34ea66ddd96ec59ba5d900d4396561cbef5e188c5de3071c8b2e4e7ee9ba"
+          },
+          "score": 7,
+          "out_of": 7,
+          "producer_seams": 7,
+          "consumer_seams": 7,
+          "failed_seams": [],
+          "accepted": true,
+          "worker_window_seconds": 95.302459453,
+          "aggregate_worker_seconds": 267.86731863,
+          "project_seconds": 95.344496483,
+          "setup_seconds": 0.015095442009624094,
+          "archive_seconds": 0.004232613,
+          "verification_seconds": 0.036812867,
+          "human_interventions": 0,
+          "concurrency_factor": 2.8107073014427635,
+          "aggregate_tokens": {
+            "input_tokens": 927156,
+            "cached_input_tokens": 772864,
+            "output_tokens": 11214,
+            "reasoning_output_tokens": 1674,
+            "total_tokens": 938370
+          },
+          "workers": [
+            {
+              "role": "worker1",
+              "start_seconds": 0.0,
+              "end_seconds": 95.302459453,
+              "duration_seconds": 95.302459453,
+              "exit_code": 0,
+              "tokens": {
+                "input_tokens": 321183,
+                "cached_input_tokens": 270592,
+                "output_tokens": 3900,
+                "reasoning_output_tokens": 503,
+                "total_tokens": 325083
+              },
+              "tool_calls": 10,
+              "enrollment_completed_seconds": 28.080158948898315,
+              "pi_tagged_tool_seconds": 0.755000114440918,
+              "pi_tagged_output_bytes": 79153
+            },
+            {
+              "role": "worker2",
+              "start_seconds": 0.001289036,
+              "end_seconds": 87.587149484,
+              "duration_seconds": 87.585860448,
+              "exit_code": 0,
+              "tokens": {
+                "input_tokens": 337026,
+                "cached_input_tokens": 281600,
+                "output_tokens": 3484,
+                "reasoning_output_tokens": 510,
+                "total_tokens": 340510
+              },
+              "tool_calls": 11,
+              "enrollment_completed_seconds": 27.923873901367188,
+              "pi_tagged_tool_seconds": 0.6509997844696045,
+              "pi_tagged_output_bytes": 82214
+            },
+            {
+              "role": "worker3",
+              "start_seconds": 0.0012315,
+              "end_seconds": 84.980230229,
+              "duration_seconds": 84.978998729,
+              "exit_code": 0,
+              "tokens": {
+                "input_tokens": 268947,
+                "cached_input_tokens": 220672,
+                "output_tokens": 3830,
+                "reasoning_output_tokens": 661,
+                "total_tokens": 272777
+              },
+              "tool_calls": 9,
+              "enrollment_completed_seconds": 25.40193200111389,
+              "pi_tagged_tool_seconds": 0.8819999694824219,
+              "pi_tagged_output_bytes": 81695
+            }
+          ]
+        },
+        {
+          "run": "C1",
+          "started_at": "2026-09-09T05:54:12.961303+00:00",
+          "finished_at": "2026-09-09T05:56:05.375515+00:00",
+          "condition": "C",
+          "model": "gpt-5.6-luna",
+          "effort": "medium",
+          "fixture_version": "seven-seams-self-organizing/v4",
+          "pi_enabled": true,
+          "pi_backend_sha256": "99ca17a18d28c214a027bab852b0d758d78115318933090a002b22a93bc40923",
+          "pi_workflow_sha256": "aa68ca28c2cd27014265ff5e315b461c1a83ffd7c0148f0d3f839c717a3b0f9a",
+          "plan_sha256": "559cb010fb7d26656348fc4921ff14ef7f2169cc70bfec0425358b31047620ba",
+          "input_hashes": {
+            "common.txt": "e1bf34ea66ddd96ec59ba5d900d4396561cbef5e188c5de3071c8b2e4e7ee9ba",
+            "check_contract.py": "7f7ddf4e46bf22bcb079344c5208b9af8adbcfc15b6da4c2955c70d9b162e038",
+            "worker1.txt": "e1bf34ea66ddd96ec59ba5d900d4396561cbef5e188c5de3071c8b2e4e7ee9ba",
+            "worker2.txt": "e1bf34ea66ddd96ec59ba5d900d4396561cbef5e188c5de3071c8b2e4e7ee9ba",
+            "worker3.txt": "e1bf34ea66ddd96ec59ba5d900d4396561cbef5e188c5de3071c8b2e4e7ee9ba"
+          },
+          "score": 7,
+          "out_of": 7,
+          "producer_seams": 7,
+          "consumer_seams": 7,
+          "failed_seams": [],
+          "accepted": true,
+          "worker_window_seconds": 112.414219868,
+          "aggregate_worker_seconds": 282.460187445,
+          "project_seconds": 112.46310765,
+          "setup_seconds": 0.019637373014120385,
+          "archive_seconds": 0.010767793,
+          "verification_seconds": 0.03635273,
+          "human_interventions": 0,
+          "concurrency_factor": 2.5126731100093282,
+          "aggregate_tokens": {
+            "input_tokens": 1104125,
+            "cached_input_tokens": 924672,
+            "output_tokens": 10989,
+            "reasoning_output_tokens": 2037,
+            "total_tokens": 1115114
+          },
+          "workers": [
+            {
+              "role": "worker1",
+              "start_seconds": 0.0,
+              "end_seconds": 89.221198176,
+              "duration_seconds": 89.221198176,
+              "exit_code": 0,
+              "tokens": {
+                "input_tokens": 331078,
+                "cached_input_tokens": 271360,
+                "output_tokens": 3851,
+                "reasoning_output_tokens": 619,
+                "total_tokens": 334929
+              },
+              "tool_calls": 11,
+              "enrollment_completed_seconds": 28.318696975708008,
+              "pi_tagged_tool_seconds": 0.8029999732971191,
+              "pi_tagged_output_bytes": 74651
+            },
+            {
+              "role": "worker2",
+              "start_seconds": 0.000299439,
+              "end_seconds": 80.826192212,
+              "duration_seconds": 80.825892773,
+              "exit_code": 0,
+              "tokens": {
+                "input_tokens": 371114,
+                "cached_input_tokens": 297216,
+                "output_tokens": 2682,
+                "reasoning_output_tokens": 507,
+                "total_tokens": 373796
+              },
+              "tool_calls": 10,
+              "enrollment_completed_seconds": 31.497400045394897,
+              "pi_tagged_tool_seconds": 8.740000009536743,
+              "pi_tagged_output_bytes": 83932
+            },
+            {
+              "role": "worker3",
+              "start_seconds": 0.001123372,
+              "end_seconds": 112.414219868,
+              "duration_seconds": 112.413096496,
+              "exit_code": 0,
+              "tokens": {
+                "input_tokens": 401933,
+                "cached_input_tokens": 356096,
+                "output_tokens": 4456,
+                "reasoning_output_tokens": 911,
+                "total_tokens": 406389
+              },
+              "tool_calls": 12,
+              "enrollment_completed_seconds": 29.31657910346985,
+              "pi_tagged_tool_seconds": 0.8869998455047607,
+              "pi_tagged_output_bytes": 85769
+            }
+          ]
+        },
+        {
+          "run": "B1",
+          "started_at": "2026-09-09T05:52:48.359744+00:00",
+          "finished_at": "2026-09-09T05:54:12.840506+00:00",
+          "condition": "B",
+          "model": "gpt-5.6-luna",
+          "effort": "medium",
+          "fixture_version": "seven-seams-self-organizing/v4",
+          "pi_enabled": false,
+          "pi_backend_sha256": null,
+          "pi_workflow_sha256": null,
+          "plan_sha256": "c805ec541d88cb574d3ce8c4a091611239d500b5714183180b0dc874ba71a401",
+          "input_hashes": {
+            "common.txt": "e1bf34ea66ddd96ec59ba5d900d4396561cbef5e188c5de3071c8b2e4e7ee9ba",
+            "check_contract.py": "7f7ddf4e46bf22bcb079344c5208b9af8adbcfc15b6da4c2955c70d9b162e038",
+            "worker1.txt": "e1bf34ea66ddd96ec59ba5d900d4396561cbef5e188c5de3071c8b2e4e7ee9ba",
+            "worker2.txt": "e1bf34ea66ddd96ec59ba5d900d4396561cbef5e188c5de3071c8b2e4e7ee9ba",
+            "worker3.txt": "e1bf34ea66ddd96ec59ba5d900d4396561cbef5e188c5de3071c8b2e4e7ee9ba"
+          },
+          "score": 7,
+          "out_of": 7,
+          "producer_seams": 7,
+          "consumer_seams": 7,
+          "failed_seams": [],
+          "accepted": true,
+          "worker_window_seconds": 84.480767565,
+          "aggregate_worker_seconds": 197.40227597999998,
+          "project_seconds": 84.517998949,
+          "setup_seconds": 0.012874771986389533,
+          "archive_seconds": 0.00186145,
+          "verification_seconds": 0.034308417,
+          "human_interventions": 0,
+          "concurrency_factor": 2.336653438051655,
+          "aggregate_tokens": {
+            "input_tokens": 418088,
+            "cached_input_tokens": 345344,
+            "output_tokens": 8783,
+            "reasoning_output_tokens": 1996,
+            "total_tokens": 426871
+          },
+          "workers": [
+            {
+              "role": "worker1",
+              "start_seconds": 0.000605023,
+              "end_seconds": 50.526964953,
+              "duration_seconds": 50.52635993,
+              "exit_code": 0,
+              "tokens": {
+                "input_tokens": 102592,
+                "cached_input_tokens": 87552,
+                "output_tokens": 2185,
+                "reasoning_output_tokens": 209,
+                "total_tokens": 104777
+              },
+              "tool_calls": 5,
+              "enrollment_completed_seconds": null,
+              "pi_tagged_tool_seconds": 0,
+              "pi_tagged_output_bytes": 0
+            },
+            {
+              "role": "worker2",
+              "start_seconds": 0.000127872,
+              "end_seconds": 62.395276357,
+              "duration_seconds": 62.395148485,
+              "exit_code": 0,
+              "tokens": {
+                "input_tokens": 144564,
+                "cached_input_tokens": 117760,
+                "output_tokens": 2786,
+                "reasoning_output_tokens": 613,
+                "total_tokens": 147350
+              },
+              "tool_calls": 7,
+              "enrollment_completed_seconds": null,
+              "pi_tagged_tool_seconds": 0,
+              "pi_tagged_output_bytes": 0
+            },
+            {
+              "role": "worker3",
+              "start_seconds": 0.0,
+              "end_seconds": 84.480767565,
+              "duration_seconds": 84.480767565,
+              "exit_code": 0,
+              "tokens": {
+                "input_tokens": 170932,
+                "cached_input_tokens": 140032,
+                "output_tokens": 3812,
+                "reasoning_output_tokens": 1174,
+                "total_tokens": 174744
+              },
+              "tool_calls": 8,
+              "enrollment_completed_seconds": null,
+              "pi_tagged_tool_seconds": 0,
+              "pi_tagged_output_bytes": 0
+            }
+          ]
+        },
+        {
+          "run": "A1",
+          "started_at": "2026-09-09T05:51:58.541788+00:00",
+          "finished_at": "2026-09-09T05:52:48.226367+00:00",
+          "condition": "A",
+          "model": "gpt-5.6-luna",
+          "effort": "medium",
+          "fixture_version": "seven-seams-self-organizing/v4",
+          "pi_enabled": false,
+          "pi_backend_sha256": null,
+          "pi_workflow_sha256": null,
+          "plan_sha256": "343eccabe18fdfcac8f1d55586ca0153bb4bc9641d1e0a700e1afb04668df6fa",
+          "input_hashes": {
+            "common.txt": "e1bf34ea66ddd96ec59ba5d900d4396561cbef5e188c5de3071c8b2e4e7ee9ba",
+            "check_contract.py": "7f7ddf4e46bf22bcb079344c5208b9af8adbcfc15b6da4c2955c70d9b162e038",
+            "worker1.txt": "e1bf34ea66ddd96ec59ba5d900d4396561cbef5e188c5de3071c8b2e4e7ee9ba"
+          },
+          "score": 7,
+          "out_of": 7,
+          "producer_seams": 7,
+          "consumer_seams": 7,
+          "failed_seams": [],
+          "accepted": true,
+          "worker_window_seconds": 49.684580976,
+          "aggregate_worker_seconds": 49.684580976,
+          "project_seconds": 49.723791502,
+          "setup_seconds": 0.009178759006317705,
+          "archive_seconds": 0.00180475,
+          "verification_seconds": 0.03644744,
+          "human_interventions": 0,
+          "concurrency_factor": 1.0,
+          "aggregate_tokens": {
+            "input_tokens": 102636,
+            "cached_input_tokens": 84480,
+            "output_tokens": 2171,
+            "reasoning_output_tokens": 207,
+            "total_tokens": 104807
+          },
+          "workers": [
+            {
+              "role": "worker1",
+              "start_seconds": 0.0,
+              "end_seconds": 49.684580976,
+              "duration_seconds": 49.684580976,
+              "exit_code": 0,
+              "tokens": {
+                "input_tokens": 102636,
+                "cached_input_tokens": 84480,
+                "output_tokens": 2171,
+                "reasoning_output_tokens": 207,
+                "total_tokens": 104807
+              },
+              "tool_calls": 5,
+              "enrollment_completed_seconds": null,
+              "pi_tagged_tool_seconds": 0,
+              "pi_tagged_output_bytes": 0
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "20260909-seven-seams-concurrency-luna-medium-v2",
+      "started_at": "2026-09-09T04:56:55.999766+00:00",
+      "last_trial_started_at": "2026-09-09T05:16:39.514272+00:00",
+      "sources_sha256": {
+        "results.json": "9c0cbdf3169246a106dfe4ce7e9fb019947bf584f2321cfc7044edcc68e1d23e",
+        "analysis.json": "c1b1f0d84d1d30ff9f04d32fac73e82d6626d771153d9acdb4420d32973a6956",
+        "REPORT.md": "c0ff68ed5bf110477259c5a52050a8091a5daf4d89dbd6b0da2927271d88159c"
+      },
+      "trials": [
+        {
+          "run": "A3",
+          "started_at": "2026-09-09T05:16:39.514272+00:00",
+          "finished_at": "2026-09-09T05:18:26.974597+00:00",
+          "condition": "A",
+          "model": "gpt-5.6-luna",
+          "effort": "medium",
+          "fixture_version": "seven-seams-concurrency/v2",
+          "pi_enabled": false,
+          "pi_backend_sha256": null,
+          "pi_workflow_sha256": null,
+          "plan_sha256": "033f1fa53acaea66b33d36334ce684b64d27d5e3615dba452bd2cb202f9e0ce5",
+          "input_hashes": {
+            "producer.txt": "12acf04798e559dd67df2a14d0b99f62f90b91a5ab04add4d7228609c86a9c19",
+            "consumer.txt": "8b2a9469ee1768d6cc28a27a83ba597d5d5f4ccaca74a82bd4b80a9c1f386a53",
+            "solo.txt": "29ed43637e447bb2acf1741386044ac98a1f042a52fffa43b0f3faea044e8ea8",
+            "check_contract.py": "7f7ddf4e46bf22bcb079344c5208b9af8adbcfc15b6da4c2955c70d9b162e038"
+          },
+          "score": 7,
+          "out_of": 7,
+          "producer_seams": 7,
+          "consumer_seams": 7,
+          "failed_seams": [],
+          "accepted": true,
+          "worker_window_seconds": 107.460332938,
+          "aggregate_worker_seconds": 107.460332938,
+          "project_seconds": 107.497152665,
+          "setup_seconds": 0.004140581993851811,
+          "archive_seconds": 0.00181888,
+          "verification_seconds": 0.033969263,
+          "human_interventions": 0,
+          "concurrency_factor": 1.0,
+          "aggregate_tokens": {
+            "input_tokens": 171153,
+            "cached_input_tokens": 131840,
+            "output_tokens": 5059,
+            "reasoning_output_tokens": 1248,
+            "total_tokens": 176212
+          },
+          "workers": [
+            {
+              "role": "solo",
+              "start_seconds": 0.0,
+              "end_seconds": 107.460332938,
+              "duration_seconds": 107.460332938,
+              "exit_code": 0,
+              "tokens": {
+                "input_tokens": 171153,
+                "cached_input_tokens": 131840,
+                "output_tokens": 5059,
+                "reasoning_output_tokens": 1248,
+                "total_tokens": 176212
+              },
+              "tool_calls": null,
+              "enrollment_completed_seconds": null,
+              "pi_tagged_tool_seconds": 0,
+              "pi_tagged_output_bytes": 0
+            }
+          ]
+        },
+        {
+          "run": "B3",
+          "started_at": "2026-09-09T05:14:59.895056+00:00",
+          "finished_at": "2026-09-09T05:16:39.437789+00:00",
+          "condition": "B",
+          "model": "gpt-5.6-luna",
+          "effort": "medium",
+          "fixture_version": "seven-seams-concurrency/v2",
+          "pi_enabled": false,
+          "pi_backend_sha256": null,
+          "pi_workflow_sha256": null,
+          "plan_sha256": "661b070d7fe07de0b2b157bfad06320e2f70d298582628303831f0dadec72ea4",
+          "input_hashes": {
+            "producer.txt": "12acf04798e559dd67df2a14d0b99f62f90b91a5ab04add4d7228609c86a9c19",
+            "consumer.txt": "8b2a9469ee1768d6cc28a27a83ba597d5d5f4ccaca74a82bd4b80a9c1f386a53",
+            "solo.txt": "29ed43637e447bb2acf1741386044ac98a1f042a52fffa43b0f3faea044e8ea8",
+            "check_contract.py": "7f7ddf4e46bf22bcb079344c5208b9af8adbcfc15b6da4c2955c70d9b162e038"
+          },
+          "score": 7,
+          "out_of": 7,
+          "producer_seams": 7,
+          "consumer_seams": 7,
+          "failed_seams": [],
+          "accepted": true,
+          "worker_window_seconds": 99.542738834,
+          "aggregate_worker_seconds": 159.691489277,
+          "project_seconds": 99.564863554,
+          "setup_seconds": 0.005267480009933934,
+          "archive_seconds": 0.001799552,
+          "verification_seconds": 0.019404896,
+          "human_interventions": 0,
+          "concurrency_factor": 1.6042505073454485,
+          "aggregate_tokens": {
+            "input_tokens": 336509,
+            "cached_input_tokens": 284160,
+            "output_tokens": 7280,
+            "reasoning_output_tokens": 1473,
+            "total_tokens": 343789
+          },
+          "workers": [
+            {
+              "role": "producer",
+              "start_seconds": 0.000187296,
+              "end_seconds": 99.542738834,
+              "duration_seconds": 99.542551538,
+              "exit_code": 0,
+              "tokens": {
+                "input_tokens": 211724,
+                "cached_input_tokens": 181504,
+                "output_tokens": 4569,
+                "reasoning_output_tokens": 948,
+                "total_tokens": 216293
+              },
+              "tool_calls": null,
+              "enrollment_completed_seconds": null,
+              "pi_tagged_tool_seconds": 0,
+              "pi_tagged_output_bytes": 0
+            },
+            {
+              "role": "consumer",
+              "start_seconds": 0.0,
+              "end_seconds": 60.148937739,
+              "duration_seconds": 60.148937739,
+              "exit_code": 0,
+              "tokens": {
+                "input_tokens": 124785,
+                "cached_input_tokens": 102656,
+                "output_tokens": 2711,
+                "reasoning_output_tokens": 525,
+                "total_tokens": 127496
+              },
+              "tool_calls": null,
+              "enrollment_completed_seconds": null,
+              "pi_tagged_tool_seconds": 0,
+              "pi_tagged_output_bytes": 0
+            }
+          ]
+        },
+        {
+          "run": "C3",
+          "started_at": "2026-09-09T05:12:38.446555+00:00",
+          "finished_at": "2026-09-09T05:14:59.788273+00:00",
+          "condition": "C",
+          "model": "gpt-5.6-luna",
+          "effort": "medium",
+          "fixture_version": "seven-seams-concurrency/v2",
+          "pi_enabled": true,
+          "pi_backend_sha256": "99ca17a18d28c214a027bab852b0d758d78115318933090a002b22a93bc40923",
+          "pi_workflow_sha256": "aa68ca28c2cd27014265ff5e315b461c1a83ffd7c0148f0d3f839c717a3b0f9a",
+          "plan_sha256": "d73517bf02ce57b4d118d4d33dcba6552e29c72315cf72224bef82700a48c598",
+          "input_hashes": {
+            "producer.txt": "12acf04798e559dd67df2a14d0b99f62f90b91a5ab04add4d7228609c86a9c19",
+            "consumer.txt": "8b2a9469ee1768d6cc28a27a83ba597d5d5f4ccaca74a82bd4b80a9c1f386a53",
+            "solo.txt": "29ed43637e447bb2acf1741386044ac98a1f042a52fffa43b0f3faea044e8ea8",
+            "check_contract.py": "7f7ddf4e46bf22bcb079344c5208b9af8adbcfc15b6da4c2955c70d9b162e038"
+          },
+          "score": 7,
+          "out_of": 7,
+          "producer_seams": 7,
+          "consumer_seams": 7,
+          "failed_seams": [],
+          "accepted": true,
+          "worker_window_seconds": 141.341723542,
+          "aggregate_worker_seconds": 236.933029864,
+          "project_seconds": 141.383657783,
+          "setup_seconds": 0.009232140990206972,
+          "archive_seconds": 0.003473616,
+          "verification_seconds": 0.037384209,
+          "human_interventions": 0,
+          "concurrency_factor": 1.6763134333337517,
+          "aggregate_tokens": {
+            "input_tokens": 944870,
+            "cached_input_tokens": 856576,
+            "output_tokens": 10945,
+            "reasoning_output_tokens": 3062,
+            "total_tokens": 955815
+          },
+          "workers": [
+            {
+              "role": "producer",
+              "start_seconds": 0.0,
+              "end_seconds": 95.59136925,
+              "duration_seconds": 95.59136925,
+              "exit_code": 0,
+              "tokens": {
+                "input_tokens": 361226,
+                "cached_input_tokens": 319488,
+                "output_tokens": 4391,
+                "reasoning_output_tokens": 560,
+                "total_tokens": 365617
+              },
+              "tool_calls": null,
+              "enrollment_completed_seconds": 29.878445148468018,
+              "pi_tagged_tool_seconds": 0.9449996948242188,
+              "pi_tagged_output_bytes": 91903
+            },
+            {
+              "role": "consumer",
+              "start_seconds": 6.2928e-05,
+              "end_seconds": 141.341723542,
+              "duration_seconds": 141.341660614,
+              "exit_code": 0,
+              "tokens": {
+                "input_tokens": 583644,
+                "cached_input_tokens": 537088,
+                "output_tokens": 6554,
+                "reasoning_output_tokens": 2502,
+                "total_tokens": 590198
+              },
+              "tool_calls": null,
+              "enrollment_completed_seconds": 30.218385934829712,
+              "pi_tagged_tool_seconds": 0.9620001316070557,
+              "pi_tagged_output_bytes": 90041
+            }
+          ]
+        },
+        {
+          "run": "D3",
+          "started_at": "2026-09-09T05:10:28.504908+00:00",
+          "finished_at": "2026-09-09T05:12:38.348753+00:00",
+          "condition": "D",
+          "model": "gpt-5.6-luna",
+          "effort": "medium",
+          "fixture_version": "seven-seams-concurrency/v2",
+          "pi_enabled": true,
+          "pi_backend_sha256": "99ca17a18d28c214a027bab852b0d758d78115318933090a002b22a93bc40923",
+          "pi_workflow_sha256": "aa68ca28c2cd27014265ff5e315b461c1a83ffd7c0148f0d3f839c717a3b0f9a",
+          "plan_sha256": "ebc726e4371a1b29a0e914270d752f9196b067be8e6e6ad5a7fe50685dc1ee93",
+          "input_hashes": {
+            "producer.txt": "12acf04798e559dd67df2a14d0b99f62f90b91a5ab04add4d7228609c86a9c19",
+            "consumer.txt": "8b2a9469ee1768d6cc28a27a83ba597d5d5f4ccaca74a82bd4b80a9c1f386a53",
+            "solo.txt": "29ed43637e447bb2acf1741386044ac98a1f042a52fffa43b0f3faea044e8ea8",
+            "check_contract.py": "7f7ddf4e46bf22bcb079344c5208b9af8adbcfc15b6da4c2955c70d9b162e038"
+          },
+          "score": 7,
+          "out_of": 7,
+          "producer_seams": 7,
+          "consumer_seams": 7,
+          "failed_seams": [],
+          "accepted": true,
+          "worker_window_seconds": 129.84384564,
+          "aggregate_worker_seconds": 129.84384564,
+          "project_seconds": 129.868758937,
+          "setup_seconds": 0.010077821993036196,
+          "archive_seconds": 0.003945104,
+          "verification_seconds": 0.020167457,
+          "human_interventions": 0,
+          "concurrency_factor": 1.0,
+          "aggregate_tokens": {
+            "input_tokens": 389113,
+            "cached_input_tokens": 352000,
+            "output_tokens": 6221,
+            "reasoning_output_tokens": 1042,
+            "total_tokens": 395334
+          },
+          "workers": [
+            {
+              "role": "solo",
+              "start_seconds": 0.0,
+              "end_seconds": 129.84384564,
+              "duration_seconds": 129.84384564,
+              "exit_code": 0,
+              "tokens": {
+                "input_tokens": 389113,
+                "cached_input_tokens": 352000,
+                "output_tokens": 6221,
+                "reasoning_output_tokens": 1042,
+                "total_tokens": 395334
+              },
+              "tool_calls": null,
+              "enrollment_completed_seconds": 29.27209186553955,
+              "pi_tagged_tool_seconds": 1.0799996852874756,
+              "pi_tagged_output_bytes": 67245
+            }
+          ]
+        },
+        {
+          "run": "B2",
+          "started_at": "2026-09-09T05:08:45.313000+00:00",
+          "finished_at": "2026-09-09T05:10:28.419991+00:00",
+          "condition": "B",
+          "model": "gpt-5.6-luna",
+          "effort": "medium",
+          "fixture_version": "seven-seams-concurrency/v2",
+          "pi_enabled": false,
+          "pi_backend_sha256": null,
+          "pi_workflow_sha256": null,
+          "plan_sha256": "2b61371f795aa91d9578d83f5ff23a106759adb1ccd868403a347eb9e083b0cb",
+          "input_hashes": {
+            "producer.txt": "12acf04798e559dd67df2a14d0b99f62f90b91a5ab04add4d7228609c86a9c19",
+            "consumer.txt": "8b2a9469ee1768d6cc28a27a83ba597d5d5f4ccaca74a82bd4b80a9c1f386a53",
+            "solo.txt": "29ed43637e447bb2acf1741386044ac98a1f042a52fffa43b0f3faea044e8ea8",
+            "check_contract.py": "7f7ddf4e46bf22bcb079344c5208b9af8adbcfc15b6da4c2955c70d9b162e038"
+          },
+          "score": 7,
+          "out_of": 7,
+          "producer_seams": 7,
+          "consumer_seams": 7,
+          "failed_seams": [],
+          "accepted": true,
+          "worker_window_seconds": 103.1069959,
+          "aggregate_worker_seconds": 156.644441133,
+          "project_seconds": 103.134798143,
+          "setup_seconds": 0.002958500001113862,
+          "archive_seconds": 0.004825857,
+          "verification_seconds": 0.02141317,
+          "human_interventions": 0,
+          "concurrency_factor": 1.5192416359887368,
+          "aggregate_tokens": {
+            "input_tokens": 330508,
+            "cached_input_tokens": 276992,
+            "output_tokens": 7235,
+            "reasoning_output_tokens": 1718,
+            "total_tokens": 337743
+          },
+          "workers": [
+            {
+              "role": "producer",
+              "start_seconds": 0.0,
+              "end_seconds": 103.1069959,
+              "duration_seconds": 103.1069959,
+              "exit_code": 0,
+              "tokens": {
+                "input_tokens": 189420,
+                "cached_input_tokens": 158208,
+                "output_tokens": 4836,
+                "reasoning_output_tokens": 592,
+                "total_tokens": 194256
+              },
+              "tool_calls": null,
+              "enrollment_completed_seconds": null,
+              "pi_tagged_tool_seconds": 0,
+              "pi_tagged_output_bytes": 0
+            },
+            {
+              "role": "consumer",
+              "start_seconds": 6.3408e-05,
+              "end_seconds": 53.537508641,
+              "duration_seconds": 53.537445233,
+              "exit_code": 0,
+              "tokens": {
+                "input_tokens": 141088,
+                "cached_input_tokens": 118784,
+                "output_tokens": 2399,
+                "reasoning_output_tokens": 1126,
+                "total_tokens": 143487
+              },
+              "tool_calls": null,
+              "enrollment_completed_seconds": null,
+              "pi_tagged_tool_seconds": 0,
+              "pi_tagged_output_bytes": 0
+            }
+          ]
+        },
+        {
+          "run": "A2",
+          "started_at": "2026-09-09T05:07:48.087784+00:00",
+          "finished_at": "2026-09-09T05:08:45.220979+00:00",
+          "condition": "A",
+          "model": "gpt-5.6-luna",
+          "effort": "medium",
+          "fixture_version": "seven-seams-concurrency/v2",
+          "pi_enabled": false,
+          "pi_backend_sha256": null,
+          "pi_workflow_sha256": null,
+          "plan_sha256": "e55bfc39984feb42c0516315d48b3c3594cd2afbffbaf70051b5c22e3e92a1c3",
+          "input_hashes": {
+            "producer.txt": "12acf04798e559dd67df2a14d0b99f62f90b91a5ab04add4d7228609c86a9c19",
+            "consumer.txt": "8b2a9469ee1768d6cc28a27a83ba597d5d5f4ccaca74a82bd4b80a9c1f386a53",
+            "solo.txt": "29ed43637e447bb2acf1741386044ac98a1f042a52fffa43b0f3faea044e8ea8",
+            "check_contract.py": "7f7ddf4e46bf22bcb079344c5208b9af8adbcfc15b6da4c2955c70d9b162e038"
+          },
+          "score": 7,
+          "out_of": 7,
+          "producer_seams": 7,
+          "consumer_seams": 7,
+          "failed_seams": [],
+          "accepted": true,
+          "worker_window_seconds": 57.133198001,
+          "aggregate_worker_seconds": 57.133198001,
+          "project_seconds": 57.156048948,
+          "setup_seconds": 0.004318502004025504,
+          "archive_seconds": 0.001882848,
+          "verification_seconds": 0.019905411,
+          "human_interventions": 0,
+          "concurrency_factor": 1.0,
+          "aggregate_tokens": {
+            "input_tokens": 86374,
+            "cached_input_tokens": 69376,
+            "output_tokens": 2605,
+            "reasoning_output_tokens": 705,
+            "total_tokens": 88979
+          },
+          "workers": [
+            {
+              "role": "solo",
+              "start_seconds": 0.0,
+              "end_seconds": 57.133198001,
+              "duration_seconds": 57.133198001,
+              "exit_code": 0,
+              "tokens": {
+                "input_tokens": 86374,
+                "cached_input_tokens": 69376,
+                "output_tokens": 2605,
+                "reasoning_output_tokens": 705,
+                "total_tokens": 88979
+              },
+              "tool_calls": null,
+              "enrollment_completed_seconds": null,
+              "pi_tagged_tool_seconds": 0,
+              "pi_tagged_output_bytes": 0
+            }
+          ]
+        },
+        {
+          "run": "D2",
+          "started_at": "2026-09-09T05:05:49.719394+00:00",
+          "finished_at": "2026-09-09T05:07:47.993415+00:00",
+          "condition": "D",
+          "model": "gpt-5.6-luna",
+          "effort": "medium",
+          "fixture_version": "seven-seams-concurrency/v2",
+          "pi_enabled": true,
+          "pi_backend_sha256": "99ca17a18d28c214a027bab852b0d758d78115318933090a002b22a93bc40923",
+          "pi_workflow_sha256": "aa68ca28c2cd27014265ff5e315b461c1a83ffd7c0148f0d3f839c717a3b0f9a",
+          "plan_sha256": "a6cffdc6136343629f35052dc4a0c4cca13331c9af7438bb2f325df51f0f041f",
+          "input_hashes": {
+            "producer.txt": "12acf04798e559dd67df2a14d0b99f62f90b91a5ab04add4d7228609c86a9c19",
+            "consumer.txt": "8b2a9469ee1768d6cc28a27a83ba597d5d5f4ccaca74a82bd4b80a9c1f386a53",
+            "solo.txt": "29ed43637e447bb2acf1741386044ac98a1f042a52fffa43b0f3faea044e8ea8",
+            "check_contract.py": "7f7ddf4e46bf22bcb079344c5208b9af8adbcfc15b6da4c2955c70d9b162e038"
+          },
+          "score": 7,
+          "out_of": 7,
+          "producer_seams": 7,
+          "consumer_seams": 7,
+          "failed_seams": [],
+          "accepted": true,
+          "worker_window_seconds": 118.274030443,
+          "aggregate_worker_seconds": 118.274030443,
+          "project_seconds": 118.298391504,
+          "setup_seconds": 0.010447679000208154,
+          "archive_seconds": 0.004010241,
+          "verification_seconds": 0.019369652,
+          "human_interventions": 0,
+          "concurrency_factor": 1.0,
+          "aggregate_tokens": {
+            "input_tokens": 366693,
+            "cached_input_tokens": 326400,
+            "output_tokens": 5157,
+            "reasoning_output_tokens": 1285,
+            "total_tokens": 371850
+          },
+          "workers": [
+            {
+              "role": "solo",
+              "start_seconds": 0.0,
+              "end_seconds": 118.274030443,
+              "duration_seconds": 118.274030443,
+              "exit_code": 0,
+              "tokens": {
+                "input_tokens": 366693,
+                "cached_input_tokens": 326400,
+                "output_tokens": 5157,
+                "reasoning_output_tokens": 1285,
+                "total_tokens": 371850
+              },
+              "tool_calls": null,
+              "enrollment_completed_seconds": 30.921606063842773,
+              "pi_tagged_tool_seconds": 1.0049998760223389,
+              "pi_tagged_output_bytes": 65889
+            }
+          ]
+        },
+        {
+          "run": "C2",
+          "started_at": "2026-09-09T05:03:20.894921+00:00",
+          "finished_at": "2026-09-09T05:05:49.617154+00:00",
+          "condition": "C",
+          "model": "gpt-5.6-luna",
+          "effort": "medium",
+          "fixture_version": "seven-seams-concurrency/v2",
+          "pi_enabled": true,
+          "pi_backend_sha256": "99ca17a18d28c214a027bab852b0d758d78115318933090a002b22a93bc40923",
+          "pi_workflow_sha256": "aa68ca28c2cd27014265ff5e315b461c1a83ffd7c0148f0d3f839c717a3b0f9a",
+          "plan_sha256": "639b2362d0184ed0778fda2e2402ea8a9e58bac43f5e0e9fca0a53ebaad38a52",
+          "input_hashes": {
+            "producer.txt": "12acf04798e559dd67df2a14d0b99f62f90b91a5ab04add4d7228609c86a9c19",
+            "consumer.txt": "8b2a9469ee1768d6cc28a27a83ba597d5d5f4ccaca74a82bd4b80a9c1f386a53",
+            "solo.txt": "29ed43637e447bb2acf1741386044ac98a1f042a52fffa43b0f3faea044e8ea8",
+            "check_contract.py": "7f7ddf4e46bf22bcb079344c5208b9af8adbcfc15b6da4c2955c70d9b162e038"
+          },
+          "score": 7,
+          "out_of": 7,
+          "producer_seams": 7,
+          "consumer_seams": 7,
+          "failed_seams": [],
+          "accepted": true,
+          "worker_window_seconds": 148.722241468,
+          "aggregate_worker_seconds": 246.368614342,
+          "project_seconds": 148.746729475,
+          "setup_seconds": 0.009688013989944011,
+          "archive_seconds": 0.004051778,
+          "verification_seconds": 0.019357845,
+          "human_interventions": 0,
+          "concurrency_factor": 1.6565687277851457,
+          "aggregate_tokens": {
+            "input_tokens": 938583,
+            "cached_input_tokens": 846848,
+            "output_tokens": 11167,
+            "reasoning_output_tokens": 2799,
+            "total_tokens": 949750
+          },
+          "workers": [
+            {
+              "role": "producer",
+              "start_seconds": 0.0,
+              "end_seconds": 148.722241468,
+              "duration_seconds": 148.722241468,
+              "exit_code": 0,
+              "tokens": {
+                "input_tokens": 578431,
+                "cached_input_tokens": 526336,
+                "output_tokens": 6782,
+                "reasoning_output_tokens": 1437,
+                "total_tokens": 585213
+              },
+              "tool_calls": null,
+              "enrollment_completed_seconds": 40.52307891845703,
+              "pi_tagged_tool_seconds": 1.0699999332427979,
+              "pi_tagged_output_bytes": 70852
+            },
+            {
+              "role": "consumer",
+              "start_seconds": 0.000265408,
+              "end_seconds": 97.646638282,
+              "duration_seconds": 97.646372874,
+              "exit_code": 0,
+              "tokens": {
+                "input_tokens": 360152,
+                "cached_input_tokens": 320512,
+                "output_tokens": 4385,
+                "reasoning_output_tokens": 1362,
+                "total_tokens": 364537
+              },
+              "tool_calls": null,
+              "enrollment_completed_seconds": 28.188818216323853,
+              "pi_tagged_tool_seconds": 0.883000373840332,
+              "pi_tagged_output_bytes": 86427
+            }
+          ]
+        },
+        {
+          "run": "D1",
+          "started_at": "2026-09-09T05:01:29.212164+00:00",
+          "finished_at": "2026-09-09T05:03:20.777087+00:00",
+          "condition": "D",
+          "model": "gpt-5.6-luna",
+          "effort": "medium",
+          "fixture_version": "seven-seams-concurrency/v2",
+          "pi_enabled": true,
+          "pi_backend_sha256": "99ca17a18d28c214a027bab852b0d758d78115318933090a002b22a93bc40923",
+          "pi_workflow_sha256": "aa68ca28c2cd27014265ff5e315b461c1a83ffd7c0148f0d3f839c717a3b0f9a",
+          "plan_sha256": "d016cdc8b6131c75143ebf4f9f90ab52fb6b4fd3bcb2f622f19d9c93194ce58c",
+          "input_hashes": {
+            "producer.txt": "12acf04798e559dd67df2a14d0b99f62f90b91a5ab04add4d7228609c86a9c19",
+            "consumer.txt": "8b2a9469ee1768d6cc28a27a83ba597d5d5f4ccaca74a82bd4b80a9c1f386a53",
+            "solo.txt": "29ed43637e447bb2acf1741386044ac98a1f042a52fffa43b0f3faea044e8ea8",
+            "check_contract.py": "7f7ddf4e46bf22bcb079344c5208b9af8adbcfc15b6da4c2955c70d9b162e038"
+          },
+          "score": 7,
+          "out_of": 7,
+          "producer_seams": 7,
+          "consumer_seams": 7,
+          "failed_seams": [],
+          "accepted": true,
+          "worker_window_seconds": 111.564931458,
+          "aggregate_worker_seconds": 111.564931458,
+          "project_seconds": 111.603220722,
+          "setup_seconds": 0.01136459200643003,
+          "archive_seconds": 0.00404221,
+          "verification_seconds": 0.033062958,
+          "human_interventions": 0,
+          "concurrency_factor": 1.0,
+          "aggregate_tokens": {
+            "input_tokens": 339911,
+            "cached_input_tokens": 292864,
+            "output_tokens": 5038,
+            "reasoning_output_tokens": 990,
+            "total_tokens": 344949
+          },
+          "workers": [
+            {
+              "role": "solo",
+              "start_seconds": 0.0,
+              "end_seconds": 111.564931458,
+              "duration_seconds": 111.564931458,
+              "exit_code": 0,
+              "tokens": {
+                "input_tokens": 339911,
+                "cached_input_tokens": 292864,
+                "output_tokens": 5038,
+                "reasoning_output_tokens": 990,
+                "total_tokens": 344949
+              },
+              "tool_calls": null,
+              "enrollment_completed_seconds": 31.218836069107056,
+              "pi_tagged_tool_seconds": 0.9649999141693115,
+              "pi_tagged_output_bytes": 54826
+            }
+          ]
+        },
+        {
+          "run": "C1",
+          "started_at": "2026-09-09T04:59:46.048377+00:00",
+          "finished_at": "2026-09-09T05:01:29.105677+00:00",
+          "condition": "C",
+          "model": "gpt-5.6-luna",
+          "effort": "medium",
+          "fixture_version": "seven-seams-concurrency/v2",
+          "pi_enabled": true,
+          "pi_backend_sha256": "99ca17a18d28c214a027bab852b0d758d78115318933090a002b22a93bc40923",
+          "pi_workflow_sha256": "aa68ca28c2cd27014265ff5e315b461c1a83ffd7c0148f0d3f839c717a3b0f9a",
+          "plan_sha256": "a792e7b265857a8a088ef1ed77f576283d418c389456f63a3d95cba65bb81edc",
+          "input_hashes": {
+            "producer.txt": "12acf04798e559dd67df2a14d0b99f62f90b91a5ab04add4d7228609c86a9c19",
+            "consumer.txt": "8b2a9469ee1768d6cc28a27a83ba597d5d5f4ccaca74a82bd4b80a9c1f386a53",
+            "solo.txt": "29ed43637e447bb2acf1741386044ac98a1f042a52fffa43b0f3faea044e8ea8",
+            "check_contract.py": "7f7ddf4e46bf22bcb079344c5208b9af8adbcfc15b6da4c2955c70d9b162e038"
+          },
+          "score": 7,
+          "out_of": 7,
+          "producer_seams": 7,
+          "consumer_seams": 7,
+          "failed_seams": [],
+          "accepted": true,
+          "worker_window_seconds": 103.057304589,
+          "aggregate_worker_seconds": 196.44934557,
+          "project_seconds": 103.096521315,
+          "setup_seconds": 0.00892334000673145,
+          "archive_seconds": 0.004149811,
+          "verification_seconds": 0.034154627,
+          "human_interventions": 0,
+          "concurrency_factor": 1.9062146672033993,
+          "aggregate_tokens": {
+            "input_tokens": 759977,
+            "cached_input_tokens": 631552,
+            "output_tokens": 8974,
+            "reasoning_output_tokens": 1958,
+            "total_tokens": 768951
+          },
+          "workers": [
+            {
+              "role": "producer",
+              "start_seconds": 0.0,
+              "end_seconds": 103.057304589,
+              "duration_seconds": 103.057304589,
+              "exit_code": 0,
+              "tokens": {
+                "input_tokens": 401222,
+                "cached_input_tokens": 336640,
+                "output_tokens": 4831,
+                "reasoning_output_tokens": 851,
+                "total_tokens": 406053
+              },
+              "tool_calls": null,
+              "enrollment_completed_seconds": 30.061622858047485,
+              "pi_tagged_tool_seconds": 1.0280001163482666,
+              "pi_tagged_output_bytes": 87688
+            },
+            {
+              "role": "consumer",
+              "start_seconds": 6.1168e-05,
+              "end_seconds": 93.392102149,
+              "duration_seconds": 93.392040981,
+              "exit_code": 0,
+              "tokens": {
+                "input_tokens": 358755,
+                "cached_input_tokens": 294912,
+                "output_tokens": 4143,
+                "reasoning_output_tokens": 1107,
+                "total_tokens": 362898
+              },
+              "tool_calls": null,
+              "enrollment_completed_seconds": 24.586560010910034,
+              "pi_tagged_tool_seconds": 0.8339998722076416,
+              "pi_tagged_output_bytes": 87098
+            }
+          ]
+        },
+        {
+          "run": "B1",
+          "started_at": "2026-09-09T04:58:17.671730+00:00",
+          "finished_at": "2026-09-09T04:59:45.958219+00:00",
+          "condition": "B",
+          "model": "gpt-5.6-luna",
+          "effort": "medium",
+          "fixture_version": "seven-seams-concurrency/v2",
+          "pi_enabled": false,
+          "pi_backend_sha256": null,
+          "pi_workflow_sha256": null,
+          "plan_sha256": "f4086c623a38030df022aca0e51a267d0e93e0d3ab2e1a1a9f8d3b90c94435c0",
+          "input_hashes": {
+            "producer.txt": "12acf04798e559dd67df2a14d0b99f62f90b91a5ab04add4d7228609c86a9c19",
+            "consumer.txt": "8b2a9469ee1768d6cc28a27a83ba597d5d5f4ccaca74a82bd4b80a9c1f386a53",
+            "solo.txt": "29ed43637e447bb2acf1741386044ac98a1f042a52fffa43b0f3faea044e8ea8",
+            "check_contract.py": "7f7ddf4e46bf22bcb079344c5208b9af8adbcfc15b6da4c2955c70d9b162e038"
+          },
+          "score": 7,
+          "out_of": 7,
+          "producer_seams": 7,
+          "consumer_seams": 7,
+          "failed_seams": [],
+          "accepted": true,
+          "worker_window_seconds": 88.286497111,
+          "aggregate_worker_seconds": 149.087860183,
+          "project_seconds": 88.308839399,
+          "setup_seconds": 0.004247702017892152,
+          "archive_seconds": 0.001831761,
+          "verification_seconds": 0.01942027,
+          "human_interventions": 0,
+          "concurrency_factor": 1.6886824719702747,
+          "aggregate_tokens": {
+            "input_tokens": 276866,
+            "cached_input_tokens": 235776,
+            "output_tokens": 7101,
+            "reasoning_output_tokens": 2027,
+            "total_tokens": 283967
+          },
+          "workers": [
+            {
+              "role": "producer",
+              "start_seconds": 0.0,
+              "end_seconds": 60.80148784,
+              "duration_seconds": 60.80148784,
+              "exit_code": 0,
+              "tokens": {
+                "input_tokens": 105457,
+                "cached_input_tokens": 83456,
+                "output_tokens": 2812,
+                "reasoning_output_tokens": 766,
+                "total_tokens": 108269
+              },
+              "tool_calls": null,
+              "enrollment_completed_seconds": null,
+              "pi_tagged_tool_seconds": 0,
+              "pi_tagged_output_bytes": 0
+            },
+            {
+              "role": "consumer",
+              "start_seconds": 0.000124768,
+              "end_seconds": 88.286497111,
+              "duration_seconds": 88.286372343,
+              "exit_code": 0,
+              "tokens": {
+                "input_tokens": 171409,
+                "cached_input_tokens": 152320,
+                "output_tokens": 4289,
+                "reasoning_output_tokens": 1261,
+                "total_tokens": 175698
+              },
+              "tool_calls": null,
+              "enrollment_completed_seconds": null,
+              "pi_tagged_tool_seconds": 0,
+              "pi_tagged_output_bytes": 0
+            }
+          ]
+        },
+        {
+          "run": "A1",
+          "started_at": "2026-09-09T04:56:55.999766+00:00",
+          "finished_at": "2026-09-09T04:58:17.568794+00:00",
+          "condition": "A",
+          "model": "gpt-5.6-luna",
+          "effort": "medium",
+          "fixture_version": "seven-seams-concurrency/v2",
+          "pi_enabled": false,
+          "pi_backend_sha256": null,
+          "pi_workflow_sha256": null,
+          "plan_sha256": "a152895bb29502e0a17b4224d469dbec5d52b4ca418b5103c17f39ab9f302d05",
+          "input_hashes": {
+            "producer.txt": "12acf04798e559dd67df2a14d0b99f62f90b91a5ab04add4d7228609c86a9c19",
+            "consumer.txt": "8b2a9469ee1768d6cc28a27a83ba597d5d5f4ccaca74a82bd4b80a9c1f386a53",
+            "solo.txt": "29ed43637e447bb2acf1741386044ac98a1f042a52fffa43b0f3faea044e8ea8",
+            "check_contract.py": "7f7ddf4e46bf22bcb079344c5208b9af8adbcfc15b6da4c2955c70d9b162e038"
+          },
+          "score": 7,
+          "out_of": 7,
+          "producer_seams": 7,
+          "consumer_seams": 7,
+          "failed_seams": [],
+          "accepted": true,
+          "worker_window_seconds": 81.569030149,
+          "aggregate_worker_seconds": 81.569030149,
+          "project_seconds": 81.606733975,
+          "setup_seconds": 0.005523368017747998,
+          "archive_seconds": 0.00181717,
+          "verification_seconds": 0.034861119,
+          "human_interventions": 0,
+          "concurrency_factor": 1.0,
+          "aggregate_tokens": {
+            "input_tokens": 148587,
+            "cached_input_tokens": 117760,
+            "output_tokens": 3784,
+            "reasoning_output_tokens": 988,
+            "total_tokens": 152371
+          },
+          "workers": [
+            {
+              "role": "solo",
+              "start_seconds": 0.0,
+              "end_seconds": 81.569030149,
+              "duration_seconds": 81.569030149,
+              "exit_code": 0,
+              "tokens": {
+                "input_tokens": 148587,
+                "cached_input_tokens": 117760,
+                "output_tokens": 3784,
+                "reasoning_output_tokens": 988,
+                "total_tokens": 152371
+              },
+              "tool_calls": null,
+              "enrollment_completed_seconds": null,
+              "pi_tagged_tool_seconds": 0,
+              "pi_tagged_output_bytes": 0
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "20260909-torture-refunds-luna-medium-pi-v1",
+      "started_at": "2026-09-09T04:33:29.669160+00:00",
+      "last_trial_started_at": "2026-09-09T04:33:29.698629+00:00",
+      "sources_sha256": {
+        "results.json": "22a2bc42a67f515055e37d08f3cf0d297bab6d5e89857a8c2c8f531d9288140b",
+        "native-verification.json": "6dc4c9975dc7d4647b8d6dcf0fc547f93c12dea7cfe6c260c8de9b0ad9072e29",
+        "observations.json": "7e6b47051fdc2868a76e63d7878baed50336c7a7b4f1edb342adb72319c89350"
+      },
+      "trials": [
+        {
+          "run": "trial3",
+          "started_at": "2026-09-09T04:33:29.698629+00:00",
+          "finished_at": "2026-09-09T04:37:08.235033+00:00",
+          "condition": null,
+          "model": "gpt-5.6-luna",
+          "effort": "medium",
+          "fixture_version": "torture-refunds/pi-v1",
+          "pi_enabled": true,
+          "pi_backend_sha256": "99ca17a18d28c214a027bab852b0d758d78115318933090a002b22a93bc40923",
+          "pi_workflow_sha256": "aa68ca28c2cd27014265ff5e315b461c1a83ffd7c0148f0d3f839c717a3b0f9a",
+          "plan_sha256": "710d63f1f6a512b6b037590a561bd6d6d716d0d733af85bf794bcc1760392a9d",
+          "input_hashes": {
+            "producer.txt": "12b12a3a78b40b41457b0d8dbc97d736a33e52c37644937b851a2c0b6b5e3a2b",
+            "consumer.txt": "3c31e6a8fe7cd91a1b5232d8ebd86382dc78653925930745fbb7d9259ff999fb",
+            "recorder.py": "bf196b3892d1685f354c8e90bfa4d9ae0f31f97220bb0f73b89501da950e4a85",
+            "check_contract.py": "565dde078778c82c18c177cca27e8c9abbe86f45f131a7e6e9081220e8e07cd7"
+          },
+          "score": 7,
+          "out_of": 7,
+          "producer_seams": null,
+          "consumer_seams": null,
+          "failed_seams": [],
+          "accepted": true,
+          "worker_window_seconds": 218.536411052,
+          "aggregate_worker_seconds": 394.11006210899995,
+          "project_seconds": null,
+          "setup_seconds": null,
+          "archive_seconds": null,
+          "verification_seconds": null,
+          "human_interventions": null,
+          "concurrency_factor": 1.803406856604883,
+          "aggregate_tokens": null,
+          "workers": [
+            {
+              "role": "producer",
+              "start_seconds": 0.0,
+              "end_seconds": 175.574032849,
+              "duration_seconds": 175.574032849,
+              "exit_code": 0,
+              "tokens": null,
+              "tool_calls": null,
+              "enrollment_completed_seconds": null,
+              "pi_tagged_tool_seconds": null,
+              "pi_tagged_output_bytes": null
+            },
+            {
+              "role": "consumer",
+              "start_seconds": 0.000381792,
+              "end_seconds": 218.536411052,
+              "duration_seconds": 218.53602926,
+              "exit_code": 0,
+              "tokens": null,
+              "tool_calls": null,
+              "enrollment_completed_seconds": null,
+              "pi_tagged_tool_seconds": null,
+              "pi_tagged_output_bytes": null
+            }
+          ]
+        },
+        {
+          "run": "trial1",
+          "started_at": "2026-09-09T04:33:29.685669+00:00",
+          "finished_at": "2026-09-09T04:36:36.143674+00:00",
+          "condition": null,
+          "model": "gpt-5.6-luna",
+          "effort": "medium",
+          "fixture_version": "torture-refunds/pi-v1",
+          "pi_enabled": true,
+          "pi_backend_sha256": "99ca17a18d28c214a027bab852b0d758d78115318933090a002b22a93bc40923",
+          "pi_workflow_sha256": "aa68ca28c2cd27014265ff5e315b461c1a83ffd7c0148f0d3f839c717a3b0f9a",
+          "plan_sha256": "710d63f1f6a512b6b037590a561bd6d6d716d0d733af85bf794bcc1760392a9d",
+          "input_hashes": {
+            "producer.txt": "12b12a3a78b40b41457b0d8dbc97d736a33e52c37644937b851a2c0b6b5e3a2b",
+            "consumer.txt": "3c31e6a8fe7cd91a1b5232d8ebd86382dc78653925930745fbb7d9259ff999fb",
+            "recorder.py": "bf196b3892d1685f354c8e90bfa4d9ae0f31f97220bb0f73b89501da950e4a85",
+            "check_contract.py": "565dde078778c82c18c177cca27e8c9abbe86f45f131a7e6e9081220e8e07cd7"
+          },
+          "score": 0,
+          "out_of": 7,
+          "producer_seams": null,
+          "consumer_seams": null,
+          "failed_seams": [
+            "units",
+            "both_features",
+            "rounding",
+            "inventory",
+            "retry_safety",
+            "persistence",
+            "receipts"
+          ],
+          "accepted": false,
+          "worker_window_seconds": 186.458012827,
+          "aggregate_worker_seconds": 299.2823834,
+          "project_seconds": null,
+          "setup_seconds": null,
+          "archive_seconds": null,
+          "verification_seconds": null,
+          "human_interventions": null,
+          "concurrency_factor": 1.6050926364729685,
+          "aggregate_tokens": null,
+          "workers": [
+            {
+              "role": "producer",
+              "start_seconds": 0.0,
+              "end_seconds": 186.458012827,
+              "duration_seconds": 186.458012827,
+              "exit_code": 0,
+              "tokens": null,
+              "tool_calls": null,
+              "enrollment_completed_seconds": null,
+              "pi_tagged_tool_seconds": null,
+              "pi_tagged_output_bytes": null
+            },
+            {
+              "role": "consumer",
+              "start_seconds": 7.3488e-05,
+              "end_seconds": 112.824444061,
+              "duration_seconds": 112.824370573,
+              "exit_code": 0,
+              "tokens": null,
+              "tool_calls": null,
+              "enrollment_completed_seconds": null,
+              "pi_tagged_tool_seconds": null,
+              "pi_tagged_output_bytes": null
+            }
+          ]
+        },
+        {
+          "run": "trial2",
+          "started_at": "2026-09-09T04:33:29.669160+00:00",
+          "finished_at": "2026-09-09T04:36:58.852878+00:00",
+          "condition": null,
+          "model": "gpt-5.6-luna",
+          "effort": "medium",
+          "fixture_version": "torture-refunds/pi-v1",
+          "pi_enabled": true,
+          "pi_backend_sha256": "99ca17a18d28c214a027bab852b0d758d78115318933090a002b22a93bc40923",
+          "pi_workflow_sha256": "aa68ca28c2cd27014265ff5e315b461c1a83ffd7c0148f0d3f839c717a3b0f9a",
+          "plan_sha256": "710d63f1f6a512b6b037590a561bd6d6d716d0d733af85bf794bcc1760392a9d",
+          "input_hashes": {
+            "producer.txt": "12b12a3a78b40b41457b0d8dbc97d736a33e52c37644937b851a2c0b6b5e3a2b",
+            "consumer.txt": "3c31e6a8fe7cd91a1b5232d8ebd86382dc78653925930745fbb7d9259ff999fb",
+            "recorder.py": "bf196b3892d1685f354c8e90bfa4d9ae0f31f97220bb0f73b89501da950e4a85",
+            "check_contract.py": "565dde078778c82c18c177cca27e8c9abbe86f45f131a7e6e9081220e8e07cd7"
+          },
+          "score": 7,
+          "out_of": 7,
+          "producer_seams": null,
+          "consumer_seams": null,
+          "failed_seams": [],
+          "accepted": true,
+          "worker_window_seconds": 209.183724127,
+          "aggregate_worker_seconds": 344.055316801,
+          "project_seconds": null,
+          "setup_seconds": null,
+          "archive_seconds": null,
+          "verification_seconds": null,
+          "human_interventions": null,
+          "concurrency_factor": 1.6447518478642082,
+          "aggregate_tokens": null,
+          "workers": [
+            {
+              "role": "producer",
+              "start_seconds": 0.0,
+              "end_seconds": 134.871924658,
+              "duration_seconds": 134.871924658,
+              "exit_code": 0,
+              "tokens": null,
+              "tool_calls": null,
+              "enrollment_completed_seconds": null,
+              "pi_tagged_tool_seconds": null,
+              "pi_tagged_output_bytes": null
+            },
+            {
+              "role": "consumer",
+              "start_seconds": 0.000331984,
+              "end_seconds": 209.183724127,
+              "duration_seconds": 209.183392143,
+              "exit_code": 0,
+              "tokens": null,
+              "tool_calls": null,
+              "enrollment_completed_seconds": null,
+              "pi_tagged_tool_seconds": null,
+              "pi_tagged_output_bytes": null
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "20260909-torture-refunds-luna-medium-control-v1",
+      "started_at": "2026-09-09T04:24:46.563728+00:00",
+      "last_trial_started_at": "2026-09-09T04:24:46.584597+00:00",
+      "sources_sha256": {
+        "results.json": "9ceb2f6204ec6810bd3243514b209f42080e9a417529ee7904f25e8efa59fc0c",
+        "native-verification.json": "1e31f87b732f3e29b8b030bc9cf17dad8a0c6d763d9112e48c1c025b13dce79f",
+        "observations.json": "668d0cbee52636f3cbcc6e924883aa2d69434c2d8ab251f7d7efb8207df6e88c"
+      },
+      "trials": [
+        {
+          "run": "trial3",
+          "started_at": "2026-09-09T04:24:46.584597+00:00",
+          "finished_at": "2026-09-09T04:27:15.174515+00:00",
+          "condition": null,
+          "model": "gpt-5.6-luna",
+          "effort": "medium",
+          "fixture_version": "torture-refunds/control-v1",
+          "pi_enabled": false,
+          "pi_backend_sha256": null,
+          "pi_workflow_sha256": null,
+          "plan_sha256": "cd802e59a14f5b94e3419a40ec317006ff8e8c8ea08688bfcd7c69b26c4ed469",
+          "input_hashes": {
+            "producer.txt": "12b12a3a78b40b41457b0d8dbc97d736a33e52c37644937b851a2c0b6b5e3a2b",
+            "consumer.txt": "3c31e6a8fe7cd91a1b5232d8ebd86382dc78653925930745fbb7d9259ff999fb",
+            "recorder.py": "6959f3e7c7b770c5b51ee1a33221dd1f1815f37443ffbdbb9d9e29feacf41fec",
+            "check_contract.py": "565dde078778c82c18c177cca27e8c9abbe86f45f131a7e6e9081220e8e07cd7"
+          },
+          "score": 6,
+          "out_of": 7,
+          "producer_seams": null,
+          "consumer_seams": null,
+          "failed_seams": [
+            "both_features"
+          ],
+          "accepted": false,
+          "worker_window_seconds": 148.589927468,
+          "aggregate_worker_seconds": 236.04766902999998,
+          "project_seconds": null,
+          "setup_seconds": null,
+          "archive_seconds": null,
+          "verification_seconds": null,
+          "human_interventions": null,
+          "concurrency_factor": 1.5885845901690387,
+          "aggregate_tokens": null,
+          "workers": [
+            {
+              "role": "producer",
+              "start_seconds": 0.0,
+              "end_seconds": 87.457861418,
+              "duration_seconds": 87.457861418,
+              "exit_code": 0,
+              "tokens": null,
+              "tool_calls": null,
+              "enrollment_completed_seconds": null,
+              "pi_tagged_tool_seconds": null,
+              "pi_tagged_output_bytes": null
+            },
+            {
+              "role": "consumer",
+              "start_seconds": 0.000119856,
+              "end_seconds": 148.589927468,
+              "duration_seconds": 148.589807612,
+              "exit_code": 0,
+              "tokens": null,
+              "tool_calls": null,
+              "enrollment_completed_seconds": null,
+              "pi_tagged_tool_seconds": null,
+              "pi_tagged_output_bytes": null
+            }
+          ]
+        },
+        {
+          "run": "trial2",
+          "started_at": "2026-09-09T04:24:46.575188+00:00",
+          "finished_at": "2026-09-09T04:27:23.509171+00:00",
+          "condition": null,
+          "model": "gpt-5.6-luna",
+          "effort": "medium",
+          "fixture_version": "torture-refunds/control-v1",
+          "pi_enabled": false,
+          "pi_backend_sha256": null,
+          "pi_workflow_sha256": null,
+          "plan_sha256": "fe42f43be058aa6b039019e4716c49cea945fa9e71434133536de921b70a1c38",
+          "input_hashes": {
+            "producer.txt": "12b12a3a78b40b41457b0d8dbc97d736a33e52c37644937b851a2c0b6b5e3a2b",
+            "consumer.txt": "3c31e6a8fe7cd91a1b5232d8ebd86382dc78653925930745fbb7d9259ff999fb",
+            "recorder.py": "6959f3e7c7b770c5b51ee1a33221dd1f1815f37443ffbdbb9d9e29feacf41fec",
+            "check_contract.py": "565dde078778c82c18c177cca27e8c9abbe86f45f131a7e6e9081220e8e07cd7"
+          },
+          "score": 6,
+          "out_of": 7,
+          "producer_seams": null,
+          "consumer_seams": null,
+          "failed_seams": [
+            "both_features"
+          ],
+          "accepted": false,
+          "worker_window_seconds": 156.933990185,
+          "aggregate_worker_seconds": 234.86299621799998,
+          "project_seconds": null,
+          "setup_seconds": null,
+          "archive_seconds": null,
+          "verification_seconds": null,
+          "human_interventions": null,
+          "concurrency_factor": 1.496571876756171,
+          "aggregate_tokens": null,
+          "workers": [
+            {
+              "role": "producer",
+              "start_seconds": 0.0,
+              "end_seconds": 77.929388513,
+              "duration_seconds": 77.929388513,
+              "exit_code": 0,
+              "tokens": null,
+              "tool_calls": null,
+              "enrollment_completed_seconds": null,
+              "pi_tagged_tool_seconds": null,
+              "pi_tagged_output_bytes": null
+            },
+            {
+              "role": "consumer",
+              "start_seconds": 0.00038248,
+              "end_seconds": 156.933990185,
+              "duration_seconds": 156.933607705,
+              "exit_code": 0,
+              "tokens": null,
+              "tool_calls": null,
+              "enrollment_completed_seconds": null,
+              "pi_tagged_tool_seconds": null,
+              "pi_tagged_output_bytes": null
+            }
+          ]
+        },
+        {
+          "run": "trial1",
+          "started_at": "2026-09-09T04:24:46.563728+00:00",
+          "finished_at": "2026-09-09T04:27:30.057942+00:00",
+          "condition": null,
+          "model": "gpt-5.6-luna",
+          "effort": "medium",
+          "fixture_version": "torture-refunds/control-v1",
+          "pi_enabled": false,
+          "pi_backend_sha256": null,
+          "pi_workflow_sha256": null,
+          "plan_sha256": "810b28bf4f03fa181e09a7fc9324a49123885214c20f19f50278c763037f0612",
+          "input_hashes": {
+            "producer.txt": "12b12a3a78b40b41457b0d8dbc97d736a33e52c37644937b851a2c0b6b5e3a2b",
+            "consumer.txt": "3c31e6a8fe7cd91a1b5232d8ebd86382dc78653925930745fbb7d9259ff999fb",
+            "recorder.py": "6959f3e7c7b770c5b51ee1a33221dd1f1815f37443ffbdbb9d9e29feacf41fec",
+            "check_contract.py": "565dde078778c82c18c177cca27e8c9abbe86f45f131a7e6e9081220e8e07cd7"
+          },
+          "score": 0,
+          "out_of": 7,
+          "producer_seams": null,
+          "consumer_seams": null,
+          "failed_seams": [
+            "units",
+            "both_features",
+            "rounding",
+            "inventory",
+            "retry_safety",
+            "persistence",
+            "receipts"
+          ],
+          "accepted": false,
+          "worker_window_seconds": 163.494223518,
+          "aggregate_worker_seconds": 255.28730652800002,
+          "project_seconds": null,
+          "setup_seconds": null,
+          "archive_seconds": null,
+          "verification_seconds": null,
+          "human_interventions": null,
+          "concurrency_factor": 1.56144542011843,
+          "aggregate_tokens": null,
+          "workers": [
+            {
+              "role": "producer",
+              "start_seconds": 0.0,
+              "end_seconds": 163.494223518,
+              "duration_seconds": 163.494223518,
+              "exit_code": 0,
+              "tokens": null,
+              "tool_calls": null,
+              "enrollment_completed_seconds": null,
+              "pi_tagged_tool_seconds": null,
+              "pi_tagged_output_bytes": null
+            },
+            {
+              "role": "consumer",
+              "start_seconds": 0.000137808,
+              "end_seconds": 91.793220818,
+              "duration_seconds": 91.79308301,
+              "exit_code": 0,
+              "tokens": null,
+              "tool_calls": null,
+              "enrollment_completed_seconds": null,
+              "pi_tagged_tool_seconds": null,
+              "pi_tagged_output_bytes": null
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "20260909-torture-refunds-luna-high-control-v1",
+      "started_at": "2026-09-09T04:16:03.917061+00:00",
+      "last_trial_started_at": "2026-09-09T04:16:03.917061+00:00",
+      "sources_sha256": {
+        "results.json": "72125b9d948094df56c19a49a5a0b2943bc786a826adac0d389fe3bf75e7ee3d",
+        "native-verification.json": "51f550c77015ff5a1f87e8ba559de487fb33e9cd67ea583575fd42d5134036a0"
+      },
+      "trials": [
+        {
+          "run": "trial1",
+          "started_at": "2026-09-09T04:16:03.917061+00:00",
+          "finished_at": "2026-09-09T04:21:13.748910+00:00",
+          "condition": null,
+          "model": "gpt-5.6-luna",
+          "effort": "high",
+          "fixture_version": "torture-refunds/control-v1",
+          "pi_enabled": false,
+          "pi_backend_sha256": null,
+          "pi_workflow_sha256": null,
+          "plan_sha256": "a586a48031237b427a4c8478a83d850354f34cc9db54904053088e0028c2ff68",
+          "input_hashes": {
+            "producer.txt": "12b12a3a78b40b41457b0d8dbc97d736a33e52c37644937b851a2c0b6b5e3a2b",
+            "consumer.txt": "3c31e6a8fe7cd91a1b5232d8ebd86382dc78653925930745fbb7d9259ff999fb",
+            "recorder.py": "6959f3e7c7b770c5b51ee1a33221dd1f1815f37443ffbdbb9d9e29feacf41fec",
+            "check_contract.py": "565dde078778c82c18c177cca27e8c9abbe86f45f131a7e6e9081220e8e07cd7"
+          },
+          "score": 7,
+          "out_of": 7,
+          "producer_seams": null,
+          "consumer_seams": null,
+          "failed_seams": [],
+          "accepted": true,
+          "worker_window_seconds": 309.831853409,
+          "aggregate_worker_seconds": 493.33236038300004,
+          "project_seconds": null,
+          "setup_seconds": null,
+          "archive_seconds": null,
+          "verification_seconds": null,
+          "human_interventions": null,
+          "concurrency_factor": 1.5922583651583633,
+          "aggregate_tokens": null,
+          "workers": [
+            {
+              "role": "producer",
+              "start_seconds": 0.0,
+              "end_seconds": 183.500650478,
+              "duration_seconds": 183.500650478,
+              "exit_code": 0,
+              "tokens": null,
+              "tool_calls": null,
+              "enrollment_completed_seconds": null,
+              "pi_tagged_tool_seconds": null,
+              "pi_tagged_output_bytes": null
+            },
+            {
+              "role": "consumer",
+              "start_seconds": 0.000143504,
+              "end_seconds": 309.831853409,
+              "duration_seconds": 309.831709905,
+              "exit_code": 0,
+              "tokens": null,
+              "tool_calls": null,
+              "enrollment_completed_seconds": null,
+              "pi_tagged_tool_seconds": null,
+              "pi_tagged_output_bytes": null
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "20260909-seven-seams-sol-medium-high-control-v1",
+      "started_at": "2026-09-09T03:57:46.390315+00:00",
+      "last_trial_started_at": "2026-09-09T03:57:46.423432+00:00",
+      "sources_sha256": {
+        "results.json": "c6158b12472192781e395a613ae05ea4247d4dbcb7cb6fe5e8fc9796ff77c85f",
+        "native-verification.json": "7af6de2626e92e2e202c4330fcb3521563fbdfa854ac7a8202867866dea36c05",
+        "observations.json": "2fd231449340eca9eba810a4bfcc8e2b3c4c02783fa1ad0ff5f348b9d7c36259"
+      },
+      "trials": [
+        {
+          "run": "medium2",
+          "started_at": "2026-09-09T03:57:46.423432+00:00",
+          "finished_at": "2026-09-09T03:59:45.327696+00:00",
+          "condition": null,
+          "model": "gpt-5.6-sol",
+          "effort": "medium",
+          "fixture_version": "seven-seams/control-v1",
+          "pi_enabled": false,
+          "pi_backend_sha256": null,
+          "pi_workflow_sha256": null,
+          "plan_sha256": "9911dd8d1777c90422492d27e5c3561989060f7f8ad57f71f3b71baba0e8e395",
+          "input_hashes": {
+            "producer.txt": "12acf04798e559dd67df2a14d0b99f62f90b91a5ab04add4d7228609c86a9c19",
+            "consumer.txt": "8b2a9469ee1768d6cc28a27a83ba597d5d5f4ccaca74a82bd4b80a9c1f386a53",
+            "recorder.py": "240750d27c4710933f5c00bec218c76f6630332932a376cac4d54991bc34e7f4",
+            "check_contract.py": "7f7ddf4e46bf22bcb079344c5208b9af8adbcfc15b6da4c2955c70d9b162e038"
+          },
+          "score": 7,
+          "out_of": 7,
+          "producer_seams": 7,
+          "consumer_seams": 7,
+          "failed_seams": [],
+          "accepted": true,
+          "worker_window_seconds": 118.904271226,
+          "aggregate_worker_seconds": 217.34103753099998,
+          "project_seconds": null,
+          "setup_seconds": null,
+          "archive_seconds": null,
+          "verification_seconds": null,
+          "human_interventions": null,
+          "concurrency_factor": 1.827865688002934,
+          "aggregate_tokens": null,
+          "workers": [
+            {
+              "role": "producer",
+              "start_seconds": 0.0,
+              "end_seconds": 98.436882513,
+              "duration_seconds": 98.436882513,
+              "exit_code": 0,
+              "tokens": null,
+              "tool_calls": null,
+              "enrollment_completed_seconds": null,
+              "pi_tagged_tool_seconds": null,
+              "pi_tagged_output_bytes": null
+            },
+            {
+              "role": "consumer",
+              "start_seconds": 0.000116208,
+              "end_seconds": 118.904271226,
+              "duration_seconds": 118.904155018,
+              "exit_code": 0,
+              "tokens": null,
+              "tool_calls": null,
+              "enrollment_completed_seconds": null,
+              "pi_tagged_tool_seconds": null,
+              "pi_tagged_output_bytes": null
+            }
+          ]
+        },
+        {
+          "run": "medium1",
+          "started_at": "2026-09-09T03:57:46.405111+00:00",
+          "finished_at": "2026-09-09T04:00:19.048672+00:00",
+          "condition": null,
+          "model": "gpt-5.6-sol",
+          "effort": "medium",
+          "fixture_version": "seven-seams/control-v1",
+          "pi_enabled": false,
+          "pi_backend_sha256": null,
+          "pi_workflow_sha256": null,
+          "plan_sha256": "9911dd8d1777c90422492d27e5c3561989060f7f8ad57f71f3b71baba0e8e395",
+          "input_hashes": {
+            "producer.txt": "12acf04798e559dd67df2a14d0b99f62f90b91a5ab04add4d7228609c86a9c19",
+            "consumer.txt": "8b2a9469ee1768d6cc28a27a83ba597d5d5f4ccaca74a82bd4b80a9c1f386a53",
+            "recorder.py": "240750d27c4710933f5c00bec218c76f6630332932a376cac4d54991bc34e7f4",
+            "check_contract.py": "7f7ddf4e46bf22bcb079344c5208b9af8adbcfc15b6da4c2955c70d9b162e038"
+          },
+          "score": 7,
+          "out_of": 7,
+          "producer_seams": 7,
+          "consumer_seams": 7,
+          "failed_seams": [],
+          "accepted": true,
+          "worker_window_seconds": 152.643571727,
+          "aggregate_worker_seconds": 268.34713415299996,
+          "project_seconds": null,
+          "setup_seconds": null,
+          "archive_seconds": null,
+          "verification_seconds": null,
+          "human_interventions": null,
+          "concurrency_factor": 1.7579982643024987,
+          "aggregate_tokens": null,
+          "workers": [
+            {
+              "role": "producer",
+              "start_seconds": 0.0,
+              "end_seconds": 115.70391321,
+              "duration_seconds": 115.70391321,
+              "exit_code": 0,
+              "tokens": null,
+              "tool_calls": null,
+              "enrollment_completed_seconds": null,
+              "pi_tagged_tool_seconds": null,
+              "pi_tagged_output_bytes": null
+            },
+            {
+              "role": "consumer",
+              "start_seconds": 0.000350784,
+              "end_seconds": 152.643571727,
+              "duration_seconds": 152.643220943,
+              "exit_code": 0,
+              "tokens": null,
+              "tool_calls": null,
+              "enrollment_completed_seconds": null,
+              "pi_tagged_tool_seconds": null,
+              "pi_tagged_output_bytes": null
+            }
+          ]
+        },
+        {
+          "run": "high1",
+          "started_at": "2026-09-09T03:57:46.403326+00:00",
+          "finished_at": "2026-09-09T04:00:08.084017+00:00",
+          "condition": null,
+          "model": "gpt-5.6-sol",
+          "effort": "high",
+          "fixture_version": "seven-seams/control-v1",
+          "pi_enabled": false,
+          "pi_backend_sha256": null,
+          "pi_workflow_sha256": null,
+          "plan_sha256": "ce278674c6606c6bfed0c73bc3b55653dba59f82d5503c3275f19cf1a35c718b",
+          "input_hashes": {
+            "producer.txt": "12acf04798e559dd67df2a14d0b99f62f90b91a5ab04add4d7228609c86a9c19",
+            "consumer.txt": "8b2a9469ee1768d6cc28a27a83ba597d5d5f4ccaca74a82bd4b80a9c1f386a53",
+            "recorder.py": "240750d27c4710933f5c00bec218c76f6630332932a376cac4d54991bc34e7f4",
+            "check_contract.py": "7f7ddf4e46bf22bcb079344c5208b9af8adbcfc15b6da4c2955c70d9b162e038"
+          },
+          "score": 7,
+          "out_of": 7,
+          "producer_seams": 7,
+          "consumer_seams": 7,
+          "failed_seams": [],
+          "accepted": true,
+          "worker_window_seconds": 141.68069781,
+          "aggregate_worker_seconds": 262.022437547,
+          "project_seconds": null,
+          "setup_seconds": null,
+          "archive_seconds": null,
+          "verification_seconds": null,
+          "human_interventions": null,
+          "concurrency_factor": 1.8493869778816554,
+          "aggregate_tokens": null,
+          "workers": [
+            {
+              "role": "producer",
+              "start_seconds": 4.888e-05,
+              "end_seconds": 120.341788617,
+              "duration_seconds": 120.341739737,
+              "exit_code": 0,
+              "tokens": null,
+              "tool_calls": null,
+              "enrollment_completed_seconds": null,
+              "pi_tagged_tool_seconds": null,
+              "pi_tagged_output_bytes": null
+            },
+            {
+              "role": "consumer",
+              "start_seconds": 0.0,
+              "end_seconds": 141.68069781,
+              "duration_seconds": 141.68069781,
+              "exit_code": 0,
+              "tokens": null,
+              "tool_calls": null,
+              "enrollment_completed_seconds": null,
+              "pi_tagged_tool_seconds": null,
+              "pi_tagged_output_bytes": null
+            }
+          ]
+        },
+        {
+          "run": "high2",
+          "started_at": "2026-09-09T03:57:46.390315+00:00",
+          "finished_at": "2026-09-09T04:00:20.122821+00:00",
+          "condition": null,
+          "model": "gpt-5.6-sol",
+          "effort": "high",
+          "fixture_version": "seven-seams/control-v1",
+          "pi_enabled": false,
+          "pi_backend_sha256": null,
+          "pi_workflow_sha256": null,
+          "plan_sha256": "ce278674c6606c6bfed0c73bc3b55653dba59f82d5503c3275f19cf1a35c718b",
+          "input_hashes": {
+            "producer.txt": "12acf04798e559dd67df2a14d0b99f62f90b91a5ab04add4d7228609c86a9c19",
+            "consumer.txt": "8b2a9469ee1768d6cc28a27a83ba597d5d5f4ccaca74a82bd4b80a9c1f386a53",
+            "recorder.py": "240750d27c4710933f5c00bec218c76f6630332932a376cac4d54991bc34e7f4",
+            "check_contract.py": "7f7ddf4e46bf22bcb079344c5208b9af8adbcfc15b6da4c2955c70d9b162e038"
+          },
+          "score": 7,
+          "out_of": 7,
+          "producer_seams": 7,
+          "consumer_seams": 7,
+          "failed_seams": [],
+          "accepted": true,
+          "worker_window_seconds": 153.732511361,
+          "aggregate_worker_seconds": 290.431669018,
+          "project_seconds": null,
+          "setup_seconds": null,
+          "archive_seconds": null,
+          "verification_seconds": null,
+          "human_interventions": null,
+          "concurrency_factor": 1.8892013566082861,
+          "aggregate_tokens": null,
+          "workers": [
+            {
+              "role": "producer",
+              "start_seconds": 2.5584e-05,
+              "end_seconds": 136.699183241,
+              "duration_seconds": 136.699157657,
+              "exit_code": 0,
+              "tokens": null,
+              "tool_calls": null,
+              "enrollment_completed_seconds": null,
+              "pi_tagged_tool_seconds": null,
+              "pi_tagged_output_bytes": null
+            },
+            {
+              "role": "consumer",
+              "start_seconds": 0.0,
+              "end_seconds": 153.732511361,
+              "duration_seconds": 153.732511361,
+              "exit_code": 0,
+              "tokens": null,
+              "tool_calls": null,
+              "enrollment_completed_seconds": null,
+              "pi_tagged_tool_seconds": null,
+              "pi_tagged_output_bytes": null
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "20260909-seven-seams-sol-low-control-v1",
+      "started_at": "2026-09-09T03:53:03.287289+00:00",
+      "last_trial_started_at": "2026-09-09T03:53:03.300740+00:00",
+      "sources_sha256": {
+        "results.json": "0c43b649cb73f8041300d3aff6b9e1296270a6341f1bfd23850ede7dfdb99854",
+        "native-verification.json": "815dc208ccd0eadaef01ad988d42882110ab5cf36e30d2832ba1826d3208689f",
+        "observations.json": "ea8d8138152d969196c1b32f0859436301a614d37b991fe2141ebb1dae64984b"
+      },
+      "trials": [
+        {
+          "run": "control2",
+          "started_at": "2026-09-09T03:53:03.300740+00:00",
+          "finished_at": "2026-09-09T03:54:12.839897+00:00",
+          "condition": null,
+          "model": "gpt-5.6-sol",
+          "effort": "low",
+          "fixture_version": "seven-seams/control-v1",
+          "pi_enabled": false,
+          "pi_backend_sha256": null,
+          "pi_workflow_sha256": null,
+          "plan_sha256": "89bbdc3ee4bea1043dce986a4b795eedfbd7022ee68f7d19d9777bd3561114f9",
+          "input_hashes": {
+            "producer.txt": "12acf04798e559dd67df2a14d0b99f62f90b91a5ab04add4d7228609c86a9c19",
+            "consumer.txt": "8b2a9469ee1768d6cc28a27a83ba597d5d5f4ccaca74a82bd4b80a9c1f386a53",
+            "recorder.py": "240750d27c4710933f5c00bec218c76f6630332932a376cac4d54991bc34e7f4",
+            "check_contract.py": "7f7ddf4e46bf22bcb079344c5208b9af8adbcfc15b6da4c2955c70d9b162e038"
+          },
+          "score": 4,
+          "out_of": 7,
+          "producer_seams": 7,
+          "consumer_seams": 4,
+          "failed_seams": [
+            "discounts",
+            "contacts",
+            "orders"
+          ],
+          "accepted": false,
+          "worker_window_seconds": 69.539163103,
+          "aggregate_worker_seconds": 117.527209449,
+          "project_seconds": null,
+          "setup_seconds": null,
+          "archive_seconds": null,
+          "verification_seconds": null,
+          "human_interventions": null,
+          "concurrency_factor": 1.6900866246394288,
+          "aggregate_tokens": null,
+          "workers": [
+            {
+              "role": "producer",
+              "start_seconds": 0.0,
+              "end_seconds": 69.539163103,
+              "duration_seconds": 69.539163103,
+              "exit_code": 0,
+              "tokens": null,
+              "tool_calls": null,
+              "enrollment_completed_seconds": null,
+              "pi_tagged_tool_seconds": null,
+              "pi_tagged_output_bytes": null
+            },
+            {
+              "role": "consumer",
+              "start_seconds": 0.000305424,
+              "end_seconds": 47.98835177,
+              "duration_seconds": 47.988046346,
+              "exit_code": 0,
+              "tokens": null,
+              "tool_calls": null,
+              "enrollment_completed_seconds": null,
+              "pi_tagged_tool_seconds": null,
+              "pi_tagged_output_bytes": null
+            }
+          ]
+        },
+        {
+          "run": "control3",
+          "started_at": "2026-09-09T03:53:03.300384+00:00",
+          "finished_at": "2026-09-09T03:54:32.695056+00:00",
+          "condition": null,
+          "model": "gpt-5.6-sol",
+          "effort": "low",
+          "fixture_version": "seven-seams/control-v1",
+          "pi_enabled": false,
+          "pi_backend_sha256": null,
+          "pi_workflow_sha256": null,
+          "plan_sha256": "89bbdc3ee4bea1043dce986a4b795eedfbd7022ee68f7d19d9777bd3561114f9",
+          "input_hashes": {
+            "producer.txt": "12acf04798e559dd67df2a14d0b99f62f90b91a5ab04add4d7228609c86a9c19",
+            "consumer.txt": "8b2a9469ee1768d6cc28a27a83ba597d5d5f4ccaca74a82bd4b80a9c1f386a53",
+            "recorder.py": "240750d27c4710933f5c00bec218c76f6630332932a376cac4d54991bc34e7f4",
+            "check_contract.py": "7f7ddf4e46bf22bcb079344c5208b9af8adbcfc15b6da4c2955c70d9b162e038"
+          },
+          "score": 3,
+          "out_of": 7,
+          "producer_seams": 7,
+          "consumer_seams": 3,
+          "failed_seams": [
+            "discounts",
+            "delivery",
+            "contacts",
+            "orders"
+          ],
+          "accepted": false,
+          "worker_window_seconds": 89.39468093,
+          "aggregate_worker_seconds": 143.909242506,
+          "project_seconds": null,
+          "setup_seconds": null,
+          "archive_seconds": null,
+          "verification_seconds": null,
+          "human_interventions": null,
+          "concurrency_factor": 1.6098188506169322,
+          "aggregate_tokens": null,
+          "workers": [
+            {
+              "role": "producer",
+              "start_seconds": 0.00013288,
+              "end_seconds": 89.39468093,
+              "duration_seconds": 89.39454805,
+              "exit_code": 0,
+              "tokens": null,
+              "tool_calls": null,
+              "enrollment_completed_seconds": null,
+              "pi_tagged_tool_seconds": null,
+              "pi_tagged_output_bytes": null
+            },
+            {
+              "role": "consumer",
+              "start_seconds": 0.0,
+              "end_seconds": 54.514694456,
+              "duration_seconds": 54.514694456,
+              "exit_code": 0,
+              "tokens": null,
+              "tool_calls": null,
+              "enrollment_completed_seconds": null,
+              "pi_tagged_tool_seconds": null,
+              "pi_tagged_output_bytes": null
+            }
+          ]
+        },
+        {
+          "run": "control1",
+          "started_at": "2026-09-09T03:53:03.287289+00:00",
+          "finished_at": "2026-09-09T03:54:46.656653+00:00",
+          "condition": null,
+          "model": "gpt-5.6-sol",
+          "effort": "low",
+          "fixture_version": "seven-seams/control-v1",
+          "pi_enabled": false,
+          "pi_backend_sha256": null,
+          "pi_workflow_sha256": null,
+          "plan_sha256": "89bbdc3ee4bea1043dce986a4b795eedfbd7022ee68f7d19d9777bd3561114f9",
+          "input_hashes": {
+            "producer.txt": "12acf04798e559dd67df2a14d0b99f62f90b91a5ab04add4d7228609c86a9c19",
+            "consumer.txt": "8b2a9469ee1768d6cc28a27a83ba597d5d5f4ccaca74a82bd4b80a9c1f386a53",
+            "recorder.py": "240750d27c4710933f5c00bec218c76f6630332932a376cac4d54991bc34e7f4",
+            "check_contract.py": "7f7ddf4e46bf22bcb079344c5208b9af8adbcfc15b6da4c2955c70d9b162e038"
+          },
+          "score": 3,
+          "out_of": 7,
+          "producer_seams": 7,
+          "consumer_seams": 3,
+          "failed_seams": [
+            "discounts",
+            "delivery",
+            "contacts",
+            "orders"
+          ],
+          "accepted": false,
+          "worker_window_seconds": 103.369370449,
+          "aggregate_worker_seconds": 154.665152326,
+          "project_seconds": null,
+          "setup_seconds": null,
+          "archive_seconds": null,
+          "verification_seconds": null,
+          "human_interventions": null,
+          "concurrency_factor": 1.4962377312949595,
+          "aggregate_tokens": null,
+          "workers": [
+            {
+              "role": "producer",
+              "start_seconds": 0.0,
+              "end_seconds": 103.369370449,
+              "duration_seconds": 103.369370449,
+              "exit_code": 0,
+              "tokens": null,
+              "tool_calls": null,
+              "enrollment_completed_seconds": null,
+              "pi_tagged_tool_seconds": null,
+              "pi_tagged_output_bytes": null
+            },
+            {
+              "role": "consumer",
+              "start_seconds": 4.5936e-05,
+              "end_seconds": 51.295827813,
+              "duration_seconds": 51.295781877,
+              "exit_code": 0,
+              "tokens": null,
+              "tool_calls": null,
+              "enrollment_completed_seconds": null,
+              "pi_tagged_tool_seconds": null,
+              "pi_tagged_output_bytes": null
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "20260909-seven-seams-luna-low-control-v1",
+      "started_at": "2026-09-09T03:38:51.980050+00:00",
+      "last_trial_started_at": "2026-09-09T03:38:51.987434+00:00",
+      "sources_sha256": {
+        "results.json": "4f46a38938ed4357c06510cafcf316eb20bfe7566ca941908a268b2bad0aa477",
+        "observations.json": "8661d420d3a49d6bc352faf4968a8b4ea559de9794eb960767868ee7bf65c049"
+      },
+      "trials": [
+        {
+          "run": "control2",
+          "started_at": "2026-09-09T03:38:51.987434+00:00",
+          "finished_at": "2026-09-09T03:39:47.072275+00:00",
+          "condition": null,
+          "model": "gpt-5.6-luna",
+          "effort": "low",
+          "fixture_version": "seven-seams/control-v1",
+          "pi_enabled": false,
+          "pi_backend_sha256": null,
+          "pi_workflow_sha256": null,
+          "plan_sha256": "a3950373757537dd7f83d4dbf1ebc73cec3975dc9b586dcb496a1ff2b9ffbe31",
+          "input_hashes": {
+            "producer.txt": "12acf04798e559dd67df2a14d0b99f62f90b91a5ab04add4d7228609c86a9c19",
+            "consumer.txt": "8b2a9469ee1768d6cc28a27a83ba597d5d5f4ccaca74a82bd4b80a9c1f386a53",
+            "recorder.py": "240750d27c4710933f5c00bec218c76f6630332932a376cac4d54991bc34e7f4",
+            "check_contract.py": "7f7ddf4e46bf22bcb079344c5208b9af8adbcfc15b6da4c2955c70d9b162e038"
+          },
+          "score": 2,
+          "out_of": 7,
+          "producer_seams": 7,
+          "consumer_seams": 2,
+          "failed_seams": [
+            "prices",
+            "weights",
+            "discounts",
+            "contacts",
+            "orders"
+          ],
+          "accepted": false,
+          "worker_window_seconds": 55.084845238,
+          "aggregate_worker_seconds": 93.385611982,
+          "project_seconds": null,
+          "setup_seconds": null,
+          "archive_seconds": null,
+          "verification_seconds": null,
+          "human_interventions": null,
+          "concurrency_factor": 1.6953049714221293,
+          "aggregate_tokens": null,
+          "workers": [
+            {
+              "role": "producer",
+              "start_seconds": 0.0,
+              "end_seconds": 55.084845238,
+              "duration_seconds": 55.084845238,
+              "exit_code": 0,
+              "tokens": null,
+              "tool_calls": null,
+              "enrollment_completed_seconds": null,
+              "pi_tagged_tool_seconds": null,
+              "pi_tagged_output_bytes": null
+            },
+            {
+              "role": "consumer",
+              "start_seconds": 0.000306353,
+              "end_seconds": 38.301073097,
+              "duration_seconds": 38.300766744,
+              "exit_code": 0,
+              "tokens": null,
+              "tool_calls": null,
+              "enrollment_completed_seconds": null,
+              "pi_tagged_tool_seconds": null,
+              "pi_tagged_output_bytes": null
+            }
+          ]
+        },
+        {
+          "run": "control1",
+          "started_at": "2026-09-09T03:38:51.980050+00:00",
+          "finished_at": "2026-09-09T03:39:38.406464+00:00",
+          "condition": null,
+          "model": "gpt-5.6-luna",
+          "effort": "low",
+          "fixture_version": "seven-seams/control-v1",
+          "pi_enabled": false,
+          "pi_backend_sha256": null,
+          "pi_workflow_sha256": null,
+          "plan_sha256": "a3950373757537dd7f83d4dbf1ebc73cec3975dc9b586dcb496a1ff2b9ffbe31",
+          "input_hashes": {
+            "producer.txt": "12acf04798e559dd67df2a14d0b99f62f90b91a5ab04add4d7228609c86a9c19",
+            "consumer.txt": "8b2a9469ee1768d6cc28a27a83ba597d5d5f4ccaca74a82bd4b80a9c1f386a53",
+            "recorder.py": "240750d27c4710933f5c00bec218c76f6630332932a376cac4d54991bc34e7f4",
+            "check_contract.py": "7f7ddf4e46bf22bcb079344c5208b9af8adbcfc15b6da4c2955c70d9b162e038"
+          },
+          "score": 0,
+          "out_of": 7,
+          "producer_seams": 7,
+          "consumer_seams": 0,
+          "failed_seams": [
+            "prices",
+            "stock",
+            "weights",
+            "discounts",
+            "delivery",
+            "contacts",
+            "orders"
+          ],
+          "accepted": false,
+          "worker_window_seconds": 46.42641814,
+          "aggregate_worker_seconds": 79.611991953,
+          "project_seconds": null,
+          "setup_seconds": null,
+          "archive_seconds": null,
+          "verification_seconds": null,
+          "human_interventions": null,
+          "concurrency_factor": 1.7147993565415296,
+          "aggregate_tokens": null,
+          "workers": [
+            {
+              "role": "producer",
+              "start_seconds": 0.0,
+              "end_seconds": 46.42641814,
+              "duration_seconds": 46.42641814,
+              "exit_code": 0,
+              "tokens": null,
+              "tool_calls": null,
+              "enrollment_completed_seconds": null,
+              "pi_tagged_tool_seconds": null,
+              "pi_tagged_output_bytes": null
+            },
+            {
+              "role": "consumer",
+              "start_seconds": 0.000159968,
+              "end_seconds": 33.185733781,
+              "duration_seconds": 33.185573813,
+              "exit_code": 0,
+              "tokens": null,
+              "tool_calls": null,
+              "enrollment_completed_seconds": null,
+              "pi_tagged_tool_seconds": null,
+              "pi_tagged_output_bytes": null
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "20260909-seven-seams-luna-low-v1",
+      "started_at": "2026-09-09T03:32:47.436265+00:00",
+      "last_trial_started_at": "2026-09-09T03:32:47.436431+00:00",
+      "sources_sha256": {
+        "results.json": "5500f96b651da84dc85283eba43275a242f6fadb40e7e6810f0316baad277866",
+        "observations.json": "4c9d02d2cbd908da909571f471dd718568585d4e8e9c12e9b5079a6583baec88"
+      },
+      "trials": [
+        {
+          "run": "luna1",
+          "started_at": "2026-09-09T03:32:47.436431+00:00",
+          "finished_at": "2026-09-09T03:34:47.394735+00:00",
+          "condition": null,
+          "model": "gpt-5.6-luna",
+          "effort": "low",
+          "fixture_version": "seven-seams/v1",
+          "pi_enabled": true,
+          "pi_backend_sha256": "99ca17a18d28c214a027bab852b0d758d78115318933090a002b22a93bc40923",
+          "pi_workflow_sha256": "aa68ca28c2cd27014265ff5e315b461c1a83ffd7c0148f0d3f839c717a3b0f9a",
+          "plan_sha256": "bc23dcbd7957f7c0f6df71e4d9e74f74b59e773a07b94cd5b58eec0880c24ded",
+          "input_hashes": {
+            "producer.txt": "12acf04798e559dd67df2a14d0b99f62f90b91a5ab04add4d7228609c86a9c19",
+            "consumer.txt": "8b2a9469ee1768d6cc28a27a83ba597d5d5f4ccaca74a82bd4b80a9c1f386a53",
+            "recorder.py": "7185c16ff9a45f3a36d432c36c9a784cca88d2fd1ef74a641e81a825f0e35d67",
+            "check_contract.py": "7f7ddf4e46bf22bcb079344c5208b9af8adbcfc15b6da4c2955c70d9b162e038"
+          },
+          "score": 7,
+          "out_of": 7,
+          "producer_seams": 7,
+          "consumer_seams": 7,
+          "failed_seams": [],
+          "accepted": true,
+          "worker_window_seconds": 119.958311073,
+          "aggregate_worker_seconds": 193.56364546499998,
+          "project_seconds": null,
+          "setup_seconds": null,
+          "archive_seconds": null,
+          "verification_seconds": null,
+          "human_interventions": null,
+          "concurrency_factor": 1.6135909528370054,
+          "aggregate_tokens": null,
+          "workers": [
+            {
+              "role": "producer",
+              "start_seconds": 0.0,
+              "end_seconds": 73.605359864,
+              "duration_seconds": 73.605359864,
+              "exit_code": 0,
+              "tokens": null,
+              "tool_calls": null,
+              "enrollment_completed_seconds": null,
+              "pi_tagged_tool_seconds": null,
+              "pi_tagged_output_bytes": null
+            },
+            {
+              "role": "consumer",
+              "start_seconds": 2.5472e-05,
+              "end_seconds": 119.958311073,
+              "duration_seconds": 119.958285601,
+              "exit_code": 0,
+              "tokens": null,
+              "tool_calls": null,
+              "enrollment_completed_seconds": null,
+              "pi_tagged_tool_seconds": null,
+              "pi_tagged_output_bytes": null
+            }
+          ]
+        },
+        {
+          "run": "luna2",
+          "started_at": "2026-09-09T03:32:47.436265+00:00",
+          "finished_at": "2026-09-09T03:34:15.306227+00:00",
+          "condition": null,
+          "model": "gpt-5.6-luna",
+          "effort": "low",
+          "fixture_version": "seven-seams/v1",
+          "pi_enabled": true,
+          "pi_backend_sha256": "99ca17a18d28c214a027bab852b0d758d78115318933090a002b22a93bc40923",
+          "pi_workflow_sha256": "aa68ca28c2cd27014265ff5e315b461c1a83ffd7c0148f0d3f839c717a3b0f9a",
+          "plan_sha256": "58f1d782d4c412ba8da3d22b813e86cc9fab703845fc0863c40651b84eaa7e6f",
+          "input_hashes": {
+            "producer.txt": "12acf04798e559dd67df2a14d0b99f62f90b91a5ab04add4d7228609c86a9c19",
+            "consumer.txt": "8b2a9469ee1768d6cc28a27a83ba597d5d5f4ccaca74a82bd4b80a9c1f386a53",
+            "recorder.py": "7185c16ff9a45f3a36d432c36c9a784cca88d2fd1ef74a641e81a825f0e35d67",
+            "check_contract.py": "7f7ddf4e46bf22bcb079344c5208b9af8adbcfc15b6da4c2955c70d9b162e038"
+          },
+          "score": 7,
+          "out_of": 7,
+          "producer_seams": 7,
+          "consumer_seams": 7,
+          "failed_seams": [],
+          "accepted": true,
+          "worker_window_seconds": 87.869971775,
+          "aggregate_worker_seconds": 169.343523659,
+          "project_seconds": null,
+          "setup_seconds": null,
+          "archive_seconds": null,
+          "verification_seconds": null,
+          "human_interventions": null,
+          "concurrency_factor": 1.9272058501693994,
+          "aggregate_tokens": null,
+          "workers": [
+            {
+              "role": "producer",
+              "start_seconds": 0.000195808,
+              "end_seconds": 87.869971775,
+              "duration_seconds": 87.869775967,
+              "exit_code": 0,
+              "tokens": null,
+              "tool_calls": null,
+              "enrollment_completed_seconds": null,
+              "pi_tagged_tool_seconds": null,
+              "pi_tagged_output_bytes": null
+            },
+            {
+              "role": "consumer",
+              "start_seconds": 0.0,
+              "end_seconds": 81.473747692,
+              "duration_seconds": 81.473747692,
+              "exit_code": 0,
+              "tokens": null,
+              "tool_calls": null,
+              "enrollment_completed_seconds": null,
+              "pi_tagged_tool_seconds": null,
+              "pi_tagged_output_bytes": null
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "20260909-seven-seams-spark-xhigh-v1",
+      "started_at": "2026-09-09T03:17:00.530863+00:00",
+      "last_trial_started_at": "2026-09-09T03:17:00.540455+00:00",
+      "sources_sha256": {
+        "results.json": "bf90553c0b2dde3cd244afced386d27f31de24d872cbe4fc83c4b6aafbe008dc",
+        "observations.json": "ebbb1c4e0b68e310c11204052aa4ecddcc1c6949b804f0a86c537c18722ed817"
+      },
+      "trials": [
+        {
+          "run": "spark1",
+          "started_at": "2026-09-09T03:17:00.540455+00:00",
+          "finished_at": "2026-09-09T03:17:49.502354+00:00",
+          "condition": null,
+          "model": "gpt-5.3-codex-spark",
+          "effort": "xhigh",
+          "fixture_version": "seven-seams/v1",
+          "pi_enabled": true,
+          "pi_backend_sha256": "99ca17a18d28c214a027bab852b0d758d78115318933090a002b22a93bc40923",
+          "pi_workflow_sha256": "aa68ca28c2cd27014265ff5e315b461c1a83ffd7c0148f0d3f839c717a3b0f9a",
+          "plan_sha256": "0f2e0ff9612128e386f34c993e2876003a0798216c069a3d514461f2b39eb26e",
+          "input_hashes": {
+            "producer.txt": "12acf04798e559dd67df2a14d0b99f62f90b91a5ab04add4d7228609c86a9c19",
+            "consumer.txt": "8b2a9469ee1768d6cc28a27a83ba597d5d5f4ccaca74a82bd4b80a9c1f386a53",
+            "recorder.py": "7185c16ff9a45f3a36d432c36c9a784cca88d2fd1ef74a641e81a825f0e35d67",
+            "check_contract.py": "7f7ddf4e46bf22bcb079344c5208b9af8adbcfc15b6da4c2955c70d9b162e038"
+          },
+          "score": 3,
+          "out_of": 7,
+          "producer_seams": 7,
+          "consumer_seams": 3,
+          "failed_seams": [
+            "prices",
+            "weights",
+            "discounts",
+            "contacts"
+          ],
+          "accepted": false,
+          "worker_window_seconds": 48.961907204,
+          "aggregate_worker_seconds": 67.724916138,
+          "project_seconds": null,
+          "setup_seconds": null,
+          "archive_seconds": null,
+          "verification_seconds": null,
+          "human_interventions": null,
+          "concurrency_factor": 1.383216463685204,
+          "aggregate_tokens": null,
+          "workers": [
+            {
+              "role": "producer",
+              "start_seconds": 0.0,
+              "end_seconds": 48.961907204,
+              "duration_seconds": 48.961907204,
+              "exit_code": 0,
+              "tokens": null,
+              "tool_calls": null,
+              "enrollment_completed_seconds": null,
+              "pi_tagged_tool_seconds": null,
+              "pi_tagged_output_bytes": null
+            },
+            {
+              "role": "consumer",
+              "start_seconds": 4.7472e-05,
+              "end_seconds": 18.763056406,
+              "duration_seconds": 18.763008934,
+              "exit_code": 0,
+              "tokens": null,
+              "tool_calls": null,
+              "enrollment_completed_seconds": null,
+              "pi_tagged_tool_seconds": null,
+              "pi_tagged_output_bytes": null
+            }
+          ]
+        },
+        {
+          "run": "spark2",
+          "started_at": "2026-09-09T03:17:00.537885+00:00",
+          "finished_at": "2026-09-09T03:17:54.129612+00:00",
+          "condition": null,
+          "model": "gpt-5.3-codex-spark",
+          "effort": "xhigh",
+          "fixture_version": "seven-seams/v1",
+          "pi_enabled": true,
+          "pi_backend_sha256": "99ca17a18d28c214a027bab852b0d758d78115318933090a002b22a93bc40923",
+          "pi_workflow_sha256": "aa68ca28c2cd27014265ff5e315b461c1a83ffd7c0148f0d3f839c717a3b0f9a",
+          "plan_sha256": "a599ad81bc29cbbd8b5d54cb6bc84a87da038ff25a42495e31456e10683104ef",
+          "input_hashes": {
+            "producer.txt": "12acf04798e559dd67df2a14d0b99f62f90b91a5ab04add4d7228609c86a9c19",
+            "consumer.txt": "8b2a9469ee1768d6cc28a27a83ba597d5d5f4ccaca74a82bd4b80a9c1f386a53",
+            "recorder.py": "7185c16ff9a45f3a36d432c36c9a784cca88d2fd1ef74a641e81a825f0e35d67",
+            "check_contract.py": "7f7ddf4e46bf22bcb079344c5208b9af8adbcfc15b6da4c2955c70d9b162e038"
+          },
+          "score": 3,
+          "out_of": 7,
+          "producer_seams": 7,
+          "consumer_seams": 3,
+          "failed_seams": [
+            "prices",
+            "weights",
+            "discounts",
+            "contacts"
+          ],
+          "accepted": false,
+          "worker_window_seconds": 53.591732898,
+          "aggregate_worker_seconds": 67.173228801,
+          "project_seconds": null,
+          "setup_seconds": null,
+          "archive_seconds": null,
+          "verification_seconds": null,
+          "human_interventions": null,
+          "concurrency_factor": 1.2534252051309736,
+          "aggregate_tokens": null,
+          "workers": [
+            {
+              "role": "producer",
+              "start_seconds": 0.0,
+              "end_seconds": 53.591732898,
+              "duration_seconds": 53.591732898,
+              "exit_code": 0,
+              "tokens": null,
+              "tool_calls": null,
+              "enrollment_completed_seconds": null,
+              "pi_tagged_tool_seconds": null,
+              "pi_tagged_output_bytes": null
+            },
+            {
+              "role": "consumer",
+              "start_seconds": 0.000299615,
+              "end_seconds": 13.581795518,
+              "duration_seconds": 13.581495903,
+              "exit_code": 0,
+              "tokens": null,
+              "tool_calls": null,
+              "enrollment_completed_seconds": null,
+              "pi_tagged_tool_seconds": null,
+              "pi_tagged_output_bytes": null
+            }
+          ]
+        },
+        {
+          "run": "spark3",
+          "started_at": "2026-09-09T03:17:00.530863+00:00",
+          "finished_at": "2026-09-09T03:17:28.558414+00:00",
+          "condition": null,
+          "model": "gpt-5.3-codex-spark",
+          "effort": "xhigh",
+          "fixture_version": "seven-seams/v1",
+          "pi_enabled": true,
+          "pi_backend_sha256": "99ca17a18d28c214a027bab852b0d758d78115318933090a002b22a93bc40923",
+          "pi_workflow_sha256": "aa68ca28c2cd27014265ff5e315b461c1a83ffd7c0148f0d3f839c717a3b0f9a",
+          "plan_sha256": "b0dd8def00dcc5b54df7ddf7aa6903e75a143b8e2c0f6b4a2ef234479a3da124",
+          "input_hashes": {
+            "producer.txt": "12acf04798e559dd67df2a14d0b99f62f90b91a5ab04add4d7228609c86a9c19",
+            "consumer.txt": "8b2a9469ee1768d6cc28a27a83ba597d5d5f4ccaca74a82bd4b80a9c1f386a53",
+            "recorder.py": "7185c16ff9a45f3a36d432c36c9a784cca88d2fd1ef74a641e81a825f0e35d67",
+            "check_contract.py": "7f7ddf4e46bf22bcb079344c5208b9af8adbcfc15b6da4c2955c70d9b162e038"
+          },
+          "score": 0,
+          "out_of": 7,
+          "producer_seams": 7,
+          "consumer_seams": 0,
+          "failed_seams": [
+            "prices",
+            "stock",
+            "weights",
+            "discounts",
+            "delivery",
+            "contacts",
+            "orders"
+          ],
+          "accepted": false,
+          "worker_window_seconds": 28.027559326,
+          "aggregate_worker_seconds": 47.275514347,
+          "project_seconds": null,
+          "setup_seconds": null,
+          "archive_seconds": null,
+          "verification_seconds": null,
+          "human_interventions": null,
+          "concurrency_factor": 1.6867510223462259,
+          "aggregate_tokens": null,
+          "workers": [
+            {
+              "role": "producer",
+              "start_seconds": 0.000175407,
+              "end_seconds": 28.027559326,
+              "duration_seconds": 28.027383919,
+              "exit_code": 0,
+              "tokens": null,
+              "tool_calls": null,
+              "enrollment_completed_seconds": null,
+              "pi_tagged_tool_seconds": null,
+              "pi_tagged_output_bytes": null
+            },
+            {
+              "role": "consumer",
+              "start_seconds": 0.0,
+              "end_seconds": 19.248130428,
+              "duration_seconds": 19.248130428,
+              "exit_code": 0,
+              "tokens": null,
+              "tool_calls": null,
+              "enrollment_completed_seconds": null,
+              "pi_tagged_tool_seconds": null,
+              "pi_tagged_output_bytes": null
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "20260909-seven-seams-luna-spark-v2",
+      "started_at": "2026-09-09T03:11:06.822935+00:00",
+      "last_trial_started_at": "2026-09-09T03:11:06.860808+00:00",
+      "sources_sha256": {
+        "results.json": "20a0ac0872b9918904c13e78ac5c5580c74c4bffc785139ea8ab5414e40ee417",
+        "observations.json": "fb4fdbf44ab939caa7e98af5aa4d30948aeec2464d3d0031edc5bc15a8ed4d57"
+      },
+      "trials": [
+        {
+          "run": "luna1",
+          "started_at": "2026-09-09T03:11:06.860808+00:00",
+          "finished_at": "2026-09-09T03:13:24.020567+00:00",
+          "condition": null,
+          "model": "gpt-5.6-luna",
+          "effort": "medium",
+          "fixture_version": "seven-seams/v1",
+          "pi_enabled": true,
+          "pi_backend_sha256": "99ca17a18d28c214a027bab852b0d758d78115318933090a002b22a93bc40923",
+          "pi_workflow_sha256": "aa68ca28c2cd27014265ff5e315b461c1a83ffd7c0148f0d3f839c717a3b0f9a",
+          "plan_sha256": "cb2de913e4b60045a01de438f3dc12362ca1aa896c06ed2d63bee6dafefe39ab",
+          "input_hashes": {
+            "producer.txt": "12acf04798e559dd67df2a14d0b99f62f90b91a5ab04add4d7228609c86a9c19",
+            "consumer.txt": "8b2a9469ee1768d6cc28a27a83ba597d5d5f4ccaca74a82bd4b80a9c1f386a53",
+            "recorder.py": "7185c16ff9a45f3a36d432c36c9a784cca88d2fd1ef74a641e81a825f0e35d67",
+            "check_contract.py": "7f7ddf4e46bf22bcb079344c5208b9af8adbcfc15b6da4c2955c70d9b162e038"
+          },
+          "score": 7,
+          "out_of": 7,
+          "producer_seams": 7,
+          "consumer_seams": 7,
+          "failed_seams": [],
+          "accepted": true,
+          "worker_window_seconds": 137.159763579,
+          "aggregate_worker_seconds": 225.675865251,
+          "project_seconds": null,
+          "setup_seconds": null,
+          "archive_seconds": null,
+          "verification_seconds": null,
+          "human_interventions": null,
+          "concurrency_factor": 1.645350351752519,
+          "aggregate_tokens": null,
+          "workers": [
+            {
+              "role": "producer",
+              "start_seconds": 0.0,
+              "end_seconds": 137.159763579,
+              "duration_seconds": 137.159763579,
+              "exit_code": 0,
+              "tokens": null,
+              "tool_calls": null,
+              "enrollment_completed_seconds": null,
+              "pi_tagged_tool_seconds": null,
+              "pi_tagged_output_bytes": null
+            },
+            {
+              "role": "consumer",
+              "start_seconds": 0.000266319,
+              "end_seconds": 88.516367991,
+              "duration_seconds": 88.516101672,
+              "exit_code": 0,
+              "tokens": null,
+              "tool_calls": null,
+              "enrollment_completed_seconds": null,
+              "pi_tagged_tool_seconds": null,
+              "pi_tagged_output_bytes": null
+            }
+          ]
+        },
+        {
+          "run": "luna3",
+          "started_at": "2026-09-09T03:11:06.856954+00:00",
+          "finished_at": "2026-09-09T03:12:48.106413+00:00",
+          "condition": null,
+          "model": "gpt-5.6-luna",
+          "effort": "medium",
+          "fixture_version": "seven-seams/v1",
+          "pi_enabled": true,
+          "pi_backend_sha256": "99ca17a18d28c214a027bab852b0d758d78115318933090a002b22a93bc40923",
+          "pi_workflow_sha256": "aa68ca28c2cd27014265ff5e315b461c1a83ffd7c0148f0d3f839c717a3b0f9a",
+          "plan_sha256": "b94e0979f8c7e038b48219f37ada6f0a0c95b4c4741b2addda49f609c5755bb2",
+          "input_hashes": {
+            "producer.txt": "12acf04798e559dd67df2a14d0b99f62f90b91a5ab04add4d7228609c86a9c19",
+            "consumer.txt": "8b2a9469ee1768d6cc28a27a83ba597d5d5f4ccaca74a82bd4b80a9c1f386a53",
+            "recorder.py": "7185c16ff9a45f3a36d432c36c9a784cca88d2fd1ef74a641e81a825f0e35d67",
+            "check_contract.py": "7f7ddf4e46bf22bcb079344c5208b9af8adbcfc15b6da4c2955c70d9b162e038"
+          },
+          "score": 7,
+          "out_of": 7,
+          "producer_seams": 7,
+          "consumer_seams": 7,
+          "failed_seams": [],
+          "accepted": true,
+          "worker_window_seconds": 101.249467642,
+          "aggregate_worker_seconds": 184.451013811,
+          "project_seconds": null,
+          "setup_seconds": null,
+          "archive_seconds": null,
+          "verification_seconds": null,
+          "human_interventions": null,
+          "concurrency_factor": 1.8217479864998973,
+          "aggregate_tokens": null,
+          "workers": [
+            {
+              "role": "producer",
+              "start_seconds": 0.0,
+              "end_seconds": 101.249467642,
+              "duration_seconds": 101.249467642,
+              "exit_code": 0,
+              "tokens": null,
+              "tool_calls": null,
+              "enrollment_completed_seconds": null,
+              "pi_tagged_tool_seconds": null,
+              "pi_tagged_output_bytes": null
+            },
+            {
+              "role": "consumer",
+              "start_seconds": 4.9632e-05,
+              "end_seconds": 83.201595801,
+              "duration_seconds": 83.201546169,
+              "exit_code": 0,
+              "tokens": null,
+              "tool_calls": null,
+              "enrollment_completed_seconds": null,
+              "pi_tagged_tool_seconds": null,
+              "pi_tagged_output_bytes": null
+            }
+          ]
+        },
+        {
+          "run": "luna2",
+          "started_at": "2026-09-09T03:11:06.856880+00:00",
+          "finished_at": "2026-09-09T03:13:47.974391+00:00",
+          "condition": null,
+          "model": "gpt-5.6-luna",
+          "effort": "medium",
+          "fixture_version": "seven-seams/v1",
+          "pi_enabled": true,
+          "pi_backend_sha256": "99ca17a18d28c214a027bab852b0d758d78115318933090a002b22a93bc40923",
+          "pi_workflow_sha256": "aa68ca28c2cd27014265ff5e315b461c1a83ffd7c0148f0d3f839c717a3b0f9a",
+          "plan_sha256": "93c25e7a6c0929a9d46b24a4dc0a8de91e1fae6ba03b50a973215a86c4b2745f",
+          "input_hashes": {
+            "producer.txt": "12acf04798e559dd67df2a14d0b99f62f90b91a5ab04add4d7228609c86a9c19",
+            "consumer.txt": "8b2a9469ee1768d6cc28a27a83ba597d5d5f4ccaca74a82bd4b80a9c1f386a53",
+            "recorder.py": "7185c16ff9a45f3a36d432c36c9a784cca88d2fd1ef74a641e81a825f0e35d67",
+            "check_contract.py": "7f7ddf4e46bf22bcb079344c5208b9af8adbcfc15b6da4c2955c70d9b162e038"
+          },
+          "score": 7,
+          "out_of": 7,
+          "producer_seams": 7,
+          "consumer_seams": 7,
+          "failed_seams": [],
+          "accepted": true,
+          "worker_window_seconds": 161.117516863,
+          "aggregate_worker_seconds": 304.456288447,
+          "project_seconds": null,
+          "setup_seconds": null,
+          "archive_seconds": null,
+          "verification_seconds": null,
+          "human_interventions": null,
+          "concurrency_factor": 1.8896535545907314,
+          "aggregate_tokens": null,
+          "workers": [
+            {
+              "role": "producer",
+              "start_seconds": 0.0,
+              "end_seconds": 161.117516863,
+              "duration_seconds": 161.117516863,
+              "exit_code": 0,
+              "tokens": null,
+              "tool_calls": null,
+              "enrollment_completed_seconds": null,
+              "pi_tagged_tool_seconds": null,
+              "pi_tagged_output_bytes": null
+            },
+            {
+              "role": "consumer",
+              "start_seconds": 0.000379967,
+              "end_seconds": 143.339151551,
+              "duration_seconds": 143.338771584,
+              "exit_code": 0,
+              "tokens": null,
+              "tool_calls": null,
+              "enrollment_completed_seconds": null,
+              "pi_tagged_tool_seconds": null,
+              "pi_tagged_output_bytes": null
+            }
+          ]
+        },
+        {
+          "run": "spark3",
+          "started_at": "2026-09-09T03:11:06.840635+00:00",
+          "finished_at": "2026-09-09T03:11:33.576855+00:00",
+          "condition": null,
+          "model": "gpt-5.3-codex-spark",
+          "effort": "medium",
+          "fixture_version": "seven-seams/v1",
+          "pi_enabled": true,
+          "pi_backend_sha256": "99ca17a18d28c214a027bab852b0d758d78115318933090a002b22a93bc40923",
+          "pi_workflow_sha256": "aa68ca28c2cd27014265ff5e315b461c1a83ffd7c0148f0d3f839c717a3b0f9a",
+          "plan_sha256": "396b412fbfa6acecfd46da60023d42a99fe9e29d3ee7e9b8f887992fcb73142b",
+          "input_hashes": {
+            "producer.txt": "12acf04798e559dd67df2a14d0b99f62f90b91a5ab04add4d7228609c86a9c19",
+            "consumer.txt": "8b2a9469ee1768d6cc28a27a83ba597d5d5f4ccaca74a82bd4b80a9c1f386a53",
+            "recorder.py": "7185c16ff9a45f3a36d432c36c9a784cca88d2fd1ef74a641e81a825f0e35d67",
+            "check_contract.py": "7f7ddf4e46bf22bcb079344c5208b9af8adbcfc15b6da4c2955c70d9b162e038"
+          },
+          "score": 0,
+          "out_of": 7,
+          "producer_seams": 7,
+          "consumer_seams": 0,
+          "failed_seams": [
+            "prices",
+            "stock",
+            "weights",
+            "discounts",
+            "delivery",
+            "contacts",
+            "orders"
+          ],
+          "accepted": false,
+          "worker_window_seconds": 26.736230183,
+          "aggregate_worker_seconds": 49.269399307,
+          "project_seconds": null,
+          "setup_seconds": null,
+          "archive_seconds": null,
+          "verification_seconds": null,
+          "human_interventions": null,
+          "concurrency_factor": 1.842795299478216,
+          "aggregate_tokens": null,
+          "workers": [
+            {
+              "role": "producer",
+              "start_seconds": 0.0,
+              "end_seconds": 26.736230183,
+              "duration_seconds": 26.736230183,
+              "exit_code": 0,
+              "tokens": null,
+              "tool_calls": null,
+              "enrollment_completed_seconds": null,
+              "pi_tagged_tool_seconds": null,
+              "pi_tagged_output_bytes": null
+            },
+            {
+              "role": "consumer",
+              "start_seconds": 0.000259775,
+              "end_seconds": 22.533428899,
+              "duration_seconds": 22.533169124,
+              "exit_code": 0,
+              "tokens": null,
+              "tool_calls": null,
+              "enrollment_completed_seconds": null,
+              "pi_tagged_tool_seconds": null,
+              "pi_tagged_output_bytes": null
+            }
+          ]
+        },
+        {
+          "run": "spark2",
+          "started_at": "2026-09-09T03:11:06.836168+00:00",
+          "finished_at": "2026-09-09T03:11:48.594534+00:00",
+          "condition": null,
+          "model": "gpt-5.3-codex-spark",
+          "effort": "medium",
+          "fixture_version": "seven-seams/v1",
+          "pi_enabled": true,
+          "pi_backend_sha256": "99ca17a18d28c214a027bab852b0d758d78115318933090a002b22a93bc40923",
+          "pi_workflow_sha256": "aa68ca28c2cd27014265ff5e315b461c1a83ffd7c0148f0d3f839c717a3b0f9a",
+          "plan_sha256": "bd702cc840b799c46a38e8e13e50eb13d5e96a335f85169d3ef60e2373a1c225",
+          "input_hashes": {
+            "producer.txt": "12acf04798e559dd67df2a14d0b99f62f90b91a5ab04add4d7228609c86a9c19",
+            "consumer.txt": "8b2a9469ee1768d6cc28a27a83ba597d5d5f4ccaca74a82bd4b80a9c1f386a53",
+            "recorder.py": "7185c16ff9a45f3a36d432c36c9a784cca88d2fd1ef74a641e81a825f0e35d67",
+            "check_contract.py": "7f7ddf4e46bf22bcb079344c5208b9af8adbcfc15b6da4c2955c70d9b162e038"
+          },
+          "score": 3,
+          "out_of": 7,
+          "producer_seams": 7,
+          "consumer_seams": 3,
+          "failed_seams": [
+            "prices",
+            "weights",
+            "discounts",
+            "contacts"
+          ],
+          "accepted": false,
+          "worker_window_seconds": 41.758372884,
+          "aggregate_worker_seconds": 65.54109462400001,
+          "project_seconds": null,
+          "setup_seconds": null,
+          "archive_seconds": null,
+          "verification_seconds": null,
+          "human_interventions": null,
+          "concurrency_factor": 1.5695318111667256,
+          "aggregate_tokens": null,
+          "workers": [
+            {
+              "role": "producer",
+              "start_seconds": 0.0,
+              "end_seconds": 41.758372884,
+              "duration_seconds": 41.758372884,
+              "exit_code": 0,
+              "tokens": null,
+              "tool_calls": null,
+              "enrollment_completed_seconds": null,
+              "pi_tagged_tool_seconds": null,
+              "pi_tagged_output_bytes": null
+            },
+            {
+              "role": "consumer",
+              "start_seconds": 5.3808e-05,
+              "end_seconds": 23.782775548,
+              "duration_seconds": 23.78272174,
+              "exit_code": 0,
+              "tokens": null,
+              "tool_calls": null,
+              "enrollment_completed_seconds": null,
+              "pi_tagged_tool_seconds": null,
+              "pi_tagged_output_bytes": null
+            }
+          ]
+        },
+        {
+          "run": "spark1",
+          "started_at": "2026-09-09T03:11:06.822935+00:00",
+          "finished_at": "2026-09-09T03:11:36.374887+00:00",
+          "condition": null,
+          "model": "gpt-5.3-codex-spark",
+          "effort": "medium",
+          "fixture_version": "seven-seams/v1",
+          "pi_enabled": true,
+          "pi_backend_sha256": "99ca17a18d28c214a027bab852b0d758d78115318933090a002b22a93bc40923",
+          "pi_workflow_sha256": "aa68ca28c2cd27014265ff5e315b461c1a83ffd7c0148f0d3f839c717a3b0f9a",
+          "plan_sha256": "42da3ae422f58f49403619a2b9e970bbecca245a6670d9b807ca3faaea8c150a",
+          "input_hashes": {
+            "producer.txt": "12acf04798e559dd67df2a14d0b99f62f90b91a5ab04add4d7228609c86a9c19",
+            "consumer.txt": "8b2a9469ee1768d6cc28a27a83ba597d5d5f4ccaca74a82bd4b80a9c1f386a53",
+            "recorder.py": "7185c16ff9a45f3a36d432c36c9a784cca88d2fd1ef74a641e81a825f0e35d67",
+            "check_contract.py": "7f7ddf4e46bf22bcb079344c5208b9af8adbcfc15b6da4c2955c70d9b162e038"
+          },
+          "score": 0,
+          "out_of": 7,
+          "producer_seams": 7,
+          "consumer_seams": 0,
+          "failed_seams": [
+            "prices",
+            "stock",
+            "weights",
+            "discounts",
+            "delivery",
+            "contacts",
+            "orders"
+          ],
+          "accepted": false,
+          "worker_window_seconds": 29.551960602,
+          "aggregate_worker_seconds": 55.497489765,
+          "project_seconds": null,
+          "setup_seconds": null,
+          "archive_seconds": null,
+          "verification_seconds": null,
+          "human_interventions": null,
+          "concurrency_factor": 1.877963039827688,
+          "aggregate_tokens": null,
+          "workers": [
+            {
+              "role": "producer",
+              "start_seconds": 0.0,
+              "end_seconds": 25.945632523,
+              "duration_seconds": 25.945632523,
+              "exit_code": 0,
+              "tokens": null,
+              "tool_calls": null,
+              "enrollment_completed_seconds": null,
+              "pi_tagged_tool_seconds": null,
+              "pi_tagged_output_bytes": null
+            },
+            {
+              "role": "consumer",
+              "start_seconds": 0.00010336,
+              "end_seconds": 29.551960602,
+              "duration_seconds": 29.551857242,
+              "exit_code": 0,
+              "tokens": null,
+              "tool_calls": null,
+              "enrollment_completed_seconds": null,
+              "pi_tagged_tool_seconds": null,
+              "pi_tagged_output_bytes": null
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "20260909-seven-seams-luna-spark-v1",
+      "started_at": "2026-09-09T02:52:51.495408+00:00",
+      "last_trial_started_at": "2026-09-09T02:52:51.526439+00:00",
+      "sources_sha256": {
+        "results.json": "fcd442473d063ed0a7ca5c98c64fe1594a42dd0e8ffef900db0ce93512e30841"
+      },
+      "trials": [
+        {
+          "run": "luna1",
+          "started_at": "2026-09-09T02:52:51.526439+00:00",
+          "finished_at": "2026-09-09T02:54:45.292620+00:00",
+          "condition": null,
+          "model": "gpt-5.6-luna",
+          "effort": "medium",
+          "fixture_version": "seven-seams/v1",
+          "pi_enabled": true,
+          "pi_backend_sha256": "7b2a368931cee769b3a62464b966a07449f3febea6f672e3edacc4a97c4a489f",
+          "pi_workflow_sha256": "51939ac946687a9ef1f9739abb2d7adbf387ae7f4f8fe8b48659ca0826cd00e5",
+          "plan_sha256": "7d4a6e0519987aabe5a2c0bced2fa195155ec000422b55d51a89114c2ee692ef",
+          "input_hashes": {
+            "producer.txt": "12acf04798e559dd67df2a14d0b99f62f90b91a5ab04add4d7228609c86a9c19",
+            "consumer.txt": "8b2a9469ee1768d6cc28a27a83ba597d5d5f4ccaca74a82bd4b80a9c1f386a53",
+            "recorder.py": "7185c16ff9a45f3a36d432c36c9a784cca88d2fd1ef74a641e81a825f0e35d67",
+            "check_contract.py": "7f7ddf4e46bf22bcb079344c5208b9af8adbcfc15b6da4c2955c70d9b162e038"
+          },
+          "score": 7,
+          "out_of": 7,
+          "producer_seams": 7,
+          "consumer_seams": 7,
+          "failed_seams": [],
+          "accepted": true,
+          "worker_window_seconds": 113.76619166,
+          "aggregate_worker_seconds": 203.904693584,
+          "project_seconds": null,
+          "setup_seconds": null,
+          "archive_seconds": null,
+          "verification_seconds": null,
+          "human_interventions": null,
+          "concurrency_factor": 1.7923136092433034,
+          "aggregate_tokens": null,
+          "workers": [
+            {
+              "role": "producer",
+              "start_seconds": 2.92e-05,
+              "end_seconds": 90.138531124,
+              "duration_seconds": 90.138501924,
+              "exit_code": 0,
+              "tokens": null,
+              "tool_calls": null,
+              "enrollment_completed_seconds": null,
+              "pi_tagged_tool_seconds": null,
+              "pi_tagged_output_bytes": null
+            },
+            {
+              "role": "consumer",
+              "start_seconds": 0.0,
+              "end_seconds": 113.76619166,
+              "duration_seconds": 113.76619166,
+              "exit_code": 0,
+              "tokens": null,
+              "tool_calls": null,
+              "enrollment_completed_seconds": null,
+              "pi_tagged_tool_seconds": null,
+              "pi_tagged_output_bytes": null
+            }
+          ]
+        },
+        {
+          "run": "luna3",
+          "started_at": "2026-09-09T02:52:51.526287+00:00",
+          "finished_at": "2026-09-09T02:54:25.671472+00:00",
+          "condition": null,
+          "model": "gpt-5.6-luna",
+          "effort": "medium",
+          "fixture_version": "seven-seams/v1",
+          "pi_enabled": true,
+          "pi_backend_sha256": "7b2a368931cee769b3a62464b966a07449f3febea6f672e3edacc4a97c4a489f",
+          "pi_workflow_sha256": "51939ac946687a9ef1f9739abb2d7adbf387ae7f4f8fe8b48659ca0826cd00e5",
+          "plan_sha256": "7a45d11dc479dab908fef58ccc2ecb7eacd988647d96f34d60bfcb37db60f9d1",
+          "input_hashes": {
+            "producer.txt": "12acf04798e559dd67df2a14d0b99f62f90b91a5ab04add4d7228609c86a9c19",
+            "consumer.txt": "8b2a9469ee1768d6cc28a27a83ba597d5d5f4ccaca74a82bd4b80a9c1f386a53",
+            "recorder.py": "7185c16ff9a45f3a36d432c36c9a784cca88d2fd1ef74a641e81a825f0e35d67",
+            "check_contract.py": "7f7ddf4e46bf22bcb079344c5208b9af8adbcfc15b6da4c2955c70d9b162e038"
+          },
+          "score": 7,
+          "out_of": 7,
+          "producer_seams": 7,
+          "consumer_seams": 7,
+          "failed_seams": [],
+          "accepted": true,
+          "worker_window_seconds": 94.145192797,
+          "aggregate_worker_seconds": 160.285082026,
+          "project_seconds": null,
+          "setup_seconds": null,
+          "archive_seconds": null,
+          "verification_seconds": null,
+          "human_interventions": null,
+          "concurrency_factor": 1.7025307109584844,
+          "aggregate_tokens": null,
+          "workers": [
+            {
+              "role": "producer",
+              "start_seconds": 0.0,
+              "end_seconds": 66.140013612,
+              "duration_seconds": 66.140013612,
+              "exit_code": 0,
+              "tokens": null,
+              "tool_calls": null,
+              "enrollment_completed_seconds": null,
+              "pi_tagged_tool_seconds": null,
+              "pi_tagged_output_bytes": null
+            },
+            {
+              "role": "consumer",
+              "start_seconds": 0.000124383,
+              "end_seconds": 94.145192797,
+              "duration_seconds": 94.145068414,
+              "exit_code": 0,
+              "tokens": null,
+              "tool_calls": null,
+              "enrollment_completed_seconds": null,
+              "pi_tagged_tool_seconds": null,
+              "pi_tagged_output_bytes": null
+            }
+          ]
+        },
+        {
+          "run": "spark2",
+          "started_at": "2026-09-09T02:52:51.524001+00:00",
+          "finished_at": "2026-09-09T02:53:38.182611+00:00",
+          "condition": null,
+          "model": "gpt-5.3-codex-spark",
+          "effort": "medium",
+          "fixture_version": "seven-seams/v1",
+          "pi_enabled": true,
+          "pi_backend_sha256": "7b2a368931cee769b3a62464b966a07449f3febea6f672e3edacc4a97c4a489f",
+          "pi_workflow_sha256": "51939ac946687a9ef1f9739abb2d7adbf387ae7f4f8fe8b48659ca0826cd00e5",
+          "plan_sha256": "c6865bacf83aeed1e2f613911826e075627b845e12b2e304cf9e88ba257b76e0",
+          "input_hashes": {
+            "producer.txt": "12acf04798e559dd67df2a14d0b99f62f90b91a5ab04add4d7228609c86a9c19",
+            "consumer.txt": "8b2a9469ee1768d6cc28a27a83ba597d5d5f4ccaca74a82bd4b80a9c1f386a53",
+            "recorder.py": "7185c16ff9a45f3a36d432c36c9a784cca88d2fd1ef74a641e81a825f0e35d67",
+            "check_contract.py": "7f7ddf4e46bf22bcb079344c5208b9af8adbcfc15b6da4c2955c70d9b162e038"
+          },
+          "score": 0,
+          "out_of": 7,
+          "producer_seams": 7,
+          "consumer_seams": 0,
+          "failed_seams": [
+            "prices",
+            "stock",
+            "weights",
+            "discounts",
+            "delivery",
+            "contacts",
+            "orders"
+          ],
+          "accepted": false,
+          "worker_window_seconds": 46.658621156,
+          "aggregate_worker_seconds": 88.505840119,
+          "project_seconds": null,
+          "setup_seconds": null,
+          "archive_seconds": null,
+          "verification_seconds": null,
+          "human_interventions": null,
+          "concurrency_factor": 1.8968807462845205,
+          "aggregate_tokens": null,
+          "workers": [
+            {
+              "role": "producer",
+              "start_seconds": 0.0,
+              "end_seconds": 46.658621156,
+              "duration_seconds": 46.658621156,
+              "exit_code": 0,
+              "tokens": null,
+              "tool_calls": null,
+              "enrollment_completed_seconds": null,
+              "pi_tagged_tool_seconds": null,
+              "pi_tagged_output_bytes": null
+            },
+            {
+              "role": "consumer",
+              "start_seconds": 0.000326127,
+              "end_seconds": 41.84754509,
+              "duration_seconds": 41.847218963,
+              "exit_code": 0,
+              "tokens": null,
+              "tool_calls": null,
+              "enrollment_completed_seconds": null,
+              "pi_tagged_tool_seconds": null,
+              "pi_tagged_output_bytes": null
+            }
+          ]
+        },
+        {
+          "run": "luna2",
+          "started_at": "2026-09-09T02:52:51.512393+00:00",
+          "finished_at": "2026-09-09T02:54:27.664637+00:00",
+          "condition": null,
+          "model": "gpt-5.6-luna",
+          "effort": "medium",
+          "fixture_version": "seven-seams/v1",
+          "pi_enabled": true,
+          "pi_backend_sha256": "7b2a368931cee769b3a62464b966a07449f3febea6f672e3edacc4a97c4a489f",
+          "pi_workflow_sha256": "51939ac946687a9ef1f9739abb2d7adbf387ae7f4f8fe8b48659ca0826cd00e5",
+          "plan_sha256": "c379df61ae9330a95dde291fe50bfca5e8bf3f4713ff3edf1484604c0281bd02",
+          "input_hashes": {
+            "producer.txt": "12acf04798e559dd67df2a14d0b99f62f90b91a5ab04add4d7228609c86a9c19",
+            "consumer.txt": "8b2a9469ee1768d6cc28a27a83ba597d5d5f4ccaca74a82bd4b80a9c1f386a53",
+            "recorder.py": "7185c16ff9a45f3a36d432c36c9a784cca88d2fd1ef74a641e81a825f0e35d67",
+            "check_contract.py": "7f7ddf4e46bf22bcb079344c5208b9af8adbcfc15b6da4c2955c70d9b162e038"
+          },
+          "score": 7,
+          "out_of": 7,
+          "producer_seams": 7,
+          "consumer_seams": 7,
+          "failed_seams": [],
+          "accepted": true,
+          "worker_window_seconds": 96.152257623,
+          "aggregate_worker_seconds": 183.217482432,
+          "project_seconds": null,
+          "setup_seconds": null,
+          "archive_seconds": null,
+          "verification_seconds": null,
+          "human_interventions": null,
+          "concurrency_factor": 1.905493297415553,
+          "aggregate_tokens": null,
+          "workers": [
+            {
+              "role": "producer",
+              "start_seconds": 0.0,
+              "end_seconds": 87.065472777,
+              "duration_seconds": 87.065472777,
+              "exit_code": 0,
+              "tokens": null,
+              "tool_calls": null,
+              "enrollment_completed_seconds": null,
+              "pi_tagged_tool_seconds": null,
+              "pi_tagged_output_bytes": null
+            },
+            {
+              "role": "consumer",
+              "start_seconds": 0.000247968,
+              "end_seconds": 96.152257623,
+              "duration_seconds": 96.152009655,
+              "exit_code": 0,
+              "tokens": null,
+              "tool_calls": null,
+              "enrollment_completed_seconds": null,
+              "pi_tagged_tool_seconds": null,
+              "pi_tagged_output_bytes": null
+            }
+          ]
+        },
+        {
+          "run": "spark3",
+          "started_at": "2026-09-09T02:52:51.508876+00:00",
+          "finished_at": "2026-09-09T02:53:34.388112+00:00",
+          "condition": null,
+          "model": "gpt-5.3-codex-spark",
+          "effort": "medium",
+          "fixture_version": "seven-seams/v1",
+          "pi_enabled": true,
+          "pi_backend_sha256": "7b2a368931cee769b3a62464b966a07449f3febea6f672e3edacc4a97c4a489f",
+          "pi_workflow_sha256": "51939ac946687a9ef1f9739abb2d7adbf387ae7f4f8fe8b48659ca0826cd00e5",
+          "plan_sha256": "0d5315be65525adc7dcca17075daa4a57e6abc955b1f9af42ba9a164837e4a1d",
+          "input_hashes": {
+            "producer.txt": "12acf04798e559dd67df2a14d0b99f62f90b91a5ab04add4d7228609c86a9c19",
+            "consumer.txt": "8b2a9469ee1768d6cc28a27a83ba597d5d5f4ccaca74a82bd4b80a9c1f386a53",
+            "recorder.py": "7185c16ff9a45f3a36d432c36c9a784cca88d2fd1ef74a641e81a825f0e35d67",
+            "check_contract.py": "7f7ddf4e46bf22bcb079344c5208b9af8adbcfc15b6da4c2955c70d9b162e038"
+          },
+          "score": 3,
+          "out_of": 7,
+          "producer_seams": 7,
+          "consumer_seams": 3,
+          "failed_seams": [
+            "prices",
+            "weights",
+            "discounts",
+            "contacts"
+          ],
+          "accepted": false,
+          "worker_window_seconds": 42.879243073,
+          "aggregate_worker_seconds": 55.577054993000004,
+          "project_seconds": null,
+          "setup_seconds": null,
+          "archive_seconds": null,
+          "verification_seconds": null,
+          "human_interventions": null,
+          "concurrency_factor": 1.296129572492279,
+          "aggregate_tokens": null,
+          "workers": [
+            {
+              "role": "producer",
+              "start_seconds": 3.8592e-05,
+              "end_seconds": 42.879243073,
+              "duration_seconds": 42.879204481,
+              "exit_code": 0,
+              "tokens": null,
+              "tool_calls": null,
+              "enrollment_completed_seconds": null,
+              "pi_tagged_tool_seconds": null,
+              "pi_tagged_output_bytes": null
+            },
+            {
+              "role": "consumer",
+              "start_seconds": 0.0,
+              "end_seconds": 12.697850512,
+              "duration_seconds": 12.697850512,
+              "exit_code": 0,
+              "tokens": null,
+              "tool_calls": null,
+              "enrollment_completed_seconds": null,
+              "pi_tagged_tool_seconds": null,
+              "pi_tagged_output_bytes": null
+            }
+          ]
+        },
+        {
+          "run": "spark1",
+          "started_at": "2026-09-09T02:52:51.495408+00:00",
+          "finished_at": "2026-09-09T02:53:19.608102+00:00",
+          "condition": null,
+          "model": "gpt-5.3-codex-spark",
+          "effort": "medium",
+          "fixture_version": "seven-seams/v1",
+          "pi_enabled": true,
+          "pi_backend_sha256": "7b2a368931cee769b3a62464b966a07449f3febea6f672e3edacc4a97c4a489f",
+          "pi_workflow_sha256": "51939ac946687a9ef1f9739abb2d7adbf387ae7f4f8fe8b48659ca0826cd00e5",
+          "plan_sha256": "3f3517762b959e6def99fffdfc855564651ed6b5f79c905b94d53014add22fbc",
+          "input_hashes": {
+            "producer.txt": "12acf04798e559dd67df2a14d0b99f62f90b91a5ab04add4d7228609c86a9c19",
+            "consumer.txt": "8b2a9469ee1768d6cc28a27a83ba597d5d5f4ccaca74a82bd4b80a9c1f386a53",
+            "recorder.py": "7185c16ff9a45f3a36d432c36c9a784cca88d2fd1ef74a641e81a825f0e35d67",
+            "check_contract.py": "7f7ddf4e46bf22bcb079344c5208b9af8adbcfc15b6da4c2955c70d9b162e038"
+          },
+          "score": 0,
+          "out_of": 7,
+          "producer_seams": 7,
+          "consumer_seams": 0,
+          "failed_seams": [
+            "prices",
+            "stock",
+            "weights",
+            "discounts",
+            "delivery",
+            "contacts",
+            "orders"
+          ],
+          "accepted": false,
+          "worker_window_seconds": 28.112698594,
+          "aggregate_worker_seconds": 54.320742167000006,
+          "project_seconds": null,
+          "setup_seconds": null,
+          "archive_seconds": null,
+          "verification_seconds": null,
+          "human_interventions": null,
+          "concurrency_factor": 1.9322492995600749,
+          "aggregate_tokens": null,
+          "workers": [
+            {
+              "role": "producer",
+              "start_seconds": 0.0,
+              "end_seconds": 26.208103941,
+              "duration_seconds": 26.208103941,
+              "exit_code": 0,
+              "tokens": null,
+              "tool_calls": null,
+              "enrollment_completed_seconds": null,
+              "pi_tagged_tool_seconds": null,
+              "pi_tagged_output_bytes": null
+            },
+            {
+              "role": "consumer",
+              "start_seconds": 6.0368e-05,
+              "end_seconds": 28.112698594,
+              "duration_seconds": 28.112638226,
+              "exit_code": 0,
+              "tokens": null,
+              "tool_calls": null,
+              "enrollment_completed_seconds": null,
+              "pi_tagged_tool_seconds": null,
+              "pi_tagged_output_bytes": null
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
