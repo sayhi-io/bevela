@@ -30,8 +30,40 @@ Declare `--access edit --touching-path relative/path` for edit scope, or
 and HEAD are observed locally; the workstream's reference checkout may belong to
 another owner. A paused worker need not enroll merely to validate its handoff.
 
-Inspect nearby declarations and route around overlap when practical. Shared paths
-or semantic boundaries are advisory convergence. When coordination is needed, send
+Use nearby context to account for the code/data your change affects. A neighboring
+assignment or path declaration is not a prohibition on repairing your change's
+consequences; respect actual user exclusions, not invented ownership walls.
+Read `integration_context.related_work`, not just active registrations: a related
+task can change a dependency before its worker enrolls. `last_known_workers` retains
+released/expired summaries as declarations, not proof of current activity or success.
+Declare actual files/directories in `--touching-path`; architecture labels belong in
+`--touching-seam`, not invented filesystem paths.
+
+For a contract change, keep `--working` concise and specific about the affected
+symbols/fields/units and their replacements. At handoff include the resulting contract,
+checks and any unresolved consumer impact, not just "done". This is a current work
+summary, not a chat channel. A stable helper can insulate its callers from storage
+changes; direct imports and field/unit assumptions still need reconciliation.
+
+Before claiming completion on overlapping work, use the printed
+`integration_context.refresh` command and inspect current affected imports/callers.
+Initial reads and checks before a peer's relevant edit do not validate the combined
+result. Where execution is authorized, exercise the affected producer and consumer
+together (including module loading); helper-only tests may miss a broken caller.
+If a peer's relevant change is still pending or checks cannot run, state that
+integration is pending/unverified. Do not wait on unrelated work or override an
+explicit restriction on testing; do not present unverified integration as complete.
+
+Ordinary edits need no repair ceremony merely because they share a seam.
+If workers might make competing fixes to a specific break, read
+[repair coordination](../../../docs/REPAIR_COORDINATION.md): one worker accepts a
+path-bounded repair plan and the named peer explicitly acknowledges it. Only the
+agreed repairer edits those paths; independent paths on the same seam stay free.
+Acceptance or a competing claim is not acknowledgment. Check current producer and
+consumer behavior before closure, using the agreed validation scope. Before handoff,
+reconcile the peer's actual result; neither a stale failure report nor leaving a known
+regression for "the other assignment" establishes completion.
+When further coordination is needed, send
 a bounded request through the authorized orchestrator/provider route, preserving
 the affected scope and desired response. Do not create a parallel chat history in
 presence. Renew at meaningful transitions and before the one-hour lease expires.
@@ -43,9 +75,11 @@ by expanding Project Intent.
 
 ## Reporting and successor
 
-Read `report --help`, `report-status --help` and the exact installed `reporting`
-path returned by `project-intent docs` for the packet schema. Submit actual evidence, source
-references, readiness dimensions and the next bounded action. Keep artifact hashes
+For a durable handoff, review, unresolved issue, or a task that explicitly requires
+reporting, use `report` and the installed `reporting` document if its schema is needed.
+Routine self-contained edits do not need a separate report just to end presence;
+summarize the result/checks when releasing enrollment and in the normal task response.
+Durable reports carry actual evidence, source references, readiness and next action. Keep artifact hashes
 and invariant revision assertions explicit; a prose summary alone does not bind
 evidence to every applicable invariant.
 
@@ -60,7 +94,7 @@ source the independent review covered. Include unresolved findings, evidence lim
 environment restrictions and successor instructions. Do not restart completed work
 to make a card look live.
 
-Verify `report-status` and `start` reflect the available report accurately, then
+When a report was submitted, verify its status. Then
 release your registration with `enroll --workstream ID --session OWN-STABLE-ID
 --inactive` (or your original `--codex` selection). Release records the end of
 presence; it does not publish a report or mark durable work complete.

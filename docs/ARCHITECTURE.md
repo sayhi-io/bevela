@@ -77,7 +77,10 @@ occupancy remain unknown: the first adapter supplies requirements, not measureme
 Public/multi-host deployment, federated identity, delegated remote worker authority,
 provider failover, production backup/restore proof, distributed presence transport,
 executable environment integration, autonomous dispatch scheduling, architecture
-inference and generalized acknowledgments remain deferred. The browser has no
+inference and generalized acknowledgments remain deferred. The bounded cooperative
+local repair acknowledgment in [repair coordination](REPAIR_COORDINATION.md) selects
+one volunteer repairer without changing PM ownership or granting execution authority.
+It is not generalized messaging, a filesystem lock, or distributed fencing. The browser has no
 mutation endpoints. Authorized local reporting/provider reconciliation and explicit
 session continuation are described in REPORTING.md and SESSION_CONNECTOR.md; their
 cooperative local-account model is not tenant isolation from hostile local code.
@@ -112,6 +115,14 @@ entries available in its credential-free worker map, not undisclosed global work
 
 `start` provides the actual checkout, applicable intent and nearby local registrations;
 `enroll` publishes the session's selected boundary and reports nearby declared overlap.
+`onboard`, `start` and enrollment also return scoped `integration_context`: related
+task contracts regardless of enrollment, and applicable last-known worker summaries,
+including released/expired observations with explicit status. The read-only refresh
+command preserves the selected scope/configuration/checkout. This is a focused
+projection of existing records, not code-change detection, verified integration,
+automatic notification, a new message store or a completion lock. Workers must
+reconcile current affected imports/callers; another checkout is never an edit target
+merely because it appears here. Missing presence coverage remains unknown.
 Workers must reconcile a different native delegate/reference against the actual user
 assignment. Reference paths can be inspection material and never silently become
 execution locations. Missing durable enrollment is explicit. The opt-in local

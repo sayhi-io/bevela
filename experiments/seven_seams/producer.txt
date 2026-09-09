@@ -1,0 +1,9 @@
+Migrate these seven shop representations, preserving the existing public helpers and their current-data behavior described in README.md:
+
+1. catalog.PRICES: integer cents, tea 1250 and cake 725, while checkout.total still returns dollars.
+2. inventory.STOCK: records containing on_hand and reserved; tea 10/2, cake 5/1. available still returns sellable units.
+3. shipping.WEIGHTS: integer grams, tea 250 and cake 500. parcel_kg still returns kilograms.
+4. promotions.DISCOUNTS: integer basis points, tea 1000 and cake 2000. discounted_total still returns discounted dollar totals.
+5. delivery.LEAD_TIME: integer hours, tea 48 and cake 24. days still returns days.
+6. customers.CONTACTS: records containing email and display_name, ada@example.test/Ada and lin@example.test/Lin. email still returns the address string.
+7. orders.STATUS: strings, P-1 "paid", P-2 "pending", R-3 "refunded". is_paid still returns the correct boolean.

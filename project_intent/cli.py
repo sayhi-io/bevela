@@ -11,9 +11,10 @@ from datetime import timedelta
 from .model import project, utcnow, validate_snapshot, date
 from .runtime import Store, read_json, write_json
 from .server import serve
-from .enrollment import registration, telemetry_path, find_codex_session, SAFE_SESSION
+from .enrollment import registration, telemetry_path, find_codex_session, SAFE_SESSION, read_registrations
 from .worker_context import checkout_identity, relative_paths, local_states, resolve_assignment, discovery, nearby_workers
-from .onboarding import documentation, command_argv, inventory_recovery
+from .onboarding import documentation, command_argv, inventory_recovery, integration_guidance
+from .repairs import status as repair_status, change as repair_change
 
 
 def markdown(snapshot):
@@ -31,7 +32,7 @@ def markdown(snapshot):
 
 def main():
     p=argparse.ArgumentParser(description=__doc__)
-    p.add_argument('command',choices=['serve','export','docs','discover','onboard','task-register','start','presence','enroll','report','report-status','publish-report','provider-list','reconcile','session-attach','session-continue'])
+    p.add_argument('command',choices=['serve','export','docs','discover','onboard','task-register','start','presence','enroll','repair-status','repair-claim','repair-ack','repair-complete','repair-release','report','report-status','publish-report','provider-list','reconcile','session-attach','session-continue'])
     from .session_connector import add_arguments
     add_arguments(p)
     p.add_argument('--input',help='JSON task, report or confirmed reconciliation packet')
@@ -43,6 +44,15 @@ def main():
     p.add_argument('--config');p.add_argument('--port',type=int,default=8290)
     p.add_argument('--scope');p.add_argument('--output');p.add_argument('--snapshot')
     p.add_argument('--workstream');p.add_argument('--directory');p.add_argument('--session')
+    p.add_argument('--seam',help='Exact assignment architectural boundary for a cooperative repair')
+    p.add_argument('--repair-path',action='append',default=[],help='Affected repair path; not an edit permission')
+    p.add_argument('--repair-id',help='Specific existing repair returned by repair-status/claim')
+    p.add_argument('--problem',default='',help='Specific break and expected behavior, not a generic seam name')
+    p.add_argument('--peer-session',action='append',default=[],help='Other affected worker who must acknowledge the repair plan')
+    p.add_argument('--claim-id',help='Current repair token returned to the successful claimant')
+    p.add_argument('--expected-revision',type=int,help='Exact inspected repair plan revision for acknowledgment or reopening')
+    p.add_argument('--check-path',action='append',default=[],help='Explicit source/test file covered by repair validation')
+    p.add_argument('--evidence',default='',help='Actual cross-seam checks/results, asserted by repair owner')
     p.add_argument('--working',default='');p.add_argument('--approaching',action='append',default=[])
     p.add_argument('--avoid',action='append',default=[]);p.add_argument('--inactive',action='store_true')
     p.add_argument('--telemetry-file',help='Explicit own-session Codex rollout file')
@@ -128,8 +138,10 @@ def main():
                 selected_scope=state['id'];view=project([state],[selected_scope])
                 work=next(w for w in view['workstreams'] if w['id']==selected['id'])
                 response['orientation']={'scope':view['scopes'][0],'assignment':work,
+                    'integration_context':integration_guidance(args,state,selected,checkout,session=args.session or (os.environ.get('CODEX_THREAD_ID') if args.codex else None)),
                     'checkout':checkout,
                     'nearby_workers':nearby_workers([state],checkout,[],work['boundaries'],selected_scope),
+                    'repair_coordination':repair_status(entries[selected_scope]['enrollment_directory'],selected_scope,checkout,verify=False),
                     'attention':[a for a in view['attention'] if a.get('workstream') in (None,work['key'])],
                     'convergence':[c for c in view['convergence'] if work['key'] in c['workstreams']],
                     'coverage':'Offline orientation only: last-known durable snapshot plus locally registered leases. No PM mutation or provider credential required.'}
@@ -157,7 +169,15 @@ def main():
     if args.scope and scope!=args.scope:p.error('Snapshot belongs to a different scope')
     matched=next((s for s in states if s['id']==scope),None)
     if matched:matched['snapshot']=snapshot
-    else:states.append({'id':scope,'label':scope,'snapshot':snapshot,'provider_status':'offline'})
+    else:
+        matched={'id':scope,'label':scope,'snapshot':snapshot,'provider_status':'offline'}
+        states.append(matched)
+    if args.directory and args.command in ('start','enroll'):
+        known={r['id'] for r in snapshot['records'] if r['kind']=='workstream'}
+        rows,failed=read_registrations({'directory':args.directory},scope,known,include_telemetry=False)
+        matched['presence']=[r for r,_ in rows]
+        matched['execution']={'status':'partial' if failed else 'observed',
+                              'meaning':'Local cooperative registration leases; no telemetry log read'}
     try:
         _,selected=resolve_assignment([{'id':scope,'snapshot':snapshot}],args.workstream,scope)
         args.workstream=selected['id']
@@ -165,6 +185,19 @@ def main():
         avoid_paths=relative_paths(args.avoid_path or [])
     except ValueError as exc:p.error(str(exc))
     result=project(states,[scope]);work=next(w for w in result['workstreams'] if w['id']==args.workstream)
+    if args.command.startswith('repair-'):
+        try:
+            checkout=checkout_identity(args.checkout or Path.cwd())
+            if args.command=='repair-status':
+                out=repair_status(args.directory,scope,checkout)
+            else:
+                session=args.session or (os.environ.get('CODEX_THREAD_ID') if args.codex else None)
+                out=repair_change(args.directory,snapshot,args.workstream,session,checkout,
+                    args.command.removeprefix('repair-'),args.seam,args.repair_path,
+                    args.claim_id,args.evidence,args.check_path,args.expected_revision,
+                    args.repair_id,args.problem,args.peer_session)
+            print(json.dumps(out,indent=2));return
+        except (OSError,ValueError,KeyError,TypeError,StopIteration) as exc:p.error(str(exc))
     if args.command in ('session-attach','session-continue'):
         from .session_connector import dispatch
         args.scope=scope;args.intent_context=selected
@@ -211,10 +244,12 @@ def main():
                 if len(json.dumps(record).encode())>65536:raise ValueError('Registration exceeds 64 KiB; keep coordination summaries bounded')
                 write_json(file,record)
             print(json.dumps({'scope':scope,'workstream':args.workstream,'session':session,'status':record['status'],
+                'integration_context':integration_guidance(args,next(s for s in states if s['id']==scope),selected,checkout,record['touching_paths'],record['touching_seams']+record['approaching'],session),
                 'expires_at':record['expires_at'],'telemetry':'registered' if record['telemetry'] else 'not-connected',
                 'checkout':checkout,'access':record['access'],'touching_paths':record['touching_paths'],'touching_seams':record['touching_seams'],
                 'scope_coverage':'Declared paths supplied' if record['touching_paths'] else 'Paths unspecified; do not infer a narrow edit boundary',
                 'nearby_workers':[w for w in nearby_workers(states,checkout,record['touching_paths'],record['touching_seams']+record['approaching'],scope) if w['session']!=session],
+                'repair_coordination':repair_status(args.directory,scope,checkout,verify=False),
                 'reference_warning':'Workstream source reference differs from execution checkout; it may be inspection material, not an edit target.' if checkout and work.get('source_checkout') and str(Path(work['source_checkout']).resolve())!=checkout['root'] else None,
                 'meaning':'Local registration only; observer must watch this scope directory. No PM assignment or execution authority granted.'},indent=2))
         except (OSError,ValueError,KeyError,TypeError,AttributeError) as exc:p.error(str(exc))
@@ -223,7 +258,9 @@ def main():
         try:checkout=checkout_identity(args.checkout or Path.cwd())
         except (ValueError,OSError):checkout=None
         print(json.dumps({'contract':result['contract'],'scope':result['scopes'][0],'assignment':work,
+            'integration_context':integration_guidance(args,next(s for s in states if s['id']==scope),selected,checkout,touching,(args.touching_seam or [])+args.approaching,args.session or (os.environ.get('CODEX_THREAD_ID') if args.codex else None)),
             'checkout':checkout,'nearby_workers':nearby_workers(states,checkout,touching,(args.touching_seam or [])+args.approaching+work['boundaries'],scope),
+            'repair_coordination':repair_status(args.directory,scope,checkout,verify=False),
             'attention':[a for a in result['attention'] if a.get('workstream') in (None,work['key'])],
             'convergence':[c for c in result['convergence'] if work['key'] in c['workstreams']],
             'coverage':'Offline orientation only: last-known durable snapshot plus locally registered leases. Checkout is observed only here; paths/seams are declarations, not detected edits or permissions. No remote calls.'},indent=2))

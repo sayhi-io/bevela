@@ -108,8 +108,51 @@ def nearby_workers(states,checkout,touching,seams,scope=None):
             paths=sorted({p for p in touching for q in worker.get('touching_paths',[]) if same and path_overlap(p,q)})
             if same or shared:
                 nearby.append({'scope':state['id'],'workstream':worker['workstream'],'session':worker['session'],
+                    'working':worker.get('working',''),'heartbeat_at':worker.get('heartbeat_at'),
                     'checkout':other,'access':worker.get('access','unspecified'),'touching_paths':worker.get('touching_paths',[]),
                     'touching_seams':worker.get('touching_seams',[]),'approaching':worker.get('approaching',[]),
                     'avoid_paths':worker.get('avoid_paths',[]),'avoid':worker.get('avoid',[]),
                     'overlapping_paths':paths,'shared_seams':shared,'expires_at':worker['expires_at']})
     return nearby
+
+
+def integration_context(state, selected, checkout, touching=(), seams=(), session=None):
+    """Scoped declared peer intent, including unenrolled tasks and ended leases.
+
+    No source inspection, completion inference, messaging or repair arbitration.
+    """
+    boundaries=set(selected['boundaries']) | set(seams)
+    now=utcnow();related=[];workers=[]
+    for record in state['snapshot']['records']:
+        shared=sorted(boundaries & set(record['boundaries']))
+        if record['kind']!='workstream' or record['id']==selected['id'] or not shared:
+            continue
+        related.append({key:record.get(key) for key in
+                        ('id','statement','scope','acceptance','avoid','revision','state','source_checkout')})
+        related[-1]['shared_seams']=shared
+    related_ids={r['id'] for r in related}
+    for worker in state.get('presence',[]):
+        if worker['scope']!=state['id'] or worker['session']==session:
+            continue
+        other=worker.get('checkout');same=same_repository(checkout,other)
+        shared=sorted(boundaries & set(worker.get('touching_seams',[])+worker.get('approaching',[])))
+        paths=sorted({p for p in touching for q in worker.get('touching_paths',[])
+                      if same and path_overlap(p,q)})
+        if not (shared or paths or worker['workstream'] in related_ids or
+                (same and worker['workstream']==selected['id'])):
+            continue
+        heartbeat=date(worker['heartbeat_at'])
+        observation=('future-timestamp' if heartbeat>now else 'released' if worker['status']=='inactive'
+                     else 'expired' if date(worker['expires_at'])<=now else 'active-lease')
+        workers.append({key:worker.get(key) for key in
+                        ('session','workstream','working','status','heartbeat_at','expires_at',
+                         'checkout','access','touching_paths','touching_seams','approaching','avoid_paths','avoid')})
+        workers[-1].update(observation=observation,shared_seams=shared,overlapping_paths=paths,
+                          same_checkout=bool(same and checkout['root']==other['root']))
+    return {'scope':state['id'],'related_work':sorted(related,key=lambda r:r['id']),
+            'last_known_workers':sorted(workers,key=lambda r:r['session']),
+            'observed_at':now.isoformat(),'snapshot_source':state['snapshot']['source'],
+            'presence_coverage':state.get('execution',{}).get('status','unavailable'),
+            'meaning':'Peer tasks and working summaries are declarations, not detected changes or verified completion. '
+                      'Released/expired registrations remain last-known context, not active workers. '
+                      'No registration does not mean no related work; other checkouts are not edit targets.'}
