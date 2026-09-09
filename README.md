@@ -63,6 +63,12 @@ After reviewing the orientation, run the printed `enroll` command with the
 worker's actual access mode, paths, semantic seams and bounded task summary.
 `discover` and `start` remain available as lower-level commands.
 
+`onboard`, `start` and enrollment return `integration_context`: relevant peer task
+requirements and work summaries, even before enrollment or after a peer releases.
+Use its scoped refresh command before finishing overlapping work, then reconcile
+current affected imports/callers. These are declared intentions and last-known
+handoffs, not automatic change detection or proof that the combined code works.
+
 No candidate fits? First run `discover --scope SCOPE` without a query and inspect
 that scope's cached inventory. Preserve the same worker-config/checkout options;
 `onboard` returns a runnable `inventory_recovery` command. Generated recovery and
@@ -82,6 +88,7 @@ local CLI operations, not browser mutation endpoints:
 | --- | --- |
 | Exact installed documentation paths, without searching other workspaces | `docs` |
 | Worker onboarding, orientation and presence | `onboard`, `discover`, `start`, `enroll` |
+| Specific repair plan, peer agreement and source-bound reported validation | `repair-status`, `repair-claim`, `repair-ack`, `repair-complete`, `repair-release` |
 | Record an existing user task, refresh onboarding context | `task-register` (opt-in local capability) |
 | Immutable local report and publication status | `report`, `report-status` |
 | Authorized native publication and metadata reconciliation | `publish-report`, `provider-list`, `reconcile` |
@@ -96,6 +103,15 @@ receipt. The [mature SparkOps execution-consumer bridge](docs/SPARKOPS_CONSUMER_
 is deferred task 6. [Integration validation](docs/INTEGRATION_GATE.md) records
 the post-merge review and the remaining independent-review, CI, release, and
 production gates.
+
+For concurrent changes that affect a shared seam, use [repair coordination](docs/REPAIR_COORDINATION.md)
+to identify the specific break, let one worker accept a path-bounded repair and
+require explicit peer acknowledgment before repair edits. Independent paths on the
+same seam can proceed; sharing a boundary alone needs no claim. Closure requires the
+agreed cross-seam validation and recorded evidence. Claims are not file
+locks or new authority. Expiry never automatically hands a repair to a second worker.
+The CLI surfaces these local records; Mission Control remains read-only and does not
+yet display repair state. Shared runtime availability still requires release activation.
 
 The skill's canonical source is this repository's `skills/project-intent/` directory.
 For this workspace it is made discoverable at

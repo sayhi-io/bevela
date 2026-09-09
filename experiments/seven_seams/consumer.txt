@@ -1,0 +1,9 @@
+Implement these seven customer-facing functions in presentation.py using current shop data rather than hard-coded example results:
+
+1. price_label(name): tea "$12.50", cake "$7.25".
+2. stock_label(name): tea "8 available", cake "4 available", accounting for reservations.
+3. weight_label(name): tea "0.250 kg", cake "0.500 kg", three decimal places.
+4. discount_label(name): tea "10% off; $11.25", cake "20% off; $5.80", showing the percentage and discounted dollar price to two decimals.
+5. delivery_label(name): tea "2 days", cake "1 day", with singular/plural day wording.
+6. contact_label(customer): ada "Ada <ada@example.test>", lin "Lin <lin@example.test>".
+7. status_label(order): P-1 "Paid", P-2 "Awaiting payment", R-3 "Refunded".

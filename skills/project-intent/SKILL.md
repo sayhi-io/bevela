@@ -13,10 +13,11 @@ proof of current inference, and delivery of a continuation is not completion.
 ## Bootstrap
 
 Read the task checkout's AGENTS.md. Discover the installed `project-intent` command;
-in the SayHi workspace use `/home/meanaverage/sayhi/bin/project-intent`. Run `--help`
-and command-specific help before relying on flags. Use the checkout's Project Intent
-README and linked operational docs for the installed version. Run `project-intent docs`
-for exact installed document paths (also returned by `onboard`). Read only available
+in the SayHi workspace use `/home/meanaverage/sayhi/bin/project-intent`. Use `--help`
+when syntax is unfamiliar, not as a repeated startup checklist. The onboarding output
+normally supplies orientation and the enrollment command. Consult operational docs
+only for the operation you need; `project-intent docs` returns exact installed paths
+(also returned by `onboard`). Read only available
 paths. On older installations without `docs`, resolve this skill directory's symlink
 and use its source release's `../../docs/`; do not append `docs/` inside the skill.
 Missing documents are an installation gap, not a reason for a workspace-wide search.
@@ -55,6 +56,17 @@ represent it. Offline orientation is useful last-known context; it cannot establ
 current remote state or authorize a remote mutation.
 
 ## Choose your role
+
+Enrollment is presence, not integration. The CLI's `integration_context` brings
+related task intent and last-known worker summaries together, even before a peer
+enrolls or after it releases. Use it to revisit affected contracts before completion;
+details are in the worker path. Missing or stale observations are not a clean bill.
+
+Sharing a seam is context, not a reason to claim every edit. For competing fixes to
+a specific break, agree on one repairer and affected paths using the worker flow.
+Acceptance alone is not agreement: the named peer must explicitly acknowledge.
+Do not leave your change's known regression unresolved merely because a different
+assignment names the consumer. Actual user exclusions still apply.
 
 - For implementation, assessment, review or successor work, read
   [the worker path](references/worker.md).
