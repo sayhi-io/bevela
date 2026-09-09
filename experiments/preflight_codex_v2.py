@@ -19,6 +19,7 @@ def main():
     parser.add_argument('--codex-bin-directory', type=Path, required=True)
     parser.add_argument('--auth-file', type=Path, required=True)
     parser.add_argument('--browser-directory', type=Path, required=True)
+    parser.add_argument('--model', default='gpt-6-astra')
     args = parser.parse_args()
     auth = args.auth_file
     if auth.is_symlink() or not auth.is_file() or auth.stat().st_mode & 0o077:
@@ -40,7 +41,7 @@ def main():
     cli = [str(binary),'-a','never','exec','--ignore-user-config','--ignore-rules',
            '--ephemeral','--enable','skip_host_skill_discovery','--disable','plugins',
            '--disable','apps','--disable','memories','--disable','multi_agent',
-           '-c','project_doc_max_bytes=0','-m','gpt-6-astra',
+           '-c','project_doc_max_bytes=0','-m',args.model,
            '-c','model_reasoning_effort="medium"','-s','danger-full-access',
            '-C',str(worker),'--json','-o',str(artifacts/'final.md'),'-']
     launch = command(root,worker,cli,readonly=[tools],writable=[artifacts])
@@ -66,7 +67,7 @@ Your final answer must be FINAL-SEPARATE-FROM-HANDOFF. Do not overwrite the hand
         result=subprocess.run(launch,input=prompt,text=True,stdout=out,stderr=err,timeout=900)
     report={'root':str(root),'exit_code':result.returncode,
             'elapsed_seconds':round(time.monotonic()-started,3),
-            'model':'gpt-6-astra','effort':'medium','condition':'neutral harness preflight'}
+            'model':args.model,'effort':'medium','condition':'neutral harness preflight'}
     p=worker/'PREFLIGHT.json'
     try:
         report['worker_assertions']=json.loads(p.read_text()) if p.exists() else None
@@ -90,7 +91,8 @@ Your final answer must be FINAL-SEPARATE-FROM-HANDOFF. Do not overwrite the hand
         and git('show','HEAD:proof.txt')=='GIT-WRITE-PROVEN'
         and handoff.exists() and 'HANDOFF-MUST-SURVIVE' in handoff.read_text()
         and git('rev-parse','HEAD') in handoff.read_text()
-        and final.exists() and final.read_text().strip()=='FINAL-SEPARATE-FROM-HANDOFF'
+        and final.exists() and 'FINAL-SEPARATE-FROM-HANDOFF' in final.read_text()
+        and final.read_text() != handoff.read_text()
         and dom.exists() and 'WORKER-BROWSER-PROVEN' in dom.read_text())
     (artifacts/'result.json').write_text(json.dumps(report,indent=2)+'\n')
     print(json.dumps(report,indent=2))

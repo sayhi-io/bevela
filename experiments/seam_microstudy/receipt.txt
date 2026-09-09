@@ -1,0 +1,1 @@
+Include the product's dollar price in receipt.label(name), to two decimal places: label("tea") should return "tea: $12.50" and label("cake") should return "cake: $7.25".

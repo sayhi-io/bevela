@@ -1,142 +1,78 @@
 # Project Intent
 
-### Coordination infrastructure for concurrent AI software workers.
+### Shared project state for concurrent coding workers.
 
-Project Intent helps independent coding workers understand **what other workers are changing, where their work intersects, what must remain true, and how to reconcile a shared boundary before declaring success**.
+Project Intent helps independent workers understand **what neighboring work is changing, where their tasks meet, and what must still work together**.
 
-Project Intent began with a concurrency problem: SayHi is one product assembled from nearly a dozen repositories, often with AI workers changing several of them at the same time. Those repositories are independently owned and developed, but they are not truly independent. Their APIs, schemas, security boundaries, runtime assumptions, and product behavior meet at seams that no single repository fully owns.
+It began inside SayHi: one product assembled from many independently developed repositories, with AI workers changing APIs, schemas, security boundaries and runtime assumptions at the same time. A change can be correct inside one repository and incompatible with work happening elsewhere. The same problem appears between worktrees and between workers sharing one checkout.
 
-The original goal was to let workers in different repositories understand those shared seams—to anticipate incompatible changes, discover neighboring work, and help mend cross-repository breaks without requiring a human to continuously coordinate every interaction. As we built and tested that idea, the same failure mode became visible between workers in different worktrees and different parts of one repository: individually reasonable changes can still produce an incoherent combined system.
+The aim is to let those workers anticipate incompatible changes, discover related work and reconcile shared boundaries without a human coordinating every interaction.
 
-> **The goal is not to make agents talk more. The goal is to let concurrent workers converge on a coherent product.**
+> The goal is not more agent conversation. It is a coherent product after concurrent changes.
 
-[Architecture](docs/ARCHITECTURE.md) · [Worker protocol](skills/project-intent/SKILL.md) · [Experiments](docs/CLI_AB_EVALUATION.md) · [Operations](docs/OPERATIONS.md)
+[Results](RESULTS.md) · [Architecture](docs/ARCHITECTURE.md) · [Worker workflow](skills/project-intent/SKILL.md) · [Operations](docs/OPERATIONS.md)
 
----
+## The problem: locally correct, jointly broken
 
-## Why this exists
+One worker changes prices from dollars to integer cents. Another builds a receipt against the old representation. Their focused tests can pass while the combined receipt charges the wrong amount.
 
-Modern coding agents are increasingly capable in isolation. A product with several of them working across repositories, worktrees, and architectural boundaries at once introduces a different class of failure.
+Git records source changes. It does not, by itself, tell a worker what a peer **intends** to change across another repository, which contract that peer is preserving, or whether somebody has agreed to repair the resulting break.
 
-One worker changes a representation. Another consumes the old representation. Both implementations can look reasonable locally. Both can pass focused tests. The product still breaks at the seam.
+Project Intent exposes scoped task and architecture records alongside workers’ declared paths, seams and work summaries. Workers can refresh that context, inspect the actual code and validate the combined behavior before claiming completion.
 
-Giving the workers more reasoning time does not necessarily repair the missing shared state. They need a durable way to discover neighboring work and answer questions such as:
+## What workers share
 
-- What is another worker changing right now?
-- Which contracts or architectural seams do our tasks share?
-- Which assumptions may have become stale while I was working?
-- Has somebody already accepted responsibility for a specific cross-seam repair?
-- What evidence says the combined behavior works?
-- What should a successor know after the original worker disappears?
-
-Project Intent makes those facts explicit without turning development into a mandatory agent graph or central planner.
-
-## What Project Intent provides
-
-Project Intent maintains a bounded, scoped model of project work and exposes it to workers and humans through a local CLI and the read-only **Mission Control** observatory.
-
-| Primitive | Purpose |
+| Primitive | What it provides |
 | --- | --- |
-| **Intent** | The task, constraints, acceptance criteria and relevant architecture. |
-| **Presence** | Which workers are active, where they are working and what they report doing. |
-| **Seams** | Declared architectural boundaries where independently owned work may interact. |
-| **Integration context** | Relevant peer requirements and last-known work summaries, including after handoff. |
-| **Repair coordination** | One acknowledged repairer for a specific break and path set, without claiming ownership of the whole seam. |
-| **Evidence** | Revision-aware reports and source-bound validation rather than an unqualified “done.” |
-| **Mission Control** | A human-readable projection of workstreams, workers, architecture, attention and convergence state. |
+| **Intent** | Recorded tasks, constraints, acceptance criteria and applicable architecture. |
+| **Presence** | Session leases, actual checkout identity and worker-declared editing boundaries—not proof of active inference. |
+| **Seams** | Named architectural boundaries connecting related work, even across files or repositories. |
+| **Integration context** | Related task requirements and last-known peer summaries, including released registrations. |
+| **Repair agreement** | A cooperative, path-bounded plan with one repairer and explicit acknowledgment from named peers. |
+| **Evidence & handoff** | Revision-aware reports, source-bound validation assertions and retained successor context. |
 
-Project Intent does **not** grant code authority, infer hidden edits, replace Git, schedule workers, or make a task correct because it appears in Mission Control. Its coordination model is deliberately cooperative and explicit.
+This is **cooperative coordination, not enforcement**. PI does not discover every hidden edit, push automatic code-change notifications, lock a seam, schedule workers or grant execution authority. Workers must declare changes, read refreshed context and check the actual integrated source. Missing observations remain unknown; a lease or a “done” summary is not a correctness certificate.
 
-## Experimental results
+Context is limited to the selected configured scope. Current repair agreement requires cooperating workers using the same scope feed and local repository/host; it is not an arbitrary cross-repository or cross-scope repair service. The CLI exposes integration context and repair plans; Mission Control does not yet display those plans.
 
-The repository includes matched worker studies because the central question is empirical: **does structured shared project state actually help concurrent workers produce a correct combined result?**
+Durable task truth stays with the configured provider; Git owns source history. Local snapshots support last-known orientation, not a claim that remote state is current. An already assigned task can be recorded through a configured, separately authorized [registration capability](docs/TASK_REGISTRATION.md).
 
-The first paired pilot did not show a clear quality advantage: ordinary and PI-aware Astra/Medium teams both completed the requested Status features and passed the same 11/11 independent acceptance checks. See [Pilot 01](docs/CLI_AB_PILOT_01.md).
+## What the experiments show
 
-A newer **seven-seam** fixture increases the concurrency pressure. Two native workers share a disposable checkout. One migrates seven data representations while the other builds seven consumers of those changing contracts:
+We measure **accepted project results**, elapsed project time and aggregate worker effort separately. More tokens are not automatically worse, and overlapping model processes are not automatically useful parallel work.
 
-| Seam | Concurrent pressure |
-| --- | --- |
-| Prices | integer cents ↔ dollar totals and labels |
-| Stock | on-hand/reserved records ↔ sellable counts |
-| Weights | integer grams ↔ kilogram totals and labels |
-| Discounts | basis points ↔ percentages and discounted prices |
-| Delivery | stored hours ↔ displayed days |
-| Contacts | structured contacts ↔ email/name presentation |
-| Orders | explicit states ↔ paid/pending/refunded labels |
+| Finding | Evidence | What it does—and does not—show |
+| --- | --- | --- |
+| **Low-effort A/B/C breakthrough** | Luna Low + PI: **7/7, 7/7**. Luna Low without PI: **0/7, 2/7**. Sol Low without PI: **3/7, 4/7, 3/7**. | Luna Low with PI outperformed both ordinary configurations on final integrated correctness, including the stronger Sol model. |
+| **Predefined roles stayed more distinct** | Luna Medium, two workers: separate retained contributions during overlap in **3/3 PI** projects versus **0/3 ordinary** projects. | Both arms still finished **7/7 in 3/3**. A single ordinary worker had the lowest median completion time and token usage on this small fixture. |
+| **Identical goals did not become a parallel team** | Luna Medium, three workers with the same complete objective: **no useful implementation partition in either arm**. | All projects reached 7/7. PI added overhead; one worker implemented the whole migration in each project. |
 
-The checker scores whether **both sides of each seam survive together**, from 0/7 to 7/7. Workers receive their complete tasks up front; there is no hidden model adjudicator, prescribed task order, injected failure notification, or automatic repair owner. See [Seven-seam study](docs/CLI_SEVEN_SEAMS.md).
+The A/B/C comparison asks whether PI can help a lower-capability configuration preserve the combined project better than simply using a stronger model without it. The observed answer was yes in these small batches. The later studies below ask a different question: whether that value comes from useful concurrency, beyond access to peer task context.
 
-### Luna Medium: concurrency study
+The latest small-fixture results suggest two limits: one worker can finish before coordination pays off, and awareness of peers does not necessarily produce an agreed division of work. A proposed next study would hold task information equal on a longer, genuinely parallel task and measure whether workers establish useful responsibility boundaries; it has not been run.
 
-A 12-project / 18-session Luna Medium study compared four execution regimes, with three fresh project trials per condition. There were no human interventions, retries, or timeouts. **Every project reached 7/7**, so this fixture showed no correctness advantage for PI at Luna Medium.
+**[Read the results →](RESULTS.md)**
 
-| Condition | Runs | 7/7 rate | Median project wall time | Aggregate worker time | Median aggregate tokens |
-| --- | ---: | ---: | ---: | ---: | ---: |
-| Single worker | 3 | 100% | **81.6s** | **81.6s** | **152,371** |
-| Concurrent ordinary | 3 | 100% | 99.6s | 156.6s | 337,743 |
-| Concurrent + PI | 3 | 100% | 141.4s | 236.9s | 949,750 |
-| Single worker + PI | 3 | 100% | 118.3s | 118.3s | 371,850 |
-
-Tokens include cached input and are usage counters, not measured GPU compute or monetary cost.
-
-The project-level result is straightforward: **one Luna Medium worker was the best execution strategy for this small fixture.** It reached the same accepted result with the lowest median wall time and fewest recorded tokens. Concurrency did not pay for its coordination overhead here.
-
-The concurrency behavior, however, differed materially. In all three ordinary concurrent runs, one worker attempted overlapping implementation against changes its peer had already made: there were **3 stale-patch failures** and **2 peer-label rewrites** across the three projects. In all three PI concurrent runs, both workers landed separate retained contributions while their peer was active: the producer handled the producer modules and the consumer handled `presentation.py`. *Peer-stale patch failures and peer-label rewrites both fell to zero.*
-
-PI did not eliminate rework. Two PI projects required day-format integration corrections, and another encountered a self-inflicted cleanup-patch failure. PI also carried measurable overhead: enrollment completed roughly 30 seconds into each worker run, PI operations added about 1.9 aggregate seconds per concurrent project, malformed command groups required recovery, and PI-aware runs processed substantially more context.
-
-So the measured conclusion is deliberately narrower than “PI is faster”:
-
-> **On a problem one worker could already solve comfortably, PI made concurrent work less duplicative but did not make the project faster or cheaper.**
-
-That is useful product guidance. Project Intent should stay cheap or largely dormant when there is no meaningful neighboring work. Its economic case depends on tasks large or distributed enough that useful parallelism can repay coordination cost.
-
-It also motivates the next experiment: give several workers the **same complete objective**, remove harness-assigned producer/consumer ownership, and observe whether they can self-organize useful parallel work. A later, larger fixture is needed to test the wall-clock economics of parallelism when the serial critical path is long enough for concurrency to plausibly win.
-
-Timing and token totals therefore remain separate from the primary concurrency phenomenon. A multi-worker system can consume more aggregate model compute while reducing project wall time on a sufficiently parallel task; conversely, as this study shows, concurrency can be unnecessary overhead when one worker can cheaply own the whole problem.
+Newest-first study history, every recovered run, backend behavior versions, failures, timing definitions and follow-up questions. Negative findings and interrupted attempts stay visible.
 
 ## Mission Control
 
-Mission Control is the read-only human observatory over Project Intent state. It exposes workstreams, architecture, reports, worker/session detail, attention state and an experimental Workstream Map for seeing declared boundaries and convergence pressure.
+Mission Control is the read-only human observatory over the normalized project state. It shows workstreams, architecture, reports, worker/session observations and attention indicators. The experimental [Workstream Map](docs/WORKSTREAM_MAP_EXPERIMENT.md) visualizes declared boundaries and convergence pressure.
 
-<!-- Screenshot placeholder. Recommended capture: Mission Control Workstream Map with 3–5 simultaneous workers, visible seams, one overlap/repair state, and enough surrounding UI to establish that this is an operational product rather than a diagram. -->
+It is not a live editor, repair dispatcher or authority surface. Provider credentials remain outside the browser. Freshness and observation gaps matter: historical registrations are not a count of people, and an unavailable worker observation does not mean no one is working.
 
-> **Screenshot coming soon.**  
-> Recommended asset path: `docs/assets/mission-control-workstream-map.png`
+## Worker workflow
 
-Mission Control deliberately does not mutate provider state or grant execution authority. The browser is an observatory; worker and operator mutations remain explicit local operations.
+1. **Orient.** From the actual task checkout, discover candidates and inspect the exact scoped assignment. Matching text is a suggestion, not ownership.
+2. **Enroll.** Register your own session with the checkout, paths, seams and bounded work you actually intend to perform.
+3. **Integrate.** Refresh relevant peer context and inspect affected code. For competing fixes to a concrete break, agree on a repairer and affected paths; ordinary independent edits do not need a repair ceremony.
+4. **Validate and hand off.** Exercise both sides of affected contracts, record unresolved impacts and release presence with a useful summary. Durable evidence reports and provider publication are separate operations.
 
-## How it works
+The [worker skill](skills/project-intent/SKILL.md) defines the supported procedure. It supplies context to native coding workers; it does not replace their execution loop.
 
-A worker begins with the task it was actually assigned. Project Intent discovers the corresponding scoped workstream and returns its requirements, constraints, acceptance criteria, architecture and relevant neighboring work. The worker then enrolls its actual checkout, access mode, paths and semantic seams.
+## Local development
 
-As work proceeds, other workers can see that declared state through scoped integration context. When two changes create a concrete shared break, workers can establish a path-bounded repair plan: one worker volunteers, affected peers acknowledge the plan, the repairer performs the agreed edit, and closure records validation evidence bound to the relevant source. Independent work on the same architectural seam remains independent.
-
-At handoff, last-known summaries survive the worker session so a successor can reconstruct the project situation without inheriting the original conversation. Mission Control projects the same normalized state for humans.
-
-```text
-          task + constraints + architecture
-                       │
-                       ▼
-                 Project Intent
-                ╱      │       ╲
-               ╱       │        ╲
-          Worker A   Worker B   Worker C
-             │          │          │
-             └────── seams ─────────┘
-                       │
-                integration context
-                       │
-                 repair / validate
-                       │
-                       ▼
-                 coherent product
-```
-
-## Quick start
-
-Project Intent requires Python 3.11+ and currently has no runtime dependencies outside the standard library.
+Python **3.11+**; no runtime dependencies outside the standard library. From this repository:
 
 ```bash
 python3 -m venv .venv
@@ -144,78 +80,45 @@ python3 -m venv .venv
 .venv/bin/python -m unittest discover -s tests -v
 ```
 
-Orient a worker from its **actual task checkout**:
+Activate that environment before changing to your task checkout:
 
 ```bash
+source .venv/bin/activate
+cd /absolute/path/to/your/task-checkout
 project-intent onboard --query "task keywords"
 project-intent onboard --scope YOUR_SCOPE --workstream SELECTED_WORKSTREAM
 ```
 
-Review the returned assignment and enrollment template, then enroll the worker with its real checkout boundary and work summary. `discover`, `start`, and `enroll` are available as lower-level operations.
+Onboarding requires a configured local worker scope map; installation alone does not discover arbitrary provider projects. Review the returned assignment and use its enrollment template. The [operations guide](docs/OPERATIONS.md) covers configuration and the distinction between credential-free local orientation and authorized provider access.
 
-For local development of Mission Control:
+To serve Mission Control with your private service configuration:
 
 ```bash
 project-intent serve --config /private/project-intent/config.json --port 8290
 ```
 
-Then open `http://127.0.0.1:8290`. The development service requires independently configured credentials and should remain loopback-only unless a separately reviewed network/TLS/identity boundary is provided.
+Open `http://127.0.0.1:8290`. Keep the service loopback-only unless a separately reviewed network, TLS and identity boundary is in place. Configuration and credentials are not part of this repository.
 
-For the complete worker workflow, use the [Project Intent skill](skills/project-intent/SKILL.md). For deployment and authority boundaries, read [Operations](docs/OPERATIONS.md) first.
+## Maturity and boundaries
 
-## Design principles
+Project Intent is **active SayHi dogfood and experimental infrastructure**, not a generally available production service. This repository includes the local service, CLI, normalized read model, observatory, cooperative repair protocol and experiment machinery.
 
-**Workers remain workers.** Project Intent does not replace native coding-agent behavior with a proprietary execution loop.
+It does not claim hostile-tenant isolation, distributed fencing, generalized scheduling or production high availability. Source integration, independent review, required CI, provider publication and runtime activation are distinct steps. A merged backend change is not automatically running in an existing deployment.
 
-**Coordination is not authority.** Presence, a Workstream ID, a repair claim or a UI state never grants permission to edit or deploy.
-
-**The product is larger than any repository or conversation.** Important task, architecture, peer and handoff state should survive individual model sessions and repository boundaries.
-
-**Seams matter more than file collisions.** Concurrent workers can conflict semantically without touching the same file—or even the same repository. Project Intent records architectural boundaries as first-class coordination state.
-
-**Evidence beats ceremony.** Enrollment counts, messages and claims are not success. The relevant combined behavior still has to work.
-
-**Missing information stays missing.** Project Intent avoids silently converting absent observations into reassuring assumptions.
-
-**Keep the baseline strong.** Evaluation controls retain normal source inspection, Git, repository documentation and ordinary communication. PI should earn its complexity rather than win against an artificially weakened worker.
-
-## Origin
-
-Project Intent started inside SayHi because the product is assembled from nearly a dozen repositories that nevertheless share product, API, schema, runtime and security seams. AI coding workers were increasingly able to work independently inside those repositories, and we wanted them to work on different parts of the product simultaneously without requiring a human to act as the permanent cross-repository coordinator.
-
-The original problem was therefore concurrency across **shared seams**. A worker changing one repository needed a way to know that another worker was approaching a related boundary elsewhere, understand the intent and constraints on both sides, avoid preventable incompatibilities, and help repair a cross-repository break when one occurred.
-
-Git could tell us what had already changed inside a repository, but not necessarily what a neighboring worker intended to change, which architectural contract it believed it was preserving, or how work in another repository related to the same product boundary. Conversation history could carry some of that information, but it was ephemeral and isolated to individual workers.
-
-Building the system clarified that the same coordination problem exists at several scales: between repositories, between worktrees, and between independently owned areas of one codebase. That led to the current primitives—intent, presence, semantic seams, integration context, successor handoffs, repair agreement and source-bound evidence. Project Intent is the shared substrate intended to let concurrent workers preserve the coherence of **one product across many boundaries**.
-
-## Current maturity
-
-Project Intent is active SayHi dogfood and experimental infrastructure, **not a generally available production service**. The repository contains a real local service, CLI, normalized read model, Mission Control UI, worker/session observation, repair coordination and evaluation harnesses. Public/multi-host deployment, hostile-tenant isolation, distributed fencing, generalized scheduling and production HA are outside the current claim.
-
-The local browser surface is read-only. Provider credentials stay outside the UI. Source changes do not automatically become a managed runtime release. See [Architecture](docs/ARCHITECTURE.md), [Read model](docs/READ_MODEL.md), [Operations](docs/OPERATIONS.md), and [Integration gate](docs/INTEGRATION_GATE.md) for the precise boundaries.
+The working principles are simple: coordination is not authority; architecture extends beyond file collisions; explicit evidence matters more than enrollment counts; and uncertainty must remain visible.
 
 ## Documentation
 
-| Document | Go here for |
+| Start here | For |
 | --- | --- |
-| [Architecture](docs/ARCHITECTURE.md) | authority boundaries, components and data flow |
-| [Read model](docs/READ_MODEL.md) | normalized project/workstream projection |
-| [Operations](docs/OPERATIONS.md) | local service, configuration, recovery and deployment limits |
-| [Worker skill](skills/project-intent/SKILL.md) | canonical worker-facing workflow |
-| [Task registration](docs/TASK_REGISTRATION.md) | recording an already assigned task when inventory is missing |
-| [Repair coordination](docs/REPAIR_COORDINATION.md) | bounded peer agreement for a concrete cross-seam repair |
-| [Reporting](docs/REPORTING.md) | evidence, publication and reconciliation |
-| [Session connector](docs/SESSION_CONNECTOR.md) | bounded continuation of an existing session |
-| [Workstream Map](docs/WORKSTREAM_MAP_EXPERIMENT.md) | Mission Control convergence visualization |
-| [Evaluation](docs/CLI_AB_EVALUATION.md) | experimental principles and methodology |
-| [Pilot 01](docs/CLI_AB_PILOT_01.md) | first matched A/B result and its negative finding |
-| [Study 02](docs/CLI_AB_SHARED_CONTRACT.md) | harder cross-layer shared-contract study |
-| [Study 03](docs/CLI_AB_STUDY03.md) | continuity/succession study design |
-| [Seven seams](docs/CLI_SEVEN_SEAMS.md) | concurrent seven-contract fixture and recorder |
+| [Results](RESULTS.md) | Newest-first outcomes, limitations and next questions |
+| [Architecture](docs/ARCHITECTURE.md) · [Read model](docs/READ_MODEL.md) | Components, authority and normalized state |
+| [Worker skill](skills/project-intent/SKILL.md) · [Task registration](docs/TASK_REGISTRATION.md) | Orientation, enrollment and missing inventory |
+| [Repair coordination](docs/REPAIR_COORDINATION.md) · [Reporting](docs/REPORTING.md) | Peer agreement, validation and durable handoffs |
+| [Operations](docs/OPERATIONS.md) · [Integration gate](docs/INTEGRATION_GATE.md) | Configuration, review, release and recovery |
+| [Session connector](docs/SESSION_CONNECTOR.md) | Bounded continuation of an existing session |
+| [Evaluation methodology](docs/CLI_AB_EVALUATION.md) | Historical study design and measurement rules |
+| [Original seven seams](docs/CLI_SEVEN_SEAMS.md) · [Refund torture](docs/CLI_TORTURE_REFUNDS.md) | Distinct fixtures and acceptance contracts |
+| [Concurrency vs. context](docs/CLI_CONCURRENCY_STUDY.md) · [Self-organization](docs/CLI_SEVEN_SEAMS_SELF_ORGANIZING.md) | Newer matched study protocols |
 
-## Status
-
-Development is intentionally evidence-driven. The immediate work is to run the self-organizing seven-seam study, commit its result packet, capture the first Mission Control screenshot, and then test the economics of PI concurrency on a larger task whose serial critical path is long enough for useful parallelism to plausibly reduce project wall-clock time.
-
-Project Intent should become more complicated only where the experiments show that the complication helps workers converge.
+Project Intent should earn its complexity by helping workers preserve a coherent combined result—not by making an activity dashboard look busy.

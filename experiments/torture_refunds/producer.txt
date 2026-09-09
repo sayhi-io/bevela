@@ -1,0 +1,5 @@
+Migrate this shop's internal representation and persisted schema while preserving the existing public contracts in README.md.
+
+Use integer cents in PRICES and in each ORDERS record's unit_price, charged and refunded fields. Public purchase/refund result money remains dollar numbers; receipts remain formatted dollar strings. Keep DISCOUNTS in percentage units. Replace separate stock/reservation dictionaries with STOCK[sku] = {"on_hand": ..., "reserved": ...}; available still excludes reservations.
+
+save() must emit version 2 with these representations under the existing prices, discounts, stock and orders keys, with no separate reserved dictionary. load() must accept existing version-1 dollar/stock snapshots and version-2 snapshots; migration must not double-convert values on repeated round trips. Retain existing order history and extra order fields. Any persisted public response payloads retain their documented public units. Preserve existing helper names/signatures, rounding, inventory behavior, historical receipts, and cache invalidation. No new runtime dependencies.
