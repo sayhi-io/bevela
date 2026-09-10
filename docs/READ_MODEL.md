@@ -70,9 +70,10 @@ refresh-provider, notes, claims, assignment or review mutation APIs.
 
 The opt-in `/observatory` presentation uses the same API and existing card/detail
 components. Home summarizes fresh observations, explicitly reported inactive
-sessions and attention; hash navigation exposes all work (including completed and
-deferred declarations), architecture, environments, handoffs and coverage. `/`
-remains the classic rollback view. No PM datastore or session history is added.
+sessions and attention; hash navigation exposes the [Developers Board and work
+calendar](ACTIVITY_VIEWS.md), all work (including completed and deferred
+declarations), architecture, environments, handoffs and coverage. `/` remains the
+classic rollback view. No PM datastore or session history is added.
 `workstreams[].local_reports` are rendered with their local/pending/uncertain/
 published state and full evidence/receipt detail, independently of provider
 readiness/handoffs. Recent report cards are bounded24; all available reports remain

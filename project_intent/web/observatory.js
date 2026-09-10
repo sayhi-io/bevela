@@ -1,8 +1,8 @@
 /* Opt-in presentation boundary over the same read model and classic components. */
 'use strict';
 if(location.pathname==='/workstream-map'&&!location.hash)history.replaceState(null,'','#map');
-const views={home:['Overview','intent','Live observations, recent releases and the next judgment.'],map:['Map','scope','Architectural surfaces from existing declarations. A projection, not a workflow.'],work:['Work','scope','Every enrolled workstream, with execution and durable readiness kept separate.'],architecture:['Architecture','architecture','Applicable constraints and explainable revision comparisons.'],environments:['Environments','environment','Declared requirements, not measured capacity or permission.'],handoffs:['Handoffs','handoff','Worker reports alongside durable provider handoffs.'],sources:['Sources','proof','Coverage, freshness and independent observation sources.']};
-for(const [key,[label,name]] of Object.entries(views)){const a=el('a');a.href='#'+key;a.title=key==='map'?'Workstream Map':label;const glyph=icon(name);if(key==='map')glyph.querySelector('path').setAttribute('d','M3 6l6-3 6 3 6-3v15l-6 3-6-3-6 3V6m6-3v15m6-12v15');a.append(glyph,el('span',label));$('view-nav').append(a);}
+const views={home:['Overview','intent','Live observations, recent releases and the next judgment.'],developers:['Developers','worker','Observed current work, recent releases and latest recorded evidence.'],calendar:['Calendar','readiness','Timestamped handoffs, worker reports and bounded release observations.'],map:['Map','scope','Architectural surfaces from existing declarations. A projection, not a workflow.'],work:['Work','scope','Every enrolled workstream, with execution and durable readiness kept separate.'],architecture:['Architecture','architecture','Applicable constraints and explainable revision comparisons.'],environments:['Environments','environment','Declared requirements, not measured capacity or permission.'],handoffs:['Handoffs','handoff','Worker reports alongside durable provider handoffs.'],sources:['Sources','proof','Coverage, freshness and independent observation sources.']};
+for(const [key,[label,name]] of Object.entries(views)){const a=el('a');a.href='#'+key;a.title=key==='map'?'Workstream Map':label;const glyph=icon(name);if(key==='map')glyph.querySelector('path').setAttribute('d','M3 6l6-3 6 3 6-3v15l-6 3-6-3-6 3V6m6-3v15m6-12v15');if(key==='calendar')glyph.querySelector('path').setAttribute('d','M5 3v4m14-4v4M3 9h18M5 5h14a2 2 0 0 1 2 2v14H3V7a2 2 0 0 1 2-2m3 8h2m4 0h2m-8 4h2m4 0h2');a.append(glyph,el('span',label));$('view-nav').append(a);}
 const bell=icon('handoff');bell.querySelector('path').setAttribute('d','M18 8a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9M10 21h4');$('notifications').prepend(bell);
 function selectView(focus=false){const key=location.hash.slice(1)||'home';const selected=views[key]?key:'home';for(const section of document.querySelectorAll('[data-view]'))section.hidden=!section.dataset.view.split(' ').includes(selected);for(const a of $('view-nav').children){if(a.hash==='#'+selected)a.setAttribute('aria-current','page');else a.removeAttribute('aria-current');}for(const [i,card] of [...$('rested').children].entries())card.hidden=selected==='home'&&i>=6;for(const [i,card] of [...$('convergence').children].entries())card.hidden=selected==='home'&&i>=3;$('view-title').textContent=views[selected][0];$('view-title').classList.toggle('home-navigation-target',selected==='home');$('view-description').textContent=views[selected][2];$('view-description').hidden=selected==='home';if(focus)$('view-title').focus();}
 window.addEventListener('hashchange',()=>selectView(true));selectView();
@@ -23,6 +23,36 @@ function reportCard(report,work,full=false){
  disclosure(tile,'Report identity, assertions and publication receipt',['Report: '+report.id,...(packet.assertions||[]).map(a=>JSON.stringify(a)),JSON.stringify(report.publication||{state:'local'})]);return tile;
 }
 function reportOrder(a,b){const time=x=>{const v=Date.parse(x.report.created_at);return Number.isFinite(v)?v:-Infinity;};return time(b)-time(a)||String(a.report.id).localeCompare(String(b.report.id));}
+let calendarMonth=new Date(new Date().getFullYear(),new Date().getMonth(),1,12),calendarSelected=ActivityViewsFacts.dateKey(Date.now()),activityResult=null;
+const displayTime=at=>new Date(at).toLocaleString(undefined,{dateStyle:'medium',timeStyle:'short'});
+function boardCard(item,kind){
+ const work=item.work,card=el('article',undefined,'developer-card');card.dataset.workstream=work.key;
+ card.append(qualifiedName('div',work.key));
+ if(kind==='active')card.append(el('span','Observed active','board-state active'),el('h3',item.worker.session),el('p',item.worker.working||'No working declaration recorded.'),el('time',displayTime(item.at),'identifier'));
+ if(kind==='released')card.append(el('span','Reported inactive','board-state released'),el('h3',item.release.session),el('p',item.release.working||'No working declaration recorded.'),el('time',displayTime(item.at),'identifier'));
+ if(kind==='evidence')card.append(el('span',item.kind==='report'?'Worker report':'Provider handoff','board-state evidence'),workstreamName('h3',work),el('p',short(item.summary,180)),el('time',displayTime(item.at),'identifier'));
+ card.append(workButton(work,'Open Workstream'));return card;
+}
+function renderDeveloperBoard(result){
+ const facts=ActivityViewsFacts.board(result,Date.parse(result.observed_at),true),sets=[['active','developer-active'],['released','developer-released'],['evidence','developer-evidence']];
+ for(const [kind,id] of sets){const target=clear(id);for(const item of facts[kind].slice(0,12))target.append(boardCard(item,kind));if(!target.children.length)empty(target,kind==='active'?'No fresh worker registrations. This does not establish that nobody is working.':kind==='released'?'No explicit inactive registrations in the bounded recent feed.':'No timestamped handoff or worker report available.');$(id+'-count').textContent=String(facts[kind].length);}
+ const coverage=result.rested_coverage;$('developer-board-coverage').textContent='Working now uses fresh registrations at the observation time. Recently released is '+(coverage?`a bounded feed showing ${facts.released.length} of ${coverage.total} latest inactive registrations`:'unavailable')+'. Recorded evidence uses the latest available timestamped worker report or provider handoff per Workstream. A report does not itself establish delivery, and lifecycle alone never places work on this board.';
+}
+function selectCalendarDay(key,focus=false){calendarSelected=key;renderCalendar(activityResult,focus);}
+function renderCalendar(result,focus=false){
+ if(!result)return;activityResult=result;const facts=ActivityViewsFacts.events(result),view=ActivityViewsFacts.month(calendarMonth.getFullYear(),calendarMonth.getMonth(),facts),today=ActivityViewsFacts.dateKey(Date.now());
+ $('calendar-month').textContent=calendarMonth.toLocaleDateString(undefined,{month:'long',year:'numeric'});
+ $('calendar-timezone').textContent='Dates use '+(Intl.DateTimeFormat().resolvedOptions().timeZone||'your browser time zone')+'.';
+ const handoffs=facts.filter(event=>event.type==='handoff').length,reports=facts.filter(event=>event.type==='report').length,releases=facts.filter(event=>event.type==='release').length;
+ $('calendar-coverage').textContent=`Available evidence: ${handoffs} provider handoffs · ${reports} worker reports · ${releases} recent release observations. Empty days mean no dated evidence in this scoped response; they are not evidence that no work occurred.`;
+ const grid=clear('calendar-grid');for(const day of view.days){const button=el('button',undefined,'calendar-day');button.type='button';button.dataset.date=day.key;button.setAttribute('aria-pressed',String(day.key===calendarSelected));button.classList.toggle('outside-month',!day.inMonth);button.classList.toggle('today',day.key===today);button.append(el('span',String(day.day),'calendar-day-number'));const counts={};if(day.events.length){const types=el('span',undefined,'calendar-event-marks');for(const type of ['handoff','report','release']){const count=day.events.filter(event=>event.type===type).length;counts[type]=count;if(count)types.append(el('i',String(count),'event-mark '+type));}button.append(types);}const evidence=day.events.length?` · ${counts.handoff||0} handoffs, ${counts.report||0} worker reports, ${counts.release||0} recent releases`:' · no dated evidence';button.setAttribute('aria-label',day.date.toLocaleDateString(undefined,{dateStyle:'full'})+evidence);button.onclick=()=>{if(!day.inMonth)calendarMonth=new Date(day.date.getFullYear(),day.date.getMonth(),1,12);selectCalendarDay(day.key,true);};grid.append(button);}
+ const selected=facts.filter(event=>event.date===calendarSelected),selectedDate=new Date(calendarSelected+'T12:00:00');$('calendar-day-title').textContent=Number.isFinite(selectedDate.getTime())?selectedDate.toLocaleDateString(undefined,{dateStyle:'full'}):'No day selected';$('calendar-day-summary').textContent=selected.length?`${selected.length} dated record${selected.length===1?'':'s'} in the available scoped response.`:'No dated evidence in the available scoped response. This is not evidence of inactivity.';
+ const list=clear('calendar-day-events');for(const event of selected){const card=el('article',undefined,'calendar-event '+event.type);card.append(el('span',event.label,'board-state '+event.type),qualifiedName('div',event.work.key),el('time',displayTime(event.at),'identifier'),el('p',short(event.summary,220)),workButton(event.work,'Open Workstream'));list.append(card);}if(!selected.length)empty(list,'Choose a marked day to review recorded work.');
+ if(focus)grid.querySelector(`[data-date="${calendarSelected}"]`)?.focus({preventScroll:true});
+}
+$('calendar-previous').onclick=()=>{calendarMonth=new Date(calendarMonth.getFullYear(),calendarMonth.getMonth()-1,1,12);calendarSelected=ActivityViewsFacts.dateKey(calendarMonth.getTime());renderCalendar(activityResult,true);};
+$('calendar-next').onclick=()=>{calendarMonth=new Date(calendarMonth.getFullYear(),calendarMonth.getMonth()+1,1,12);calendarSelected=ActivityViewsFacts.dateKey(calendarMonth.getTime());renderCalendar(activityResult,true);};
+$('calendar-today').onclick=()=>{const now=new Date();calendarMonth=new Date(now.getFullYear(),now.getMonth(),1,12);calendarSelected=ActivityViewsFacts.dateKey(now.getTime());renderCalendar(activityResult,true);};
 let detailKey=null;
 const classicDetail=showDetail;
 let reportSignature=null;
@@ -59,6 +89,8 @@ render=function(result){
  classicRender(result);
  renderWorkspaceInventory(result);
  renderHighlightKey(result);
+ renderDeveloperBoard(result);
+ renderCalendar(result);
  // Work view includes completed/deferred intent too; home is observational only.
  const ordered=[...result.workstreams].sort((a,b)=>executionRank(b)-executionRank(a)||a.key.localeCompare(b.key));
  const all=clear('workstreams');for(const work of ordered)all.append(renderWorkCard(work));
@@ -72,4 +104,4 @@ render=function(result){
  selectView();
 };
 // Clear added surfaces synchronously on scope change; failed fetch cannot leak prior scope.
-$('scope').addEventListener('change',()=>{for(const id of ['live-work','rested','rested-coverage','home-attention','reports','report-coverage','highlight-key-examples','workspace-inventory'])clear(id);workspaceSummary.hidden=true;detailKey=null;});
+$('scope').addEventListener('change',()=>{for(const id of ['live-work','rested','rested-coverage','home-attention','reports','report-coverage','highlight-key-examples','workspace-inventory','developer-active','developer-released','developer-evidence','calendar-grid','calendar-day-events'])clear(id);for(const id of ['developer-active-count','developer-released-count','developer-evidence-count'])$(id).textContent='0';$('developer-board-coverage').textContent='Awaiting the selected scoped response.';$('calendar-coverage').textContent='Awaiting the selected scoped response.';$('calendar-day-summary').textContent='';workspaceSummary.hidden=true;detailKey=null;activityResult=null;});

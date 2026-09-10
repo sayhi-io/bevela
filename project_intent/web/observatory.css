@@ -45,3 +45,29 @@ main{margin-left:64px;padding-top:30px}header h1{font-size:38px;margin-top:8px}.
 .inventory-table details{font-size:11px;margin-top:6px}.inventory-table summary{cursor:pointer;color:var(--muted)}
 .inventory-table code{display:block;user-select:text;padding:8px 0;font-size:11px}
 @media(max-width:700px){.inventory-table{font-size:11px}.inventory-table td,.inventory-table th{padding:10px 5px}.status-tools{flex-wrap:wrap}}
+
+/* Developers Board: observation lanes, not a schedule or ownership score. */
+.developer-board{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px;align-items:start}
+.developer-column{min-width:0;border:1px solid var(--line);border-radius:10px;background:#141b16;padding:12px}
+.developer-column-head{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:3px 4px 12px;border-bottom:1px solid var(--line)}
+.developer-column-head h3{font-size:14px;margin:0}.developer-column-head>span{font:11px ui-monospace,monospace;color:var(--muted);border:1px solid var(--line);border-radius:999px;padding:3px 7px}
+.developer-stack{display:grid;gap:9px;margin-top:10px}
+.developer-card{min-width:0;padding:13px;border:1px solid var(--line);border-radius:8px;background:#1b241d}
+.developer-card h3{font-size:14px;margin:8px 0}.developer-card p{font-size:12px;line-height:1.55;color:#c8d4c8;overflow-wrap:anywhere}.developer-card button{width:100%;margin-top:7px}
+.board-state{display:inline-block;margin:8px 0 2px;font:10px/1.4 ui-monospace,monospace;letter-spacing:.3px;text-transform:uppercase;color:var(--muted)}
+.board-state.active{color:#b8e7ad}.board-state.released,.board-state.release{color:#c6cfc7}.board-state.evidence,.board-state.report{color:#a9caef}.board-state.handoff{color:#e2c58f}
+
+/* Calendar is evidence-indexed. Empty cells deliberately carry no status color. */
+.calendar-toolbar{display:flex;align-items:center;justify-content:space-between;gap:18px;margin:20px 0 8px}.calendar-toolbar h2{font-size:24px}.calendar-actions{display:flex;gap:7px}.calendar-actions button{min-width:44px}
+.calendar-layout{display:grid;grid-template-columns:minmax(0,2fr) minmax(260px,.8fr);gap:18px;align-items:start;margin-top:16px}.calendar-shell,.calendar-detail{border:1px solid var(--line);border-radius:10px;background:#141b16;padding:14px;min-width:0}
+.calendar-weekdays,.calendar-grid{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:5px}.calendar-weekdays{padding:0 2px 8px}.calendar-weekdays span{text-align:center;font:10px ui-monospace,monospace;color:var(--muted);text-transform:uppercase}
+.calendar-day{position:relative;display:flex;flex-direction:column;justify-content:space-between;align-items:flex-start;min-width:0;min-height:86px;padding:8px;border-radius:7px;background:#19221b;text-align:left}.calendar-day:hover{border-color:#6c8264;background:#202c23}.calendar-day[aria-pressed="true"]{outline:2px solid var(--mint);outline-offset:-2px}.calendar-day.outside-month{opacity:.38}.calendar-day.today .calendar-day-number{color:var(--mint);font-weight:700}.calendar-day-number{font:12px ui-monospace,monospace}
+.calendar-event-marks{display:flex;align-items:flex-end;gap:4px;flex-wrap:wrap}.event-mark{display:grid;place-items:center;min-width:18px;height:18px;padding:0 4px;border-radius:5px;font:9px ui-monospace,monospace;font-style:normal}.event-mark.handoff{color:#f0d3a0;background:#4b3b22}.event-mark.report{color:#c8ddf6;background:#293d55}.event-mark.release{color:#d3dbd3;background:#343d35}
+.calendar-detail{position:sticky;top:16px}.calendar-detail h3{font-size:19px;margin:8px 0}.calendar-event{padding:12px 0;border-top:1px solid var(--line)}.calendar-event:first-child{margin-top:10px}.calendar-event p{font-size:12px;line-height:1.55;color:#c8d4c8}.calendar-event button{width:100%;margin-top:5px}
+[data-theme="light"] .developer-column,[data-theme="light"] .calendar-shell,[data-theme="light"] .calendar-detail{background:#f7faf3}
+[data-theme="light"] .developer-card,[data-theme="light"] .calendar-day{background:#fcfdf9}
+[data-theme="light"] .developer-card p,[data-theme="light"] .calendar-event p{color:#405342}
+[data-theme="light"] .calendar-day:hover{background:#edf3e7}
+[data-theme="light"] .board-state.active{color:#35652d}[data-theme="light"] .board-state.report,[data-theme="light"] .board-state.evidence{color:#315c9b}[data-theme="light"] .board-state.handoff{color:#85500e}
+@media(max-width:1050px){.developer-board{grid-template-columns:1fr 1fr}.developer-column:last-child{grid-column:1/-1}.calendar-layout{grid-template-columns:1fr}.calendar-detail{position:static}}
+@media(max-width:700px){.developer-board{grid-template-columns:1fr}.developer-column:last-child{grid-column:auto}.calendar-toolbar{align-items:flex-start}.calendar-actions{flex-wrap:wrap;justify-content:flex-end}.calendar-shell{padding:8px}.calendar-weekdays,.calendar-grid{gap:3px}.calendar-day{min-height:58px;padding:5px}.calendar-event-marks{gap:2px}.event-mark{min-width:15px;height:15px;font-size:8px}.calendar-day-number{font-size:11px}}

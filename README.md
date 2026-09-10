@@ -181,7 +181,7 @@ PI does not require those workers to become nodes in a proprietary agent graph. 
 
 **Mission Control is a read-only observatory—not a control panel for its workers.**
 
-Browse workstreams, architecture, reports, worker/session observations and attention indicators. The experimental [Workstream Map](docs/WORKSTREAM_MAP_EXPERIMENT.md) shows declared boundaries and convergence pressure.
+Browse workstreams, architecture, reports, worker/session observations and attention indicators. The [Developers Board and work calendar](docs/ACTIVITY_VIEWS.md) separate current observations from timestamped evidence; the experimental [Workstream Map](docs/WORKSTREAM_MAP_EXPERIMENT.md) shows declared boundaries and convergence pressure.
 
 Historical registrations are not a headcount. Missing observations do not mean no one is working. Integration context and repair plans are CLI features; Mission Control does not yet display those plans.
 
