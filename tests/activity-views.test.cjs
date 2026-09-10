@@ -59,3 +59,16 @@ test('empty and invalid timestamps remain absent rather than becoming epoch acti
  assert.equal(F.dateKey(''),null);assert.equal(F.dateKey(null),null);assert.equal(F.time(undefined),null);
  assert.deepEqual(F.events({workstreams:[work('a:none')]}),[]);
 });
+
+test('selected-day evidence can be searched, filtered and sorted without mutating events',()=>{
+ const rows=[
+  {id:'report',type:'report',label:'Worker report',at:20,summary:'Validated calendar ledger',work:{key:'sayhi/project:beta'}},
+  {id:'commit',type:'commit',label:'Git commit',at:10,summary:'Add search controls',scope:'sayhi/project',commit:{repository:'project',oid:'a'.repeat(40),publication:'local-only'}},
+  {id:'handoff',type:'handoff',label:'Provider handoff',at:30,summary:'Ready for review',work:{key:'sayhi/project:alpha'}},
+ ],original=rows.map(row=>row.id);
+ assert.deepEqual(F.filterEvents(rows,{query:'calendar ledger'}).map(row=>row.id),['report']);
+ assert.deepEqual(F.filterEvents(rows,{query:'local-only',type:'commit'}).map(row=>row.id),['commit']);
+ assert.deepEqual(F.filterEvents(rows,{sort:'oldest'}).map(row=>row.id),['commit','report','handoff']);
+ assert.deepEqual(F.filterEvents(rows,{sort:'workstream'}).map(row=>row.id),['commit','handoff','report']);
+ assert.deepEqual(rows.map(row=>row.id),original);
+});

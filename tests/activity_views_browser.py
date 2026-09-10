@@ -62,6 +62,7 @@ def fixture():
 def run(output):
     output.mkdir(parents=True, exist_ok=True)
     payload = fixture()
+    api_unavailable = False
     with sync_playwright() as playwright:
         options = {"executable_path": os.environ["BROWSER_EXECUTABLE"]} if os.getenv("BROWSER_EXECUTABLE") else {}
         # The shared DGX headless shell can stall compositor frames; this probe
@@ -78,7 +79,7 @@ def run(output):
             if url.netloc != "pi.test":
                 request.abort()
             elif url.path == "/api/v1/observatory":
-                request.fulfill(json=payload)
+                request.fulfill(status=503) if api_unavailable else request.fulfill(json=payload)
             else:
                 name = "observatory.html" if url.path in ("/", "/observatory") else url.path.lstrip("/")
                 asset = ROOT / "project_intent/web" / name
@@ -116,13 +117,25 @@ def run(output):
         assert marked.count() >= 2
         today = page.locator('#calendar-grid .calendar-day.today')
         today.click()
-        expect(page.locator("#calendar-day-events .calendar-event")).to_have_count(4)
+        expect(page.locator("#calendar-day-events tr[data-event-type]")).to_have_count(4)
         day_text = page.locator("#calendar-day-events").inner_text()
         assert "worker report" in day_text.lower(), day_text
         assert "reported inactive" in day_text.lower(), day_text
         assert "pull request observed" in day_text.lower(), day_text
         assert "record local git calendar evidence" in day_text.lower(), day_text
         assert "local-only" in day_text.lower(), day_text
+        page.locator("#calendar-event-search").fill("Record local Git")
+        expect(page.locator("#calendar-day-events tr[data-event-type]")).to_have_count(1)
+        expect(page.locator("#calendar-event-result-count")).to_have_text("1 of 4 records")
+        expect(page.locator("#calendar-day-events tr")).to_have_attribute("data-event-type", "commit")
+        page.locator("#calendar-event-search").fill("")
+        page.locator("#calendar-event-type").select_option("report")
+        expect(page.locator("#calendar-day-events tr[data-event-type]")).to_have_count(1)
+        expect(page.locator("#calendar-day-events")).to_contain_text("Worker report")
+        page.locator("#calendar-event-type").select_option("")
+        page.locator("#calendar-event-sort").select_option("oldest")
+        times = page.locator("#calendar-day-events tr[data-at]").evaluate_all("rows => rows.map(row => Number(row.dataset.at))")
+        assert times == sorted(times), times
         page.locator("#calendar-day-events button").first.click()
         expect(page.locator("#detail")).to_be_visible()
         page.keyboard.press("Escape")
@@ -142,12 +155,12 @@ def run(output):
         detail = page.locator(".calendar-detail").bounding_box()
         assert shell["width"] <= 930, shell
         assert detail["y"] >= shell["y"] + shell["height"], (shell, detail)
-        cards = page.locator("#calendar-day-events .calendar-event")
-        assert len({round(cards.nth(index).bounding_box()["x"]) for index in range(cards.count())}) >= 2
-        assert page.evaluate("""() => [...document.querySelectorAll('#calendar-day-events .calendar-event')].every(card => {
-          const right=card.getBoundingClientRect().right;
-          return card.scrollWidth<=card.clientWidth+.5 && [...card.querySelectorAll('*')].every(node=>node.getBoundingClientRect().right<=right+.5);
-        })"""), "selected-day evidence must remain contained within its card"
+        rows = page.locator("#calendar-day-events tr[data-event-type]")
+        expect(rows).to_have_count(4)
+        assert page.evaluate("""() => [...document.querySelectorAll('#calendar-day-events tr[data-event-type]')].every(row => {
+          const right=row.getBoundingClientRect().right;
+          return row.scrollWidth<=row.clientWidth+.5 && [...row.querySelectorAll('*')].every(node=>node.getBoundingClientRect().right<=right+.5);
+        })"""), "selected-day evidence must remain contained within its row"
 
         page.locator("#calendar-month-view").click()
         expect(page.locator("#calendar-month-view")).to_have_attribute("aria-pressed", "true")
@@ -223,6 +236,15 @@ def run(output):
             page.locator(f'#view-nav a[href="#{view}"]').click()
             if view != "home":
                 expect(page.locator(".judgment-bar")).to_be_hidden()
+            if view == "calendar":
+                expect(page.locator("#calendar-event-search")).to_be_visible()
+                expect(page.locator("#calendar-day-events tr[data-event-type]")).to_have_count(4)
+                page.screenshot(path=str(output / "calendar-ledger-mobile.png"), animations="disabled")
+                page.locator("#calendar-day-events tr[data-event-type]").first.scroll_into_view_if_needed()
+                assert page.evaluate("""() => [...document.querySelectorAll('#calendar-day-events tr[data-event-type]')].every(row => {
+                  const box=row.getBoundingClientRect(); return box.left>=0 && box.right<=innerWidth;
+                })""")
+                page.screenshot(path=str(output / "calendar-ledger-mobile-rows.png"), animations="disabled")
             assert page.evaluate("document.documentElement.scrollWidth <= innerWidth"), view
         page.locator('#view-nav a[href="#home"]').click()
         accepted_metric = page.locator(".metric-explainer").nth(3)
@@ -232,11 +254,23 @@ def run(output):
         expect(accepted_metric.locator(".metric-explanation")).to_contain_text("not verified implementation conformance")
         expect(accepted_metric.locator(".metric-explanation")).to_contain_text("applicable records imported from another scope")
         page.screenshot(path=str(output / "calendar-mobile.png"), animations="disabled")
+
+        # A pending or failed scope refresh must never let ledger controls redraw
+        # evidence retained from the prior scope.
+        page.locator('#view-nav a[href="#calendar"]').click()
+        expect(page.locator("#calendar-day-events tr[data-event-type]")).to_have_count(4)
+        api_unavailable = True
+        page.locator("#scope").dispatch_event("change")
+        page.locator("#calendar-event-search").fill("Calendar")
+        page.locator("#calendar-event-type").select_option("report")
+        expect(page.locator("#calendar-day-events tr[data-event-type]")).to_have_count(0)
+        expect(page.locator("#calendar-event-result-count")).to_have_text("0 records")
+        expect(page.locator("#error")).to_be_visible()
         assert not errors, errors
         browser.close()
     (output / "results.json").write_text(json.dumps([
         "Developers Board active/released/evidence lanes passed",
-        "Calendar week/month evidence, stacked detail, focus, theme and mobile checks passed",
+        "Calendar week/month evidence, searchable ledger, focus, theme and mobile checks passed",
         "Overview-only summaries and distinct Work, Architecture, Environment, Handoff and Source layouts passed",
     ], indent=2) + "\n")
 

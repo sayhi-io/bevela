@@ -20,6 +20,17 @@
   for(const commit of result.local_git?.commits||[]){if(!commit||typeof commit.repository!=='string'||typeof commit.scope!=='string'||!/^[a-f0-9]{40}$|^[a-f0-9]{64}$/.test(commit.oid||'')||!['local-only','remote-tracking','unknown'].includes(commit.publication))continue;add('commit',commit.committed_at,null,{id:`commit:${commit.repository}:${commit.oid}`,scope:commit.scope,summary:commit.subject||'Commit without a subject',commit});}
   return rows.sort((a,b)=>b.at-a.at||a.id.localeCompare(b.id));
  }
+ function filterEvents(rows,options={}){
+  const query=String(options.query||'').trim().toLocaleLowerCase(),type=String(options.type||''),sort=String(options.sort||'newest');
+  const identity=row=>row.work?.key||`${row.scope||''} ${row.commit?.repository||''}`;
+  const searchable=row=>[row.label,row.type,row.summary,identity(row),row.id,row.session,row.commit?.oid,row.commit?.publication,row.ref?.repository,row.ref?.number,row.ref?.relationship,row.ref?.observation?.state].filter(value=>value!==undefined&&value!==null).join(' ').toLocaleLowerCase();
+  const result=rows.filter(row=>(!type||row.type===type)&&(!query||searchable(row).includes(query))).slice();
+  if(sort==='oldest')result.sort((a,b)=>a.at-b.at||a.id.localeCompare(b.id));
+  else if(sort==='type')result.sort((a,b)=>a.label.localeCompare(b.label)||b.at-a.at||a.id.localeCompare(b.id));
+  else if(sort==='workstream')result.sort((a,b)=>identity(a).localeCompare(identity(b))||b.at-a.at||a.id.localeCompare(b.id));
+  else result.sort((a,b)=>b.at-a.at||a.id.localeCompare(b.id));
+  return result;
+ }
  const fresh=(worker,now)=>worker?.status==='active'&&time(worker.heartbeat_at)!==null&&time(worker.expires_at)!==null&&time(worker.heartbeat_at)<=now&&time(worker.expires_at)>now;
  function board(result,now=Date.now(),connected=true){
   const works=new Map((result.workstreams||[]).map(work=>[work.key,work])),active=[];
@@ -56,6 +67,6 @@
   for(let index=0;index<7;index++){const day=new Date(date);day.setDate(date.getDate()+index);const key=dateKey(day.getTime());days.push({date:day,key,day:day.getDate(),inMonth:true,events:byDate.get(key)||[]});}
   return {days};
  }
- const api={events,board,month,week,dateKey,time,eventLabels};
+ const api={events,filterEvents,board,month,week,dateKey,time,eventLabels};
  if(typeof module!=='undefined'&&module.exports)module.exports=api;else root.ActivityViewsFacts=api;
 })(typeof globalThis!=='undefined'?globalThis:this);
