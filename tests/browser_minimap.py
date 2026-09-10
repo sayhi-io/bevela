@@ -1,6 +1,7 @@
 """Minimap interactions over the real local cache; candidate-only loopback server."""
 import argparse
 import json
+import os
 from pathlib import Path
 import threading
 from http.server import ThreadingHTTPServer
@@ -34,7 +35,8 @@ def check_width_control(page):
  page.keyboard.press('Home')
 try:
  with sync_playwright() as p:
-  browser=p.chromium.launch(headless=True)
+  options={'executable_path':os.environ['BROWSER_EXECUTABLE']} if os.getenv('BROWSER_EXECUTABLE') else {}
+  browser=p.chromium.launch(headless=True,args=['--disable-gpu','--disable-software-rasterizer'],**options)
   context=browser.new_context(http_credentials=access,viewport={'width':1440,'height':1050},reduced_motion='reduce',has_touch=True)
   page=context.new_page();errors=[];page.on('pageerror',lambda e:errors.append(str(e)))
   page.goto(f'http://127.0.0.1:{server.server_port}/observatory#work')
@@ -92,7 +94,7 @@ try:
   page.locator('.minimap-entry').first.focus()
   page.evaluate('render(data)')
   expect(page.locator('.minimap-entry').first).to_be_focused()
-  page.locator('#theme').select_option('light')
+  page.locator('.display-options>summary').click();page.locator('#theme').select_option('light');page.locator('.display-options>summary').click()
   page.wait_for_function("() => getComputedStyle(document.querySelector('#page-minimap')).backgroundColor==='rgb(251, 252, 250)'")
   page.screenshot(path=str(args.output/'minimap-cards-light.png'),animations='disabled')
   check_width_control(page)
@@ -118,7 +120,7 @@ try:
   target.click()
   expect(page.locator('#architecture .tile').last.locator('h3')).to_be_focused()
   assert page.locator('#minimap-index').evaluate('(node) => node.scrollTop > 0')
-  page.locator('#theme').select_option('dark')
+  page.locator('.display-options>summary').click();page.locator('#theme').select_option('dark');page.locator('.display-options>summary').click()
   page.wait_for_function("() => getComputedStyle(document.querySelector('#page-minimap')).backgroundColor==='rgb(28, 37, 31)'")
   page.screenshot(path=str(args.output/'minimap-list-dark.png'),animations='disabled')
   page.locator('#notifications').click()

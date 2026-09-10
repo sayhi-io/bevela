@@ -47,6 +47,15 @@
   }
   return {year,monthIndex,days};
  }
- const api={events,board,month,dateKey,time,eventLabels};
+ function week(anchor,rows=[]){
+  const date=new Date(anchor);if(!Number.isFinite(date.getTime()))return {days:[]};
+  date.setHours(12,0,0,0);date.setDate(date.getDate()-((date.getDay()+6)%7));
+  const byDate=new Map();
+  for(const row of rows){if(!row.date)continue;if(!byDate.has(row.date))byDate.set(row.date,[]);byDate.get(row.date).push(row);}
+  const days=[];
+  for(let index=0;index<7;index++){const day=new Date(date);day.setDate(date.getDate()+index);const key=dateKey(day.getTime());days.push({date:day,key,day:day.getDate(),inMonth:true,events:byDate.get(key)||[]});}
+  return {days};
+ }
+ const api={events,board,month,week,dateKey,time,eventLabels};
  if(typeof module!=='undefined'&&module.exports)module.exports=api;else root.ActivityViewsFacts=api;
 })(typeof globalThis!=='undefined'?globalThis:this);

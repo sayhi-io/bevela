@@ -21,7 +21,7 @@
  const picker=el('label',undefined,'design-picker');picker.append(el('span','Design'));
  const select=el('select');select.setAttribute('aria-label','Mission Control design');
  for(const [id,name] of [['default','Current'],['plan','Plan'],['studio','Studio'],['console','Console']]){const option=el('option',name);option.value=id;select.append(option);}
- select.value=selected;select.onchange=()=>{const url=new URL(location.href);if(select.value==='default')url.searchParams.delete('design');else url.searchParams.set('design',select.value);location.assign(url.href);};picker.append(select);document.querySelector('header .controls').append(picker);
+ select.value=selected;select.onchange=()=>{const url=new URL(location.href);if(select.value==='default')url.searchParams.delete('design');else url.searchParams.set('design',select.value);location.assign(url.href);};picker.append(select);document.querySelector('.display-options-panel').append(picker);
  // Marks are generated client-side from the same scoped Workstream identity.
  // No external avatar service, new PM fields, title hash, or status-based color.
 })();

@@ -78,7 +78,9 @@ def run(output):
         for width in (1440, 800, 390, 320):
             page.set_viewport_size({'width': width, 'height': 1000})
             for theme in ('light', 'dark'):
+                page.locator('.display-options>summary').click()
                 page.select_option('#theme', theme)
+                page.locator('.display-options>summary').click()
                 bounds, history = chart.bounding_box(), card.locator('.history-trigger').bounding_box()
                 assert bounds['height'] == 32
                 assert bounds['x'] + bounds['width'] <= history['x'] - 4

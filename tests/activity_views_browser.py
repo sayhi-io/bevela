@@ -91,17 +91,24 @@ def run(output):
         page.goto("http://pi.test/observatory")
         page.locator('#view-nav a[href="#developers"]').click()
         expect(page.locator("#view-title")).to_have_text("Developers")
+        expect(page.locator(".judgment-bar")).to_be_hidden()
         expect(page.locator("#developer-active .developer-card")).to_have_count(1)
         expect(page.locator("#developer-released .developer-card")).to_have_count(1)
         expect(page.locator("#developer-evidence .developer-card")).to_have_count(1)
         assert "calendar-active-session" in page.locator("#developer-active").inner_text()
         assert "lifecycle alone never" in page.locator("#developer-board-coverage").inner_text().lower()
+        page.locator(".display-options > summary").click()
         page.locator("#theme").select_option("dark")
         expect(page.locator("html")).to_have_attribute("data-theme", "dark")
+        page.locator(".display-options > summary").click()
         page.screenshot(path=str(output / "developers-dark.png"), animations="disabled")
 
         page.locator('#view-nav a[href="#calendar"]').click()
         expect(page.locator("#view-title")).to_have_text("Calendar")
+        expect(page.locator(".judgment-bar")).to_be_hidden()
+        expect(page.locator("#calendar-week")).to_have_attribute("aria-pressed", "true")
+        expect(page.locator("#calendar-grid .calendar-day")).to_have_count(7)
+        assert "(day:" not in page.locator("#calendar-month").inner_text()
         marked = page.locator("#calendar-grid .calendar-day:has(.event-mark)")
         assert marked.count() >= 2
         today = page.locator('#calendar-grid .calendar-day.today')
@@ -116,27 +123,57 @@ def run(output):
         page.locator("#calendar-day-events button").first.click()
         expect(page.locator("#detail")).to_be_visible()
         page.keyboard.press("Escape")
-        month = page.locator("#calendar-month").inner_text()
+        week = page.locator("#calendar-month").inner_text()
         page.locator("#calendar-previous").click()
-        assert page.locator("#calendar-month").inner_text() != month
+        assert page.locator("#calendar-month").inner_text() != week
         page.locator("#calendar-today").click()
-        expect(page.locator("#calendar-month")).to_have_text(month)
+        expect(page.locator("#calendar-month")).to_have_text(week)
         expect(page.locator('#calendar-grid .calendar-day[aria-pressed="true"]')).to_be_focused()
-        assert "not evidence that no work occurred" in page.locator("#calendar-coverage").inner_text()
+        assert "not evidence that no work occurred" in page.locator("#calendar-coverage").text_content()
+        shell = page.locator(".calendar-shell").bounding_box()
+        detail = page.locator(".calendar-detail").bounding_box()
+        assert shell["width"] <= 930, shell
+        assert detail["y"] >= shell["y"] + shell["height"], (shell, detail)
+        cards = page.locator("#calendar-day-events .calendar-event")
+        assert len({round(cards.nth(index).bounding_box()["x"]) for index in range(cards.count())}) >= 2
+
+        page.locator("#calendar-month-view").click()
+        expect(page.locator("#calendar-month-view")).to_have_attribute("aria-pressed", "true")
+        expect(page.locator("#calendar-grid .calendar-day")).to_have_count(42)
+        page.screenshot(path=str(output / "calendar-month-dark.png"), animations="disabled")
+        page.locator("#calendar-week").click()
+        expect(page.locator("#calendar-grid .calendar-day")).to_have_count(7)
+        expect(page.locator('#calendar-grid .calendar-day.today[aria-pressed="true"]')).to_have_count(1)
+        page.locator(".display-options > summary").click()
         page.locator("#theme").select_option("light")
         expect(page.locator("html")).to_have_attribute("data-theme", "light")
-        page.screenshot(path=str(output / "calendar-light.png"), animations="disabled")
+        page.locator(".display-options > summary").click()
+        page.screenshot(path=str(output / "calendar-week-light.png"), animations="disabled")
+
+        page.locator('#view-nav a[href="#handoffs"]').click()
+        expect(page.locator("#rested")).to_be_hidden()
+        page.locator('#view-nav a[href="#work"]').click()
+        expect(page.locator("#convergence")).to_be_hidden()
+        page.locator('#view-nav a[href="#home"]').click()
+        expect(page.locator(".judgment-bar")).to_be_visible()
+        expect(page.locator("#rested")).to_be_visible()
+        expect(page.locator("#convergence")).to_be_visible()
+        page.locator("#rested-coverage a").click()
+        expect(page.locator("#view-title")).to_have_text("Developers")
+        expect(page.locator("#developer-released .developer-card")).to_have_count(1)
 
         page.set_viewport_size({"width": 390, "height": 844})
         for view in ("developers", "calendar"):
             page.locator(f'#view-nav a[href="#{view}"]').click()
+            expect(page.locator(".judgment-bar")).to_be_hidden()
             assert page.evaluate("document.documentElement.scrollWidth <= innerWidth"), view
         page.screenshot(path=str(output / "calendar-mobile.png"), animations="disabled")
         assert not errors, errors
         browser.close()
     (output / "results.json").write_text(json.dumps([
         "Developers Board active/released/evidence lanes passed",
-        "Calendar evidence, navigation, focus, detail, theme and mobile checks passed",
+        "Calendar week/month evidence, stacked detail, focus, theme and mobile checks passed",
+        "Overview-only summaries and distinct Work/Handoffs destinations passed",
     ], indent=2) + "\n")
 
 

@@ -2,6 +2,7 @@
 import argparse
 import copy
 import json
+import os
 from pathlib import Path
 import threading
 from http.server import ThreadingHTTPServer
@@ -23,32 +24,36 @@ base='http://127.0.0.1:'+str(server.server_port)
 results=[]
 try:
  with sync_playwright() as p:
-  browser=p.chromium.launch(headless=True)
+  options={'executable_path':os.environ['BROWSER_EXECUTABLE']} if os.getenv('BROWSER_EXECUTABLE') else {}
+  browser=p.chromium.launch(headless=True,args=['--disable-gpu','--disable-software-rasterizer'],**options)
   context=browser.new_context(http_credentials={'username':access['username'],'password':access['password']},viewport={'width':1440,'height':1050})
   page=context.new_page();errors=[];page.on('pageerror',lambda e:errors.append(str(e)))
   page.goto(base+'/observatory');page.wait_for_selector('#rested .tile')
   expect(page.locator('#view-title')).to_have_text('Overview')
   expect(page.locator('#architecture')).not_to_be_visible()
-  page.locator('#theme').select_option('dark')
+  page.locator('.display-options>summary').click();page.locator('#theme').select_option('dark');page.locator('.display-options>summary').click()
   page.wait_for_function("() => getComputedStyle(document.querySelector('#live-work .work-card')).backgroundColor==='rgb(25, 32, 27)'")
   page.screenshot(path=str(args.output/'home-dark.png'),animations='disabled')
   page.locator('#view-nav a[href="#handoffs"]').click()
   expect(page.locator('#reports .report-card').first).to_be_visible()
   page.locator('#reports button').first.click()
   expect(page.locator('#worker-report-detail')).to_be_visible()
-  assert 'publication receipt' in page.locator('#worker-report-detail').inner_text()
   receipt=page.locator('#worker-report-detail details').first
-  receipt.locator('summary').click();receipt.locator('summary').focus()
+  receipt_summary=receipt.locator(':scope > summary')
+  receipt_summary.click()
+  report_detail=page.locator('#worker-report-detail').inner_text()
+  assert 'publication receipt' in report_detail,report_detail
+  receipt_summary.focus()
   page.evaluate('() => render(data)')
   expect(receipt).to_have_attribute('open','')
-  expect(receipt.locator('summary')).to_be_focused()
+  expect(receipt_summary).to_be_focused()
   page.keyboard.press('Escape')
   page.go_back();expect(page.locator('#view-title')).to_have_text('Overview')
   page.go_forward();expect(page.locator('#view-title')).to_have_text('Handoffs')
   page.locator('#scope').select_option('sayhi/project-intent')
   page.wait_for_function("() => data && data.scopes.length===1")
   assert 'sayhi/sparkops' not in page.locator('#reports').inner_text()
-  page.locator('#theme').select_option('light')
+  page.locator('.display-options>summary').click();page.locator('#theme').select_option('light');page.locator('.display-options>summary').click()
   page.wait_for_function("() => getComputedStyle(document.querySelector('#reports .tile')).backgroundColor==='rgb(250, 252, 246)'")
   page.screenshot(path=str(args.output/'handoffs-light.png'),animations='disabled')
   page.locator('#view-nav a[href="#home"]').focus();page.keyboard.press('Enter')

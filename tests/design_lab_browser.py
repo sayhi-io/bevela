@@ -3,12 +3,13 @@ import json
 import os
 from pathlib import Path
 from urllib.parse import urlparse
-from playwright.sync_api import sync_playwright
+from playwright.sync_api import expect, sync_playwright
 
 access=json.loads(Path(os.environ['PI_MAP_ACCESS']).read_text())
 out=Path(os.environ['PI_MAP_OUTPUT']);out.mkdir(parents=True,exist_ok=True)
 with sync_playwright() as p:
-    browser=p.chromium.launch()
+    options={'executable_path':os.environ['BROWSER_EXECUTABLE']} if os.getenv('BROWSER_EXECUTABLE') else {}
+    browser=p.chromium.launch(args=['--disable-gpu','--disable-software-rasterizer'],**options)
     context=browser.new_context(http_credentials={k:access[k] for k in ('username','password')},viewport={'width':1536,'height':1100},reduced_motion='reduce')
     page=context.new_page();errors=[];page.on('pageerror',lambda e:errors.append(str(e)))
 
@@ -27,7 +28,9 @@ with sync_playwright() as p:
         page.set_viewport_size({'width':1536,'height':1100})
         page.goto('http://127.0.0.1:8290/observatory?design='+variant+'#work')
         page.wait_for_selector('.work-group:visible .work-identicon')
-        assert page.locator('.design-picker select').is_visible()
+        expect(page.locator('.design-picker select')).to_be_hidden()
+        page.locator('.display-options>summary').click()
+        expect(page.locator('.design-picker select')).to_be_visible()
         assert page.locator('html').get_attribute('data-design')==('default' if variant=='unknown' else variant)
         key=page.locator('.work-group:visible').first.get_attribute('data-group')
         mark=page.locator('.work-group:visible .work-identicon').first.inner_html()
@@ -38,6 +41,7 @@ with sync_playwright() as p:
             assert page.evaluate('document.documentElement.scrollWidth<=innerWidth')
             assert page.locator('.work-group:visible .pr-chip').evaluate_all('(xs)=>xs.every(x=>{const p=x.parentElement.getBoundingClientRect(),r=x.getBoundingClientRect();return r.bottom<=p.bottom+1&&r.top>=p.top-1;})')
             page.screenshot(path=str(out/(variant+'-'+theme+'.png')))
+        page.locator('.display-options>summary').click()
         page.locator('.work-group:visible .group-context').first.click()
         assert page.locator('#detail .work-identicon').first.inner_html()==mark
         page.keyboard.press('Escape')
@@ -47,6 +51,7 @@ with sync_playwright() as p:
         page.locator('#view-nav a[href="#map"]').click()
         page.wait_for_selector('.jelly-center .work-identicon')
         assert page.locator('#workstream-map').is_visible()
+    page.locator('.display-options>summary').click()
     page.select_option('.design-picker select','plan')
     page.wait_for_url('**design=plan#map')
     page.wait_for_selector('.jelly-center .work-identicon')

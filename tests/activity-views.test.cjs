@@ -48,6 +48,13 @@ test('month is a Monday-first six-week grid with events on exact local dates',()
  assert.equal(view.days.filter(day=>day.inMonth).length,30);
 });
 
+test('week is a compact Monday-first seven-day range around the selected date',()=>{
+ const date=local(2026,8,10),events=[{id:'one',date:F.dateKey(date)}],view=F.week(new Date(2026,8,10,12),events);
+ assert.equal(view.days.length,7);assert.equal(view.days[0].date.getDay(),1);assert.equal(view.days[6].date.getDay(),0);
+ assert.equal(view.days.find(day=>day.key===F.dateKey(date)).events.length,1);
+ assert.deepEqual(F.week('invalid',events).days,[]);
+});
+
 test('empty and invalid timestamps remain absent rather than becoming epoch activity',()=>{
  assert.equal(F.dateKey(''),null);assert.equal(F.dateKey(null),null);assert.equal(F.time(undefined),null);
  assert.deepEqual(F.events({workstreams:[work('a:none')]}),[]);
