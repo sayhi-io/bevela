@@ -17,6 +17,18 @@ generation speed or an agent productivity judgment; there are no speed bands.
 Clicking a chip opens exact identity, working declaration, checkout and existing
 telemetry history. Previous registrations are collapsed by default. Historical charts
 remain in session and full Workstream detail; no history retention behavior changed.
+Measured overview chips now show the current value on the left and a thin curved
+sparkline in the same 32px-high row, stopping before the session-history button.
+Each curve uses only that exact session's existing 15-minute samples, never a
+Workstream total. The zero-based vertical scale adapts to the visible peak; curves
+are for within-session trends, not cross-session magnitude comparisons. There are
+no axes, fills, markers or animation. Missing/invalid values, lease boundaries and
+gaps over 120 seconds break the line; a single sample shows its value without
+inventing a curve. Unmeasured/disconnected observations retain explicit text.
+The first active session (reporting first, then present, with exact ID ordering)
+gets the strip's width. Other active sessions are counted on the history button
+and remain individually inspectable there, avoiding overlapping labels or
+zero-width curves on narrow cards. The shown value is not their combined rate.
 The same exact session appearing in several visible same-scope Workstreams is labeled
 Shared with its visible membership count. Rates are never summed or allocated to
 Workstreams. Similar strings, common checkout, matching working text and inferred
@@ -32,8 +44,8 @@ Keyboard buttons, named native modal, Escape/outside dismissal, focus restoratio
 text labels alongside vector icons and mobile wrapping are supported. No animation.
 Scope changes clear the panel; failed API refresh marks retained observations unknown.
 
-Validation: five pure Node worker-group tests plus five map tests and82existing Python
-tests. Real-data browser probe checks default charts absent, session keyboard detail,
+Original validation: five pure Node worker-group tests plus five map tests and82existing Python
+tests. The original real-data browser probe checked full-size charts absent, session keyboard detail,
 light/dark,390px layout, failed-refresh live badge suppression, scope clearing and
 reconnection, alongside the existing Workstream Map checks. Private evidence:
 `state/project-intent/reviews/worker-groups-20260906/`.
@@ -47,3 +59,23 @@ cleared the corrected source (worker-groups.js SHA256
 f811ef62d925fd82295f3dbdf65eab8fd4fccf9a763168e452c5a3a269f629e5).
 The real browser probe requires an actual reporting session for the nonempty history
 check and asserts both Workstream and session identity on focus restoration.
+
+## Compact sparkline validation
+
+`node --test tests/worker-groups.test.cjs` covers exact session rates and curved
+path generation, including explicit gaps, invalid samples, zeros and bounded
+smoothing. The credential-free deterministic browser probe serves checkout assets
+and an explicitly synthetic API fixture without contacting a service:
+
+```sh
+# Optional checkout-owned Playwright installation: see docs/OPERATIONS.md.
+BROWSER_EXECUTABLE=/path/to/headless_shell .venv/bin/python \
+  tests/throughput_sparkline_browser.py --output /private/evidence/sparklines
+```
+
+It checks 320/390/800/1440px layouts in both themes, exact-session inspection,
+keyboard focus restoration, overflow-session history, and unavailable/zero states.
+The probe disables GPU and software-GPU startup; SVG/CSS use CPU page rendering.
+This avoids a DGX headless compositor stall without bypassing normal browser
+actionability checks. It adds no application animation or runtime dependency.
+Fixture screenshots are layout evidence, not observations of worker performance.

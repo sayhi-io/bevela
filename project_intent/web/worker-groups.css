@@ -13,12 +13,20 @@
 .work-group .worker-chip{padding:6px 8px;border-radius:8px;flex-shrink:1;min-width:0}
 .work-group .worker-short-id,.work-group .worker-shared{display:none}
 .work-group .worker-rate{font-size:11px;white-space:nowrap}
+.work-group .worker-chip.worker-throughput{flex:1 1 0;height:32px;padding:0;gap:12px;border:0;border-radius:4px;box-shadow:none;background:transparent}
+.worker-throughput .worker-rate{flex:none;font-variant-numeric:tabular-nums}
+.worker-sparkline{display:block;flex:1 1 0;width:0;min-width:0;height:32px;color:var(--mint)}
+.worker-sparkline path{fill:none;stroke:currentColor;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round}
+.work-group .worker-chip:not(.worker-throughput) .worker-rate{overflow:hidden;text-overflow:ellipsis}
+.work-group .worker-chips{padding:3px; margin:-3px;overflow:visible}
+.work-group .worker-chip:focus-visible{outline-offset:1px}
 .work-group .card-gates{display:flex;align-items:center;gap:8px;margin:0;padding-top:10px;min-height:44px}
 .compact-field{position:relative;display:inline-flex;align-items:center;justify-content:center;width:32px;height:32px;padding:5px;border:0;background:transparent;flex-shrink:0}
 .compact-field .detail-icon{width:18px;height:18px}
 .card-tooltip{position:absolute;bottom:calc(100% + 8px);left:0;z-index:5;max-width:260px;width:max-content;padding:8px 10px;border:1px solid var(--line);border-radius:6px;background:var(--nav-bg,#151a17);color:var(--mint);font-size:12px;line-height:1.4;text-align:left;opacity:0;pointer-events:none}
 .compact-field:hover .card-tooltip,.compact-field:focus-visible .card-tooltip{opacity:1}
 .history-trigger .card-tooltip{left:auto;right:0}
+.history-trigger.has-more-sessions{width:auto;min-width:32px;gap:4px}
 .work-group .group-context{margin-left:auto;font-size:12px;border:0;background:transparent}
 #session-history{width:min(850px,94vw);max-height:80vh}
 #session-history input{width:100%;padding:12px;margin:12px 0}

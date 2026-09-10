@@ -32,9 +32,17 @@
  function chip(work,row){
   const b=el('button',undefined,'worker-chip '+row.kind);b.type='button';b.dataset.session=row.id;b.dataset.group=work.key;
   const shared=F.assignments(data,work.scope_id,row.id).length;
-  b.append(agentIcon(),el('span',label(row.id),'worker-short-id'),el('strong',row.label,'worker-rate'));
+  b.append(el('span',label(row.id),'worker-short-id'),el('strong',row.label,'worker-rate'));
+  if(row.rate!==null){
+   b.classList.add('worker-throughput');
+   const chart=F.sparkline(row.metric.points),svg=document.createElementNS('http://www.w3.org/2000/svg','svg');
+   svg.setAttribute('class','worker-sparkline');svg.setAttribute('viewBox','0 0 600 32');svg.setAttribute('preserveAspectRatio','none');svg.setAttribute('aria-hidden','true');svg.setAttribute('focusable','false');
+   for(const d of chart.paths){const path=document.createElementNS(svg.namespaceURI,'path');path.setAttribute('d',d);path.setAttribute('vector-effect','non-scaling-stroke');svg.append(path);}
+   b.append(svg);
+  }else b.prepend(agentIcon());
   if(shared>1)b.append(el('span','Shared · '+shared,'worker-shared'));
-  b.setAttribute('aria-label',row.id+' · '+row.label+(shared>1?' · shared across '+shared+' visible Workstreams':''));b.title=row.id+' — '+(row.presence?.working||'No working declaration')+' — click for exact checkout and telemetry history';b.onclick=()=>inspect(work.scope_id,row.id,work.key);return b;
+  const historyDescription=row.rate!==null?' · reported output-token rate over the last 15 minutes; gaps are unknown; open session history':'';
+  b.setAttribute('aria-label',row.id+' · '+row.label+(shared>1?' · shared across '+shared+' visible Workstreams':'')+historyDescription);b.title=row.id+' — '+(row.presence?.working||'No working declaration')+historyDescription+' — click for exact checkout and telemetry history';b.onclick=()=>inspect(work.scope_id,row.id,work.key);return b;
  }
  const classicCard=renderWorkCard;
  renderWorkCard=function(work){
@@ -44,10 +52,12 @@
   card.querySelector('.work-reference').prepend(scopeName('span',work.scope_id));
   const rows=F.sessions(work,Date.now(),connected),active=rows.filter(r=>r.present||r.reporting);
   const strip=el('div',undefined,'worker-strip');strip.setAttribute('aria-label','Session observations for '+work.id);
-  const chips=el('div',undefined,'worker-chips');for(const r of active.slice(0,3))chips.append(chip(work,r));strip.append(chips);
+  // One exact session gets the available chart width. Other active sessions
+  // remain in history; squeezing several curves can hide both rates and lines.
+  const chips=el('div',undefined,'worker-chips');for(const r of active.slice(0,1))chips.append(chip(work,r));strip.append(chips);
   if(!active.length)strip.append(el('p',connected?'No live observation':'Observation unavailable','quiet'));
   const historyButton=hint(el('button',undefined,'compact-field history-trigger'),'Session history · '+rows.length+' registrations');const clock=icon('handoff');clock.querySelector('path').setAttribute('d','M3 12a9 9 0 1 0 3-6.7M3 3v5h5m4-1v5l3 2');historyButton.append(clock);historyButton.onclick=()=>history(work);strip.append(historyButton);
-  if(active.length>3)historyButton.prepend(el('span','+'+(active.length-3)));
+  if(active.length>1){historyButton.classList.add('has-more-sessions');historyButton.prepend(el('span','+'+(active.length-1)));historyButton.setAttribute('aria-label','Session history · '+rows.length+' registrations · '+(active.length-1)+' other active session observations');}
   if(!rows.length&&work.activity?.points?.length)strip.append(el('p','Unattributed history available in Workstream context; no session identity inferred.','quiet'));
   card.insertBefore(strip,card.querySelector('.card-gates'));
   const gates=card.querySelector('.card-gates');gates.replaceChildren();for(const [name,key,glyph] of [['Review','review','architecture'],['Merge','merge','nearby']]){const b=hint(el('button',undefined,'compact-field'),name+' · '+(work.readiness?.[key]||'Not reported').replaceAll('-',' ')+' · provider declared');b.append(icon(glyph));b.onclick=()=>showDetail(work.key);gates.append(b);}const context=el('button','Details','group-context');context.onclick=()=>showDetail(work.key);gates.append(context);
