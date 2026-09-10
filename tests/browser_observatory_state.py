@@ -54,16 +54,25 @@ try:
   page.wait_for_function("() => data && data.scopes.length===1")
   assert 'sayhi/sparkops' not in page.locator('#reports').inner_text()
   page.locator('.display-options>summary').click();page.locator('#theme').select_option('light');page.locator('.display-options>summary').click()
-  page.wait_for_function("() => getComputedStyle(document.querySelector('#reports .tile')).backgroundColor==='rgb(250, 252, 246)'")
+  expect(page.locator('html')).to_have_attribute('data-theme','light')
   page.screenshot(path=str(args.output/'handoffs-light.png'),animations='disabled')
+  for view in ['work','architecture','environments','sources']:
+   page.locator('#view-nav a[href="#'+view+'"]').click()
+   expect(page.locator('#product-title')).to_have_text(view.capitalize())
+   page.screenshot(path=str(args.output/(view+'-light.png')),animations='disabled',full_page=True)
   page.locator('#view-nav a[href="#home"]').focus();page.keyboard.press('Enter')
-  expect(page.locator('#view-title')).to_be_focused()
+  expect(page.locator('#product-title')).to_be_focused()
   page.set_viewport_size({'width':390,'height':844})
   assert page.evaluate('document.documentElement.scrollWidth<=innerWidth')
   page.screenshot(path=str(args.output/'home-mobile.png'))
   for view in ['work','architecture','environments','handoffs','sources']:
    page.locator('#view-nav a[href="#'+view+'"]').click()
-   assert page.evaluate('document.documentElement.scrollWidth<=innerWidth'),view
+   overflow=page.evaluate("""() => [...document.querySelectorAll('body *')].filter(node => {
+    const style=getComputedStyle(node),box=node.getBoundingClientRect();
+    return style.display!=='none' && box.width>0 && !node.closest('#view-nav') && (box.right>innerWidth+.5 || node.scrollWidth>node.clientWidth+.5);
+   }).slice(0,12).map(node=>({tag:node.tagName,id:node.id,className:node.className,left:node.getBoundingClientRect().left,right:node.getBoundingClientRect().right,scrollWidth:node.scrollWidth,clientWidth:node.clientWidth}))""")
+   dimensions=page.evaluate("() => ({document:document.documentElement.scrollWidth,body:document.body.scrollWidth,viewport:innerWidth,main:document.querySelector('main').getBoundingClientRect().toJSON()})")
+   assert page.evaluate('document.documentElement.scrollWidth<=innerWidth'),(view,dimensions,overflow)
   results.append('Candidate-only real-cache desktop/mobile, light/dark, navigation/history/keyboard and scoped report/detail checks passed')
   # Browser disconnection retains clearly labeled observations; no real outage.
   page.route('**/api/v1/observatory*',lambda route:route.abort())

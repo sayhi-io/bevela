@@ -105,7 +105,10 @@ def run(output):
 
         page.locator('#view-nav a[href="#calendar"]').click()
         expect(page.locator("#view-title")).to_have_text("Calendar")
+        expect(page.locator("#product-title")).to_have_text("Calendar")
+        expect(page.locator("#product-description")).to_contain_text("Timestamped handoffs")
         expect(page.locator(".judgment-bar")).to_be_hidden()
+        expect(page.locator(".status-tools > span")).to_be_hidden()
         expect(page.locator("#calendar-week")).to_have_attribute("aria-pressed", "true")
         expect(page.locator("#calendar-grid .calendar-day")).to_have_count(7)
         assert "(day:" not in page.locator("#calendar-month").inner_text()
@@ -130,6 +133,11 @@ def run(output):
         expect(page.locator("#calendar-month")).to_have_text(week)
         expect(page.locator('#calendar-grid .calendar-day[aria-pressed="true"]')).to_be_focused()
         assert "not evidence that no work occurred" in page.locator("#calendar-coverage").text_content()
+        status = page.locator(".statusline").bounding_box()
+        evidence = page.locator("#calendar-evidence-types").bounding_box()
+        coverage = page.locator("#calendar-coverage-summary").bounding_box()
+        assert status["y"] <= evidence["y"] < status["y"] + status["height"], (status, evidence)
+        assert status["y"] <= coverage["y"] < status["y"] + status["height"], (status, coverage)
         shell = page.locator(".calendar-shell").bounding_box()
         detail = page.locator(".calendar-detail").bounding_box()
         assert shell["width"] <= 930, shell
@@ -152,9 +160,35 @@ def run(output):
 
         page.locator('#view-nav a[href="#handoffs"]').click()
         expect(page.locator("#rested")).to_be_hidden()
+        expect(page.locator(".handoff-layout")).to_be_visible()
+        expect(page.locator("#reports .report-card")).to_have_count(1)
+        expect(page.locator("#handoffs .handoff-item")).to_have_count(1)
+        page.screenshot(path=str(output / "handoffs-light.png"), animations="disabled")
         page.locator('#view-nav a[href="#work"]').click()
         expect(page.locator("#convergence")).to_be_hidden()
+        expect(page.locator(".work-layout")).to_be_visible()
+        expect(page.locator("#workstreams .work-card")).to_have_count(1)
+        expect(page.locator("#initiatives .initiative-item")).to_have_count(1)
+        page.screenshot(path=str(output / "work-light.png"), animations="disabled")
+        page.locator('#view-nav a[href="#architecture"]').click()
+        expect(page.locator("#architecture .architecture-row")).to_have_count(4)
+        expect(page.locator(".ledger-head")).to_be_visible()
+        page.screenshot(path=str(output / "architecture-light.png"), animations="disabled")
+        page.locator('#view-nav a[href="#environments"]').click()
+        expect(page.locator("#environments .environment-row")).to_have_count(1)
+        expect(page.locator(".matrix-head")).to_be_visible()
+        limitations = page.locator("#environments .environment-row > div").nth(2)
+        expect(limitations).to_contain_text("No production or fleet authority")
+        expect(limitations).to_contain_text("Native provider provisional")
+        assert '{"requirement"' not in limitations.inner_text()
+        page.screenshot(path=str(output / "environments-light.png"), animations="disabled")
+        page.locator('#view-nav a[href="#sources"]').click()
+        expect(page.locator(".sources-layout")).to_be_visible()
+        expect(page.locator("#sources .source-item")).to_have_count(1)
+        page.screenshot(path=str(output / "sources-light.png"), animations="disabled")
         page.locator('#view-nav a[href="#home"]').click()
+        expect(page.locator("#product-title")).to_have_text("Mission Control")
+        expect(page.locator(".status-tools > span")).to_be_visible()
         expect(page.locator(".judgment-bar")).to_be_visible()
         expect(page.locator("#rested")).to_be_visible()
         expect(page.locator("#convergence")).to_be_visible()
@@ -163,9 +197,10 @@ def run(output):
         expect(page.locator("#developer-released .developer-card")).to_have_count(1)
 
         page.set_viewport_size({"width": 390, "height": 844})
-        for view in ("developers", "calendar"):
+        for view in ("home", "developers", "calendar", "map", "work", "architecture", "environments", "handoffs", "sources"):
             page.locator(f'#view-nav a[href="#{view}"]').click()
-            expect(page.locator(".judgment-bar")).to_be_hidden()
+            if view != "home":
+                expect(page.locator(".judgment-bar")).to_be_hidden()
             assert page.evaluate("document.documentElement.scrollWidth <= innerWidth"), view
         page.screenshot(path=str(output / "calendar-mobile.png"), animations="disabled")
         assert not errors, errors
@@ -173,7 +208,7 @@ def run(output):
     (output / "results.json").write_text(json.dumps([
         "Developers Board active/released/evidence lanes passed",
         "Calendar week/month evidence, stacked detail, focus, theme and mobile checks passed",
-        "Overview-only summaries and distinct Work/Handoffs destinations passed",
+        "Overview-only summaries and distinct Work, Architecture, Environment, Handoff and Source layouts passed",
     ], indent=2) + "\n")
 
 

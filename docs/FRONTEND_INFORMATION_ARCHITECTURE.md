@@ -10,15 +10,15 @@ progressive disclosure; record detail remains contextual.
 
 | View | Primary question | Visible information |
 | --- | --- | --- |
-| Overview | What needs attention now? | Global metrics, fresh work, bounded recent releases, judgment items, and a small convergence preview |
+| Overview | What needs attention now? | An asymmetric command deck: global metrics and current execution dominate; judgment, bounded releases, and convergence stay compact |
 | Developers | What activity is currently observed? | Fresh registrations, bounded releases, and latest recorded evidence in three scan lanes |
 | Calendar | What dated evidence was recorded? | Compact week or month grid, evidence-type counts, and selected-day records |
 | Map | Where do declared boundaries meet? | Boundary index, topology, convergence, and focused boundary detail |
-| Work | What work is enrolled? | Full Workstream inventory and initiatives, with execution and lifecycle kept separate |
-| Architecture | What must remain true? | Accepted invariants and explainable revision comparisons |
-| Environments | What substrate is required? | Declared environment requirements, never inferred capacity or admission |
-| Handoffs | What evidence was handed over? | Worker reports and durable provider handoffs |
-| Sources | What was observed and how complete is it? | Scope/provider coverage, repository connections, freshness, and limitations |
+| Work | What work is enrolled? | A dense Workstream inventory with initiatives held in a narrower provider-context rail; execution and lifecycle remain separate |
+| Architecture | What must remain true? | A comparison ledger of declarations, states, revisions, statements, and applicability |
+| Environments | What substrate is required? | A requirement matrix comparing Workstream, profile, and limitations; never inferred capacity or admission |
+| Handoffs | What evidence was handed over? | A chronological worker-report feed with durable provider handoffs in a secondary rail |
+| Sources | What was observed and how complete is it? | A repository coverage table with scope/provider freshness and limitations in a diagnostic rail |
 
 Overview summaries must not reappear wholesale on destination pages. In particular,
 global metrics and attention are Overview-only; recent releases are summarized on
@@ -28,15 +28,22 @@ explored on Map; Handoffs contains evidence, not a duplicate activity dashboard.
 ## Display and disclosure
 
 - Keep scope and Refresh visible because they change or refresh the evidence set.
+- On destination views, replace the generic Mission Control masthead with the
+  current view's title and purpose instead of repeating that identity again in the
+  content column. Overview retains the product masthead.
 - Put theme selection behind the Display menu because it changes presentation, not
   evidence.
-- Keep short evidence-type counts visible on Calendar. Put coverage qualifications
-  behind a native details control while retaining their full truthful wording.
+- Keep short evidence-type counts and the dated-record total in Calendar's global
+  connection strip. Put coverage qualifications behind a native details control
+  while retaining their full truthful wording.
 - Open Workstream/report detail contextually instead of expanding every property in
   the scanning surface.
 - Use three columns only for comparable records or lanes that benefit from parallel
   scanning. Collapse to two and one column at narrower widths; do not force a global
   three-column shell.
+- Do not use a generic card grid as the default representation. Match shape to
+  evidence: lanes for activity, rows for inventory, a ledger for constraints, a
+  matrix for requirements, a timeline for reports, and tables for provenance.
 
 ## Type scale
 
