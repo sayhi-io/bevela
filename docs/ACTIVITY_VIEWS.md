@@ -11,12 +11,24 @@ or provider handoff for each Workstream. A report does not itself establish
 delivery, and provider lifecycle alone never makes a card look active.
 
 The **Calendar** answers “what recorded evidence exists for this date?” It indexes
-provider handoff timestamps, local worker-report creation timestamps, and bounded
-recent inactive-registration timestamps. Dates use the browser's named local time
-zone. An empty date means no dated evidence exists in the currently authorized,
-selected response; it does not mean nobody worked. The calendar does not index the
-15-minute process-local throughput history, source-control commits, or live provider
-data not already included in the scoped API.
+provider handoff timestamps, local worker-report creation timestamps, bounded recent
+inactive-registration timestamps, usable enrolled pull-request observation timestamps,
+and optionally observed local Git commit timestamps. PR entries describe when a PR
+state was observed, not when Git-provider lifecycle transitions necessarily occurred.
+Commit entries use Git committer time, not inferred work duration. Dates use the
+browser's named local time zone. An empty date means no dated evidence exists in the
+currently authorized, selected response; it does not mean nobody worked. The calendar
+does not index the 15-minute process-local throughput history or live provider data
+not already included in the scoped API.
+
+Local Git evidence is an explicit operator opt-in. It is read only from named immediate
+repositories under one configured absolute root after principal scope filtering. The
+observer reads local branch and remote-tracking refs without fetching. It exports the
+repository name, full object ID, committer timestamp, bounded subject, and a conservative
+`local-only`, `remote-tracking`, or `unknown` publication label. It does not export local
+paths, author names/emails, branch names, bodies, diffs, tags, or remote credentials.
+Several commits may relate to one Workstream, but the calendar leaves them at repository
+scope instead of inventing Workstream attribution.
 
 Neither view is a Gantt chart. Project Intent does not currently expose authoritative
 planned start/end dates or dependency schedules, so drawing duration bars would

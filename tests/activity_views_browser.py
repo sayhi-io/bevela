@@ -35,6 +35,14 @@ def fixture():
     }]
     work["handoff_at"] = (now - timedelta(days=2)).isoformat()
     work["handoff_summary"] = "Developer board handoff recorded."
+    work["pull_requests"] = [{
+        "repository": "https://github.com/sayhi-io/bevela", "number": 14,
+        "url": "https://github.com/sayhi-io/bevela/pull/14", "relationship": "implementation",
+        "observation_status": "last-known", "observation": {
+            "observed_at": (now - timedelta(minutes=5)).isoformat(), "source": "browser fixture",
+            "head": "a" * 40, "state": "merged",
+        },
+    }]
     payload["recently_rested"] = [{
         "workstream": work["key"], "session": "calendar-rested-session",
         "working": "Finished the board facts", "status": "inactive",
@@ -43,6 +51,11 @@ def fixture():
     payload["rested_coverage"] = {"total": 1}
     payload["observed_at"] = now.isoformat()
     payload["workstreams"] = [work]
+    payload["local_git"] = {"status": "observed", "commits": [{
+        "scope": scope, "repository": "sayhi-project-intent", "oid": "b" * 40,
+        "committed_at": (now - timedelta(minutes=7)).isoformat(),
+        "subject": "Record local Git calendar evidence", "publication": "local-only",
+    }]}
     return payload
 
 
@@ -93,10 +106,13 @@ def run(output):
         assert marked.count() >= 2
         today = page.locator('#calendar-grid .calendar-day.today')
         today.click()
-        expect(page.locator("#calendar-day-events .calendar-event")).to_have_count(2)
+        expect(page.locator("#calendar-day-events .calendar-event")).to_have_count(4)
         day_text = page.locator("#calendar-day-events").inner_text()
         assert "worker report" in day_text.lower(), day_text
         assert "reported inactive" in day_text.lower(), day_text
+        assert "pull request observed" in day_text.lower(), day_text
+        assert "record local git calendar evidence" in day_text.lower(), day_text
+        assert "local-only" in day_text.lower(), day_text
         page.locator("#calendar-day-events button").first.click()
         expect(page.locator("#detail")).to_be_visible()
         page.keyboard.press("Escape")

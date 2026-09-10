@@ -168,7 +168,7 @@ class ServiceTests(SnapshotCase):
 
     def test_api_auth_scope_and_readonly(self):
         store=Store(self.config);store.refresh()
-        principals={'reader':{'token_sha256':hashlib.sha256(b'test-secret').hexdigest(),'scopes':[self.scope]},'denied':{'token_sha256':hashlib.sha256(b'test-secret').hexdigest(),'scopes':[]}}
+        principals={'reader':{'token_sha256':hashlib.sha256(b'test-secret').hexdigest(),'scopes':[self.scope],'local_git_calendar':True},'denied':{'token_sha256':hashlib.sha256(b'test-secret').hexdigest(),'scopes':[]}}
         server=ThreadingHTTPServer(('127.0.0.1',0),handler(store,principals));thread=threading.Thread(target=server.serve_forever);thread.start()
         self.addCleanup(server.server_close);self.addCleanup(server.shutdown);self.addCleanup(lambda:None)
         base='http://127.0.0.1:'+str(server.server_port)
@@ -186,8 +186,9 @@ class ServiceTests(SnapshotCase):
                     self.assertIn(mime,response.headers['Content-Type'])
                     self.assertTrue(response.read())
         with request('/api/v1/observatory','reader') as r:
-            payload=json.load(r);self.assertTrue(payload['workstreams']);self.assertNotIn('workspace_inventory',payload)
-        with request('/api/v1/observatory','denied') as r:self.assertFalse(json.load(r)['workstreams'])
+            payload=json.load(r);self.assertTrue(payload['workstreams']);self.assertNotIn('workspace_inventory',payload);self.assertEqual(payload['local_git']['status'],'not-configured')
+        with request('/api/v1/observatory','denied') as r:
+            payload=json.load(r);self.assertFalse(payload['workstreams']);self.assertNotIn('local_git',payload)
         with self.assertRaises(HTTPError) as e:request('/api/v1/observatory?scope=other','reader')
         self.assertEqual(e.exception.code,403)
         with self.assertRaises(HTTPError) as e:request('/api/v1/observatory','reader','POST')

@@ -19,7 +19,13 @@ Private configuration example (placeholders, not an executable deployment):
 
 ```json
 {
-  "principals": {"operator": {"token_sha256": "SHA256_OF_RANDOM_32_BYTE_TOKEN", "scopes": ["sayhi/project-intent"]}},
+  "principals": {"operator": {"token_sha256": "SHA256_OF_RANDOM_32_BYTE_TOKEN", "scopes": ["sayhi/project-intent"], "local_git_calendar": true}},
+  "local_git_calendar": {
+    "root": "/absolute/canonical/repositories",
+    "lookback_days": 90,
+    "commit_limit": 50,
+    "repositories": [{"name": "sayhi-project-intent", "scope": "sayhi/project-intent"}]
+  },
   "scopes": [{
     "id": "sayhi/project-intent", "label": "Project Intent",
     "provider": {"kind": "itsaplan", "url": "http://127.0.0.1:8280", "project": "SAYINT", "token_file": "/private/project-intent/provider-token"},
@@ -28,6 +34,14 @@ Private configuration example (placeholders, not an executable deployment):
   }]
 }
 ```
+
+Local Git calendar access is disabled unless both the principal capability and the
+top-level configuration are present. Repository entries are exact immediate directory
+names, not globs or discovery rules. The observer reads existing local and
+remote-tracking refs without fetching; it does not run hooks or expose filesystem
+paths, authors/emails, branch names, commit bodies, or diffs. Keep the root and list
+narrow, and grant the capability only to principals permitted to see local source
+history for their authorized scopes.
 
 Keep the state directory mode 0700 and credentials/config mode 0600. Snapshots are
 atomic fsynced replacements; caches survive process restarts. A malformed refresh

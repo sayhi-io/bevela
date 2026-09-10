@@ -1,7 +1,7 @@
 /* Derived presentation facts only; never infer work from an empty timestamp. */
 (function(root){
  'use strict';
- const eventLabels={handoff:'Provider handoff',report:'Worker report',release:'Reported inactive'};
+ const eventLabels={handoff:'Provider handoff',report:'Worker report',release:'Reported inactive','pull-request':'Pull request observation',commit:'Git commit'};
  const time=value=>{const parsed=Date.parse(value);return Number.isFinite(parsed)?parsed:null;};
  const dateKey=value=>{
   const at=typeof value==='number'?value:time(value);if(at===null||!Number.isFinite(at))return null;
@@ -10,12 +10,14 @@
  };
  function events(result){
   const rows=[],works=new Map((result.workstreams||[]).map(work=>[work.key,work]));
-  const add=(type,at,work,extra={})=>{const value=time(at);if(value===null||!work)return;rows.push({type,label:eventLabels[type],at:value,date:dateKey(value),work,...extra});};
+  const add=(type,at,work,extra={})=>{const value=time(at);if(value===null||(!work&&type!=='commit'))return;rows.push({type,label:eventLabels[type],at:value,date:dateKey(value),work,...extra});};
   for(const work of works.values()){
    add('handoff',work.handoff_at,work,{id:`handoff:${work.key}:${work.handoff_at}`,summary:work.handoff_summary||work.statement||'Handoff recorded.'});
    for(const report of work.local_reports||[])add('report',report.created_at,work,{id:`report:${work.key}:${report.id||report.created_at}`,summary:report.payload?.packet?.summary||'Worker report recorded.',report});
+   for(const ref of work.pull_requests||[]){const observation=ref.observation_status==='last-known'?ref.observation:null;if(observation)add('pull-request',observation.observed_at,work,{id:`pull-request:${work.key}:${ref.repository}:${ref.number}:${observation.observed_at}`,label:`Pull request observed · ${observation.state||'state unknown'}`,summary:`${ref.repository.replace('https://','')} #${ref.number} · ${ref.relationship}`,ref});}
   }
   for(const release of result.recently_rested||[]){const work=works.get(release.workstream);add('release',release.reported_inactive_at,work,{id:`release:${release.workstream}:${release.session}:${release.reported_inactive_at}`,summary:release.working||'Registration reported inactive.',session:release.session});}
+  for(const commit of result.local_git?.commits||[]){if(!commit||typeof commit.repository!=='string'||typeof commit.scope!=='string'||!/^[a-f0-9]{40}$|^[a-f0-9]{64}$/.test(commit.oid||'')||!['local-only','remote-tracking','unknown'].includes(commit.publication))continue;add('commit',commit.committed_at,null,{id:`commit:${commit.repository}:${commit.oid}`,scope:commit.scope,summary:commit.subject||'Commit without a subject',commit});}
   return rows.sort((a,b)=>b.at-a.at||a.id.localeCompare(b.id));
  }
  const fresh=(worker,now)=>worker?.status==='active'&&time(worker.heartbeat_at)!==null&&time(worker.expires_at)!==null&&time(worker.heartbeat_at)<=now&&time(worker.expires_at)>now;

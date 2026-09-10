@@ -15,6 +15,18 @@ test('calendar indexes only valid handoffs, reports and known recent releases',(
  assert.equal(JSON.stringify(result),before);
 });
 
+test('calendar adds usable PR observations and scoped local Git commits without inventing work links',()=>{
+ const observed=local(2026,8,10,10),committed=local(2026,8,10,9),result={workstreams:[work('a:one',{pull_requests:[{repository:'https://github.com/sayhi-io/bevela',number:14,url:'https://github.com/sayhi-io/bevela/pull/14',relationship:'implementation',observation_status:'last-known',observation:{observed_at:observed,state:'merged'}}]})],local_git:{status:'observed',commits:[{scope:'a',repository:'bevela',oid:'a'.repeat(40),committed_at:committed,subject:'Add calendar evidence',publication:'local-only'},{scope:'a',repository:'bad',oid:'short',committed_at:committed,subject:'invalid',publication:'unknown'}]}};
+ const events=F.events(result),pr=events.find(event=>event.type==='pull-request'),commit=events.find(event=>event.type==='commit');
+ assert.equal(events.length,2);assert.equal(pr.label,'Pull request observed · merged');assert.equal(pr.ref.number,14);
+ assert.equal(commit.work,null);assert.equal(commit.commit.publication,'local-only');assert.equal(commit.summary,'Add calendar evidence');
+});
+
+test('PR references without usable observations and malformed local commits stay off calendar',()=>{
+ const result={workstreams:[work('a:one',{pull_requests:[{observation_status:'not-observed',observation:{observed_at:local(2026,8,10)}}]})],local_git:{commits:[null,{scope:'a',repository:'repo',oid:'b'.repeat(40),committed_at:'bad',subject:'bad',publication:'local-only'}]}};
+ assert.deepEqual(F.events(result),[]);
+});
+
 test('developer board requires fresh observation and never promotes lifecycle alone',()=>{
  const now=new Date(2026,8,10,12).getTime(),fresh={session:'fresh',status:'active',heartbeat_at:new Date(now-1000).toISOString(),expires_at:new Date(now+60000).toISOString()},expired={session:'expired',status:'active',heartbeat_at:new Date(now-90000).toISOString(),expires_at:new Date(now-1).toISOString()};
  const result={workstreams:[work('a:active',{state:'active',workers:[fresh],handoff_at:local(2026,8,8)}),work('a:lifecycle',{state:'active',workers:[]}),work('a:old',{workers:[expired]})],recently_rested:[]};
