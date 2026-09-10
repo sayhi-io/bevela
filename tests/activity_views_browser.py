@@ -46,6 +46,8 @@ def fixture():
     payload["recently_rested"] = [{
         "workstream": work["key"], "session": "calendar-rested-session",
         "working": "Finished the board facts", "status": "inactive",
+        "checkout": {"root": "/fixture/released-checkout", "branch": "agent/calendar"},
+        "touching_paths": ["project_intent/web/observatory.css"],
         "reported_inactive_at": (now - timedelta(minutes=20)).isoformat(),
     }]
     payload["rested_coverage"] = {"total": 1}
@@ -90,6 +92,7 @@ def run(output):
 
         page.route("**/*", route)
         page.goto("http://pi.test/observatory")
+        page.evaluate("document.fonts.ready")
         page.locator('#view-nav a[href="#developers"]').click()
         expect(page.locator("#view-title")).to_have_text("Developers")
         expect(page.locator(".judgment-bar")).to_be_hidden()
@@ -97,7 +100,7 @@ def run(output):
         expect(page.locator("#developer-released .developer-card")).to_have_count(1)
         expect(page.locator("#developer-evidence .developer-card")).to_have_count(1)
         assert "calendar-active-session" in page.locator("#developer-active").inner_text()
-        assert "lifecycle alone never" in page.locator("#developer-board-coverage").inner_text().lower()
+        assert "lifecycle alone never" in page.locator("#developer-board-coverage").text_content().lower()
         page.locator(".display-options > summary").click()
         page.locator("#theme").select_option("dark")
         expect(page.locator("html")).to_have_attribute("data-theme", "dark")
@@ -121,7 +124,7 @@ def run(output):
         day_text = page.locator("#calendar-day-events").inner_text()
         assert "worker report" in day_text.lower(), day_text
         assert "reported inactive" in day_text.lower(), day_text
-        assert "pull request observed" in day_text.lower(), day_text
+        assert "pull request observation" in day_text.lower(), day_text
         assert "record local git calendar evidence" in day_text.lower(), day_text
         assert "local-only" in day_text.lower(), day_text
         page.locator("#calendar-event-search").fill("Record local Git")
@@ -136,9 +139,29 @@ def run(output):
         page.locator("#calendar-event-sort").select_option("oldest")
         times = page.locator("#calendar-day-events tr[data-at]").evaluate_all("rows => rows.map(row => Number(row.dataset.at))")
         assert times == sorted(times), times
-        page.locator("#calendar-day-events button").first.click()
+        page.locator("#calendar-day-events button").first.focus()
+        page.keyboard.press("Enter")
+        expect(page.locator("#event-detail")).to_be_visible()
+        expect(page.locator("#event-detail")).to_contain_text("Finished the board facts")
+        page.locator("#event-detail .event-source > summary").click()
+        expect(page.locator("#event-detail .event-source pre")).to_contain_text("/fixture/released-checkout")
+        expect(page.locator("#event-detail .event-source pre")).to_contain_text("project_intent/web/observatory.css")
+        page.locator("#event-detail").get_by_role("button", name="Open workstream", exact=True).click()
         expect(page.locator("#detail")).to_be_visible()
         page.keyboard.press("Escape")
+        # Search outside the selected day without guessing a date.
+        page.locator("#calendar-event-range").select_option("all")
+        page.locator("#calendar-event-search").fill("Developer board handoff")
+        expect(page.locator("#calendar-day-events tr[data-event-type]")).to_have_count(1)
+        expect(page.locator("#calendar-day-events tr")).to_have_attribute("data-event-type", "handoff")
+        page.locator("#calendar-event-search").fill("")
+        page.locator("#calendar-event-range").select_option("day")
+        page.locator("#calendar-event-type").select_option("report")
+        page.locator("#calendar-day-events button").click()
+        expect(page.locator(".event-full-summary")).to_have_text(payload["workstreams"][0]["local_reports"][0]["payload"]["packet"]["summary"])
+        page.screenshot(path=str(output / "activity-inspector-dark.png"), animations="disabled")
+        page.keyboard.press("Escape")
+        page.locator("#calendar-event-type").select_option("")
         week = page.locator("#calendar-month").inner_text()
         page.locator("#calendar-previous").click()
         assert page.locator("#calendar-month").inner_text() != week
@@ -153,7 +176,7 @@ def run(output):
         assert status["y"] <= coverage["y"] < status["y"] + status["height"], (status, coverage)
         shell = page.locator(".calendar-shell").bounding_box()
         detail = page.locator(".calendar-detail").bounding_box()
-        assert shell["width"] <= 930, shell
+        assert shell["width"] <= page.locator("main").bounding_box()["width"], shell
         assert detail["y"] >= shell["y"] + shell["height"], (shell, detail)
         rows = page.locator("#calendar-day-events tr[data-event-type]")
         expect(rows).to_have_count(4)
@@ -174,6 +197,14 @@ def run(output):
         expect(page.locator("html")).to_have_attribute("data-theme", "light")
         page.locator(".display-options > summary").click()
         page.screenshot(path=str(output / "calendar-week-light.png"), animations="disabled")
+        contrast = page.locator('#calendar-day-events .board-state.release').evaluate("""node => {
+          const rgb=value=>value.match(/[\\d.]+/g).slice(0,3).map(Number);
+          const luminance=values=>values.map(v=>{v/=255;return v<=.04045?v/12.92:((v+.055)/1.055)**2.4;}).reduce((sum,v,i)=>sum+v*[.2126,.7152,.0722][i],0);
+          const foreground=luminance(rgb(getComputedStyle(node).color));
+          const background=luminance(rgb(getComputedStyle(document.documentElement).backgroundColor));
+          return (Math.max(foreground,background)+.05)/(Math.min(foreground,background)+.05);
+        }""")
+        assert contrast >= 4.5, contrast
 
         page.locator('#view-nav a[href="#handoffs"]').click()
         expect(page.locator("#rested")).to_be_hidden()
@@ -185,6 +216,11 @@ def run(output):
         expect(page.locator("#convergence")).to_be_hidden()
         expect(page.locator(".work-layout")).to_be_visible()
         expect(page.locator("#workstreams .work-card")).to_have_count(1)
+        page.locator("#work-search").fill("not-a-workstream")
+        expect(page.locator("#workstreams .work-card")).to_be_hidden()
+        page.locator("#work-search").fill("")
+        expect(page.locator("#workstreams .work-card")).to_be_visible()
+        assert page.locator("#workstreams .work-card").bounding_box()["height"] < 160
         expect(page.locator("#initiatives .initiative-item")).to_have_count(1)
         page.screenshot(path=str(output / "work-light.png"), animations="disabled")
         page.locator('#view-nav a[href="#architecture"]').click()
@@ -204,7 +240,7 @@ def run(output):
         expect(page.locator("#sources .source-item")).to_have_count(1)
         page.screenshot(path=str(output / "sources-light.png"), animations="disabled")
         page.locator('#view-nav a[href="#home"]').click()
-        expect(page.locator("#product-title")).to_have_text("Mission Control")
+        expect(page.locator("#product-title")).to_have_text("Overview")
         expect(page.locator(".status-tools > span")).to_be_visible()
         expect(page.locator(".judgment-bar")).to_be_visible()
         expect(page.locator(".metric-explainer")).to_have_count(4)
@@ -227,6 +263,7 @@ def run(output):
         expect(attention_metric.locator(".metric-explanation")).to_contain_text("not unread messages")
         expect(page.locator("#rested")).to_be_visible()
         expect(page.locator("#convergence")).to_be_visible()
+        page.locator(".overview-rested .view-note > summary").click()
         page.locator("#rested-coverage a").click()
         expect(page.locator("#view-title")).to_have_text("Developers")
         expect(page.locator("#developer-released .developer-card")).to_have_count(1)
@@ -255,12 +292,34 @@ def run(output):
         expect(accepted_metric.locator(".metric-explanation")).to_contain_text("applicable records imported from another scope")
         page.screenshot(path=str(output / "calendar-mobile.png"), animations="disabled")
 
+        # Pagination limits rendered rows, never the searchable evidence set.
+        page.locator('#view-nav a[href="#calendar"]').click()
+        page.set_viewport_size({"width": 1440, "height": 1000})
+        commit = payload["local_git"]["commits"][0]
+        payload["local_git"]["commits"].extend([
+            {**commit, "oid": f"{index:040x}", "subject": f"Pagination record {index}"}
+            for index in range(55)
+        ])
+        page.locator("#refresh").click()
+        expect(page.locator("#calendar-day-events tr[data-event-type]")).to_have_count(40)
+        expect(page.locator("#calendar-event-result-count")).to_have_text("59 records")
+        page.locator("#calendar-load-more").click()
+        expect(page.locator("#calendar-day-events tr[data-event-type]")).to_have_count(59)
+        page.locator("#calendar-event-search").fill("Pagination record 54")
+        expect(page.locator("#calendar-day-events tr[data-event-type]")).to_have_count(1)
+        page.locator("#calendar-event-search").fill("")
+        expect(page.locator("#calendar-day-events tr[data-event-type]")).to_have_count(40)
+
         # A pending or failed scope refresh must never let ledger controls redraw
         # evidence retained from the prior scope.
         page.locator('#view-nav a[href="#calendar"]').click()
-        expect(page.locator("#calendar-day-events tr[data-event-type]")).to_have_count(4)
+        expect(page.locator("#calendar-day-events tr[data-event-type]")).to_have_count(40)
+        page.locator("#calendar-day-events button").first.click()
+        expect(page.locator("#event-detail")).to_be_visible()
         api_unavailable = True
         page.locator("#scope").dispatch_event("change")
+        expect(page.locator("#event-detail")).to_be_hidden()
+        expect(page.locator("#event-detail-content")).to_be_empty()
         page.locator("#calendar-event-search").fill("Calendar")
         page.locator("#calendar-event-type").select_option("report")
         expect(page.locator("#calendar-day-events tr[data-event-type]")).to_have_count(0)

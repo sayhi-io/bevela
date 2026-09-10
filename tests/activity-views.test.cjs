@@ -12,6 +12,7 @@ test('calendar indexes only valid handoffs, reports and known recent releases',(
  const before=JSON.stringify(result),events=F.events(result);
  assert.deepEqual(events.map(event=>event.type),['release','report','handoff']);
  assert.deepEqual(events.map(event=>event.summary),['Wrapped up','Checked one','Shipped one']);
+ assert.deepEqual(events[0].release,result.recently_rested[0]);
  assert.equal(JSON.stringify(result),before);
 });
 
@@ -71,4 +72,13 @@ test('selected-day evidence can be searched, filtered and sorted without mutatin
  assert.deepEqual(F.filterEvents(rows,{sort:'oldest'}).map(row=>row.id),['commit','report','handoff']);
  assert.deepEqual(F.filterEvents(rows,{sort:'workstream'}).map(row=>row.id),['commit','handoff','report']);
  assert.deepEqual(rows.map(row=>row.id),original);
+});
+
+test('short previews preserve full searchable evidence and native references',()=>{
+ const summary='Reviewed the calendar implementation at '+ 'b'.repeat(40)+'; follow-up evidence mentions keyboard restoration';
+ const row={id:'report',type:'report',label:'Worker report',at:1,summary,work:{key:'scope:internal-id',title:'Calendar redesign',provider_identifier:'SAYINT-62'},report:{payload:{session:'independent-session'}}};
+ assert.ok(F.preview(summary,100).length<=101);
+ assert.ok(!F.preview(summary,100).includes('b'.repeat(40)));
+ for(const query of ['keyboard restoration','b'.repeat(40),'SAYINT-62','Calendar redesign','independent-session'])assert.deepEqual(F.filterEvents([row],{query}),[row]);
+ assert.equal(row.summary,summary);
 });

@@ -16,14 +16,14 @@
    for(const report of work.local_reports||[])add('report',report.created_at,work,{id:`report:${work.key}:${report.id||report.created_at}`,summary:report.payload?.packet?.summary||'Worker report recorded.',report});
    for(const ref of work.pull_requests||[]){const observation=ref.observation_status==='last-known'?ref.observation:null;if(observation)add('pull-request',observation.observed_at,work,{id:`pull-request:${work.key}:${ref.repository}:${ref.number}:${observation.observed_at}`,label:`Pull request observed · ${observation.state||'state unknown'}`,summary:`${ref.repository.replace('https://','')} #${ref.number} · ${ref.relationship}`,ref});}
   }
-  for(const release of result.recently_rested||[]){const work=works.get(release.workstream);add('release',release.reported_inactive_at,work,{id:`release:${release.workstream}:${release.session}:${release.reported_inactive_at}`,summary:release.working||'Registration reported inactive.',session:release.session});}
+  for(const release of result.recently_rested||[]){const work=works.get(release.workstream);add('release',release.reported_inactive_at,work,{id:`release:${release.workstream}:${release.session}:${release.reported_inactive_at}`,summary:release.working||'Registration reported inactive.',session:release.session,release});}
   for(const commit of result.local_git?.commits||[]){if(!commit||typeof commit.repository!=='string'||typeof commit.scope!=='string'||!/^[a-f0-9]{40}$|^[a-f0-9]{64}$/.test(commit.oid||'')||!['local-only','remote-tracking','unknown'].includes(commit.publication))continue;add('commit',commit.committed_at,null,{id:`commit:${commit.repository}:${commit.oid}`,scope:commit.scope,summary:commit.subject||'Commit without a subject',commit});}
   return rows.sort((a,b)=>b.at-a.at||a.id.localeCompare(b.id));
  }
  function filterEvents(rows,options={}){
   const query=String(options.query||'').trim().toLocaleLowerCase(),type=String(options.type||''),sort=String(options.sort||'newest');
   const identity=row=>row.work?.key||`${row.scope||''} ${row.commit?.repository||''}`;
-  const searchable=row=>[row.label,row.type,row.summary,identity(row),row.id,row.session,row.commit?.oid,row.commit?.publication,row.ref?.repository,row.ref?.number,row.ref?.relationship,row.ref?.observation?.state].filter(value=>value!==undefined&&value!==null).join(' ').toLocaleLowerCase();
+  const searchable=row=>[row.label,row.type,row.summary,identity(row),row.work?.title,row.work?.statement,row.work?.provider_identifier,row.id,row.session,row.report?.payload?.session,row.commit?.oid,row.commit?.publication,row.ref?.repository,row.ref?.number,row.ref?.relationship,row.ref?.observation?.state].filter(value=>value!==undefined&&value!==null).join(' ').toLocaleLowerCase();
   const result=rows.filter(row=>(!type||row.type===type)&&(!query||searchable(row).includes(query))).slice();
   if(sort==='oldest')result.sort((a,b)=>a.at-b.at||a.id.localeCompare(b.id));
   else if(sort==='type')result.sort((a,b)=>a.label.localeCompare(b.label)||b.at-a.at||a.id.localeCompare(b.id));
@@ -67,6 +67,14 @@
   for(let index=0;index<7;index++){const day=new Date(date);day.setDate(date.getDate()+index);const key=dateKey(day.getTime());days.push({date:day,key,day:day.getDate(),inMonth:true,events:byDate.get(key)||[]});}
   return {days};
  }
- const api={events,filterEvents,board,month,week,dateKey,time,eventLabels};
+ function preview(value,limit=140){
+  const normalized=String(value||'').replace(/\s+/g,' ').trim().replace(/\b[a-f0-9]{24,}\b/gi,hash=>hash.slice(0,8)+'…');
+  const clause=normalized.match(/^(.{24,}?)(?:;\s+|\.\s+(?=[A-Z]))/);
+  const text=clause?clause[1]+'…':normalized;
+  if(text.length<=limit)return text;
+  const cut=text.slice(0,limit),space=cut.lastIndexOf(' ');
+  return (space>limit/2?cut.slice(0,space):cut)+'…';
+ }
+ const api={events,filterEvents,preview,board,month,week,dateKey,time,eventLabels};
  if(typeof module!=='undefined'&&module.exports)module.exports=api;else root.ActivityViewsFacts=api;
 })(typeof globalThis!=='undefined'?globalThis:this);

@@ -1,81 +1,92 @@
-# Mission Control frontend information architecture
+# Mission Control interface
 
-This contract borrows interaction principles from established planning products,
-not their proprietary visuals. One authorized response can support several views,
-but each view must expose only the fields needed for its own decision. Scope and
-Refresh remain global; presentation settings and coverage qualifications use
-progressive disclosure; record detail remains contextual.
+Mission Control is a read-only project observatory. The layout helps people find
+recorded activity, understand current observations and inspect evidence without
+turning records into a schedule or a completion claim.
+
+## Design references and decisions
+
+The September 2026 redesign reviewed the current official product interfaces and
+documentation of [Linear planning](https://linear.app/features/plan),
+[Linear timeline](https://linear.app/docs/timeline),
+[Notion calendar views](https://www.notion.com/help/calendars), and
+[Notion Calendar](https://www.notion.com/product/calendar).
+
+Linear's narrow workspace navigation, flat record lists, consistent control
+placement and separation of project planning from issue implementation inform
+the shell and Work inventory. Notion's week/month switching, locally filtered
+views and contextual record opening inform Calendar. These are interaction
+references; no product screenshots, proprietary artwork or fabricated planning
+fields are shipped.
+
+The resulting interface uses one neutral visual system across all nine views:
+a labeled workspace sidebar, one page title, a quiet connection/coverage strip,
+a restrained terracotta selection accent and content separated by rules.
+There is no equal-height card grid or appearance-variant selector.
+
+Typography uses self-hosted Inter 4.1 from the
+[Inter project](https://github.com/rsms/inter/tree/v4.1), including its SIL Open
+Font License in `project_intent/web/INTER-LICENSE.txt`. The font is served through
+the same authenticated static boundary as other assets. There are no external
+font requests.
 
 ## Page jobs
 
-| View | Primary question | Visible information |
-| --- | --- | --- |
-| Overview | What needs attention now? | An asymmetric command deck: global metrics and current execution dominate; judgment, bounded releases, and convergence stay compact |
-| Developers | What activity is currently observed? | Fresh registrations, bounded releases, and latest recorded evidence in three scan lanes |
-| Calendar | What dated evidence was recorded? | Compact week or month grid, evidence-type counts, and selected-day records |
-| Map | Where do declared boundaries meet? | Boundary index, topology, convergence, and focused boundary detail |
-| Work | What work is enrolled? | A dense Workstream inventory with initiatives held in a narrower provider-context rail; execution and lifecycle remain separate |
-| Architecture | What must remain true? | A comparison ledger of declarations, states, revisions, statements, and applicability |
-| Environments | What substrate is required? | A requirement matrix comparing Workstream, profile, and limitations; never inferred capacity or admission |
-| Handoffs | What evidence was handed over? | A chronological worker-report feed with durable provider handoffs in a secondary rail |
-| Sources | What was observed and how complete is it? | A repository coverage table with scope/provider freshness and limitations in a diagnostic rail |
+| View | Primary content |
+| --- | --- |
+| Overview | Explainable metrics, current observations, four recent releases and a small attention rail |
+| Developers | Three flat lanes: observed active registrations, reported inactive registrations and latest recorded evidence |
+| Calendar | Date navigation and an activity list, with full evidence in a contextual inspector |
+| Map | Declared boundaries, their relationships and scoped details |
+| Work | Searchable workstream rows, available session rates, review/merge affordances and initiative context |
+| Architecture | Constraint declarations, revisions and applicability in a comparison ledger |
+| Environments | Requirement profiles and limitations in a matrix |
+| Handoffs | A compact report feed with separate durable provider handoffs |
+| Sources | Repository coverage and provider/execution provenance |
 
-Overview summaries must not reappear wholesale on destination pages. In particular,
-global metrics and attention are Overview-only; recent releases are summarized on
-Overview and analyzed on Developers; convergence is summarized on Overview and
-explored on Map; Handoffs contains evidence, not a duplicate activity dashboard.
+Global metrics remain exclusive to Overview. Operational caveats and source
+coverage stay accessible through disclosures and the Sources view. Technical
+identifiers are secondary to a record's description. Native work references are
+preferred where available; full keys remain available in context and search.
 
-## Display and disclosure
+## Calendar and evidence
 
-- Keep scope and Refresh visible because they change or refresh the evidence set.
-- On destination views, replace the generic Mission Control masthead with the
-  current view's title and purpose instead of repeating that identity again in the
-  content column. Overview retains the product masthead.
-- Put theme selection behind the Display menu because it changes presentation, not
-  evidence.
-- Keep short evidence-type counts and the dated-record total in Calendar's global
-  connection strip. Put coverage qualifications behind a native details control
-  while retaining their full truthful wording.
-- Open Workstream/report detail contextually instead of expanding every property in
-  the scanning surface.
-- Use three columns only for comparable records or lanes that benefit from parallel
-  scanning. Collapse to two and one column at narrower widths; do not force a global
-  three-column shell.
-- Do not use a generic card grid as the default representation. Match shape to
-  evidence: lanes for activity, rows for inventory, a ledger for constraints, a
-  matrix for requirements, a timeline for reports, and tables for provenance.
+- Week is a seven-day strip; Month provides six Monday-first weeks.
+- Each date shows its total dated records and a small type-composition strip.
+  The accessible date name retains exact counts by evidence type. These marks
+  indicate records, never task duration, utilization or scheduled work.
+- The activity range can be Selected day, Visible week/month or All recorded
+  dates. Selecting a date returns to Selected day.
+- Search covers full summaries, scope, workstream title/statement/native reference,
+  session, commit IDs/publication and PR metadata. A short visible preview never
+  restricts the search index.
+- Type filtering and newest/oldest/type/workstream ordering apply before pagination.
+  Forty matching rows render initially. Show more reveals the next forty, and
+  filters reset that display limit. Counts describe the complete matching set.
+- Row titles contain a bounded first-clause preview; long hashes are shortened only
+  in that preview. Opening a row reveals the complete original summary, timestamp,
+  project/workstream, exact identifiers, source record and available contextual links.
+- The inspector is a keyboard-accessible native dialog. Scope changes clear records,
+  pagination and any open inspector synchronously. New scope failures cannot restore
+  prior-scope evidence through a search, filter or sort action.
+- Empty dates mean no dated evidence in the response, not inactivity. Local-only
+  commits, worker assertions, PR observations and explicit inactive registrations
+  remain distinct. No project relationship is invented for a local Git commit.
 
-## Type scale
+## Geometry and accessibility
 
-The product UI uses a compact hierarchy based on a 14px body:
+Body and row titles use 14px type, controls 12–13px and secondary metadata 11–12px.
+The page title is 22px; the date heading is 25px. Long evidence never determines
+the height of a scanning row. Detail panels wrap unbroken identifiers.
 
-- page title: 28px / 32px;
-- section title: 20px / 24px;
-- body and controls: 14px / 20px;
-- secondary descriptions and metadata: 12px / 16–18px;
-- 10px uppercase labels only for brief eyebrows and evidence-kind labels.
+At narrow widths, navigation becomes a labeled-for-accessibility icon rail and
+activity rows stack type/time above their title. The same filters and complete
+record details remain available. The optional inspector is the third surface only
+when the user opens a record. Light and dark themes use the same geometry and
+theme-specific foreground colors; the inactive label has normal text contrast.
 
-Use relative units where shared foundations permit them, maintain one logical page
-heading target, and keep explanatory lines near 60–80 characters where practical.
-
-## Source principles
-
-- [Notion database views](https://www.notion.com/help/views-filters-and-sorts) let
-  the same database support multiple locally configured layouts, visible properties,
-  filters, sorts, and page-opening modes.
-- [Notion layouts](https://www.notion.com/en-gb/help/layouts) bring important
-  properties forward and move secondary properties to a details panel; its
-  [calendar documentation](https://www.notion.com/help/calendars) includes weekly
-  layout selection.
-- [Linear custom views](https://linear.app/docs/custom-views) and
-  [display options](https://linear.app/docs/display-options) treat views as focused,
-  durable subsets with view-local layout, grouping, ordering, and property controls.
-- Jira documents view-specific field selection for its
-  [list](https://support.atlassian.com/jira-software-cloud/docs/customize-list-view-by-adding-or-removing-fields/)
-  and date-backed records for its
-  [calendar](https://support.atlassian.com/jira-software-cloud/docs/what-is-the-calendar/).
-- [Microsoft Planner](https://support.microsoft.com/en-us/Planner/create-a-plan-in-microsoft-planner)
-  gives Grid, Board, Charts, and Calendar distinct consumption jobs.
-- [Atlassian typography guidance](https://atlassian.design/foundations/typography/)
-  uses a compact product scale, a 14px default body, and 12px sparingly for secondary
-  information.
+Validation covers scoped real data across all views, deterministic week/month
+navigation, all-date search, filters/sorts, pagination, full-summary disclosure,
+work search, scope failure isolation, metric explainers, light-theme inactive
+contrast and mobile containment. Font assets are included in authenticated route
+tests and committed-release publication checks.
