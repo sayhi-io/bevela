@@ -42,6 +42,25 @@ class PublishLoopbackTests(unittest.TestCase):
         self.assertEqual(args.port, 8290)
         self.assertEqual(args.state_dir, Path.home() / "sayhi/state/project-intent")
 
+    def test_virtual_environment_is_built_at_the_final_release_path(self):
+        source = (ROOT / "scripts/publish_loopback.py").read_text()
+        rename = source.index("pending.rename(destination)")
+        venv = source.index('"-m", "venv"')
+        self.assertLess(rename, venv)
+
+    def test_failed_rename_cleanup_preserves_unowned_destination(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            pending = root / "pending"
+            destination = root / "destination"
+            pending.mkdir()
+            destination.mkdir()
+            marker = destination / "owned-by-someone-else"
+            marker.write_text("keep")
+            publish_loopback.clean_failed_candidate(pending, destination, promoted=False)
+            self.assertFalse(pending.exists())
+            self.assertEqual(marker.read_text(), "keep")
+
     def test_publish_lock_rejects_a_concurrent_publisher(self):
         with tempfile.TemporaryDirectory() as directory:
             state = Path(directory)

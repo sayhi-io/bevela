@@ -66,6 +66,13 @@ def lock_release(root: Path) -> None:
             os.chmod(path, 0o555 if mode & stat.S_IXUSR else 0o444)
 
 
+def clean_failed_candidate(pending: Path, destination: Path, promoted: bool) -> None:
+    if pending.exists():
+        shutil.rmtree(pending)
+    if promoted and destination.exists():
+        shutil.rmtree(destination)
+
+
 def authenticated_smoke(state: Path, port: int) -> None:
     access = json.loads((state / "operator-access.json").read_text())
     token = base64.b64encode(
@@ -126,11 +133,14 @@ def publish_locked(args: argparse.Namespace, state: Path) -> str:
     old = current.resolve()
     if old.name != "source" or old.parent.parent != releases:
         raise PublishError(f"Current release is outside the managed release directory: {old}")
+    promoted = False
     try:
         pending.mkdir(mode=0o700)
         run(["git", "clone", "--quiet", "--no-local", "--no-checkout", str(root), str(pending / "source")])
-        source = pending / "source"
-        git(source, "checkout", "--quiet", "--detach", commit)
+        git(pending / "source", "checkout", "--quiet", "--detach", commit)
+        pending.rename(destination)
+        promoted = True
+        source = destination / "source"
         run([sys.executable, "-m", "venv", str(source / ".venv")])
         python = source / ".venv/bin/python"
         run([str(python), "-m", "pip", "install", "--quiet", "--disable-pip-version-check", "--no-input", "--no-deps", str(source)])
@@ -141,10 +151,8 @@ def publish_locked(args: argparse.Namespace, state: Path) -> str:
         if git(source, "rev-parse", "HEAD") != commit:
             raise PublishError("Candidate checkout does not match the requested commit")
         lock_release(source)
-        pending.rename(destination)
     except Exception:
-        if pending.exists():
-            shutil.rmtree(pending)
+        clean_failed_candidate(pending, destination, promoted)
         raise
 
     source = destination / "source"
