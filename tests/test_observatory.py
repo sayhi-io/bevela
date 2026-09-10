@@ -178,7 +178,7 @@ class ServiceTests(SnapshotCase):
             return urlopen(Request(base+path,headers=headers,method=method),timeout=2)
         with self.assertRaises(HTTPError) as e:request('/api/v1/observatory')
         self.assertEqual(e.exception.code,401)
-        for path,mime in [('/minimap.js','text/javascript'),('/minimap.css','text/css'),('/activity-views-facts.js','text/javascript'),('/identity-facts.js','text/javascript'),('/design-lab.js','text/javascript'),('/design-lab.css','text/css'),('/inter-variable.woff2','font/woff2')]:
+        for path,mime in [('/minimap.js','text/javascript'),('/minimap.css','text/css'),('/activity-views-facts.js','text/javascript'),('/workspace-views.js','text/javascript'),('/identity-facts.js','text/javascript'),('/design-lab.js','text/javascript'),('/design-lab.css','text/css'),('/inter-variable.woff2','font/woff2')]:
             with self.subTest(asset=path):
                 with self.assertRaises(HTTPError) as denied:request(path)
                 self.assertEqual(denied.exception.code,401)

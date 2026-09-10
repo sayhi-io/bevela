@@ -44,6 +44,52 @@ font requests.
 | Handoffs | A compact report feed with separate durable provider handoffs |
 | Sources | Repository coverage and provider/execution provenance |
 
+## Database-view refinement
+
+An additional whole-site review uses Notion's [views, filters and grouping](https://www.notion.com/help/views-filters-and-sorts)
+and [contextual page layouts](https://www.notion.com/help/layouts) as interaction
+references. Overview and Calendar retain their distinct jobs; the other views
+gain local database controls instead of another dashboard summary.
+
+- Work adds lifecycle filters, title/execution sorting and optional project or
+  lifecycle grouping. Provider initiatives move into a disclosure instead of
+  consuming a permanently sparse side column. Full workstream data stays searchable.
+- Developers adds search before the per-lane display limit and an explicit
+  show-more action. The lanes still represent observations, never task stages.
+- Handoffs offers worker-report and provider-handoff views, search, report
+  publication filtering, date ordering and pagination. Undated provider handoffs
+  stay accessible here. Full assertions and source records open in a side inspector.
+- Architecture adds search and state filtering, with complete declarations and
+  applicable workstream links in the inspector. Environments adds requirement
+  search and a limitations filter, using descriptive work titles.
+- Map keeps its existing focus controls; its legend and observation caveats are
+  consolidated into a disclosure. No data model or relationship is changed.
+- Sources separates repository inventory from provider/execution provenance in a
+  view selector. Repository search and connection filters surface setup gaps.
+
+The **Set up repository** guide is available only with the existing operator
+inventory projection. It lists observed mapping/provider status, explicitly marks
+worker-map configuration as unverified, and prepares a shell-quoted read-only
+discovery command for the chosen scope and actual checkout. Its operator recipe
+contains separately labeled configuration entries, not a complete replacement
+configuration. It does not read private configuration, grant access, create provider
+projects, write configuration, register workers or enable task creation/local Git.
+One-click connection still needs an explicitly authorized backend enrollment flow
+with validation, least-privilege access, atomic configuration changes and rollback.
+The current read-only HTTP contract has not been expanded; only a static asset
+route is added.
+
+A true Gantt was considered and deferred: [Notion timelines](https://www.notion.com/help/timelines)
+are plotted from explicit dates/date ranges. This projection supplies evidence
+timestamps but no authoritative planned start/end dates or scheduled dependencies.
+Neither first/last commits nor registration leases are substituted for a schedule.
+
+Validation for this pass includes record membership/order (not counts alone),
+search beyond rendered pages, undated evidence, keyboard focus across polling,
+updated same-identity inspectors, unchanged-count announcement suppression,
+repository command quoting, scoped failure clearing, and all nine views in both
+themes at desktop and mobile widths. No frontend action performs an HTTP write.
+
 Global metrics remain exclusive to Overview. Operational caveats and source
 coverage stay accessible through disclosures and the Sources view. Technical
 identifiers are secondary to a record's description. Native work references are

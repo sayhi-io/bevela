@@ -209,7 +209,7 @@ def run(output):
         page.locator('#view-nav a[href="#handoffs"]').click()
         expect(page.locator("#rested")).to_be_hidden()
         expect(page.locator(".handoff-layout")).to_be_visible()
-        expect(page.locator("#reports .report-card")).to_have_count(1)
+        expect(page.locator("#reports .reference-row")).to_have_count(1)
         expect(page.locator("#handoffs .handoff-item")).to_have_count(1)
         page.screenshot(path=str(output / "handoffs-light.png"), animations="disabled")
         page.locator('#view-nav a[href="#work"]').click()

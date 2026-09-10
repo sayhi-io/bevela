@@ -14,9 +14,8 @@ The **Calendar** answers “what recorded evidence exists for this date?” Its 
 week view provides a compact seven-day scan; the month control switches to a
 Monday-first six-week range without changing the evidence set. The date grid sits
 above the selected-day evidence so a short calendar cannot leave an artificial empty
-column beside a long evidence list. Selected-day records use responsive cards that
-form additional columns only when the available width and record count make them
-useful. It indexes
+column beside a long evidence list. Selected-day records use a searchable flat
+activity table, with complete summaries and metadata in a side inspector. It indexes
 provider handoff timestamps, local worker-report creation timestamps, bounded recent
 inactive-registration timestamps, usable enrolled pull-request observation timestamps,
 and optionally observed local Git commit timestamps. PR entries describe when a PR

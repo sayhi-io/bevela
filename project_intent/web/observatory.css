@@ -374,3 +374,71 @@ main>header { min-height: 90px; gap: 24px; align-items: center; border-bottom: 1
 .record-description>summary::after { content: ' ↗'; color: var(--muted); }
 :root .report-card button { border: 0; padding: 5px 0; background: transparent; color: var(--accent); }
 :root .work-group .group-context { border: 0; background: transparent; }
+
+/* Database-style controls and contextual pages share one quiet visual language. */
+.database-layout { display: block; }
+.database-toolbar { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; padding: 12px 0; margin: 0 0 12px; border-bottom: 1px solid var(--line); }
+.database-view-name { font-size: 13px; font-weight: 600; margin-right: auto; }
+:root .database-toolbar :is(input,select,button) { font-size: 12px; padding: 5px 8px; }
+:root .database-toolbar input { width: 210px; min-width: 0; background: var(--surface); }
+:root .database-toolbar select { max-width: 220px; background: transparent; border-color: transparent; }
+.database-count { color: var(--muted); font-size: 11px; white-space: nowrap; }
+.database-empty { padding: 28px 0; font-size: 13px; }
+.database-layout .initiative-disclosure { margin-top: 24px; }
+.initiative-disclosure #initiatives { max-width: 640px; }
+.work-group-heading { margin: 24px 0 0; padding: 8px 4px; font-size: 12px; font-weight: 500; color: var(--muted); border-bottom: 1px solid var(--line); }
+:root .database-layout .work-group { min-height: 76px !important; padding-block: 12px !important; }
+:root button.record-link { display: block; text-align: left; border: 0; padding: 0; background: none; color: var(--text); font-size: 14px; font-weight: 500; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; max-width: 100%; }
+:root button.record-link:hover { color: var(--accent); background: transparent; }
+.reference-row { display: grid; grid-template-columns: minmax(0,1fr) 185px; gap: 24px; padding: 16px 0; border-bottom: 1px solid var(--line); align-items: center; }
+.reference-row>div { min-width: 0; }
+.reference-subtitle { display: block; color: var(--muted); font-size: 11px; margin-top: 5px; }
+.reference-meta { display: flex; flex-direction: column; align-items: flex-end; gap: 4px; font-size: 11px; color: var(--muted); }
+#handoff-more,#developer-more { margin-top: 20px; }
+.architecture-row .record-link { margin-top: 6px; }
+:root .environment-row button.record-link { white-space: normal; font-size: 13px; }
+.environment-row strong { font-weight: 400; }
+.database-layout .source-coverage-panel { border: 0; padding: 0; }
+.database-layout #sources { display: grid; grid-template-columns: repeat(auto-fit,minmax(250px,1fr)); gap: 0 32px; }
+.database-layout .source-item { padding: 20px 0; }
+.database-layout .inventory-table th:first-child { width: 30%; }
+.database-layout .inventory-table th:last-child { width: 75px; }
+.database-layout .inventory-table .record-link { font-size: 13px; }
+.database-layout .inventory-table td:last-child .record-link { font-size: 12px; color: var(--muted); }
+.database-layout .view-note { margin-top: 20px; }
+#workstream-map>.view-note { margin-bottom: 20px; }
+:root .workspace-inspector { width: min(600px,100vw); max-width: 100vw; height: 100dvh; max-height: 100dvh; margin: 0 0 0 auto; border: 0; border-left: 1px solid var(--line); border-radius: 0; padding: 22px 28px; background: var(--canvas); color: var(--text); }
+.workspace-inspector h2 { font-size: 23px; margin: 26px 0 12px; overflow-wrap: anywhere; }
+.workspace-inspector p { font-size: 13px; line-height: 1.65; }
+:root .workspace-inspector button.record-link { margin-block: 14px; white-space: normal; }
+.workspace-inspector :is(pre,code) { max-width: 100%; white-space: pre-wrap; overflow-wrap: anywhere; font-size: 11px; }
+.workspace-inspector #workspace-detail-content>button { display: block; margin-block: 12px; max-width: 100%; white-space: normal; text-align: left; }
+.setup-eyebrow { font-size: 12px !important; color: var(--accent); }
+.setup-steps { list-style: decimal-leading-zero; padding-left: 26px; margin: 28px 0; }
+.setup-steps>li { padding: 16px 0 16px 8px; border-bottom: 1px solid var(--line); }
+.setup-steps>li::marker { font-size: 12px; color: var(--muted); }
+.setup-steps li>div { display: flex; justify-content: space-between; gap: 10px; align-items: baseline; }
+.setup-steps h3 { margin: 0; font-size: 13px; }
+.setup-steps p { margin: 7px 0 0; color: var(--muted); font-size: 12px; }
+.setup-fields { display: grid; grid-template-columns: 130px minmax(0,1fr); gap: 10px; align-items: center; font-size: 12px; }
+:root .setup-fields input { width: 100%; min-width: 0; border: 1px solid var(--line); background: var(--surface); color: var(--text); border-radius: 5px; padding: 8px; font-size: 12px; }
+.setup-snippet { margin: 22px 0; }.setup-snippet h3 { font-size: 13px; }
+.setup-snippet pre { padding: 14px; background: var(--surface); border: 1px solid var(--line); border-radius: 5px; }
+.setup-snippet button { font-size: 12px; }.setup-snippet [role="status"] { margin-left: 10px; }
+.setup-recipe { margin-top: 24px; padding-top: 20px; border-top: 1px solid var(--line); font-size: 12px; }
+@media (max-width: 800px) {
+ .database-view-name { flex-basis: 100%; margin-bottom: 5px; }
+ :root .database-toolbar input { flex: 1 1 180px; }
+ .database-count { margin-left: auto; }
+ .reference-row { grid-template-columns: minmax(0,1fr); gap: 6px; }
+ .reference-meta { flex-direction: row; justify-content: space-between; }
+ .database-layout .inventory-table th:first-child { width: 38%; }
+ .database-layout .inventory-table th:nth-child(2),.database-layout .inventory-table td:nth-child(2) { display: none; }
+ .database-layout .inventory-table th:last-child { width: 60px; }
+ :root .database-layout .inventory-table td:first-child button.record-link { white-space: normal; overflow-wrap: anywhere; }
+ footer { display: flex; flex-wrap: wrap; gap: 8px 12px; }
+ footer #observed { flex-basis: 100%; }
+ .setup-fields { grid-template-columns: 1fr; gap: 6px; }
+ :root .workspace-inspector { padding-inline: 20px; }
+ .setup-steps li>div { flex-wrap: wrap; }
+}
