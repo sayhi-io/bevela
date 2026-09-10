@@ -30,7 +30,7 @@ def fixture():
     work["local_reports"] = [{
         "id": "calendar-report", "created_at": (now - timedelta(minutes=10)).isoformat(),
         "payload": {"session": "calendar-active-session", "packet": {
-            "summary": "Calendar rendering passed focused review.",
+            "summary": "Calendar rendering passed focused review at commit " + "b" * 64 + ".",
         }}, "publication": {"state": "local"},
     }]
     work["handoff_at"] = (now - timedelta(days=2)).isoformat()
@@ -144,6 +144,10 @@ def run(output):
         assert detail["y"] >= shell["y"] + shell["height"], (shell, detail)
         cards = page.locator("#calendar-day-events .calendar-event")
         assert len({round(cards.nth(index).bounding_box()["x"]) for index in range(cards.count())}) >= 2
+        assert page.evaluate("""() => [...document.querySelectorAll('#calendar-day-events .calendar-event')].every(card => {
+          const right=card.getBoundingClientRect().right;
+          return card.scrollWidth<=card.clientWidth+.5 && [...card.querySelectorAll('*')].every(node=>node.getBoundingClientRect().right<=right+.5);
+        })"""), "selected-day evidence must remain contained within its card"
 
         page.locator("#calendar-month-view").click()
         expect(page.locator("#calendar-month-view")).to_have_attribute("aria-pressed", "true")
@@ -190,6 +194,24 @@ def run(output):
         expect(page.locator("#product-title")).to_have_text("Mission Control")
         expect(page.locator(".status-tools > span")).to_be_visible()
         expect(page.locator(".judgment-bar")).to_be_visible()
+        expect(page.locator(".metric-explainer")).to_have_count(4)
+        first_metric = page.locator(".metric-explainer").first
+        first_metric.locator(".metric-trigger").click()
+        expect(first_metric.locator(".metric-trigger")).to_have_attribute("aria-expanded", "true")
+        expect(first_metric.locator(".metric-explanation")).to_contain_text("durable lifecycle")
+        expect(first_metric.locator(".metric-explanation")).to_contain_text("active + blocked + ready")
+        page.keyboard.press("Escape")
+        expect(first_metric.locator(".metric-trigger")).to_have_attribute("aria-expanded", "false")
+        expect(first_metric.locator(".metric-explanation")).to_be_hidden()
+        first_metric.locator(".metric-trigger").click()
+        expect(first_metric.locator(".metric-explanation")).to_be_visible()
+        first_metric.locator(".metric-trigger").click()
+        expect(first_metric.locator(".metric-trigger")).to_have_attribute("aria-expanded", "false")
+        expect(first_metric.locator(".metric-explanation")).to_be_hidden()
+        attention_metric = page.locator(".metric-explainer").nth(2)
+        attention_metric.hover()
+        expect(attention_metric.locator(".metric-explanation")).to_be_visible()
+        expect(attention_metric.locator(".metric-explanation")).to_contain_text("not unread messages")
         expect(page.locator("#rested")).to_be_visible()
         expect(page.locator("#convergence")).to_be_visible()
         page.locator("#rested-coverage a").click()
@@ -202,6 +224,13 @@ def run(output):
             if view != "home":
                 expect(page.locator(".judgment-bar")).to_be_hidden()
             assert page.evaluate("document.documentElement.scrollWidth <= innerWidth"), view
+        page.locator('#view-nav a[href="#home"]').click()
+        accepted_metric = page.locator(".metric-explainer").nth(3)
+        accepted_metric.locator(".metric-trigger").click()
+        panel = accepted_metric.locator(".metric-explanation").bounding_box()
+        assert panel["x"] >= 0 and panel["x"] + panel["width"] <= 390, panel
+        expect(accepted_metric.locator(".metric-explanation")).to_contain_text("not verified implementation conformance")
+        expect(accepted_metric.locator(".metric-explanation")).to_contain_text("applicable records imported from another scope")
         page.screenshot(path=str(output / "calendar-mobile.png"), animations="disabled")
         assert not errors, errors
         browser.close()
