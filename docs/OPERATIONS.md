@@ -67,6 +67,21 @@ semantics without stopping any real SparkOps, provider or SayHi service. A real
 provider disaster recovery drill and managed independent hosting remain admission
 gates. Do not advertise this loopback development process as production availability.
 
+## Publish the loopback release
+
+From a clean committed checkout, publish and verify an immutable dogfood release with
+one command:
+
+```bash
+./scripts/publish_loopback.py
+```
+
+The command stays quiet while it creates a self-contained release, installs its own
+environment, runs the Python and JavaScript suites, switches the release pointer,
+restarts only `project-intent-dogfood.service`, and performs an authenticated smoke
+check. Success prints only the commit and observatory route. A failed activation is
+rolled back and prints the failing command or check.
+
 The repository exports are scoped fallback material, not service secrets. Review
 their content before committing to a repository with different readers. Do not copy
 the whole operator cache into a product repository.
