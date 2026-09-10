@@ -15,6 +15,7 @@ import shutil
 import stat
 import subprocess
 import sys
+import time
 import urllib.error
 import urllib.request
 
@@ -82,10 +83,18 @@ def authenticated_smoke(state: Path, port: int) -> None:
         f"http://127.0.0.1:{port}/observatory",
         headers={"Authorization": "Basic " + token},
     )
-    with urllib.request.urlopen(request, timeout=30) as response:
-        body = response.read()
-        if response.status != 200 or b'id="metrics"' not in body:
-            raise PublishError("Live observatory smoke check failed")
+    deadline = time.monotonic() + 30
+    while True:
+        try:
+            with urllib.request.urlopen(request, timeout=5) as response:
+                body = response.read()
+                if response.status != 200 or b'id="metrics"' not in body:
+                    raise PublishError("Live observatory smoke check failed")
+                return
+        except urllib.error.URLError as error:
+            if time.monotonic() >= deadline:
+                raise PublishError(f"Live observatory did not become ready: {error}") from error
+            time.sleep(0.2)
 
 
 def verify_service(unit: str, source: Path, previous_pid: str) -> str:

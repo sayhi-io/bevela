@@ -3,6 +3,7 @@ from pathlib import Path
 import tempfile
 import unittest
 from unittest import mock
+import urllib.error
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -85,6 +86,31 @@ class PublishLoopbackTests(unittest.TestCase):
             self.assertEqual(current.resolve(), old)
             run.assert_called_once_with(["systemctl", "--user", "restart", "example.service"])
             verify.assert_called_once_with("example.service", old, "12")
+
+    def test_authenticated_smoke_retries_startup_connection_refusal(self):
+        class Response:
+            status = 200
+
+            def __enter__(self):
+                return self
+
+            def __exit__(self, *_):
+                return None
+
+            def read(self):
+                return b'<div id="metrics"></div>'
+
+        with tempfile.TemporaryDirectory() as directory:
+            state = Path(directory)
+            (state / "operator-access.json").write_text(
+                '{"username":"operator","password":"private"}'
+            )
+            with mock.patch.object(
+                publish_loopback.urllib.request, "urlopen",
+                side_effect=[urllib.error.URLError("starting"), Response()],
+            ) as urlopen, mock.patch.object(publish_loopback.time, "sleep"):
+                publish_loopback.authenticated_smoke(state, 8290)
+            self.assertEqual(urlopen.call_count, 2)
 
 
 if __name__ == "__main__":
