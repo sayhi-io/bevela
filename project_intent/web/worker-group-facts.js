@@ -18,5 +18,39 @@
   return [...rows.values()].sort((a,b)=>Number(b.reporting)-Number(a.reporting)||Number(b.present)-Number(a.present)||a.id.localeCompare(b.id));
  }
  function assignments(result,scope,session){return (result.workstreams||[]).filter(w=>w.scope_id===scope&&sessions(w).some(r=>r.id===session));}
- const api={sessions,assignments};if(typeof module!=='undefined'&&module.exports)module.exports=api;else root.WorkerGroupFacts=api;
+ // A fixed 15-minute window, matching the observer's retained numeric history.
+ // Never bridge unknown samples, lease epochs, or long reporting gaps.
+ function sparkline(points=[],now=Date.now()){
+  const end=now/1000,start=end-900,segments=[];
+  let segment=[],previous=null;
+  const flush=()=>{if(segment.length)segments.push(segment);segment=[];};
+  for(const p of points){
+   if(!p||!Number.isFinite(p.at)||p.at<start||p.at>end){flush();previous=null;continue;}
+   if(p.break_before||(previous!==null&&(p.at<=previous||p.at-previous>120)))flush();
+   if(Number.isFinite(p.value)&&p.value>=0)segment.push(p);else flush();
+   previous=p.at;
+  }
+  flush();
+  const maximum=Math.max(1,...segments.flat().map(p=>p.value));
+  const paths=segments.filter(s=>s.length>1).map(s=>{
+   const xy=s.map(p=>({x:2+(p.at-start)/900*596,y:28-p.value/maximum*24}));
+   const slopes=xy.slice(1).map((p,i)=>(p.y-xy[i].y)/(p.x-xy[i].x));
+   // Limited tangents keep every curve inside its neighboring sample range:
+   // smoothing cannot manufacture spikes or negative throughput.
+   const tangents=xy.map((_,i)=>{
+    if(i===0)return slopes[0];if(i===xy.length-1)return slopes.at(-1);
+    const a=slopes[i-1],b=slopes[i];
+    return a*b<=0?0:Math.sign(a)*Math.min(Math.abs(a),Math.abs(b));
+   });
+   const n=v=>v.toFixed(3);
+   let d=`M${n(xy[0].x)} ${n(xy[0].y)}`;
+   for(let i=1;i<xy.length;i++){
+    const a=xy[i-1],b=xy[i],dx=(b.x-a.x)/3;
+    d+=` C${n(a.x+dx)} ${n(a.y+dx*tangents[i-1])} ${n(b.x-dx)} ${n(b.y-dx*tangents[i])} ${n(b.x)} ${n(b.y)}`;
+   }
+   return d;
+  });
+  return {paths,maximum};
+ }
+ const api={sessions,assignments,sparkline};if(typeof module!=='undefined'&&module.exports)module.exports=api;else root.WorkerGroupFacts=api;
 })(typeof globalThis!=='undefined'?globalThis:this);
