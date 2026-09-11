@@ -7,6 +7,7 @@ import re
 import stat
 
 from .model import utcnow, valid_presence, date
+from .runtime_identity import runtime_session_ref, validate_runtime_session
 
 SAFE_SESSION = re.compile(r'[A-Za-z0-9_-]{1,100}')
 
@@ -36,7 +37,7 @@ def find_codex_session(root,session):
     return telemetry_path(candidates[0],session,[root])
 
 
-def registration(snapshot,workstream,session,working,approaching,avoid,path=None,old=None,inactive=False,now=None):
+def registration(snapshot,workstream,session,working,approaching,avoid,path=None,old=None,inactive=False,now=None,runtime_session=None):
     now=now or utcnow()
     if not SAFE_SESSION.fullmatch(session):raise ValueError('Safe session identifier required')
     if not any(r['id']==workstream and r['kind']=='workstream' for r in snapshot['records']):
@@ -44,6 +45,14 @@ def registration(snapshot,workstream,session,working,approaching,avoid,path=None
     scope=snapshot['scope_id']
     if old and (old.get('scope'),old.get('workstream'),old.get('session'))!=(scope,workstream,session):
         raise ValueError('Session already bound elsewhere; use a separate session, do not overwrite ownership')
+    prior_runtime = runtime_session_ref(old) if old else None
+    runtime_session = validate_runtime_session(runtime_session)
+    if prior_runtime and runtime_session and prior_runtime != runtime_session:
+        raise ValueError('Runtime conversation already bound; use a separate PI session for a different conversation')
+    runtime_session = runtime_session or prior_runtime
+    if runtime_session and (path or (old or {}).get('telemetry')) and (
+            runtime_session['runtime'] != 'codex' or runtime_session['id'] != session):
+        raise ValueError('Codex telemetry must match the runtime conversation and PI session')
     prior=old.get('telemetry') if old else None
     if path and prior and prior.get('path')!=path:raise ValueError('Cannot silently replace session telemetry source')
     contiguous=old and old.get('status')=='active' and date(old['expires_at'])>now
@@ -53,7 +62,8 @@ def registration(snapshot,workstream,session,working,approaching,avoid,path=None
     return {'version':1,'scope':scope,'workstream':workstream,'session':session,
             'status':'inactive' if inactive else 'active','claimed_at':claimed,
             'heartbeat_at':now.isoformat(),'expires_at':(now+timedelta(hours=1)).isoformat(),
-            'working':working,'approaching':approaching,'avoid':avoid,'telemetry':telemetry}
+            'working':working,'approaching':approaching,'avoid':avoid,'telemetry':telemetry,
+            'runtime_session':runtime_session}
 
 
 def read_registrations(source,scope,known,now=None,include_telemetry=True):

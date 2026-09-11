@@ -57,6 +57,9 @@ def main():
     p.add_argument('--avoid',action='append',default=[]);p.add_argument('--inactive',action='store_true')
     p.add_argument('--telemetry-file',help='Explicit own-session Codex rollout file')
     p.add_argument('--codex',action='store_true',help='Use CODEX_THREAD_ID and locate only its matching log filename')
+    p.add_argument('--runtime',choices=['codex','qwen-code'],help='Conversation runtime, separate from the PI session identity')
+    p.add_argument('--runtime-session',help='Exact Codex thread ID or Qwen Code session ID; does not attach a transport')
+    p.add_argument('--runtime-instance',help='Opaque local app-server/daemon registry name; no URLs or credentials')
     p.add_argument('--worker-config',default=os.environ.get('PROJECT_INTENT_WORKER_CONFIG'),help='Credential-free local scope/snapshot/enrollment-directory map')
     p.add_argument('--query',default='',help='Rank partial task-word matches; omit for the scoped cached inventory')
     p.add_argument('--checkout',help='Actual execution checkout; default current directory')
@@ -228,13 +231,24 @@ def main():
                 if file.is_symlink():raise ValueError('Refusing symlink registration')
                 old=read_json(file) if file.exists() else None
                 checkout=(old or {}).get('checkout') if args.inactive else checkout_identity(args.checkout or Path.cwd())
+                runtime_session = None
+                if args.runtime_session or args.runtime or args.runtime_instance or args.codex:
+                    runtime = args.runtime or ('codex' if args.codex else None)
+                    runtime_id = args.runtime_session or (session if args.codex else None)
+                    if not runtime or not runtime_id:
+                        raise ValueError('--runtime and --runtime-session are required together')
+                    if args.codex and (runtime != 'codex' or runtime_id != session):
+                        raise ValueError('--codex runtime identity must match its PI session; use explicit --runtime for a separate runner identity')
+                    runtime_session = {'runtime':runtime,'id':runtime_id,'host':checkout['host'],
+                                       'instance':args.runtime_instance or ((old or {}).get('runtime_session') or {}).get('instance')}
                 if old and old.get('checkout') and checkout and old['checkout']['root']!=checkout['root'] and old['status']=='active' and date(old['expires_at'])>utcnow():
                     raise ValueError('Session checkout changed: release the old enrollment before enrolling the new checkout')
                 path=telemetry_path(args.telemetry_file,session) if args.telemetry_file else None
                 if args.codex and not path and not old and not args.inactive:
                     path=find_codex_session(Path(os.environ.get('CODEX_HOME',str(Path.home()/'.codex')))/'sessions',session)
                 record=registration(snapshot,args.workstream,session,args.working or (old or {}).get('working',''),
-                    args.approaching or (old or {}).get('approaching',[]),args.avoid or (old or {}).get('avoid',[]),path,old,args.inactive)
+                    args.approaching or (old or {}).get('approaching',[]),args.avoid or (old or {}).get('avoid',[]),path,old,args.inactive,
+                    runtime_session=runtime_session)
                 record.update(checkout=checkout,access=args.access or (old or {}).get('access','unspecified'),
                     touching_paths=touching if args.touching_path is not None else (old or {}).get('touching_paths',[]),
                     touching_seams=args.touching_seam if args.touching_seam is not None else (old or {}).get('touching_seams',[]),
@@ -244,6 +258,7 @@ def main():
                 if len(json.dumps(record).encode())>65536:raise ValueError('Registration exceeds 64 KiB; keep coordination summaries bounded')
                 write_json(file,record)
             print(json.dumps({'scope':scope,'workstream':args.workstream,'session':session,'status':record['status'],
+                'runtime_session':record['runtime_session'],
                 'integration_context':integration_guidance(args,next(s for s in states if s['id']==scope),selected,checkout,record['touching_paths'],record['touching_seams']+record['approaching'],session),
                 'expires_at':record['expires_at'],'telemetry':'registered' if record['telemetry'] else 'not-connected',
                 'checkout':checkout,'access':record['access'],'touching_paths':record['touching_paths'],'touching_seams':record['touching_seams'],
