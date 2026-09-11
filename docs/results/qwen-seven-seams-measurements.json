@@ -1,0 +1,1354 @@
+{
+  "schema": "qwen-original-seven-seams-public/v1",
+  "model": "qwen38-27b-dflash2",
+  "effort": "medium",
+  "qwen_code_version": "0.23.2",
+  "pi_behavior": "v0.05 unchanged; Qwen session adaptation and bounded operational documentation",
+  "context_tokens": 230000,
+  "deadline_seconds": 1800,
+  "order": [
+    "B1",
+    "C1",
+    "C2",
+    "B2",
+    "B3",
+    "C3"
+  ],
+  "frozen_sha256": "fe378b77345b414204d50601d3d3ce400f0fe5c79d4fdefe97bc9d3ecbe11b45",
+  "recorder_sha256": "adee913e5cc070a1ba2b09a02d5fe7f6bc026c5ac84bb60a062d68bd4ce54628",
+  "summary": {
+    "B": {
+      "runs": 3,
+      "accepted": 3,
+      "scores": [
+        7,
+        7,
+        7
+      ],
+      "median_project_seconds": 231.195351008,
+      "median_worker_seconds": 297.303175832,
+      "median_input_plus_output_tokens": 430459,
+      "worker_timeouts": 0,
+      "native_successes": 6
+    },
+    "C": {
+      "runs": 3,
+      "accepted": 2,
+      "scores": [
+        7,
+        6,
+        7
+      ],
+      "median_project_seconds": 608.639746624,
+      "median_worker_seconds": 926.1509891200001,
+      "median_input_plus_output_tokens": 1910569,
+      "worker_timeouts": 0,
+      "native_successes": 6
+    }
+  },
+  "projects_newest_first": [
+    {
+      "project": "C3",
+      "condition": "C",
+      "score": 7,
+      "accepted": true,
+      "failed_seams": [],
+      "checks": {
+        "prices": {
+          "producer": {
+            "passed": true,
+            "failures": [],
+            "checks": 4
+          },
+          "consumer": {
+            "passed": true,
+            "failures": [],
+            "checks": 2
+          },
+          "both_preserved": true
+        },
+        "stock": {
+          "producer": {
+            "passed": true,
+            "failures": [],
+            "checks": 4
+          },
+          "consumer": {
+            "passed": true,
+            "failures": [],
+            "checks": 2
+          },
+          "both_preserved": true
+        },
+        "weights": {
+          "producer": {
+            "passed": true,
+            "failures": [],
+            "checks": 4
+          },
+          "consumer": {
+            "passed": true,
+            "failures": [],
+            "checks": 2
+          },
+          "both_preserved": true
+        },
+        "discounts": {
+          "producer": {
+            "passed": true,
+            "failures": [],
+            "checks": 6
+          },
+          "consumer": {
+            "passed": true,
+            "failures": [],
+            "checks": 3
+          },
+          "both_preserved": true
+        },
+        "delivery": {
+          "producer": {
+            "passed": true,
+            "failures": [],
+            "checks": 4
+          },
+          "consumer": {
+            "passed": true,
+            "failures": [],
+            "checks": 2
+          },
+          "both_preserved": true
+        },
+        "contacts": {
+          "producer": {
+            "passed": true,
+            "failures": [],
+            "checks": 4
+          },
+          "consumer": {
+            "passed": true,
+            "failures": [],
+            "checks": 2
+          },
+          "both_preserved": true
+        },
+        "orders": {
+          "producer": {
+            "passed": true,
+            "failures": [],
+            "checks": 4
+          },
+          "consumer": {
+            "passed": true,
+            "failures": [],
+            "checks": 2
+          },
+          "both_preserved": true
+        }
+      },
+      "project_seconds": 602.925877244,
+      "aggregate_worker_seconds": 780.545885576,
+      "concurrency": {
+        "start_ns": 287631804329035,
+        "end_ns": 288234141251188,
+        "worker_interval_seconds": 602.336922153,
+        "worker_seconds": 780.545885576,
+        "factor": 1.2958625926267442,
+        "max_simultaneous": 2,
+        "active_timeline": [
+          {
+            "seconds": 0.0,
+            "active": 1
+          },
+          {
+            "seconds": 0.001262879,
+            "active": 2
+          },
+          {
+            "seconds": 178.210226302,
+            "active": 1
+          },
+          {
+            "seconds": 602.336922153,
+            "active": 0
+          }
+        ]
+      },
+      "setup_seconds": 0.24936089798575267,
+      "archive_seconds": 0.151146437,
+      "verification_seconds": 0.028244395,
+      "human_interventions": 0,
+      "workers": [
+        {
+          "role": "producer",
+          "session": "18722158-10fc-44ab-9f05-adfbb48fcd4c",
+          "started_at": "2026-09-09T20:35:32.867521+00:00",
+          "finished_at": "2026-09-09T20:38:31.077744+00:00",
+          "elapsed_seconds": 178.210226302,
+          "exit_code": 0,
+          "timed_out": null,
+          "stream_complete": true,
+          "relay_complete": true,
+          "usage": {
+            "input_tokens": 236994,
+            "cached_input_tokens": 221696,
+            "output_tokens": 10355,
+            "reasoning_tokens": 7097,
+            "requests": 7,
+            "usage_requests": 7,
+            "reasoning_observed": true,
+            "input_usage_requests": 7,
+            "complete_input_usage": true,
+            "output_usage_requests": 7,
+            "complete_output_usage": true,
+            "cached_input_usage_requests": 7,
+            "complete_cached_input_usage": true,
+            "reasoning_usage_requests": 7,
+            "complete_reasoning_usage": true,
+            "complete_usage": true
+          },
+          "controls_verified": true,
+          "initialization_verified": true,
+          "final_identity_verified": true,
+          "native_success": true
+        },
+        {
+          "role": "consumer",
+          "session": "b7c8dacf-a38e-4a37-8917-e1a3bcefad33",
+          "started_at": "2026-09-09T20:35:32.868780+00:00",
+          "finished_at": "2026-09-09T20:45:35.204437+00:00",
+          "elapsed_seconds": 602.335659274,
+          "exit_code": 0,
+          "timed_out": null,
+          "stream_complete": true,
+          "relay_complete": true,
+          "usage": {
+            "input_tokens": 1288363,
+            "cached_input_tokens": 1254016,
+            "output_tokens": 35735,
+            "reasoning_tokens": 28490,
+            "requests": 21,
+            "usage_requests": 21,
+            "reasoning_observed": true,
+            "input_usage_requests": 21,
+            "complete_input_usage": true,
+            "output_usage_requests": 21,
+            "complete_output_usage": true,
+            "cached_input_usage_requests": 21,
+            "complete_cached_input_usage": true,
+            "reasoning_usage_requests": 21,
+            "complete_reasoning_usage": true,
+            "complete_usage": true
+          },
+          "controls_verified": true,
+          "initialization_verified": true,
+          "final_identity_verified": true,
+          "native_success": true
+        }
+      ],
+      "usage": {
+        "input_tokens": 1525357,
+        "cached_input_tokens": 1475712,
+        "output_tokens": 46090,
+        "reasoning_tokens": 35587,
+        "requests": 28,
+        "usage_requests": 28,
+        "complete_input_output": true,
+        "complete_cached_input": true,
+        "complete_reasoning": true
+      },
+      "infrastructure_ok": true,
+      "protected_inputs_changed": [],
+      "result_sha256": "5d0579f081f028928fdc623395a61ab7edba52566780991b21d5c5ed05d23a14",
+      "plan_sha256": "1cd9f797129ba1ff004b74e46bbbe66bae8f64e22e4422fde7375433a943e8c6"
+    },
+    {
+      "project": "B3",
+      "condition": "B",
+      "score": 7,
+      "accepted": true,
+      "failed_seams": [],
+      "checks": {
+        "prices": {
+          "producer": {
+            "passed": true,
+            "failures": [],
+            "checks": 4
+          },
+          "consumer": {
+            "passed": true,
+            "failures": [],
+            "checks": 2
+          },
+          "both_preserved": true
+        },
+        "stock": {
+          "producer": {
+            "passed": true,
+            "failures": [],
+            "checks": 4
+          },
+          "consumer": {
+            "passed": true,
+            "failures": [],
+            "checks": 2
+          },
+          "both_preserved": true
+        },
+        "weights": {
+          "producer": {
+            "passed": true,
+            "failures": [],
+            "checks": 4
+          },
+          "consumer": {
+            "passed": true,
+            "failures": [],
+            "checks": 2
+          },
+          "both_preserved": true
+        },
+        "discounts": {
+          "producer": {
+            "passed": true,
+            "failures": [],
+            "checks": 6
+          },
+          "consumer": {
+            "passed": true,
+            "failures": [],
+            "checks": 3
+          },
+          "both_preserved": true
+        },
+        "delivery": {
+          "producer": {
+            "passed": true,
+            "failures": [],
+            "checks": 4
+          },
+          "consumer": {
+            "passed": true,
+            "failures": [],
+            "checks": 2
+          },
+          "both_preserved": true
+        },
+        "contacts": {
+          "producer": {
+            "passed": true,
+            "failures": [],
+            "checks": 4
+          },
+          "consumer": {
+            "passed": true,
+            "failures": [],
+            "checks": 2
+          },
+          "both_preserved": true
+        },
+        "orders": {
+          "producer": {
+            "passed": true,
+            "failures": [],
+            "checks": 4
+          },
+          "consumer": {
+            "passed": true,
+            "failures": [],
+            "checks": 2
+          },
+          "both_preserved": true
+        }
+      },
+      "project_seconds": 234.255971465,
+      "aggregate_worker_seconds": 297.303175832,
+      "concurrency": {
+        "start_ns": 287397412594944,
+        "end_ns": 287631060386451,
+        "worker_interval_seconds": 233.647791507,
+        "worker_seconds": 297.303175832,
+        "factor": 1.2724416264088374,
+        "max_simultaneous": 2,
+        "active_timeline": [
+          {
+            "seconds": 0.0,
+            "active": 1
+          },
+          {
+            "seconds": 3.184e-05,
+            "active": 2
+          },
+          {
+            "seconds": 63.655416165,
+            "active": 1
+          },
+          {
+            "seconds": 233.647791507,
+            "active": 0
+          }
+        ]
+      },
+      "setup_seconds": 0.23592663800809532,
+      "archive_seconds": 0.138674143,
+      "verification_seconds": 0.032856398,
+      "human_interventions": 0,
+      "workers": [
+        {
+          "role": "producer",
+          "session": "6ac95d15-e60b-4336-b326-e8433100f471",
+          "started_at": "2026-09-09T20:31:38.475819+00:00",
+          "finished_at": "2026-09-09T20:35:32.123573+00:00",
+          "elapsed_seconds": 233.647759667,
+          "exit_code": 0,
+          "timed_out": null,
+          "stream_complete": true,
+          "relay_complete": true,
+          "usage": {
+            "input_tokens": 217430,
+            "cached_input_tokens": 206400,
+            "output_tokens": 16326,
+            "reasoning_tokens": 12489,
+            "requests": 6,
+            "usage_requests": 6,
+            "reasoning_observed": true,
+            "input_usage_requests": 6,
+            "complete_input_usage": true,
+            "output_usage_requests": 6,
+            "complete_output_usage": true,
+            "cached_input_usage_requests": 6,
+            "complete_cached_input_usage": true,
+            "reasoning_usage_requests": 6,
+            "complete_reasoning_usage": true,
+            "complete_usage": true
+          },
+          "controls_verified": true,
+          "initialization_verified": true,
+          "final_identity_verified": true,
+          "native_success": true
+        },
+        {
+          "role": "consumer",
+          "session": "749951ba-efe3-4350-9a35-c2fc2e26d8e6",
+          "started_at": "2026-09-09T20:31:38.475785+00:00",
+          "finished_at": "2026-09-09T20:32:42.131190+00:00",
+          "elapsed_seconds": 63.655416165,
+          "exit_code": 0,
+          "timed_out": null,
+          "stream_complete": true,
+          "relay_complete": true,
+          "usage": {
+            "input_tokens": 192200,
+            "cached_input_tokens": 186944,
+            "output_tokens": 4503,
+            "reasoning_tokens": 2176,
+            "requests": 7,
+            "usage_requests": 7,
+            "reasoning_observed": true,
+            "input_usage_requests": 7,
+            "complete_input_usage": true,
+            "output_usage_requests": 7,
+            "complete_output_usage": true,
+            "cached_input_usage_requests": 7,
+            "complete_cached_input_usage": true,
+            "reasoning_usage_requests": 7,
+            "complete_reasoning_usage": true,
+            "complete_usage": true
+          },
+          "controls_verified": true,
+          "initialization_verified": true,
+          "final_identity_verified": true,
+          "native_success": true
+        }
+      ],
+      "usage": {
+        "input_tokens": 409630,
+        "cached_input_tokens": 393344,
+        "output_tokens": 20829,
+        "reasoning_tokens": 14665,
+        "requests": 13,
+        "usage_requests": 13,
+        "complete_input_output": true,
+        "complete_cached_input": true,
+        "complete_reasoning": true
+      },
+      "infrastructure_ok": true,
+      "protected_inputs_changed": [],
+      "result_sha256": "5d1061a8e27eec6b216329ed4557cd35b99aead8232714b51dc666915c238505",
+      "plan_sha256": "c4bfed8e8c3ce90ee1a7f601c276347842119e15a182bf046a381be936d04a83"
+    },
+    {
+      "project": "B2",
+      "condition": "B",
+      "score": 7,
+      "accepted": true,
+      "failed_seams": [],
+      "checks": {
+        "prices": {
+          "producer": {
+            "passed": true,
+            "failures": [],
+            "checks": 4
+          },
+          "consumer": {
+            "passed": true,
+            "failures": [],
+            "checks": 2
+          },
+          "both_preserved": true
+        },
+        "stock": {
+          "producer": {
+            "passed": true,
+            "failures": [],
+            "checks": 4
+          },
+          "consumer": {
+            "passed": true,
+            "failures": [],
+            "checks": 2
+          },
+          "both_preserved": true
+        },
+        "weights": {
+          "producer": {
+            "passed": true,
+            "failures": [],
+            "checks": 4
+          },
+          "consumer": {
+            "passed": true,
+            "failures": [],
+            "checks": 2
+          },
+          "both_preserved": true
+        },
+        "discounts": {
+          "producer": {
+            "passed": true,
+            "failures": [],
+            "checks": 6
+          },
+          "consumer": {
+            "passed": true,
+            "failures": [],
+            "checks": 3
+          },
+          "both_preserved": true
+        },
+        "delivery": {
+          "producer": {
+            "passed": true,
+            "failures": [],
+            "checks": 4
+          },
+          "consumer": {
+            "passed": true,
+            "failures": [],
+            "checks": 2
+          },
+          "both_preserved": true
+        },
+        "contacts": {
+          "producer": {
+            "passed": true,
+            "failures": [],
+            "checks": 4
+          },
+          "consumer": {
+            "passed": true,
+            "failures": [],
+            "checks": 2
+          },
+          "both_preserved": true
+        },
+        "orders": {
+          "producer": {
+            "passed": true,
+            "failures": [],
+            "checks": 4
+          },
+          "consumer": {
+            "passed": true,
+            "failures": [],
+            "checks": 2
+          },
+          "both_preserved": true
+        }
+      },
+      "project_seconds": 231.195351008,
+      "aggregate_worker_seconds": 300.34028000800004,
+      "concurrency": {
+        "start_ns": 287166083090589,
+        "end_ns": 287396966036406,
+        "worker_interval_seconds": 230.882945817,
+        "worker_seconds": 300.34028000800004,
+        "factor": 1.3008335411921355,
+        "max_simultaneous": 2,
+        "active_timeline": [
+          {
+            "seconds": 0.0,
+            "active": 1
+          },
+          {
+            "seconds": 0.001095774,
+            "active": 2
+          },
+          {
+            "seconds": 69.458429965,
+            "active": 1
+          },
+          {
+            "seconds": 230.882945817,
+            "active": 0
+          }
+        ]
+      },
+      "setup_seconds": 0.24052487296285108,
+      "archive_seconds": 0.137095056,
+      "verification_seconds": 0.028306082,
+      "human_interventions": 0,
+      "workers": [
+        {
+          "role": "producer",
+          "session": "3f12ca31-3bbf-4d5f-8d14-cf8aa45481b4",
+          "started_at": "2026-09-09T20:27:47.146280+00:00",
+          "finished_at": "2026-09-09T20:31:38.029227+00:00",
+          "elapsed_seconds": 230.882945817,
+          "exit_code": 0,
+          "timed_out": null,
+          "stream_complete": true,
+          "relay_complete": true,
+          "usage": {
+            "input_tokens": 307356,
+            "cached_input_tokens": 277568,
+            "output_tokens": 13735,
+            "reasoning_tokens": 10122,
+            "requests": 9,
+            "usage_requests": 9,
+            "reasoning_observed": true,
+            "input_usage_requests": 9,
+            "complete_input_usage": true,
+            "output_usage_requests": 9,
+            "complete_output_usage": true,
+            "cached_input_usage_requests": 8,
+            "complete_cached_input_usage": false,
+            "reasoning_usage_requests": 9,
+            "complete_reasoning_usage": true,
+            "complete_usage": true
+          },
+          "controls_verified": true,
+          "initialization_verified": true,
+          "final_identity_verified": true,
+          "native_success": true
+        },
+        {
+          "role": "consumer",
+          "session": "49a25aa6-79fd-4fc7-87dd-f50e58b30153",
+          "started_at": "2026-09-09T20:27:47.147375+00:00",
+          "finished_at": "2026-09-09T20:28:56.604712+00:00",
+          "elapsed_seconds": 69.457334191,
+          "exit_code": 0,
+          "timed_out": null,
+          "stream_complete": true,
+          "relay_complete": true,
+          "usage": {
+            "input_tokens": 161615,
+            "cached_input_tokens": 151808,
+            "output_tokens": 4076,
+            "reasoning_tokens": 1805,
+            "requests": 6,
+            "usage_requests": 6,
+            "reasoning_observed": true,
+            "input_usage_requests": 6,
+            "complete_input_usage": true,
+            "output_usage_requests": 6,
+            "complete_output_usage": true,
+            "cached_input_usage_requests": 6,
+            "complete_cached_input_usage": true,
+            "reasoning_usage_requests": 6,
+            "complete_reasoning_usage": true,
+            "complete_usage": true
+          },
+          "controls_verified": true,
+          "initialization_verified": true,
+          "final_identity_verified": true,
+          "native_success": true
+        }
+      ],
+      "usage": {
+        "input_tokens": 468971,
+        "cached_input_tokens": 429376,
+        "output_tokens": 17811,
+        "reasoning_tokens": 11927,
+        "requests": 15,
+        "usage_requests": 15,
+        "complete_input_output": true,
+        "complete_cached_input": false,
+        "complete_reasoning": true
+      },
+      "infrastructure_ok": true,
+      "protected_inputs_changed": [],
+      "result_sha256": "8d6ba7723c9a7b7f3f53f61b839d145ad83be6215b3b4cad894ed849b5b2c4be",
+      "plan_sha256": "82168c21d2b53786feff7e8a6565ee721285e07cd7f6d656c2cc087d72123382"
+    },
+    {
+      "project": "C2",
+      "condition": "C",
+      "score": 6,
+      "accepted": false,
+      "failed_seams": [
+        "contacts"
+      ],
+      "checks": {
+        "prices": {
+          "producer": {
+            "passed": true,
+            "failures": [],
+            "checks": 4
+          },
+          "consumer": {
+            "passed": true,
+            "failures": [],
+            "checks": 2
+          },
+          "both_preserved": true
+        },
+        "stock": {
+          "producer": {
+            "passed": true,
+            "failures": [],
+            "checks": 4
+          },
+          "consumer": {
+            "passed": true,
+            "failures": [],
+            "checks": 2
+          },
+          "both_preserved": true
+        },
+        "weights": {
+          "producer": {
+            "passed": true,
+            "failures": [],
+            "checks": 4
+          },
+          "consumer": {
+            "passed": true,
+            "failures": [],
+            "checks": 2
+          },
+          "both_preserved": true
+        },
+        "discounts": {
+          "producer": {
+            "passed": true,
+            "failures": [],
+            "checks": 6
+          },
+          "consumer": {
+            "passed": true,
+            "failures": [],
+            "checks": 3
+          },
+          "both_preserved": true
+        },
+        "delivery": {
+          "producer": {
+            "passed": true,
+            "failures": [],
+            "checks": 4
+          },
+          "consumer": {
+            "passed": true,
+            "failures": [],
+            "checks": 2
+          },
+          "both_preserved": true
+        },
+        "contacts": {
+          "producer": {
+            "passed": true,
+            "failures": [],
+            "checks": 4
+          },
+          "consumer": {
+            "passed": false,
+            "failures": [
+              {
+                "check": 2,
+                "error": "AssertionError: Expected ['Ada Lovelace <ada2@example.test>'], got ['Ada <ada2@example.test>']"
+              }
+            ],
+            "checks": 2
+          },
+          "both_preserved": false
+        },
+        "orders": {
+          "producer": {
+            "passed": true,
+            "failures": [],
+            "checks": 4
+          },
+          "consumer": {
+            "passed": true,
+            "failures": [],
+            "checks": 2
+          },
+          "both_preserved": true
+        }
+      },
+      "project_seconds": 608.639746624,
+      "aggregate_worker_seconds": 960.268602108,
+      "concurrency": {
+        "start_ns": 286557309689723,
+        "end_ns": 287165634183418,
+        "worker_interval_seconds": 608.324493695,
+        "worker_seconds": 960.268602108,
+        "factor": 1.5785466672158308,
+        "max_simultaneous": 2,
+        "active_timeline": [
+          {
+            "seconds": 0.0,
+            "active": 1
+          },
+          {
+            "seconds": 3.8128e-05,
+            "active": 2
+          },
+          {
+            "seconds": 351.944146541,
+            "active": 1
+          },
+          {
+            "seconds": 608.324493695,
+            "active": 0
+          }
+        ]
+      },
+      "setup_seconds": 0.24613976501859725,
+      "archive_seconds": 0.154065436,
+      "verification_seconds": 0.033458653,
+      "human_interventions": 0,
+      "workers": [
+        {
+          "role": "producer",
+          "session": "a78f1e4e-4694-4dee-b0bd-538e351da3f0",
+          "started_at": "2026-09-09T20:17:38.372922+00:00",
+          "finished_at": "2026-09-09T20:23:30.317021+00:00",
+          "elapsed_seconds": 351.944108413,
+          "exit_code": 0,
+          "timed_out": null,
+          "stream_complete": true,
+          "relay_complete": true,
+          "usage": {
+            "input_tokens": 998322,
+            "cached_input_tokens": 957376,
+            "output_tokens": 18322,
+            "reasoning_tokens": 11952,
+            "requests": 19,
+            "usage_requests": 19,
+            "reasoning_observed": true,
+            "input_usage_requests": 19,
+            "complete_input_usage": true,
+            "output_usage_requests": 19,
+            "complete_output_usage": true,
+            "cached_input_usage_requests": 19,
+            "complete_cached_input_usage": true,
+            "reasoning_usage_requests": 19,
+            "complete_reasoning_usage": true,
+            "complete_usage": true
+          },
+          "controls_verified": true,
+          "initialization_verified": true,
+          "final_identity_verified": true,
+          "native_success": true
+        },
+        {
+          "role": "consumer",
+          "session": "18d25649-526f-44ef-bfe3-48ff7128e5f2",
+          "started_at": "2026-09-09T20:17:38.372882+00:00",
+          "finished_at": "2026-09-09T20:27:46.697371+00:00",
+          "elapsed_seconds": 608.324493695,
+          "exit_code": 0,
+          "timed_out": null,
+          "stream_complete": true,
+          "relay_complete": true,
+          "usage": {
+            "input_tokens": 860718,
+            "cached_input_tokens": 801920,
+            "output_tokens": 33207,
+            "reasoning_tokens": 27521,
+            "requests": 15,
+            "usage_requests": 15,
+            "reasoning_observed": true,
+            "input_usage_requests": 15,
+            "complete_input_usage": true,
+            "output_usage_requests": 15,
+            "complete_output_usage": true,
+            "cached_input_usage_requests": 14,
+            "complete_cached_input_usage": false,
+            "reasoning_usage_requests": 15,
+            "complete_reasoning_usage": true,
+            "complete_usage": true
+          },
+          "controls_verified": true,
+          "initialization_verified": true,
+          "final_identity_verified": true,
+          "native_success": true
+        }
+      ],
+      "usage": {
+        "input_tokens": 1859040,
+        "cached_input_tokens": 1759296,
+        "output_tokens": 51529,
+        "reasoning_tokens": 39473,
+        "requests": 34,
+        "usage_requests": 34,
+        "complete_input_output": true,
+        "complete_cached_input": false,
+        "complete_reasoning": true
+      },
+      "infrastructure_ok": true,
+      "protected_inputs_changed": [],
+      "result_sha256": "8bf22732dec3c70c2e1caefb35d18731851555eb6e6746875b3f6aa457ed541b",
+      "plan_sha256": "d610d1f0a153a50ed7f2488340c79e4366547a0ee3dbef9642bf351b3adb5d32"
+    },
+    {
+      "project": "C1",
+      "condition": "C",
+      "score": 7,
+      "accepted": true,
+      "failed_seams": [],
+      "checks": {
+        "prices": {
+          "producer": {
+            "passed": true,
+            "failures": [],
+            "checks": 4
+          },
+          "consumer": {
+            "passed": true,
+            "failures": [],
+            "checks": 2
+          },
+          "both_preserved": true
+        },
+        "stock": {
+          "producer": {
+            "passed": true,
+            "failures": [],
+            "checks": 4
+          },
+          "consumer": {
+            "passed": true,
+            "failures": [],
+            "checks": 2
+          },
+          "both_preserved": true
+        },
+        "weights": {
+          "producer": {
+            "passed": true,
+            "failures": [],
+            "checks": 4
+          },
+          "consumer": {
+            "passed": true,
+            "failures": [],
+            "checks": 2
+          },
+          "both_preserved": true
+        },
+        "discounts": {
+          "producer": {
+            "passed": true,
+            "failures": [],
+            "checks": 6
+          },
+          "consumer": {
+            "passed": true,
+            "failures": [],
+            "checks": 3
+          },
+          "both_preserved": true
+        },
+        "delivery": {
+          "producer": {
+            "passed": true,
+            "failures": [],
+            "checks": 4
+          },
+          "consumer": {
+            "passed": true,
+            "failures": [],
+            "checks": 2
+          },
+          "both_preserved": true
+        },
+        "contacts": {
+          "producer": {
+            "passed": true,
+            "failures": [],
+            "checks": 4
+          },
+          "consumer": {
+            "passed": true,
+            "failures": [],
+            "checks": 2
+          },
+          "both_preserved": true
+        },
+        "orders": {
+          "producer": {
+            "passed": true,
+            "failures": [],
+            "checks": 4
+          },
+          "consumer": {
+            "passed": true,
+            "failures": [],
+            "checks": 2
+          },
+          "both_preserved": true
+        }
+      },
+      "project_seconds": 625.365232981,
+      "aggregate_worker_seconds": 926.1509891200001,
+      "concurrency": {
+        "start_ns": 285931807695057,
+        "end_ns": 286556929680955,
+        "worker_interval_seconds": 625.121985898,
+        "worker_seconds": 926.1509891200001,
+        "factor": 1.4815524169887673,
+        "max_simultaneous": 2,
+        "active_timeline": [
+          {
+            "seconds": 0.0,
+            "active": 1
+          },
+          {
+            "seconds": 6.0048e-05,
+            "active": 2
+          },
+          {
+            "seconds": 301.02906327,
+            "active": 1
+          },
+          {
+            "seconds": 625.121985898,
+            "active": 0
+          }
+        ]
+      },
+      "setup_seconds": 0.24399216601159424,
+      "archive_seconds": 0.156205854,
+      "verification_seconds": 0.046749515,
+      "human_interventions": 0,
+      "workers": [
+        {
+          "role": "producer",
+          "session": "82e84a38-9ccc-4929-8734-7e4c3b0d035a",
+          "started_at": "2026-09-09T20:07:12.870945+00:00",
+          "finished_at": "2026-09-09T20:12:13.899945+00:00",
+          "elapsed_seconds": 301.029003222,
+          "exit_code": 0,
+          "timed_out": null,
+          "stream_complete": true,
+          "relay_complete": true,
+          "usage": {
+            "input_tokens": 644184,
+            "cached_input_tokens": 612416,
+            "output_tokens": 17026,
+            "reasoning_tokens": 11508,
+            "requests": 14,
+            "usage_requests": 14,
+            "reasoning_observed": true,
+            "input_usage_requests": 14,
+            "complete_input_usage": true,
+            "output_usage_requests": 14,
+            "complete_output_usage": true,
+            "cached_input_usage_requests": 14,
+            "complete_cached_input_usage": true,
+            "reasoning_usage_requests": 14,
+            "complete_reasoning_usage": true,
+            "complete_usage": true
+          },
+          "controls_verified": true,
+          "initialization_verified": true,
+          "final_identity_verified": true,
+          "native_success": true
+        },
+        {
+          "role": "consumer",
+          "session": "99014eab-5174-4146-bb1c-21eb1de539f8",
+          "started_at": "2026-09-09T20:07:12.870882+00:00",
+          "finished_at": "2026-09-09T20:17:37.992867+00:00",
+          "elapsed_seconds": 625.121985898,
+          "exit_code": 0,
+          "timed_out": null,
+          "stream_complete": true,
+          "relay_complete": true,
+          "usage": {
+            "input_tokens": 1290076,
+            "cached_input_tokens": 1246528,
+            "output_tokens": 34646,
+            "reasoning_tokens": 27174,
+            "requests": 20,
+            "usage_requests": 20,
+            "reasoning_observed": true,
+            "input_usage_requests": 20,
+            "complete_input_usage": true,
+            "output_usage_requests": 20,
+            "complete_output_usage": true,
+            "cached_input_usage_requests": 20,
+            "complete_cached_input_usage": true,
+            "reasoning_usage_requests": 20,
+            "complete_reasoning_usage": true,
+            "complete_usage": true
+          },
+          "controls_verified": true,
+          "initialization_verified": true,
+          "final_identity_verified": true,
+          "native_success": true
+        }
+      ],
+      "usage": {
+        "input_tokens": 1934260,
+        "cached_input_tokens": 1858944,
+        "output_tokens": 51672,
+        "reasoning_tokens": 38682,
+        "requests": 34,
+        "usage_requests": 34,
+        "complete_input_output": true,
+        "complete_cached_input": true,
+        "complete_reasoning": true
+      },
+      "infrastructure_ok": true,
+      "protected_inputs_changed": [],
+      "result_sha256": "a2291f10986c71cfc20b2ae13872c86dac39247d3ab573d618f26f9d899d8020",
+      "plan_sha256": "ace3ca8f17e10ca755247f71eda18ce3d979efc3553d6920298dc65ef2070b75"
+    },
+    {
+      "project": "B1",
+      "condition": "B",
+      "score": 7,
+      "accepted": true,
+      "failed_seams": [],
+      "checks": {
+        "prices": {
+          "producer": {
+            "passed": true,
+            "failures": [],
+            "checks": 4
+          },
+          "consumer": {
+            "passed": true,
+            "failures": [],
+            "checks": 2
+          },
+          "both_preserved": true
+        },
+        "stock": {
+          "producer": {
+            "passed": true,
+            "failures": [],
+            "checks": 4
+          },
+          "consumer": {
+            "passed": true,
+            "failures": [],
+            "checks": 2
+          },
+          "both_preserved": true
+        },
+        "weights": {
+          "producer": {
+            "passed": true,
+            "failures": [],
+            "checks": 4
+          },
+          "consumer": {
+            "passed": true,
+            "failures": [],
+            "checks": 2
+          },
+          "both_preserved": true
+        },
+        "discounts": {
+          "producer": {
+            "passed": true,
+            "failures": [],
+            "checks": 6
+          },
+          "consumer": {
+            "passed": true,
+            "failures": [],
+            "checks": 3
+          },
+          "both_preserved": true
+        },
+        "delivery": {
+          "producer": {
+            "passed": true,
+            "failures": [],
+            "checks": 4
+          },
+          "consumer": {
+            "passed": true,
+            "failures": [],
+            "checks": 2
+          },
+          "both_preserved": true
+        },
+        "contacts": {
+          "producer": {
+            "passed": true,
+            "failures": [],
+            "checks": 4
+          },
+          "consumer": {
+            "passed": true,
+            "failures": [],
+            "checks": 2
+          },
+          "both_preserved": true
+        },
+        "orders": {
+          "producer": {
+            "passed": true,
+            "failures": [],
+            "checks": 4
+          },
+          "consumer": {
+            "passed": true,
+            "failures": [],
+            "checks": 2
+          },
+          "both_preserved": true
+        }
+      },
+      "project_seconds": 170.588395981,
+      "aggregate_worker_seconds": 220.330371481,
+      "concurrency": {
+        "start_ns": 285761081629236,
+        "end_ns": 285931483910869,
+        "worker_interval_seconds": 170.402281633,
+        "worker_seconds": 220.330371481,
+        "factor": 1.2930012988648325,
+        "max_simultaneous": 2,
+        "active_timeline": [
+          {
+            "seconds": 0.0,
+            "active": 1
+          },
+          {
+            "seconds": 2.9536e-05,
+            "active": 2
+          },
+          {
+            "seconds": 49.928119384,
+            "active": 1
+          },
+          {
+            "seconds": 170.402281633,
+            "active": 0
+          }
+        ]
+      },
+      "setup_seconds": 0.24334679101593792,
+      "archive_seconds": 0.136486482,
+      "verification_seconds": 0.027601401,
+      "human_interventions": 0,
+      "workers": [
+        {
+          "role": "producer",
+          "session": "215806c1-78ff-4d36-9984-5d95b1ebcae4",
+          "started_at": "2026-09-09T20:04:22.144851+00:00",
+          "finished_at": "2026-09-09T20:07:12.547097+00:00",
+          "elapsed_seconds": 170.402252097,
+          "exit_code": 0,
+          "timed_out": null,
+          "stream_complete": true,
+          "relay_complete": true,
+          "usage": {
+            "input_tokens": 265921,
+            "cached_input_tokens": 251648,
+            "output_tokens": 11652,
+            "reasoning_tokens": 7114,
+            "requests": 8,
+            "usage_requests": 8,
+            "reasoning_observed": true,
+            "input_usage_requests": 8,
+            "complete_input_usage": true,
+            "output_usage_requests": 8,
+            "complete_output_usage": true,
+            "cached_input_usage_requests": 8,
+            "complete_cached_input_usage": true,
+            "reasoning_usage_requests": 8,
+            "complete_reasoning_usage": true,
+            "complete_usage": true
+          },
+          "controls_verified": true,
+          "initialization_verified": true,
+          "final_identity_verified": true,
+          "native_success": true
+        },
+        {
+          "role": "consumer",
+          "session": "47261c5b-ced5-497c-80bc-250e82920d79",
+          "started_at": "2026-09-09T20:04:22.144818+00:00",
+          "finished_at": "2026-09-09T20:05:12.072940+00:00",
+          "elapsed_seconds": 49.928119384,
+          "exit_code": 0,
+          "timed_out": null,
+          "stream_complete": true,
+          "relay_complete": true,
+          "usage": {
+            "input_tokens": 129924,
+            "cached_input_tokens": 103680,
+            "output_tokens": 2624,
+            "reasoning_tokens": 711,
+            "requests": 5,
+            "usage_requests": 5,
+            "reasoning_observed": true,
+            "input_usage_requests": 5,
+            "complete_input_usage": true,
+            "output_usage_requests": 5,
+            "complete_output_usage": true,
+            "cached_input_usage_requests": 4,
+            "complete_cached_input_usage": false,
+            "reasoning_usage_requests": 5,
+            "complete_reasoning_usage": true,
+            "complete_usage": true
+          },
+          "controls_verified": true,
+          "initialization_verified": true,
+          "final_identity_verified": true,
+          "native_success": true
+        }
+      ],
+      "usage": {
+        "input_tokens": 395845,
+        "cached_input_tokens": 355328,
+        "output_tokens": 14276,
+        "reasoning_tokens": 7825,
+        "requests": 13,
+        "usage_requests": 13,
+        "complete_input_output": true,
+        "complete_cached_input": false,
+        "complete_reasoning": true
+      },
+      "infrastructure_ok": true,
+      "protected_inputs_changed": [],
+      "result_sha256": "b36c04e82babf26f4a4dddca28a68684b0c01b4ddb335ab16b28ed7ce84abbd3",
+      "plan_sha256": "ce74502043b30ccb902d5b111be7f3acc56d6a6b06d8e17fd3c1fbb28b4fd8ee"
+    }
+  ],
+  "limitations": [
+    "Original own-task control versus PI peer-task context; not an equal-static-context ablation.",
+    "Context, fixture size and worker count differ from earlier distributed Qwen cohort.",
+    "Final post-exit acceptance; no continuous time-to-first-correct measurement.",
+    "Cached input and reasoning are subsets; no exclusive GPU reservation or causal timing claim."
+  ]
+}

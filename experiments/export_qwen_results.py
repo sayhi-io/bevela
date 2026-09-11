@@ -1,0 +1,285 @@
+"""Publish an allowlisted measurements ledger, never native transcripts/profiles."""
+import argparse
+import hashlib
+import json
+from pathlib import Path
+import re
+from statistics import median
+
+from experiments import analyze_qwen_distributed as analysis
+from experiments import qwen_distributed_study as study
+
+
+def public_path(value):
+    if (not isinstance(value, str) or not re.fullmatch(r'[A-Za-z0-9_./-]{1,256}', value)
+            or Path(value).is_absolute() or '..' in Path(value).parts):
+        raise ValueError('Unsafe public path')
+    return value
+
+
+def public_usage(value):
+    return {key: value[key] for key in ('input_tokens', 'cached_input_tokens',
+        'output_tokens', 'reasoning_tokens', 'requests', 'usage_requests',
+        'reasoning_observed', 'complete_usage', 'complete_input_usage',
+        'complete_output_usage', 'complete_cached_input_usage', 'complete_reasoning_usage',
+        'input_usage_requests', 'output_usage_requests', 'cached_input_usage_requests',
+        'reasoning_usage_requests') if key in value}
+
+
+def operational_hashes(batch):
+    """Available artifact identities only, not a completeness or claim audit."""
+    return {name: study.sha(batch / name) for name in (
+        'operational-receipt.json', 'native-context-audit.json',
+        'system-tool-provenance.json', 'frozen-matching-audit.json')
+        if (batch / name).is_file()}
+
+
+def runtime_identity(root):
+    package = root / 'runtime/lib/node_modules/@qwen-code/qwen-code/package.json'
+    value = json.loads(package.read_text())
+    version = value.get('version')
+    if value.get('name') != '@qwen-code/qwen-code' or not isinstance(version, str) or not re.fullmatch(
+            r'\d+\.\d+\.\d+(?:-[A-Za-z0-9.-]+)?(?:\+[A-Za-z0-9.-]+)?', version):
+        raise ValueError('Unrecognized frozen native runtime identity')
+    return 'Qwen Code ' + version
+
+
+def public_project(value):
+    final = value['result']
+    checked = final['result']
+    scored = (isinstance(checked.get('groups'), dict)
+        and isinstance(checked.get('failed_contracts'), list)
+        and isinstance(checked.get('component_checks'), dict)
+        and not checked.get('evaluation_error'))
+    if final['accepted'] and not scored:
+        raise ValueError('Unscored evaluation cannot establish acceptance')
+    workers = []
+    fields = ('role', 'session', 'started_at', 'finished_at', 'start_seconds',
+        'end_seconds', 'duration_seconds', 'exit_code', 'timed_out', 'usage',
+        'native_identity_verified', 'native_success', 'tools', 'native_retry_events',
+        'recorder_stream_complete', 'recorder_stream_eof', 'recorder_stream_error_type', 'relay_complete',
+        'response_limit_sized_completions', 'max_observed_request_input_tokens',
+        'pi_tagged_calls', 'pi_operation_candidates', 'pi_tagged_seconds',
+        'pi_native_result_bytes', 'pi_tagged_errors')
+    for worker in value['workers']:
+        entry = {key: worker[key] for key in fields}
+        entry['usage'] = public_usage(worker['usage'])
+        workers.append(entry)
+    replay = value['replay']
+    if replay is None:
+        raise ValueError('Public results require post-exit replay')
+    return {'project': value['label'], 'condition': value['condition'],
+        'pi_behavior': value['pi_behavior'], 'accepted': final['accepted'],
+        'autonomous_complete': final['autonomous_complete'],
+        'evaluation_status': 'scored' if scored else 'unscored',
+        'evaluation_error_present': bool(checked.get('evaluation_error')),
+        'integration_passed': sum(bool(g['passed']) for g in checked['groups'].values()) if scored else None,
+        'integration_total': len(checked['groups']) if scored else None,
+        'failed_contracts': checked.get('failed_contracts') if scored else None,
+        'component_checks': {role: {key: row[key] for key in (
+            'passed', 'tests_run', 'failures', 'errors') if key in row}
+            for role, row in checked.get('component_checks', {}).items() if role in study.base.ROLES} if scored else {},
+        'protected_inputs_changed': [public_path(p) for p in final['protected_inputs_changed']],
+        'setup_seconds': final['setup_seconds'], 'archive_seconds': final['archive_seconds'],
+        'verification_seconds': final['verification_seconds'],
+        'project_seconds': final['project_seconds'], 'concurrency': final['concurrency'],
+        'usage': public_usage(final['usage']), 'human_interventions': final['human_interventions'],
+        'transport_observations': [{'role': row['role'], 'errors': [
+            {key: error[key] for key in ('event', 'request', 'at', 'mono_ns', 'type', 'status') if key in error}
+            for error in row['errors']]} for row in final.get('infrastructure_errors', [])],
+        'external_repair_seconds': final['external_repair_seconds'],
+        'workers': workers, 'source_changes': [{
+            'path': public_path(row['path']), **{key: row[key] for key in ('seconds', 'before', 'after', 'trigger')}}
+            for row in value['source_changes']],
+        'first_accepted_sample_seconds': replay['first_accepted_sample_seconds'],
+        'durable_accepted_sample_seconds': replay['durable_accepted_sample_seconds'],
+        'final_sample_matches_final_acceptance': replay['final_sample_matches_final_score'],
+        'final_sample_matches_final_contracts_and_local_checks': scored and bool(replay['sampled_states'])
+            and replay['sampled_states'][-1]['failed_contracts'] == checked['failed_contracts']
+            and replay['sampled_states'][-1]['component_checks'] == checked['component_checks'],
+        'sampled_states': len(replay['sampled_states']),
+        'evidence_sha256': value['evidence_sha256'],
+        'native_event_hashes': value['native_event_hashes'],
+        'replay_sha256': value['replay_sha256'], 'analyzer_sha256': value['analyzer_sha256']}
+
+
+def summarize(projects):
+    result = {}
+    for arm in ('B', 'C'):
+        rows = [r for r in projects if r['condition'] == arm]
+        if not rows:
+            continue
+        result[arm] = {'runs': len(rows), 'accepted': sum(r['accepted'] for r in rows),
+            'unscored': sum(r.get('evaluation_status') == 'unscored' for r in rows),
+            'median_final_project_seconds': median(r['project_seconds'] for r in rows),
+            'median_aggregate_worker_seconds': median(r['concurrency']['worker_seconds'] for r in rows),
+            'median_observed_aggregate_tokens': median(r['usage']['input_tokens'] + r['usage']['output_tokens'] for r in rows),
+            'all_usage_complete': all(r['usage']['complete_usage'] for r in rows),
+            'worker_timeouts': sum(w['timed_out'] for r in rows for w in r['workers']),
+            'native_successes': sum(w['native_success'] for r in rows for w in r['workers']),
+            'human_interventions': sum(r['human_interventions'] for r in rows)}
+    return result
+
+
+def registrations(root, plan):
+    """Archived local presence is observation, not execution or PM authority."""
+    by_session = {session: role for role, session in plan['sessions'].items()}
+    architecture = json.loads((root / 'before/architecture.json').read_text())
+    public_seams = set().union(*architecture['boundaries'].values())
+    records = []
+    for path in sorted((root / 'after/.pi/presence').glob('*.json')):
+        row = json.loads(path.read_text())
+        role = by_session.get(row.get('session'))
+        paths = [public_path(p) for p in row.get('touching_paths', [])]
+        records.append({'role': role, 'session': row.get('session') if role else None,
+            'binding_matches': bool(role and row.get('workstream') == role.upper()
+                and row.get('scope') == study.base.SCOPE
+                and row.get('checkout', {}).get('root') == str(root / 'work')),
+            **{key: row.get(key) for key in ('status', 'claimed_at', 'heartbeat_at',
+                'expires_at', 'access')},
+            'touching_paths': paths,
+            **{key: [seam for seam in row.get(key, []) if seam in public_seams]
+               for key in ('touching_seams', 'approaching')},
+            'unpublished_seam_declarations': sum(seam not in public_seams
+                for key in ('touching_seams', 'approaching') for seam in row.get(key, [])),
+            'evidence_sha256': study.sha(path)})
+    return records
+
+
+def public_disposition(root, plan, workers):
+    version = next((v for v in (4, 3, 2) if (root / f'timeout-disposition-v{v}.json').exists()), None)
+    if version is None:
+        return None
+    path = root / f'timeout-disposition-v{version}.json'
+    disposition = json.loads(path.read_text())
+    for key, name in (('result_sha256', 'result.json'), ('plan_sha256', 'plan.json')):
+        if disposition[key] != study.sha(root / name):
+            raise ValueError('Boundary disposition has stale evidence')
+    if set(disposition['transport_sha256']) != set(plan['roles']):
+        raise ValueError('Boundary transport coverage is incomplete')
+    if disposition['timed_out_roles'] != [w['role'] for w in workers if w['timed_out']]:
+        raise ValueError('Boundary timeout roles disagree')
+    amendment_path = root.parent / ('frozen.json' if version == 4 else f'sequencing-amendment-v{version}.json')
+    amendment = json.loads(amendment_path.read_text())
+    if version == 4:
+        amendment = amendment['sequencing_policy']
+        if amendment['version'] != disposition.get('policy_version') or amendment['version'] != 'qwen-native-boundary/v4':
+            raise ValueError('Disposition policy does not match frozen policy')
+    if disposition['controller_sha256'] != amendment['controller_sha256']:
+        raise ValueError('Boundary controller does not match amendment')
+    for role, digest in disposition['transport_sha256'].items():
+        if digest != study.sha(root / role / 'transport.jsonl'):
+            raise ValueError('Boundary transport changed')
+    result = {key: disposition[key] for key in ('state', 'timed_out_roles', 'controller_sha256')}
+    expected_state = ('reviewed_native_stream_cancellation' if version >= 3 and
+        any(row['matches'] for row in disposition['native_cancellations'].values()) else 'reviewed_predetermined_timeout')
+    if disposition['state'] != expected_state:
+        raise ValueError('Disposition state does not match observed cancellation evidence')
+    result.update(version=version, sha256=study.sha(path))
+    if version == 4:
+        result.update(policy_source='frozen.json', policy_evidence_sha256=study.sha(amendment_path),
+            policy_version=amendment['version'])
+    else:
+        result['amendment_sha256'] = study.sha(amendment_path)
+    if version >= 3:
+        if disposition['classifier_sha256'] != amendment['classifier_sha256']:
+            raise ValueError('Native classifier does not match amendment')
+        result['classifier_sha256'] = disposition['classifier_sha256']
+        result['native_cancellations'] = {}
+        for role, row in disposition['native_cancellations'].items():
+            if role not in plan['roles'] or row['classifier_sha256'] != disposition['classifier_sha256']:
+                raise ValueError('Unknown role or changed native classifier')
+            profiles = list((root / 'qwen-home' / role / 'projects').glob('*/chats/' + plan['sessions'][role] + '.jsonl'))
+            if len(profiles) != 1 or study.sha(profiles[0]) != row['profile_sha256']:
+                raise ValueError('Native profile evidence changed')
+            if study.sha(root / role / 'events.jsonl') != row['native_events_sha256']:
+                raise ValueError('Native event evidence changed')
+            result['native_cancellations'][role] = {
+                **{key: row[key] for key in ('profile_sha256', 'native_events_sha256', 'classifier_sha256')},
+                'matches': [{key: item[key] for key in ('request', 'native_error_at',
+                    'native_error_type', 'duration_ms', 'transport_error_at',
+                    'transport_error_type', 'native_retry_at', 'followup_request')} for item in row['matches']]}
+    return result
+
+
+def export(batch, output):
+    frozen = json.loads((batch / 'frozen.json').read_text())
+    if frozen['order'] != list(study.ORDER):
+        raise ValueError('Unexpected or incomplete cohort')
+    projects, plans = [], []
+    for label in frozen['order']:
+        root = batch / label
+        if study.sha(root / 'plan.json') != frozen['plans'][label]:
+            raise ValueError('Plan hash changed: ' + label)
+        value = public_project(analysis.project(root))
+        plan = json.loads((root / 'plan.json').read_text())
+        plans.append(plan)
+        value['archived_registration_records'] = registrations(root, plan)
+        value['boundary_disposition'] = public_disposition(root, plan, value['workers'])
+        diagnostic_path = root / 'controller-diagnostics.json'
+        value['separately_recorded_shutdown_diagnostics'] = None
+        if diagnostic_path.exists():
+            diagnostic = json.loads(diagnostic_path.read_text())
+            exceptions = diagnostic['uncaught_handler_exceptions']
+            value['separately_recorded_shutdown_diagnostics'] = {
+                'evidence_sha256': study.sha(diagnostic_path),
+                'controller_exit': (int(diagnostic['controller_exit'])
+                    if diagnostic.get('controller_exit') is not None else None),
+                'uncaught_handler_count': int(exceptions['count']),
+                'exception_type': exceptions['type'] if exceptions['type'] == 'AttributeError' else 'other',
+                'individual_handler_roles_known': False}
+        projects.append(value)
+    intervals = [r['concurrency'] for r in projects]
+    if any(a['end_ns'] > b['start_ns'] for a, b in zip(intervals, intervals[1:])):
+        raise ValueError('Project execution windows overlap')
+    for field in ('input_hashes', 'fixture_manifest', 'runtime_manifest', 'settings_sha256'):
+        if any(plan[field] != plans[0][field] for plan in plans[1:]):
+            raise ValueError('Matched frozen inputs differ: ' + field)
+    def manifest_digest(value):
+        return hashlib.sha256(json.dumps(value, sort_keys=True, separators=(',', ':')).encode()).hexdigest()
+    pi_plans = [p for p in plans if p['pi_enabled']]
+    if any(p['pi_manifest'] != pi_plans[0]['pi_manifest'] for p in pi_plans[1:]):
+        raise ValueError('PI treatment changed between projects')
+    value = {'schema': 'qwen-distributed-public/v2', 'study_version': frozen['version'],
+        'model': frozen['model'], 'native_runtime': runtime_identity(batch / frozen['order'][0]),
+        'reasoning': 'user high mapped to supported server xhigh; thinking enabled',
+        'context_tokens': 230000, 'response_limit_tokens': 32768,
+        'worker_budget_seconds': frozen['timeout_seconds'], 'order': frozen['order'],
+        'source_commit': frozen['source_commit'], 'frozen_sha256': study.sha(batch / 'frozen.json'),
+        'frozen_study_sha256': frozen['study_sha256'], 'frozen_adapter_sha256': frozen['adapter_sha256'],
+        'common_prompt_and_checker_sha256': plans[0]['input_hashes'],
+        'fixture_manifest_sha256': manifest_digest(plans[0]['fixture_manifest']),
+        'runtime_manifest_sha256': manifest_digest(plans[0]['runtime_manifest']),
+        'pi_manifest_sha256': manifest_digest(pi_plans[0]['pi_manifest']),
+        'manifest_hash_encoding': 'UTF-8 json.dumps(manifest, sort_keys=True, separators=(comma, colon))',
+        'settings_sha256': plans[0]['settings_sha256'],
+        'pre_frozen_sequencing_policy': {key: frozen['sequencing_policy'][key] for key in (
+            'version', 'controller_sha256', 'classifier_sha256')} if 'sequencing_policy' in frozen else None,
+        'operational_evidence_sha256': operational_hashes(batch),
+        'sequencing_amendments': [{
+            'file': name, 'sha256': study.sha(batch / name),
+            **{key: data[key] for key in ('version', 'at', 'controller_sha256', 'classifier_sha256') if key in data}}
+            for name in ('sequencing-amendment.json', 'sequencing-amendment-v2.json', 'sequencing-amendment-v3.json')
+            if (batch / name).exists() for data in [json.loads((batch / name).read_text())]],
+        'exporter_sha256': study.sha(__file__), 'summary': summarize(projects),
+        'projects_newest_first': list(reversed(projects)),
+        'limitations': [
+            'Final project duration is not time to accepted when acceptance fails.',
+            'Incomplete token totals are observed lower bounds; cache is a subset of input, reasoning a subset of output.',
+            'Native process overlap does not quantify productive coding time.',
+            'Source changes alone do not establish authorship, duplication, or causal PI effects.',
+            'PI event spans/result bytes are observable overhead, not attributable total PI tokens.',
+            '100ms non-atomic source samples are replayed only after worker exit.',
+            'Timeout dispositions and between-project sequencing amendments preserve raw failures; see detailed report.',
+            'No single-worker Qwen ceiling or protocol-competence calibration was run.']}
+    study.write_json(output, value)
+    return value
+
+
+if __name__ == '__main__':
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument('batch', type=Path)
+    parser.add_argument('output', type=Path)
+    args = parser.parse_args()
+    value = export(args.batch.resolve(), args.output)
+    print(json.dumps(value['summary'], indent=2))

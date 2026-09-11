@@ -20,6 +20,16 @@ defined [below](#pi-behavior-versions), not deployed release numbers.
 
 | Executed | Study | Model / effort | Ordinary outcome | PI outcome | PI behavior |
 | --- | --- | --- | --- | --- | --- |
+| Sep 10 · recorded summary | [Qwen independent requests · candidate 2](docs/results/qwen-independent-requests.md) | Qwen3.8 DFlash2 · thinking off | **3/3 accepted**, 15/15 each | Steering on: **1/3 accepted**, 13/15, 13/15, 15/15; first two stopped at the 30-minute worker boundary. Owner-recorded outcomes, not a newly audited measurements export. | v0.05 backend unchanged; independent-request steering adapter v1 |
+| Sep 9, 22:55–22:57 | [Qwen PI steering · first pilot](docs/results/qwen-steering.md) | Qwen3.8 DFlash2 · thinking off | No new control; preceding pull-only PI project scored 0/7 | **1/1 accepted, 7/7 in 95s**; both enrolled; 18 automatic notices, consumer reconciled migration. One pilot, not established reliability. | v0.05 backend unchanged; steering integration v1 |
+| Sep 9, 22:42–22:44 | [Compact PI v2 · filtered Qwen CLI](docs/results/qwen-compact-pi-v2.md) | Qwen3.8 DFlash2 · thinking off | Not run | **0/1 accepted, 0/7 in 76s**; both workers finished. Consumer made no PI calls; producer left stale consumer unchanged. No loop or timeout. | v0.05 backend unchanged; Qwen CLI v2 |
+| Sep 9, 22:01–22:07 | [Compact PI prompt · Qwen thinking off](docs/results/qwen-compact-pi.md) | Qwen3.8 DFlash2 · thinking off | Not run | **1/3 accepted: 0/7, 0/7, 7/7**; 130s, 84s, 103s. Two native loop-guard stops; no timeouts. | v0.05 unchanged; compact instructions v1 |
+| Sep 9, 21:43–21:45 | [Qwen single worker · thinking off](docs/results/qwen-single-worker.md) | Qwen3.8 DFlash2 · thinking off | **3/3 accepted, 7/7 each**; 41.5s, 47.9s, 72.2s. One worker owns both tasks. | Not run; preceding PI pair took 146.7s for 7/7 | None; single-worker v1 |
+| Sep 9, 21:36–21:37 | [Qwen thinking off · ordinary follow-up](docs/results/qwen-ordinary-thinking-off.md) | Qwen3.8 DFlash2 · thinking off | **0/1 accepted, 0/7 in 44s**; migration broke already-finished consumer imports. No timeouts. | Preceding same-profile PI project: **7/7 in 2m 27s**; one run per condition | None in ordinary; preceding PI v0.05 |
+| Sep 9, 21:29–21:32 | [Qwen thinking off · one project](docs/results/qwen-thinking-off.md) | Qwen3.8 DFlash2 · thinking off | Not run | **1/1 accepted, 7/7 in 2m 27s**; zero reasoning tokens, no timeouts. One duplicate repair attempt rejected by native edit guard. | v0.05 unchanged; profile v1, confidence off |
+| Sep 9, 21:14–21:22 | [Qwen confidence prompt · one project](docs/results/qwen-confidence.md) | Qwen3.8 DFlash2 · Medium, thinking on | Not run | **0/1 accepted, 0/7**; both workers finished. Stale consumer imports; producer left known break unresolved. Extended deliberation persisted. | v0.05 unchanged; profile v1, confidence on |
+| Sep 9, 20:04–20:45 | [Qwen Code · original seven seams](docs/results/qwen-seven-seams.md) | Qwen3.8 DFlash2 · Medium | **3/3 accepted**, 7/7 each | **2/3 accepted**, 7/7, 6/7, 7/7; stale Contacts name in C2. All 12 workers finished, no timeouts. | v0.05 unchanged; Qwen session adaptation |
+| Sep 9, 12:47–18:00 | [Qwen Code · distributed candidate 2](docs/results/qwen-distributed.md) | Qwen3.8 DFlash2 · thinking / server XHigh | **0/5 accepted**, scores 4, 6, 7, 5, 5 out of 15 | **0/5 accepted**, scores 4, 7, 5, 5, 5. 35/40 workers timed out across arms; PI enrollment incomplete. | v0.05 unchanged; Qwen-specific session instructions |
 | Sep 9, 09:46–10:25 | [Distributed coherence · candidate 2 calibration](docs/results/sol-distributed.md#candidate-2--implementation-defined-return-contracts) | Sol Medium | **3/3 accepted**, 15/15 contracts; four retained implementations each | Not run: both allowed candidates saturated; bounded calibration stopped | v0.05 frozen, not executed |
 | Sep 9, 08:51–09:21 | [Distributed coherence · candidate 1 calibration](docs/results/sol-distributed.md#candidate-1--prescribed-internal-contracts) | Sol Medium | Four fixed-role workers: **3/3 accepted**, 12/12 contracts each; four distinct retained implementations each | Not run: ordinary calibration saturated. Candidate 2 subsequently tested implementation-defined internal contracts. | v0.05 frozen, not executed |
 | Sep 9, 07:31–08:18 | [PI protocol competence calibration](docs/results/sol-protocol.md) | Sol Medium | Not applicable: deterministic protocol scenarios, not software A/B | **8/9 completed workflows**; one reporting/release timeout. Qualified for software calibration, not error-free operation. | v0.05 unchanged |
@@ -91,7 +101,30 @@ cripple ordinary tools. No PI software effect is measured here.
 [Software results](docs/results/sol-distributed.md) · [Protocol evidence](docs/results/sol-protocol.md) ·
 [Frozen software-study plan](docs/CLI_SOL_DISTRIBUTED_SOFTWARE.md).
 
-## Latest completed project-level comparison
+## Latest Qwen follow-up: independent requests
+
+The September 10 study-owner summary records **3/3 ordinary projects accepted**,
+versus **1/3 with PI and steering**. The other two PI projects reached 13/15 at
+the 30-minute worker boundary. Workers noticed peers but did not establish a PI
+repair agreement. This is not evidence of a reliable PI advantage or proof that
+PI caused the failures. [Recorded outcomes and evidence limits](docs/results/qwen-independent-requests.md).
+The [proposed follow-up](docs/QWEN_STEERING_BACKLOG.md) remains on hold.
+
+## Earlier Qwen Code distributed comparison: no PI win
+
+The requested five ordinary and five PI projects ran through native **Qwen Code
+0.23.2**, with 230k context and thinking enabled, on distributed candidate 2.
+Neither arm produced an accepted project; both had a median **5/15** score.
+Projects ran sequentially, with four concurrent role workers inside each project.
+
+**Possible limit:** 35/40 workers hit the 30-minute limit, native stream/reasoning
+behavior constrained useful output, and only 7/20 PI workers initially enrolled.
+**Next test should separate** native Qwen/tool throughput and PI protocol reliability
+from coordination before another frozen comparison. The subsequent fleet recovery
+and recorder-v2 fixes do not change this cohort's treatment or results.
+[Every project, measured timelines and limitations →](docs/results/qwen-distributed.md)
+
+## Earlier identical-objective comparison
 
 Luna Medium, original fixture, identical complete objective for every worker.
 Three fresh projects per condition; **all reached 7/7**. Time and token columns

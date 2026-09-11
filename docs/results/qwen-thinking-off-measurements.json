@@ -1,0 +1,261 @@
+{
+  "schema": "pi-for-qwen-public/v1",
+  "qwen_profile": {
+    "thinking": false,
+    "confidence": false,
+    "pi": true,
+    "runs": 1,
+    "context": 230000,
+    "effort": "medium"
+  },
+  "model": "qwen38-27b-dflash2",
+  "effort": "medium",
+  "qwen_code_version": "0.23.2",
+  "pi_behavior": "v0.05 unchanged; Qwen session adaptation and bounded operational documentation",
+  "context_tokens": 230000,
+  "deadline_seconds": 1800,
+  "order": [
+    "C1"
+  ],
+  "frozen_sha256": "b11879a9735af5bd91a5ce98f029532268903f48159915fc61da482cdea30442",
+  "recorder_sha256": "adee913e5cc070a1ba2b09a02d5fe7f6bc026c5ac84bb60a062d68bd4ce54628",
+  "summary": {
+    "C": {
+      "runs": 1,
+      "accepted": 1,
+      "scores": [
+        7
+      ],
+      "median_project_seconds": 146.66917981,
+      "median_worker_seconds": 278.967660535,
+      "median_input_plus_output_tokens": 1983581,
+      "worker_timeouts": 0,
+      "native_successes": 2
+    }
+  },
+  "projects_newest_first": [
+    {
+      "project": "C1",
+      "condition": "C",
+      "score": 7,
+      "accepted": true,
+      "failed_seams": [],
+      "checks": {
+        "prices": {
+          "producer": {
+            "passed": true,
+            "failures": [],
+            "checks": 4
+          },
+          "consumer": {
+            "passed": true,
+            "failures": [],
+            "checks": 2
+          },
+          "both_preserved": true
+        },
+        "stock": {
+          "producer": {
+            "passed": true,
+            "failures": [],
+            "checks": 4
+          },
+          "consumer": {
+            "passed": true,
+            "failures": [],
+            "checks": 2
+          },
+          "both_preserved": true
+        },
+        "weights": {
+          "producer": {
+            "passed": true,
+            "failures": [],
+            "checks": 4
+          },
+          "consumer": {
+            "passed": true,
+            "failures": [],
+            "checks": 2
+          },
+          "both_preserved": true
+        },
+        "discounts": {
+          "producer": {
+            "passed": true,
+            "failures": [],
+            "checks": 6
+          },
+          "consumer": {
+            "passed": true,
+            "failures": [],
+            "checks": 3
+          },
+          "both_preserved": true
+        },
+        "delivery": {
+          "producer": {
+            "passed": true,
+            "failures": [],
+            "checks": 4
+          },
+          "consumer": {
+            "passed": true,
+            "failures": [],
+            "checks": 2
+          },
+          "both_preserved": true
+        },
+        "contacts": {
+          "producer": {
+            "passed": true,
+            "failures": [],
+            "checks": 4
+          },
+          "consumer": {
+            "passed": true,
+            "failures": [],
+            "checks": 2
+          },
+          "both_preserved": true
+        },
+        "orders": {
+          "producer": {
+            "passed": true,
+            "failures": [],
+            "checks": 4
+          },
+          "consumer": {
+            "passed": true,
+            "failures": [],
+            "checks": 2
+          },
+          "both_preserved": true
+        }
+      },
+      "project_seconds": 146.66917981,
+      "aggregate_worker_seconds": 278.967660535,
+      "concurrency": {
+        "start_ns": 290896435462208,
+        "end_ns": 291042554207615,
+        "worker_interval_seconds": 146.118745407,
+        "worker_seconds": 278.967660535,
+        "factor": 1.9091846139108424,
+        "max_simultaneous": 2,
+        "active_timeline": [
+          {
+            "seconds": 0.0,
+            "active": 1
+          },
+          {
+            "seconds": 4.752e-05,
+            "active": 2
+          },
+          {
+            "seconds": 132.848962648,
+            "active": 1
+          },
+          {
+            "seconds": 146.118745407,
+            "active": 0
+          }
+        ]
+      },
+      "setup_seconds": 0.2503884360194206,
+      "archive_seconds": 0.137899828,
+      "verification_seconds": 0.028923411,
+      "human_interventions": 0,
+      "workers": [
+        {
+          "role": "producer",
+          "session": "d2d63787-dcf9-4091-a595-a3b79f25ca79",
+          "started_at": "2026-09-09T21:29:57.498651+00:00",
+          "finished_at": "2026-09-09T21:32:23.617394+00:00",
+          "elapsed_seconds": 146.118745407,
+          "exit_code": 0,
+          "timed_out": null,
+          "stream_complete": true,
+          "relay_complete": true,
+          "usage": {
+            "input_tokens": 1089250,
+            "cached_input_tokens": 1050048,
+            "output_tokens": 7634,
+            "reasoning_tokens": 0,
+            "requests": 23,
+            "usage_requests": 23,
+            "reasoning_observed": false,
+            "input_usage_requests": 23,
+            "complete_input_usage": true,
+            "output_usage_requests": 23,
+            "complete_output_usage": true,
+            "cached_input_usage_requests": 23,
+            "complete_cached_input_usage": true,
+            "reasoning_usage_requests": 23,
+            "complete_reasoning_usage": true,
+            "complete_usage": true
+          },
+          "controls_verified": true,
+          "thinking_disabled_verified": true,
+          "initialization_verified": true,
+          "final_identity_verified": true,
+          "native_success": true
+        },
+        {
+          "role": "consumer",
+          "session": "31a2ba44-d571-489c-afb8-0ab328ad5861",
+          "started_at": "2026-09-09T21:29:57.498702+00:00",
+          "finished_at": "2026-09-09T21:32:10.347610+00:00",
+          "elapsed_seconds": 132.848915128,
+          "exit_code": 0,
+          "timed_out": null,
+          "stream_complete": true,
+          "relay_complete": true,
+          "usage": {
+            "input_tokens": 879892,
+            "cached_input_tokens": 852928,
+            "output_tokens": 6805,
+            "reasoning_tokens": 0,
+            "requests": 21,
+            "usage_requests": 21,
+            "reasoning_observed": false,
+            "input_usage_requests": 21,
+            "complete_input_usage": true,
+            "output_usage_requests": 21,
+            "complete_output_usage": true,
+            "cached_input_usage_requests": 21,
+            "complete_cached_input_usage": true,
+            "reasoning_usage_requests": 21,
+            "complete_reasoning_usage": true,
+            "complete_usage": true
+          },
+          "controls_verified": true,
+          "thinking_disabled_verified": true,
+          "initialization_verified": true,
+          "final_identity_verified": true,
+          "native_success": true
+        }
+      ],
+      "usage": {
+        "input_tokens": 1969142,
+        "cached_input_tokens": 1902976,
+        "output_tokens": 14439,
+        "reasoning_tokens": 0,
+        "requests": 44,
+        "usage_requests": 44,
+        "complete_input_output": true,
+        "complete_cached_input": true,
+        "complete_reasoning": true
+      },
+      "infrastructure_ok": true,
+      "protected_inputs_changed": [],
+      "result_sha256": "1dc24c9ad10b202d6142e99a70d783b1b2d7377edebbeb29e6a379fc8011c4dc",
+      "plan_sha256": "964c5c75336504edd7fa11d2ffb71f2c200699ebdc11b14bb0cb65a5ea82d06b"
+    }
+  ],
+  "limitations": [
+    "Original own-task control versus PI peer-task context; not an equal-static-context ablation.",
+    "One thinking-off/confidence-off intervention, no new ordinary control; historical comparisons are exploratory.",
+    "Final post-exit acceptance; no continuous time-to-first-correct measurement.",
+    "Cached input and reasoning are subsets; no exclusive GPU reservation or causal timing claim."
+  ]
+}

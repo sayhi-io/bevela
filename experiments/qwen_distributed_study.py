@@ -1,0 +1,245 @@
+"""Versioned 5+5 native Qwen Code comparison on unchanged distributed candidate 2.
+
+Sequential projects; four component owners launch together within each project.
+No evaluator feedback, repair successor, trial replacement or model fallback.
+Historical Sol calibration gates/results are not rewritten by this new study.
+"""
+import argparse
+from concurrent.futures import ThreadPoolExecutor
+import json
+from pathlib import Path
+import shutil
+import subprocess
+import threading
+import time
+import uuid
+
+from experiments import distributed_study as base
+from experiments import qwen_code_adapter as adapter
+from experiments import isolation_v2
+
+VERSION = 'qwen-distributed/candidate2-v2'
+ORDER = ('B1', 'C1', 'C2', 'B2', 'B3', 'C3', 'C4', 'B4', 'B5', 'C5')
+sha, manifest, write_json, utc = base.sha, base.manifest, base.write_json, base.utc
+
+
+def prepare(root, condition, source, runtime, endpoint, model, timeout=1800):
+    if condition not in ('B', 'C'):
+        raise ValueError('This bounded study supports concurrent B/C only')
+    started = time.monotonic()
+    source, runtime = Path(source).resolve(), Path(runtime).resolve()
+    fixture = source / 'experiments/assets/distributed_v2/fixture'
+    base.prepare(root, condition, source, fixture, fixture / 'acceptance.py', timeout)
+    (root / 'plan.json').rename(root / 'upstream-preparation.json')
+    (root / 'DISPOSABLE_TRIAL').touch()
+    for file in runtime.rglob('*'):
+        if file.is_symlink() and not file.resolve().is_relative_to(runtime):
+            raise ValueError('Runtime contains external symbolic link')
+    shutil.copytree(runtime, root / 'runtime', symlinks=True)
+    roles = list(base.ROLES)
+    sessions = {role: str(uuid.uuid4()) for role in roles}
+    for role in roles:
+        (root / 'qwen-home' / role).mkdir(parents=True)
+    agents = root / 'work/AGENTS.md'
+    agents.write_text(agents.read_text().replace(
+        'Use your own CODEX_THREAD_ID with --session for local presence.',
+        'Use your own QWEN_SESSION_ID environment value with --session for local presence. '
+        'You are Qwen Code, not Codex; do not use --codex.'))
+    # Native context-file naming and session identity are the only prompt adapter
+    # changes. Role prompts and every business requirement remain byte-identical.
+    subprocess.run(['git', '-C', str(root / 'work'), 'add', 'AGENTS.md'], check=True)
+    subprocess.run(['git', '-C', str(root / 'work'), '-c', 'user.name=Fixture', '-c',
+        'user.email=fixture@example.invalid', 'commit', '--allow-empty', '-qm', 'Native Qwen session binding'], check=True)
+    shutil.copy2(agents, root / 'before/AGENTS.md')
+    write_json(root / 'before.json', manifest(root / 'work', ignore_cache=True))
+    write_json(root / 'settings-template.json', adapter.settings(model, endpoint))
+    prepared = json.loads((root / 'upstream-preparation.json').read_text())
+    write_json(root / 'plan.json', {
+        **prepared, 'version': VERSION, 'model': model, 'effort': 'high-requested/xhigh-server',
+        'server_effort': 'xhigh', 'context_window': 230000, 'endpoint': endpoint,
+        'sessions': sessions, 'roles': roles, 'before_sha256': sha(root / 'before.json'),
+        'runtime_manifest': manifest(root / 'runtime'),
+        'settings_sha256': sha(root / 'settings-template.json'),
+        'qwen_recorder_hashes': {Path(m.__file__).name: sha(m.__file__) for m in (adapter, base, isolation_v2)},
+        'qwen_study_sha256': sha(__file__), 'worker_count': 4,
+        'setup_seconds': time.monotonic() - started,
+        'limits': 'Native Qwen Code owns reasoning/tools/compaction. Fresh homes; no historical transcripts or reference solutions mounted. Network retained for local inference and ordinary tools, not hostile-network isolation. 100ms source sampling is non-atomic. Four top-level workers; any native subagents are native harness behavior, not evaluator dispatch.'})
+    return root
+
+
+def verify(root, before=False):
+    plan = json.loads((root / 'plan.json').read_text())
+    assert plan['version'] == VERSION and plan['roles'] == list(base.ROLES)
+    assert plan['qwen_study_sha256'] == sha(__file__)
+    for module in (adapter, base, isolation_v2):
+        assert plan['qwen_recorder_hashes'][Path(module.__file__).name] == sha(module.__file__)
+    for module in (base.common, base.common.original, base.native, base.analysis):
+        assert plan['recorder_hashes'][Path(module.__file__).name] == sha(module.__file__)
+    assert plan['before_sha256'] == sha(root / 'before.json')
+    assert plan['settings_sha256'] == sha(root / 'settings-template.json')
+    assert manifest(root / 'runtime') == plan['runtime_manifest']
+    for name, digest in plan['input_hashes'].items():
+        assert sha(root / name) == digest
+    if plan['pi_enabled']:
+        assert manifest(root / 'pi-source', ignore_cache=True) == plan['pi_manifest']
+    else:
+        assert not (root / 'pi-source').exists()
+    if before:
+        assert manifest(root / 'work', ignore_cache=True) == json.loads((root / 'before.json').read_text())
+        for role in plan['roles']:
+            assert not list((root / 'qwen-home' / role).iterdir()), 'Worker home is not fresh'
+    return plan
+
+
+def preflight(root):
+    plan = verify(root, before=True)
+    for role in plan['roles']:
+        code = ('from pathlib import Path; import subprocess; '
+            f'assert not Path({str(root / "plan.json")!r}).exists(); '
+            f'assert not Path({str(root / "before")!r}).exists(); '
+            'assert not Path("/home/meanaverage/sayhi/state/project-intent/config.json").exists(); '
+            'assert not Path("/home/meanaverage/sayhi/state/project-intent/registrar-credentials").exists(); '
+            'assert not list(Path.home().glob(".codex/**")); '
+            'assert not list((Path.home()/".qwen").iterdir()); '
+            'subprocess.run(["git","status","--porcelain"],check=True); '
+            'p=Path(".isolation-probe");p.write_text("ok");p.unlink()')
+        command = adapter.sandbox(root, role, ['/usr/bin/python3', '-B', '-c', code],
+                                  plan['sessions'][role], pi=plan['pi_enabled'])
+        result = subprocess.run(command, capture_output=True, text=True, timeout=30)
+        if result.returncode:
+            raise RuntimeError(result.stderr)
+    verify(root, before=True)
+
+
+def worker_analysis(root, row):
+    plan = json.loads((root / 'plan.json').read_text())
+    directory = root / row['role']
+    events = []
+    for line in (directory / 'stdout.jsonl').read_text().splitlines():
+        try:
+            events.append(json.loads(line))
+        except ValueError:
+            pass
+    initial = [r for r in events if r.get('type') == 'system' and r.get('subtype') == 'init']
+    final = [r for r in events if r.get('type') == 'result']
+    calls = []
+    for event in events:
+        for item in event.get('message', {}).get('content', []) if isinstance(event.get('message', {}).get('content'), list) else []:
+            if item.get('type') == 'tool_use':
+                calls.append({'name': item.get('name'), 'input': item.get('input'), 'id': item.get('id')})
+    transport_path = directory / 'transport.jsonl'
+    transport = [json.loads(line) for line in transport_path.read_text().splitlines()] if transport_path.exists() else []
+    requests = [r for r in transport if r['event'] == 'request']
+    identity = bool(initial and requests) and all(r.get('model') == plan['model'] and
+        r.get('session_id') == row['session'] for r in initial) and all(
+            r.get('model') == plan['model'] for r in requests)
+    controls = bool(requests) and all(r.get('reasoning_effort') == 'xhigh' and
+        r.get('chat_template_kwargs', {}).get('enable_thinking') is True for r in requests)
+    transport_errors = [r for r in transport if r['event'] == 'transport_error' or
+                        (r['event'] == 'response' and r.get('status', 200) >= 400)]
+    final_identity = bool(final) and all(r.get('session_id') == row['session'] for r in final)
+    return {'role': row['role'], 'session': row['session'], 'native_initialization': initial,
+        'native_final': final, 'usage': adapter.usage(directory / 'transport.jsonl'),
+        'tool_calls': calls, 'native_identity_verified': identity and controls and final_identity,
+        'transport_errors': transport_errors,
+        'native_success': bool(final and final[-1].get('subtype') == 'success' and not final[-1].get('is_error'))}
+
+
+def run(root):
+    plan = verify(root, before=True)
+    with (root / 'started.json').open('x') as stream:
+        json.dump({'at': utc(), 'plan_sha256': sha(root / 'plan.json')}, stream)
+    observer = base.SourceObserver(root)
+    observer.capture('initial')
+    stop = threading.Event()
+    def poll():
+        while not stop.wait(.1):
+            observer.capture()
+    monitor = threading.Thread(target=poll, daemon=True)
+    monitor.start()
+    try:
+        with ThreadPoolExecutor(max_workers=4) as pool:
+            futures = [pool.submit(adapter.record, root, role, plan, observer) for role in plan['roles']]
+            workers = [f.result() for f in futures]
+    finally:
+        stop.set()
+        monitor.join(timeout=10)
+        observer.capture('final')
+        observer.close()
+    window = base.common.concurrency(workers)
+    archive_start = time.monotonic_ns()
+    shutil.copytree(root / 'work', root / 'after', symlinks=True, ignore=shutil.ignore_patterns('.git'))
+    telemetry = [worker_analysis(root, row) for row in workers]
+    write_json(root / 'worker-analysis.json', telemetry)
+    verify(root)
+    verification_start = time.monotonic_ns()
+    result = base.score(root / 'after', root / 'check_contract.py')
+    end = time.monotonic_ns()
+    initial = json.loads((root / 'before.json').read_text())
+    final = manifest(root / 'after', ignore_cache=True)
+    protected = ['acceptance.py', 'OBJECTIVE.md', 'architecture.json', 'AGENTS.md'] + [n for n in initial if n.startswith('tasks/')]
+    altered = [n for n in protected if final.get(n) != initial.get(n)]
+    accepted = bool(result.get('accepted')) and not altered
+    correct_identity = all(t['native_identity_verified'] for t in telemetry)
+    completed = correct_identity and all(t['native_success'] for t in telemetry) and all(
+        w.get('exit_code') == 0 and not w.get('timed_out') and w.get('stream_complete') for w in workers)
+    totals = {key: sum(t['usage'][key] for t in telemetry) for key in
+        ('input_tokens', 'cached_input_tokens', 'output_tokens', 'requests', 'usage_requests')}
+    reasoning = [t['usage']['reasoning_tokens'] for t in telemetry]
+    totals['reasoning_tokens'] = sum(v for v in reasoning if v is not None) if any(v is not None for v in reasoning) else None
+    totals['complete_usage'] = all(t['usage']['complete_usage'] for t in telemetry)
+    for field in ('input', 'output', 'cached_input', 'reasoning'):
+        totals[field + '_usage_requests'] = sum(t['usage'][field + '_usage_requests'] for t in telemetry)
+        totals['complete_' + field + '_usage'] = all(t['usage']['complete_' + field + '_usage'] for t in telemetry)
+    value = {'version': VERSION, 'condition': plan['condition'], 'model': plan['model'],
+        'workers': workers, 'concurrency': window, 'result': result, 'accepted': accepted,
+        'autonomous_complete': accepted and completed, 'native_identity_verified': correct_identity,
+        'protected_inputs_changed': altered, 'usage': totals, 'setup_seconds': plan['setup_seconds'],
+        'infrastructure_errors': [dict(role=t['role'], errors=t['transport_errors'])
+                                  for t in telemetry if t['transport_errors']],
+        'archive_seconds': (verification_start - archive_start) / 1e9,
+        'verification_seconds': (end - verification_start) / 1e9,
+        'project_seconds': (end - window['start_ns']) / 1e9,
+        'external_repair_seconds': 0, 'human_interventions': 0,
+        'timing_note': 'Final integrated verification after native exits; not the sum of worker durations. No evaluator repairs.'}
+    write_json(root / 'result.json', value)
+    return value
+
+
+def freeze(batch, source, runtime, endpoint, model, timeout=1800):
+    from experiments import qwen_boundary_resume as boundary
+    batch.mkdir(parents=True, exist_ok=False)
+    plans = {}
+    for trial in ORDER:
+        root = prepare(batch / trial, trial[0], source, runtime, endpoint, model, timeout)
+        preflight(root)
+        plans[trial] = sha(root / 'plan.json')
+    write_json(batch / 'frozen.json', {'version': VERSION, 'created_at': utc(), 'order': ORDER,
+        'model': model, 'endpoint': endpoint, 'timeout_seconds': timeout,
+        'study_sha256': sha(__file__), 'adapter_sha256': sha(adapter.__file__), 'plans': plans,
+        'sequencing_policy': boundary.policy_identity(),
+        'source_commit': subprocess.check_output(['git', '-C', str(source), 'rev-parse', 'HEAD'], text=True).strip(),
+        'interpretation': 'New user-authorized Qwen stratum; not a continuation or reopening of saturated Sol calibration. No single-worker Qwen ceiling; do not infer isolated coordination causality from general coding failures.'})
+
+
+def run_all(batch):
+    from experiments import qwen_boundary_resume as boundary
+    boundary.run(batch)
+
+
+if __name__ == '__main__':
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument('action', choices=('freeze', 'run'))
+    parser.add_argument('batch', type=Path)
+    parser.add_argument('--source', type=Path, default=Path(__file__).resolve().parents[1])
+    parser.add_argument('--runtime', type=Path)
+    parser.add_argument('--endpoint')
+    parser.add_argument('--model')
+    parser.add_argument('--timeout', type=int, default=1800)
+    args = parser.parse_args()
+    if args.action == 'freeze':
+        if not all((args.runtime, args.endpoint, args.model)):
+            parser.error('freeze requires --runtime, --endpoint and --model')
+        freeze(args.batch.resolve(), args.source, args.runtime, args.endpoint, args.model, args.timeout)
+    else:
+        run_all(args.batch.resolve())

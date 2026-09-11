@@ -1,0 +1,573 @@
+{
+  "schema": "pi-for-qwen-public/v1",
+  "qwen_profile": {
+    "thinking": false,
+    "confidence": false,
+    "pi": false,
+    "runs": 3,
+    "effort": "medium",
+    "context": 230000
+  },
+  "model": "qwen38-27b-dflash2",
+  "effort": "medium",
+  "qwen_code_version": "0.23.2",
+  "pi_behavior": "None; PI disabled and not mounted to ordinary workers",
+  "context_tokens": 230000,
+  "deadline_seconds": 1800,
+  "order": [
+    "A1",
+    "A2",
+    "A3"
+  ],
+  "frozen_sha256": "af7dfae61e1967adebae2dc1b5d59f6c467d0609f64d5063ab8ba36084f09d40",
+  "recorder_sha256": "adee913e5cc070a1ba2b09a02d5fe7f6bc026c5ac84bb60a062d68bd4ce54628",
+  "summary": {
+    "A": {
+      "runs": 3,
+      "accepted": 3,
+      "scores": [
+        7,
+        7,
+        7
+      ],
+      "median_project_seconds": 47.925862649,
+      "median_worker_seconds": 47.384583046,
+      "median_input_plus_output_tokens": 286224,
+      "worker_timeouts": 0,
+      "native_successes": 3
+    }
+  },
+  "projects_newest_first": [
+    {
+      "project": "A3",
+      "condition": "A",
+      "score": 7,
+      "accepted": true,
+      "failed_seams": [],
+      "checks": {
+        "prices": {
+          "producer": {
+            "passed": true,
+            "failures": [],
+            "checks": 4
+          },
+          "consumer": {
+            "passed": true,
+            "failures": [],
+            "checks": 2
+          },
+          "both_preserved": true
+        },
+        "stock": {
+          "producer": {
+            "passed": true,
+            "failures": [],
+            "checks": 4
+          },
+          "consumer": {
+            "passed": true,
+            "failures": [],
+            "checks": 2
+          },
+          "both_preserved": true
+        },
+        "weights": {
+          "producer": {
+            "passed": true,
+            "failures": [],
+            "checks": 4
+          },
+          "consumer": {
+            "passed": true,
+            "failures": [],
+            "checks": 2
+          },
+          "both_preserved": true
+        },
+        "discounts": {
+          "producer": {
+            "passed": true,
+            "failures": [],
+            "checks": 6
+          },
+          "consumer": {
+            "passed": true,
+            "failures": [],
+            "checks": 3
+          },
+          "both_preserved": true
+        },
+        "delivery": {
+          "producer": {
+            "passed": true,
+            "failures": [],
+            "checks": 4
+          },
+          "consumer": {
+            "passed": true,
+            "failures": [],
+            "checks": 2
+          },
+          "both_preserved": true
+        },
+        "contacts": {
+          "producer": {
+            "passed": true,
+            "failures": [],
+            "checks": 4
+          },
+          "consumer": {
+            "passed": true,
+            "failures": [],
+            "checks": 2
+          },
+          "both_preserved": true
+        },
+        "orders": {
+          "producer": {
+            "passed": true,
+            "failures": [],
+            "checks": 4
+          },
+          "consumer": {
+            "passed": true,
+            "failures": [],
+            "checks": 2
+          },
+          "both_preserved": true
+        }
+      },
+      "project_seconds": 72.245562701,
+      "aggregate_worker_seconds": 71.911617157,
+      "concurrency": {
+        "start_ns": 291769522546978,
+        "end_ns": 291841434164135,
+        "worker_interval_seconds": 71.911617157,
+        "worker_seconds": 71.911617157,
+        "factor": 1.0,
+        "max_simultaneous": 1,
+        "active_timeline": [
+          {
+            "seconds": 0.0,
+            "active": 1
+          },
+          {
+            "seconds": 71.911617157,
+            "active": 0
+          }
+        ]
+      },
+      "setup_seconds": 0.21797469101147726,
+      "archive_seconds": 0.129986466,
+      "verification_seconds": 0.047830132,
+      "human_interventions": 0,
+      "workers": [
+        {
+          "role": "solo",
+          "session": "c5983e65-23c0-4d71-afdf-6888edb3f513",
+          "started_at": "2026-09-09T21:44:30.585739+00:00",
+          "finished_at": "2026-09-09T21:45:42.497352+00:00",
+          "elapsed_seconds": 71.911617157,
+          "exit_code": 0,
+          "timed_out": null,
+          "stream_complete": true,
+          "relay_complete": true,
+          "usage": {
+            "input_tokens": 499792,
+            "cached_input_tokens": 489216,
+            "output_tokens": 5855,
+            "reasoning_tokens": 0,
+            "requests": 16,
+            "usage_requests": 16,
+            "reasoning_observed": false,
+            "input_usage_requests": 16,
+            "complete_input_usage": true,
+            "output_usage_requests": 16,
+            "complete_output_usage": true,
+            "cached_input_usage_requests": 16,
+            "complete_cached_input_usage": true,
+            "reasoning_usage_requests": 16,
+            "complete_reasoning_usage": true,
+            "complete_usage": true
+          },
+          "controls_verified": true,
+          "thinking_disabled_verified": true,
+          "initialization_verified": true,
+          "final_identity_verified": true,
+          "native_success": true
+        }
+      ],
+      "usage": {
+        "input_tokens": 499792,
+        "cached_input_tokens": 489216,
+        "output_tokens": 5855,
+        "reasoning_tokens": 0,
+        "requests": 16,
+        "usage_requests": 16,
+        "complete_input_output": true,
+        "complete_cached_input": true,
+        "complete_reasoning": true
+      },
+      "infrastructure_ok": true,
+      "protected_inputs_changed": [],
+      "result_sha256": "f8b78e9c136e73ba2e0898e13f1525db1b88d402844dd7a629c9800484eccdf0",
+      "plan_sha256": "98c87a2d11f6b6c2af7d8f52b984e0a8eee202f62a2966de1ab284a6cb88eded"
+    },
+    {
+      "project": "A2",
+      "condition": "A",
+      "score": 7,
+      "accepted": true,
+      "failed_seams": [],
+      "checks": {
+        "prices": {
+          "producer": {
+            "passed": true,
+            "failures": [],
+            "checks": 4
+          },
+          "consumer": {
+            "passed": true,
+            "failures": [],
+            "checks": 2
+          },
+          "both_preserved": true
+        },
+        "stock": {
+          "producer": {
+            "passed": true,
+            "failures": [],
+            "checks": 4
+          },
+          "consumer": {
+            "passed": true,
+            "failures": [],
+            "checks": 2
+          },
+          "both_preserved": true
+        },
+        "weights": {
+          "producer": {
+            "passed": true,
+            "failures": [],
+            "checks": 4
+          },
+          "consumer": {
+            "passed": true,
+            "failures": [],
+            "checks": 2
+          },
+          "both_preserved": true
+        },
+        "discounts": {
+          "producer": {
+            "passed": true,
+            "failures": [],
+            "checks": 6
+          },
+          "consumer": {
+            "passed": true,
+            "failures": [],
+            "checks": 3
+          },
+          "both_preserved": true
+        },
+        "delivery": {
+          "producer": {
+            "passed": true,
+            "failures": [],
+            "checks": 4
+          },
+          "consumer": {
+            "passed": true,
+            "failures": [],
+            "checks": 2
+          },
+          "both_preserved": true
+        },
+        "contacts": {
+          "producer": {
+            "passed": true,
+            "failures": [],
+            "checks": 4
+          },
+          "consumer": {
+            "passed": true,
+            "failures": [],
+            "checks": 2
+          },
+          "both_preserved": true
+        },
+        "orders": {
+          "producer": {
+            "passed": true,
+            "failures": [],
+            "checks": 4
+          },
+          "consumer": {
+            "passed": true,
+            "failures": [],
+            "checks": 2
+          },
+          "both_preserved": true
+        }
+      },
+      "project_seconds": 47.925862649,
+      "aggregate_worker_seconds": 47.384583046,
+      "concurrency": {
+        "start_ns": 291721464339898,
+        "end_ns": 291768848922944,
+        "worker_interval_seconds": 47.384583046,
+        "worker_seconds": 47.384583046,
+        "factor": 1.0,
+        "max_simultaneous": 1,
+        "active_timeline": [
+          {
+            "seconds": 0.0,
+            "active": 1
+          },
+          {
+            "seconds": 47.384583046,
+            "active": 0
+          }
+        ]
+      },
+      "setup_seconds": 0.2226721280021593,
+      "archive_seconds": 0.130201615,
+      "verification_seconds": 0.032767948,
+      "human_interventions": 0,
+      "workers": [
+        {
+          "role": "solo",
+          "session": "fcdacdc5-75a0-44cf-9391-3971704c282d",
+          "started_at": "2026-09-09T21:43:42.527529+00:00",
+          "finished_at": "2026-09-09T21:44:29.912111+00:00",
+          "elapsed_seconds": 47.384583046,
+          "exit_code": 0,
+          "timed_out": null,
+          "stream_complete": true,
+          "relay_complete": true,
+          "usage": {
+            "input_tokens": 282210,
+            "cached_input_tokens": 274240,
+            "output_tokens": 4014,
+            "reasoning_tokens": 0,
+            "requests": 10,
+            "usage_requests": 10,
+            "reasoning_observed": false,
+            "input_usage_requests": 10,
+            "complete_input_usage": true,
+            "output_usage_requests": 10,
+            "complete_output_usage": true,
+            "cached_input_usage_requests": 10,
+            "complete_cached_input_usage": true,
+            "reasoning_usage_requests": 10,
+            "complete_reasoning_usage": true,
+            "complete_usage": true
+          },
+          "controls_verified": true,
+          "thinking_disabled_verified": true,
+          "initialization_verified": true,
+          "final_identity_verified": true,
+          "native_success": true
+        }
+      ],
+      "usage": {
+        "input_tokens": 282210,
+        "cached_input_tokens": 274240,
+        "output_tokens": 4014,
+        "reasoning_tokens": 0,
+        "requests": 10,
+        "usage_requests": 10,
+        "complete_input_output": true,
+        "complete_cached_input": true,
+        "complete_reasoning": true
+      },
+      "infrastructure_ok": true,
+      "protected_inputs_changed": [],
+      "result_sha256": "7f971aa309c9354cf94f2200c5ed2a632c1746fb7ad335849b41c18c46050bcf",
+      "plan_sha256": "d27489ae77525b91792ac7edcd09a4ea36af8da1bccb9905f925732397c89ea3"
+    },
+    {
+      "project": "A1",
+      "condition": "A",
+      "score": 7,
+      "accepted": true,
+      "failed_seams": [],
+      "checks": {
+        "prices": {
+          "producer": {
+            "passed": true,
+            "failures": [],
+            "checks": 4
+          },
+          "consumer": {
+            "passed": true,
+            "failures": [],
+            "checks": 2
+          },
+          "both_preserved": true
+        },
+        "stock": {
+          "producer": {
+            "passed": true,
+            "failures": [],
+            "checks": 4
+          },
+          "consumer": {
+            "passed": true,
+            "failures": [],
+            "checks": 2
+          },
+          "both_preserved": true
+        },
+        "weights": {
+          "producer": {
+            "passed": true,
+            "failures": [],
+            "checks": 4
+          },
+          "consumer": {
+            "passed": true,
+            "failures": [],
+            "checks": 2
+          },
+          "both_preserved": true
+        },
+        "discounts": {
+          "producer": {
+            "passed": true,
+            "failures": [],
+            "checks": 6
+          },
+          "consumer": {
+            "passed": true,
+            "failures": [],
+            "checks": 3
+          },
+          "both_preserved": true
+        },
+        "delivery": {
+          "producer": {
+            "passed": true,
+            "failures": [],
+            "checks": 4
+          },
+          "consumer": {
+            "passed": true,
+            "failures": [],
+            "checks": 2
+          },
+          "both_preserved": true
+        },
+        "contacts": {
+          "producer": {
+            "passed": true,
+            "failures": [],
+            "checks": 4
+          },
+          "consumer": {
+            "passed": true,
+            "failures": [],
+            "checks": 2
+          },
+          "both_preserved": true
+        },
+        "orders": {
+          "producer": {
+            "passed": true,
+            "failures": [],
+            "checks": 4
+          },
+          "consumer": {
+            "passed": true,
+            "failures": [],
+            "checks": 2
+          },
+          "both_preserved": true
+        }
+      },
+      "project_seconds": 41.496867552,
+      "aggregate_worker_seconds": 41.065091039,
+      "concurrency": {
+        "start_ns": 291679834991597,
+        "end_ns": 291720900082636,
+        "worker_interval_seconds": 41.065091039,
+        "worker_seconds": 41.065091039,
+        "factor": 1.0,
+        "max_simultaneous": 1,
+        "active_timeline": [
+          {
+            "seconds": 0.0,
+            "active": 1
+          },
+          {
+            "seconds": 41.065091039,
+            "active": 0
+          }
+        ]
+      },
+      "setup_seconds": 0.240284661995247,
+      "archive_seconds": 0.131877885,
+      "verification_seconds": 0.02786035,
+      "human_interventions": 0,
+      "workers": [
+        {
+          "role": "solo",
+          "session": "a9596d13-04e7-43e0-a2b7-c4b0f8265827",
+          "started_at": "2026-09-09T21:43:00.898180+00:00",
+          "finished_at": "2026-09-09T21:43:41.963266+00:00",
+          "elapsed_seconds": 41.065091039,
+          "exit_code": 0,
+          "timed_out": null,
+          "stream_complete": true,
+          "relay_complete": true,
+          "usage": {
+            "input_tokens": 194603,
+            "cached_input_tokens": 187712,
+            "output_tokens": 3474,
+            "reasoning_tokens": 0,
+            "requests": 7,
+            "usage_requests": 7,
+            "reasoning_observed": false,
+            "input_usage_requests": 7,
+            "complete_input_usage": true,
+            "output_usage_requests": 7,
+            "complete_output_usage": true,
+            "cached_input_usage_requests": 7,
+            "complete_cached_input_usage": true,
+            "reasoning_usage_requests": 7,
+            "complete_reasoning_usage": true,
+            "complete_usage": true
+          },
+          "controls_verified": true,
+          "thinking_disabled_verified": true,
+          "initialization_verified": true,
+          "final_identity_verified": true,
+          "native_success": true
+        }
+      ],
+      "usage": {
+        "input_tokens": 194603,
+        "cached_input_tokens": 187712,
+        "output_tokens": 3474,
+        "reasoning_tokens": 0,
+        "requests": 7,
+        "usage_requests": 7,
+        "complete_input_output": true,
+        "complete_cached_input": true,
+        "complete_reasoning": true
+      },
+      "infrastructure_ok": true,
+      "protected_inputs_changed": [],
+      "result_sha256": "a260c118b448faad8c6193115405ccf61502d53e27671fba02469951bf45457a",
+      "plan_sha256": "bb625daf0e215c935354ddf7a746d3eb9751f2e5b4da98d710648f3581e77fd9"
+    }
+  ],
+  "limitations": [
+    "Original own-task control versus PI peer-task context; not an equal-static-context ablation.",
+    "Three single-worker projects compared with preceding one-project concurrent conditions; unequal exploratory samples.",
+    "Final post-exit acceptance; no continuous time-to-first-correct measurement.",
+    "Cached input and reasoning are subsets; no exclusive GPU reservation or causal timing claim."
+  ]
+}

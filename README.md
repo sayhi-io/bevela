@@ -155,6 +155,31 @@ Then ordinary concurrent workers passed **3/3 projects on each candidate**, reta
 
 [Distributed calibration results →](docs/results/sol-distributed.md) · [Protocol calibration →](docs/results/sol-protocol.md)
 
+### Then we tried native Qwen Code—and steering.
+
+The September 9–10 Qwen3.8 DFlash2 studies did **not establish a reliable PI advantage**.
+These are separate small experiments, not one pooled benchmark:
+
+- [Distributed candidate 2 · thinking on](docs/results/qwen-distributed.md): **0/5 accepted in each arm**; 35/40 workers timed out across both arms.
+- [Original seven seams · Medium](docs/results/qwen-seven-seams.md): **3/3 ordinary versus 2/3 PI** projects accepted.
+- [First seven-seam steering pilot · thinking off](docs/results/qwen-steering.md): **1/1 accepted, 7/7 in 95s**; no new matched control and only one pilot.
+- [Latest independent requests · September 10](docs/results/qwen-independent-requests.md): **3/3 ordinary versus 1/3 PI+steering** accepted; ordinary scored 15/15 each, PI scored 13/15, 13/15, 15/15.
+
+The latest comparison is the study owner's recorded outcome summary, not a newly audited
+per-worker measurements export. Two PI projects stopped at the 30-minute boundary;
+that does not establish that PI caused their failures.
+
+On the smaller seven-seam fixture, [one ordinary worker with thinking off](docs/results/qwen-single-worker.md)
+also passed **3/3**, with a median **47.9 seconds**. Notifications reaching workers
+are not the same as workers agreeing on a repair or producing a correct integration.
+The [steering follow-up remains on hold](docs/QWEN_STEERING_BACKLOG.md); it is not a shipped PI backend feature.
+
+[All Qwen runs and diagnostics](RESULTS.md#study-history--newest-first) include
+confidence prompts, compact instructions, failures and timing limitations.
+The Qwen harnesses and offline regression tests are under `experiments/` and `tests/`;
+running the test suite does not rerun these model studies. See the
+[publication and verification notes](docs/results/qwen-publication.md).
+
 > **Do not make the worker less capable to make Project Intent look useful. Make the coordination problem harder while keeping the worker capable.**
 
 That is the standard we want the next round of results to meet.

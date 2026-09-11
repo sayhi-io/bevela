@@ -1,0 +1,339 @@
+{
+  "publication": {
+    "kind": "sanitized-public-copy",
+    "source_ledger_sha256": "61f0aa8ba4fe602fbba958e7f7857917f7fa0fe4b8a804cdac024ca1badb496e",
+    "redactions": [
+      "Absolute private evaluation paths in checker errors replaced with <private-evaluation>/source/."
+    ],
+    "meaning": "Scores and error types unchanged. Existing evidence hashes identify original local artifacts, not this derived public file."
+  },
+  "version": "qwen-compact-pi/v2",
+  "condition": "C",
+  "model": "qwen38-27b-dflash2",
+  "effort": "medium",
+  "result": {
+    "problems": {
+      "prices": {
+        "producer": {
+          "passed": true,
+          "failures": [],
+          "checks": 4
+        },
+        "consumer": {
+          "passed": false,
+          "failures": [
+            {
+              "check": 1,
+              "error": "ValueError: ImportError: cannot import name 'NAMES' from 'customers' (<private-evaluation>/source/customers.py)"
+            },
+            {
+              "check": 2,
+              "error": "ValueError: ImportError: cannot import name 'NAMES' from 'customers' (<private-evaluation>/source/customers.py)"
+            }
+          ],
+          "checks": 2
+        },
+        "both_preserved": false
+      },
+      "stock": {
+        "producer": {
+          "passed": true,
+          "failures": [],
+          "checks": 4
+        },
+        "consumer": {
+          "passed": false,
+          "failures": [
+            {
+              "check": 1,
+              "error": "ValueError: ImportError: cannot import name 'NAMES' from 'customers' (<private-evaluation>/source/customers.py)"
+            },
+            {
+              "check": 2,
+              "error": "ValueError: ImportError: cannot import name 'NAMES' from 'customers' (<private-evaluation>/source/customers.py)"
+            }
+          ],
+          "checks": 2
+        },
+        "both_preserved": false
+      },
+      "weights": {
+        "producer": {
+          "passed": true,
+          "failures": [],
+          "checks": 4
+        },
+        "consumer": {
+          "passed": false,
+          "failures": [
+            {
+              "check": 1,
+              "error": "ValueError: ImportError: cannot import name 'NAMES' from 'customers' (<private-evaluation>/source/customers.py)"
+            },
+            {
+              "check": 2,
+              "error": "ValueError: ImportError: cannot import name 'NAMES' from 'customers' (<private-evaluation>/source/customers.py)"
+            }
+          ],
+          "checks": 2
+        },
+        "both_preserved": false
+      },
+      "discounts": {
+        "producer": {
+          "passed": true,
+          "failures": [],
+          "checks": 6
+        },
+        "consumer": {
+          "passed": false,
+          "failures": [
+            {
+              "check": 1,
+              "error": "ValueError: ImportError: cannot import name 'NAMES' from 'customers' (<private-evaluation>/source/customers.py)"
+            },
+            {
+              "check": 2,
+              "error": "ValueError: ImportError: cannot import name 'NAMES' from 'customers' (<private-evaluation>/source/customers.py)"
+            },
+            {
+              "check": 3,
+              "error": "ValueError: ImportError: cannot import name 'NAMES' from 'customers' (<private-evaluation>/source/customers.py)"
+            }
+          ],
+          "checks": 3
+        },
+        "both_preserved": false
+      },
+      "delivery": {
+        "producer": {
+          "passed": true,
+          "failures": [],
+          "checks": 4
+        },
+        "consumer": {
+          "passed": false,
+          "failures": [
+            {
+              "check": 1,
+              "error": "ValueError: ImportError: cannot import name 'NAMES' from 'customers' (<private-evaluation>/source/customers.py)"
+            },
+            {
+              "check": 2,
+              "error": "ValueError: ImportError: cannot import name 'NAMES' from 'customers' (<private-evaluation>/source/customers.py)"
+            }
+          ],
+          "checks": 2
+        },
+        "both_preserved": false
+      },
+      "contacts": {
+        "producer": {
+          "passed": true,
+          "failures": [],
+          "checks": 4
+        },
+        "consumer": {
+          "passed": false,
+          "failures": [
+            {
+              "check": 1,
+              "error": "ValueError: ImportError: cannot import name 'NAMES' from 'customers' (<private-evaluation>/source/customers.py)"
+            },
+            {
+              "check": 2,
+              "error": "ValueError: ImportError: cannot import name 'NAMES' from 'customers' (<private-evaluation>/source/customers.py)"
+            }
+          ],
+          "checks": 2
+        },
+        "both_preserved": false
+      },
+      "orders": {
+        "producer": {
+          "passed": true,
+          "failures": [],
+          "checks": 4
+        },
+        "consumer": {
+          "passed": false,
+          "failures": [
+            {
+              "check": 1,
+              "error": "ValueError: ImportError: cannot import name 'NAMES' from 'customers' (<private-evaluation>/source/customers.py)"
+            },
+            {
+              "check": 2,
+              "error": "ValueError: ImportError: cannot import name 'NAMES' from 'customers' (<private-evaluation>/source/customers.py)"
+            }
+          ],
+          "checks": 2
+        },
+        "both_preserved": false
+      }
+    },
+    "score": 0,
+    "out_of": 7,
+    "meaning": "Original task examples and current-data behavior only; not broad correctness or causal PI benefit"
+  },
+  "accepted": false,
+  "workers": [
+    {
+      "role": "producer",
+      "session": "96cbcd19-4aa7-4b0f-90ca-ba50ed38cf1f",
+      "started_at": "2026-09-09T22:42:45.568591+00:00",
+      "start_monotonic_ns": 295264505396778,
+      "pid": 2736754,
+      "exit_code": 0,
+      "stream_eof": true,
+      "stream_error_type": null,
+      "stream_complete": true,
+      "finished_at": "2026-09-09T22:44:01.588101+00:00",
+      "end_monotonic_ns": 295340524911320,
+      "relay_complete": true,
+      "elapsed_seconds": 76.019514542
+    },
+    {
+      "role": "consumer",
+      "session": "8f71edb3-3ee1-4ed2-8875-c27e5df1b1a5",
+      "started_at": "2026-09-09T22:42:45.569141+00:00",
+      "start_monotonic_ns": 295264505952297,
+      "pid": 2736756,
+      "exit_code": 0,
+      "stream_eof": true,
+      "stream_error_type": null,
+      "stream_complete": true,
+      "finished_at": "2026-09-09T22:43:22.884926+00:00",
+      "end_monotonic_ns": 295301821735210,
+      "relay_complete": true,
+      "elapsed_seconds": 37.315782913
+    }
+  ],
+  "infrastructure_ok": true,
+  "concurrency": {
+    "start_ns": 295264505396778,
+    "end_ns": 295340524911320,
+    "worker_interval_seconds": 76.019514542,
+    "worker_seconds": 113.33529745499999,
+    "factor": 1.4908711024770278,
+    "max_simultaneous": 2,
+    "active_timeline": [
+      {
+        "seconds": 0.0,
+        "active": 1
+      },
+      {
+        "seconds": 0.000555519,
+        "active": 2
+      },
+      {
+        "seconds": 37.316338432,
+        "active": 1
+      },
+      {
+        "seconds": 76.019514542,
+        "active": 0
+      }
+    ]
+  },
+  "protected_inputs_changed": [],
+  "setup_seconds": 0.23985177499707788,
+  "archive_seconds": 0.135023671,
+  "verification_seconds": 0.028757906,
+  "project_seconds": 76.207147551,
+  "human_interventions": 0,
+  "external_repair_seconds": 0,
+  "qwen_profile": {
+    "thinking": false,
+    "confidence": false,
+    "pi": true,
+    "runs": 1,
+    "effort": "medium",
+    "context": 230000
+  },
+  "instruction_profile": "qwen-compact-pi/v1",
+  "qwen_cli_profile": "qwen-compact-pi/v2",
+  "schema": "qwen-compact-pi-v2-public/v1",
+  "telemetry": [
+    {
+      "role": "producer",
+      "usage": {
+        "input_tokens": 317650,
+        "cached_input_tokens": 275712,
+        "output_tokens": 3945,
+        "reasoning_tokens": 0,
+        "requests": 9,
+        "usage_requests": 9,
+        "reasoning_observed": false,
+        "input_usage_requests": 9,
+        "complete_input_usage": true,
+        "output_usage_requests": 9,
+        "complete_output_usage": true,
+        "cached_input_usage_requests": 8,
+        "complete_cached_input_usage": false,
+        "reasoning_usage_requests": 9,
+        "complete_reasoning_usage": true,
+        "complete_usage": true
+      },
+      "controls_verified": true,
+      "thinking_disabled_verified": true,
+      "initialization_verified": true,
+      "final_identity_verified": true,
+      "native_success": true
+    },
+    {
+      "role": "consumer",
+      "usage": {
+        "input_tokens": 184295,
+        "cached_input_tokens": 179136,
+        "output_tokens": 1674,
+        "reasoning_tokens": 0,
+        "requests": 7,
+        "usage_requests": 7,
+        "reasoning_observed": false,
+        "input_usage_requests": 7,
+        "complete_input_usage": true,
+        "output_usage_requests": 7,
+        "complete_output_usage": true,
+        "cached_input_usage_requests": 7,
+        "complete_cached_input_usage": true,
+        "reasoning_usage_requests": 7,
+        "complete_reasoning_usage": true,
+        "complete_usage": true
+      },
+      "controls_verified": true,
+      "thinking_disabled_verified": true,
+      "initialization_verified": true,
+      "final_identity_verified": true,
+      "native_success": true
+    }
+  ],
+  "provenance": {
+    "batch": "20260909-qwen-compact-pi-v2",
+    "project": "C1",
+    "frozen_sha256": "3efa88a7632f3f2a4b3e8fdeae1011636fce0e13d35dd16304c59ca990b09974",
+    "plan_sha256": "cb906d24431634ff9a2c8ec2c31a4e7d05ddbf87d5746330d5c52ba2223776ed",
+    "result_sha256": "4fe9147446c02b725b1b1f7795dcf2f3e880b2714c7250dcac01ffd69ddb78b2",
+    "adapter_sha256": "aa06f6fbe45c19053f73ddb36dd5486c170f37b69be87556b33cf838b12415cc",
+    "module_hashes": {
+      "concurrency_study.py": "158e364406791ed6efae0de9cac7d26a2bec2c17f197e59955dedee5b547c967",
+      "seven_seams.py": "7185c16ff9a45f3a36d432c36c9a784cca88d2fd1ef74a641e81a825f0e35d67",
+      "qwen_code_adapter.py": "8c0b6e3260123cbd9d8ce996fc25c2f9871474df8a04a8a19966f86ae4707641",
+      "isolation_v2.py": "147e2683f9fb0b6f243bdc6f89feee2b756978453ebb77fad6b383b0d261ca08",
+      "qwen_seven_seams.py": "adee913e5cc070a1ba2b09a02d5fe7f6bc026c5ac84bb60a062d68bd4ce54628",
+      "qwen_profiles.py": "f44db5d71bdfd8628608cc09bbb7c4e6ab52cc9c3b2d2bda9a00a534eb9c8214",
+      "qwen_compact_pi.py": "b80b6549f20364d1b65cd02ea051e1eb7ca0b1c02abdaa11dea0b6e5468df7c0",
+      "qwen_compact_pi_v2.py": "49aaed6c53096a918bd2510b9ae302d4a80316d1322df5f00294bd34dd4c4c37",
+      "qwen_worker_cli.py": "aa06f6fbe45c19053f73ddb36dd5486c170f37b69be87556b33cf838b12415cc"
+    },
+    "template_sha256": "e2449ccc6ede1f0568e021da0603688d728f267d627d4339dc05ed29608b32c2",
+    "qwen_code_version": "0.23.2",
+    "backend": "v0.05 unchanged; Qwen-only CLI adapter v2"
+  },
+  "limits": [
+    "One PI-only project; no causal/reliability inference.",
+    "Post-exit acceptance, not continuous time-to-first-correct.",
+    "Input includes cached input; do not sum those as separate token costs.",
+    "Inherited setup_seconds excludes compact rewrite and CLI adapter preparation."
+  ]
+}

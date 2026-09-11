@@ -1,0 +1,344 @@
+{
+  "publication": {
+    "kind": "sanitized-public-copy",
+    "source_ledger_sha256": "d58660319aa0495cc86f3398507993c1131f3845137812d67f31fcb6b19e4b90",
+    "redactions": [
+      "Absolute private evaluation paths in checker errors replaced with <private-evaluation>/source/."
+    ],
+    "meaning": "Scores and error types unchanged. Existing evidence hashes identify original local artifacts, not this derived public file."
+  },
+  "schema": "pi-for-qwen-public/v1",
+  "qwen_profile": {
+    "thinking": false,
+    "confidence": false,
+    "pi": false,
+    "runs": 1,
+    "context": 230000,
+    "effort": "medium"
+  },
+  "model": "qwen38-27b-dflash2",
+  "effort": "medium",
+  "qwen_code_version": "0.23.2",
+  "pi_behavior": "None; PI disabled and not mounted to ordinary workers",
+  "context_tokens": 230000,
+  "deadline_seconds": 1800,
+  "order": [
+    "B1"
+  ],
+  "frozen_sha256": "cb23887419b1b9f2b3c620e2f2d9e4be6c6feaea1f0fa2e893e20fc6f5572349",
+  "recorder_sha256": "adee913e5cc070a1ba2b09a02d5fe7f6bc026c5ac84bb60a062d68bd4ce54628",
+  "summary": {
+    "B": {
+      "runs": 1,
+      "accepted": 0,
+      "scores": [
+        0
+      ],
+      "median_project_seconds": 44.071887077,
+      "median_worker_seconds": 79.240736861,
+      "median_input_plus_output_tokens": 241948,
+      "worker_timeouts": 0,
+      "native_successes": 2
+    }
+  },
+  "projects_newest_first": [
+    {
+      "project": "B1",
+      "condition": "B",
+      "score": 0,
+      "accepted": false,
+      "failed_seams": [
+        "prices",
+        "stock",
+        "weights",
+        "discounts",
+        "delivery",
+        "contacts",
+        "orders"
+      ],
+      "checks": {
+        "prices": {
+          "producer": {
+            "passed": true,
+            "failures": [],
+            "checks": 4
+          },
+          "consumer": {
+            "passed": false,
+            "failures": [
+              {
+                "check": 1,
+                "error": "ValueError: ImportError: cannot import name 'NAMES' from 'customers' (<private-evaluation>/source/customers.py)"
+              },
+              {
+                "check": 2,
+                "error": "ValueError: ImportError: cannot import name 'NAMES' from 'customers' (<private-evaluation>/source/customers.py)"
+              }
+            ],
+            "checks": 2
+          },
+          "both_preserved": false
+        },
+        "stock": {
+          "producer": {
+            "passed": true,
+            "failures": [],
+            "checks": 4
+          },
+          "consumer": {
+            "passed": false,
+            "failures": [
+              {
+                "check": 1,
+                "error": "ValueError: ImportError: cannot import name 'NAMES' from 'customers' (<private-evaluation>/source/customers.py)"
+              },
+              {
+                "check": 2,
+                "error": "ValueError: ImportError: cannot import name 'NAMES' from 'customers' (<private-evaluation>/source/customers.py)"
+              }
+            ],
+            "checks": 2
+          },
+          "both_preserved": false
+        },
+        "weights": {
+          "producer": {
+            "passed": true,
+            "failures": [],
+            "checks": 4
+          },
+          "consumer": {
+            "passed": false,
+            "failures": [
+              {
+                "check": 1,
+                "error": "ValueError: ImportError: cannot import name 'NAMES' from 'customers' (<private-evaluation>/source/customers.py)"
+              },
+              {
+                "check": 2,
+                "error": "ValueError: ImportError: cannot import name 'NAMES' from 'customers' (<private-evaluation>/source/customers.py)"
+              }
+            ],
+            "checks": 2
+          },
+          "both_preserved": false
+        },
+        "discounts": {
+          "producer": {
+            "passed": true,
+            "failures": [],
+            "checks": 6
+          },
+          "consumer": {
+            "passed": false,
+            "failures": [
+              {
+                "check": 1,
+                "error": "ValueError: ImportError: cannot import name 'NAMES' from 'customers' (<private-evaluation>/source/customers.py)"
+              },
+              {
+                "check": 2,
+                "error": "ValueError: ImportError: cannot import name 'NAMES' from 'customers' (<private-evaluation>/source/customers.py)"
+              },
+              {
+                "check": 3,
+                "error": "ValueError: ImportError: cannot import name 'NAMES' from 'customers' (<private-evaluation>/source/customers.py)"
+              }
+            ],
+            "checks": 3
+          },
+          "both_preserved": false
+        },
+        "delivery": {
+          "producer": {
+            "passed": true,
+            "failures": [],
+            "checks": 4
+          },
+          "consumer": {
+            "passed": false,
+            "failures": [
+              {
+                "check": 1,
+                "error": "ValueError: ImportError: cannot import name 'NAMES' from 'customers' (<private-evaluation>/source/customers.py)"
+              },
+              {
+                "check": 2,
+                "error": "ValueError: ImportError: cannot import name 'NAMES' from 'customers' (<private-evaluation>/source/customers.py)"
+              }
+            ],
+            "checks": 2
+          },
+          "both_preserved": false
+        },
+        "contacts": {
+          "producer": {
+            "passed": true,
+            "failures": [],
+            "checks": 4
+          },
+          "consumer": {
+            "passed": false,
+            "failures": [
+              {
+                "check": 1,
+                "error": "ValueError: ImportError: cannot import name 'NAMES' from 'customers' (<private-evaluation>/source/customers.py)"
+              },
+              {
+                "check": 2,
+                "error": "ValueError: ImportError: cannot import name 'NAMES' from 'customers' (<private-evaluation>/source/customers.py)"
+              }
+            ],
+            "checks": 2
+          },
+          "both_preserved": false
+        },
+        "orders": {
+          "producer": {
+            "passed": true,
+            "failures": [],
+            "checks": 4
+          },
+          "consumer": {
+            "passed": false,
+            "failures": [
+              {
+                "check": 1,
+                "error": "ValueError: ImportError: cannot import name 'NAMES' from 'customers' (<private-evaluation>/source/customers.py)"
+              },
+              {
+                "check": 2,
+                "error": "ValueError: ImportError: cannot import name 'NAMES' from 'customers' (<private-evaluation>/source/customers.py)"
+              }
+            ],
+            "checks": 2
+          },
+          "both_preserved": false
+        }
+      },
+      "project_seconds": 44.071887077,
+      "aggregate_worker_seconds": 79.240736861,
+      "concurrency": {
+        "start_ns": 291284376593817,
+        "end_ns": 291327898634448,
+        "worker_interval_seconds": 43.522040631,
+        "worker_seconds": 79.240736861,
+        "factor": 1.8207036184915968,
+        "max_simultaneous": 2,
+        "active_timeline": [
+          {
+            "seconds": 0.0,
+            "active": 1
+          },
+          {
+            "seconds": 0.000354639,
+            "active": 2
+          },
+          {
+            "seconds": 35.719050869,
+            "active": 1
+          },
+          {
+            "seconds": 43.522040631,
+            "active": 0
+          }
+        ]
+      },
+      "setup_seconds": 0.2409396410221234,
+      "archive_seconds": 0.130692889,
+      "verification_seconds": 0.046083403,
+      "human_interventions": 0,
+      "workers": [
+        {
+          "role": "producer",
+          "session": "0bdfefc4-6bc8-4032-98cc-124ca5e24784",
+          "started_at": "2026-09-09T21:36:25.439787+00:00",
+          "finished_at": "2026-09-09T21:37:08.961823+00:00",
+          "elapsed_seconds": 43.522040631,
+          "exit_code": 0,
+          "timed_out": null,
+          "stream_complete": true,
+          "relay_complete": true,
+          "usage": {
+            "input_tokens": 133187,
+            "cached_input_tokens": 122688,
+            "output_tokens": 2737,
+            "reasoning_tokens": 0,
+            "requests": 5,
+            "usage_requests": 5,
+            "reasoning_observed": false,
+            "input_usage_requests": 5,
+            "complete_input_usage": true,
+            "output_usage_requests": 5,
+            "complete_output_usage": true,
+            "cached_input_usage_requests": 5,
+            "complete_cached_input_usage": true,
+            "reasoning_usage_requests": 5,
+            "complete_reasoning_usage": true,
+            "complete_usage": true
+          },
+          "controls_verified": true,
+          "thinking_disabled_verified": true,
+          "initialization_verified": true,
+          "final_identity_verified": true,
+          "native_success": true
+        },
+        {
+          "role": "consumer",
+          "session": "877691f1-1c74-4cc4-8902-a2b84d54cff0",
+          "started_at": "2026-09-09T21:36:25.440137+00:00",
+          "finished_at": "2026-09-09T21:37:01.158829+00:00",
+          "elapsed_seconds": 35.71869623,
+          "exit_code": 0,
+          "timed_out": null,
+          "stream_complete": true,
+          "relay_complete": true,
+          "usage": {
+            "input_tokens": 104151,
+            "cached_input_tokens": 77568,
+            "output_tokens": 1873,
+            "reasoning_tokens": 0,
+            "requests": 4,
+            "usage_requests": 4,
+            "reasoning_observed": false,
+            "input_usage_requests": 4,
+            "complete_input_usage": true,
+            "output_usage_requests": 4,
+            "complete_output_usage": true,
+            "cached_input_usage_requests": 3,
+            "complete_cached_input_usage": false,
+            "reasoning_usage_requests": 4,
+            "complete_reasoning_usage": true,
+            "complete_usage": true
+          },
+          "controls_verified": true,
+          "thinking_disabled_verified": true,
+          "initialization_verified": true,
+          "final_identity_verified": true,
+          "native_success": true
+        }
+      ],
+      "usage": {
+        "input_tokens": 237338,
+        "cached_input_tokens": 200256,
+        "output_tokens": 4610,
+        "reasoning_tokens": 0,
+        "requests": 9,
+        "usage_requests": 9,
+        "complete_input_output": true,
+        "complete_cached_input": false,
+        "complete_reasoning": true
+      },
+      "infrastructure_ok": true,
+      "protected_inputs_changed": [],
+      "result_sha256": "35f0717413234537a76beacfd74f5a4aeb7f73d60cd332f5c3e4b99b347797a2",
+      "plan_sha256": "0355c370cb420ae094b7ae38c7be49feebbad555e14801e3abe3c2b74755ddf9"
+    }
+  ],
+  "limitations": [
+    "Original own-task control versus PI peer-task context; not an equal-static-context ablation.",
+    "One ordinary thinking-off project compared with the preceding one PI thinking-off project; exploratory n=1 per condition.",
+    "Final post-exit acceptance; no continuous time-to-first-correct measurement.",
+    "Cached input and reasoning are subsets; no exclusive GPU reservation or causal timing claim."
+  ]
+}

@@ -1,0 +1,1118 @@
+{
+  "version": "qwen-steering/v1",
+  "condition": "C",
+  "model": "qwen38-27b-dflash2",
+  "effort": "medium",
+  "result": {
+    "problems": {
+      "prices": {
+        "producer": {
+          "passed": true,
+          "failures": [],
+          "checks": 4
+        },
+        "consumer": {
+          "passed": true,
+          "failures": [],
+          "checks": 2
+        },
+        "both_preserved": true
+      },
+      "stock": {
+        "producer": {
+          "passed": true,
+          "failures": [],
+          "checks": 4
+        },
+        "consumer": {
+          "passed": true,
+          "failures": [],
+          "checks": 2
+        },
+        "both_preserved": true
+      },
+      "weights": {
+        "producer": {
+          "passed": true,
+          "failures": [],
+          "checks": 4
+        },
+        "consumer": {
+          "passed": true,
+          "failures": [],
+          "checks": 2
+        },
+        "both_preserved": true
+      },
+      "discounts": {
+        "producer": {
+          "passed": true,
+          "failures": [],
+          "checks": 6
+        },
+        "consumer": {
+          "passed": true,
+          "failures": [],
+          "checks": 3
+        },
+        "both_preserved": true
+      },
+      "delivery": {
+        "producer": {
+          "passed": true,
+          "failures": [],
+          "checks": 4
+        },
+        "consumer": {
+          "passed": true,
+          "failures": [],
+          "checks": 2
+        },
+        "both_preserved": true
+      },
+      "contacts": {
+        "producer": {
+          "passed": true,
+          "failures": [],
+          "checks": 4
+        },
+        "consumer": {
+          "passed": true,
+          "failures": [],
+          "checks": 2
+        },
+        "both_preserved": true
+      },
+      "orders": {
+        "producer": {
+          "passed": true,
+          "failures": [],
+          "checks": 4
+        },
+        "consumer": {
+          "passed": true,
+          "failures": [],
+          "checks": 2
+        },
+        "both_preserved": true
+      }
+    },
+    "score": 7,
+    "out_of": 7,
+    "meaning": "Original task examples and current-data behavior only; not broad correctness or causal PI benefit"
+  },
+  "accepted": true,
+  "workers": [
+    {
+      "role": "producer",
+      "session": "1c2a38df-ddab-4eae-b8b7-317d3b7d82ce",
+      "started_at": "2026-09-09T22:55:25.826378+00:00",
+      "start_monotonic_ns": 296024763184436,
+      "pid": 2821323,
+      "exit_code": 0,
+      "stream_eof": true,
+      "stream_error_type": null,
+      "stream_complete": true,
+      "finished_at": "2026-09-09T22:56:58.874008+00:00",
+      "end_monotonic_ns": 296117810823163,
+      "relay_complete": true,
+      "elapsed_seconds": 93.047638727
+    },
+    {
+      "role": "consumer",
+      "session": "7da4f94f-0752-42a6-a588-78dbb639014d",
+      "started_at": "2026-09-09T22:55:25.826425+00:00",
+      "start_monotonic_ns": 296024763234932,
+      "pid": 2821324,
+      "exit_code": 0,
+      "stream_eof": true,
+      "stream_error_type": null,
+      "stream_complete": true,
+      "finished_at": "2026-09-09T22:57:00.366163+00:00",
+      "end_monotonic_ns": 296119302978189,
+      "relay_complete": true,
+      "elapsed_seconds": 94.539743257
+    }
+  ],
+  "infrastructure_ok": true,
+  "concurrency": {
+    "start_ns": 296024763184436,
+    "end_ns": 296119302978189,
+    "worker_interval_seconds": 94.539793753,
+    "worker_seconds": 187.587381984,
+    "factor": 1.9842161119380202,
+    "max_simultaneous": 2,
+    "active_timeline": [
+      {
+        "seconds": 0.0,
+        "active": 1
+      },
+      {
+        "seconds": 5.0496e-05,
+        "active": 2
+      },
+      {
+        "seconds": 93.047638727,
+        "active": 1
+      },
+      {
+        "seconds": 94.539793753,
+        "active": 0
+      }
+    ]
+  },
+  "protected_inputs_changed": [],
+  "setup_seconds": 0.2553437890019268,
+  "archive_seconds": 0.135498765,
+  "verification_seconds": 0.028291169,
+  "project_seconds": 94.85996811,
+  "human_interventions": 0,
+  "external_repair_seconds": 0,
+  "qwen_profile": {
+    "thinking": false,
+    "confidence": false,
+    "pi": true,
+    "runs": 1,
+    "effort": "medium",
+    "context": 230000
+  },
+  "instruction_profile": "qwen-compact-pi/v1",
+  "qwen_cli_profile": "qwen-compact-pi/v2",
+  "steering_enabled": true,
+  "steering_version": "qwen-steering/v1",
+  "steering_observations": {
+    "producer": {
+      "hook_calls": 41,
+      "emitted_notices": 11,
+      "seconds": 7.956198522937484,
+      "suppressed": 0
+    },
+    "consumer": {
+      "hook_calls": 42,
+      "emitted_notices": 7,
+      "seconds": 7.4070508477743715,
+      "suppressed": 0
+    }
+  },
+  "schema": "qwen-steering-public/v1",
+  "telemetry": [
+    {
+      "role": "producer",
+      "usage": {
+        "input_tokens": 512288,
+        "cached_input_tokens": 481536,
+        "output_tokens": 4137,
+        "reasoning_tokens": 0,
+        "requests": 13,
+        "usage_requests": 13,
+        "reasoning_observed": false,
+        "input_usage_requests": 13,
+        "complete_input_usage": true,
+        "output_usage_requests": 13,
+        "complete_output_usage": true,
+        "cached_input_usage_requests": 13,
+        "complete_cached_input_usage": true,
+        "reasoning_usage_requests": 13,
+        "complete_reasoning_usage": true,
+        "complete_usage": true
+      },
+      "controls_verified": true,
+      "thinking_disabled_verified": true,
+      "initialization_verified": true,
+      "final_identity_verified": true,
+      "native_success": true
+    },
+    {
+      "role": "consumer",
+      "usage": {
+        "input_tokens": 485302,
+        "cached_input_tokens": 458816,
+        "output_tokens": 4373,
+        "reasoning_tokens": 0,
+        "requests": 12,
+        "usage_requests": 12,
+        "reasoning_observed": false,
+        "input_usage_requests": 12,
+        "complete_input_usage": true,
+        "output_usage_requests": 12,
+        "complete_output_usage": true,
+        "cached_input_usage_requests": 12,
+        "complete_cached_input_usage": true,
+        "reasoning_usage_requests": 12,
+        "complete_reasoning_usage": true,
+        "complete_usage": true
+      },
+      "controls_verified": true,
+      "thinking_disabled_verified": true,
+      "initialization_verified": true,
+      "final_identity_verified": true,
+      "native_success": true
+    }
+  ],
+  "hook_events": {
+    "producer": [
+      {
+        "at": 1788994527.0886638,
+        "session": "1c2a38df-ddab-4eae-b8b7-317d3b7d82ce",
+        "event": "UserPromptSubmit",
+        "tool_use_id": null,
+        "emitted": true,
+        "message": "PI update: inspect changed source and affected callers; validate combined behavior. Related assignments are not edit prohibitions. Follow existing scope and repair agreement; this notice grants no authority and is not an acceptance result. Data follows:\n{\"source\": \"PI steering observation/v1\", \"source_changes\": [], \"omitted_paths\": 0, \"attribution\": \"Observed checkout differences; author and semantic impact unverified.\", \"declarations\": {\"related_tasks\": [{\"id\": \"CONSUMER\", \"statement\": \"Implement these seven customer-facing functions in presentation.py using current shop data rather than hard-coded example results:\\n\\n1. price_label(name): tea \\\"$12.50\\\", cake \\\"$7.25\\\".\\n2. stock_label(name): tea \\\"8 available\\\", cake \\\"4 available\\\", accounting for reservations.\\n3. weight_label(name): tea \\\"0.250 kg\\\", cake \\\"0.500 kg\\\", three decimal places.\\n4. discount_label(name): tea \\\"10% off; $11.25\\\", ca\", \"shared_seams\": [\"shop/contacts\", \"shop/delivery\", \"shop/discounts\", \"shop/orders\", \"shop/prices\", \"shop/stock\", \"shop/weights\"]}], \"workers\": [], \"omitted_tasks\": 0, \"omitted_workers\": 0}}",
+        "suppressed": 0,
+        "elapsed_seconds": 0.10018936399137601
+      },
+      {
+        "at": 1788994532.140795,
+        "session": "1c2a38df-ddab-4eae-b8b7-317d3b7d82ce",
+        "event": "PostToolUse",
+        "tool_use_id": "toolu_1788994531939_v3vxncm0q",
+        "emitted": false,
+        "message": null,
+        "suppressed": 0,
+        "elapsed_seconds": 0.08172549499431625
+      },
+      {
+        "at": 1788994532.2730262,
+        "session": "1c2a38df-ddab-4eae-b8b7-317d3b7d82ce",
+        "event": "UserPromptSubmit",
+        "tool_use_id": null,
+        "emitted": false,
+        "message": null,
+        "suppressed": 0,
+        "elapsed_seconds": 0.07946245797211304
+      },
+      {
+        "at": 1788994535.4596891,
+        "session": "1c2a38df-ddab-4eae-b8b7-317d3b7d82ce",
+        "event": "PostToolUse",
+        "tool_use_id": "toolu_1788994535228_k065my0wc",
+        "emitted": false,
+        "message": null,
+        "suppressed": 0,
+        "elapsed_seconds": 0.06214164401171729
+      },
+      {
+        "at": 1788994535.5762808,
+        "session": "1c2a38df-ddab-4eae-b8b7-317d3b7d82ce",
+        "event": "UserPromptSubmit",
+        "tool_use_id": null,
+        "emitted": false,
+        "message": null,
+        "suppressed": 0,
+        "elapsed_seconds": 0.06299538799794391
+      },
+      {
+        "at": 1788994543.6638422,
+        "session": "1c2a38df-ddab-4eae-b8b7-317d3b7d82ce",
+        "event": "PostToolUse",
+        "tool_use_id": "toolu_1788994542204_jsr9z8404",
+        "emitted": false,
+        "message": null,
+        "suppressed": 0,
+        "elapsed_seconds": 0.07882410701131448
+      },
+      {
+        "at": 1788994543.7994556,
+        "session": "1c2a38df-ddab-4eae-b8b7-317d3b7d82ce",
+        "event": "UserPromptSubmit",
+        "tool_use_id": null,
+        "emitted": false,
+        "message": null,
+        "suppressed": 0,
+        "elapsed_seconds": 0.07983848999720067
+      },
+      {
+        "at": 1788994556.87616,
+        "session": "1c2a38df-ddab-4eae-b8b7-317d3b7d82ce",
+        "event": "PostToolUse",
+        "tool_use_id": "toolu_1788994556601_atvdw0lpy",
+        "emitted": false,
+        "message": null,
+        "suppressed": 0,
+        "elapsed_seconds": 0.10559646197361872
+      },
+      {
+        "at": 1788994556.9770594,
+        "session": "1c2a38df-ddab-4eae-b8b7-317d3b7d82ce",
+        "event": "PostToolUse",
+        "tool_use_id": "toolu_1788994556602_kjly6gddd",
+        "emitted": false,
+        "message": null,
+        "suppressed": 0,
+        "elapsed_seconds": 0.20643108896911144
+      },
+      {
+        "at": 1788994557.078923,
+        "session": "1c2a38df-ddab-4eae-b8b7-317d3b7d82ce",
+        "event": "PostToolUse",
+        "tool_use_id": "toolu_1788994556602_irzsbsl6y",
+        "emitted": false,
+        "message": null,
+        "suppressed": 0,
+        "elapsed_seconds": 0.30813845101511106
+      },
+      {
+        "at": 1788994557.1595464,
+        "session": "1c2a38df-ddab-4eae-b8b7-317d3b7d82ce",
+        "event": "PostToolUse",
+        "tool_use_id": "toolu_1788994556602_jhy56ib4d",
+        "emitted": false,
+        "message": null,
+        "suppressed": 0,
+        "elapsed_seconds": 0.38867359602591023
+      },
+      {
+        "at": 1788994557.235743,
+        "session": "1c2a38df-ddab-4eae-b8b7-317d3b7d82ce",
+        "event": "PostToolUse",
+        "tool_use_id": "toolu_1788994556603_zgo0bh9zz",
+        "emitted": false,
+        "message": null,
+        "suppressed": 0,
+        "elapsed_seconds": 0.4647941860021092
+      },
+      {
+        "at": 1788994557.2969873,
+        "session": "1c2a38df-ddab-4eae-b8b7-317d3b7d82ce",
+        "event": "PostToolUse",
+        "tool_use_id": "toolu_1788994556603_ndrildqm3",
+        "emitted": false,
+        "message": null,
+        "suppressed": 0,
+        "elapsed_seconds": 0.525990296038799
+      },
+      {
+        "at": 1788994557.4001322,
+        "session": "1c2a38df-ddab-4eae-b8b7-317d3b7d82ce",
+        "event": "PostToolUse",
+        "tool_use_id": "toolu_1788994556603_8rf0ex0jq",
+        "emitted": false,
+        "message": null,
+        "suppressed": 0,
+        "elapsed_seconds": 0.629115447984077
+      },
+      {
+        "at": 1788994557.4664311,
+        "session": "1c2a38df-ddab-4eae-b8b7-317d3b7d82ce",
+        "event": "PostToolUse",
+        "tool_use_id": "toolu_1788994556603_bzo26z3qt",
+        "emitted": false,
+        "message": null,
+        "suppressed": 0,
+        "elapsed_seconds": 0.6953267380013131
+      },
+      {
+        "at": 1788994557.5303597,
+        "session": "1c2a38df-ddab-4eae-b8b7-317d3b7d82ce",
+        "event": "PostToolUse",
+        "tool_use_id": "toolu_1788994556603_ehxrqohvu",
+        "emitted": false,
+        "message": null,
+        "suppressed": 0,
+        "elapsed_seconds": 0.756696286960505
+      },
+      {
+        "at": 1788994557.6107116,
+        "session": "1c2a38df-ddab-4eae-b8b7-317d3b7d82ce",
+        "event": "PostToolUse",
+        "tool_use_id": "toolu_1788994556603_7cpbly7g5",
+        "emitted": false,
+        "message": null,
+        "suppressed": 0,
+        "elapsed_seconds": 0.8129836660227738
+      },
+      {
+        "at": 1788994557.7095919,
+        "session": "1c2a38df-ddab-4eae-b8b7-317d3b7d82ce",
+        "event": "PostToolUse",
+        "tool_use_id": "toolu_1788994556885_2kxhaev1u",
+        "emitted": false,
+        "message": null,
+        "suppressed": 0,
+        "elapsed_seconds": 0.758927692018915
+      },
+      {
+        "at": 1788994557.8275394,
+        "session": "1c2a38df-ddab-4eae-b8b7-317d3b7d82ce",
+        "event": "UserPromptSubmit",
+        "tool_use_id": null,
+        "emitted": false,
+        "message": null,
+        "suppressed": 0,
+        "elapsed_seconds": 0.07930781797040254
+      },
+      {
+        "at": 1788994569.6486402,
+        "session": "1c2a38df-ddab-4eae-b8b7-317d3b7d82ce",
+        "event": "PostToolUse",
+        "tool_use_id": "toolu_1788994569532_hjif5591q",
+        "emitted": true,
+        "message": "PI update: inspect changed source and affected callers; validate combined behavior. Related assignments are not edit prohibitions. Follow existing scope and repair agreement; this notice grants no authority and is not an acceptance result. Data follows:\n{\"source\": \"PI steering observation/v1\", \"source_changes\": [\"catalog.py\", \"presentation.py\"], \"omitted_paths\": 0, \"attribution\": \"Observed checkout differences; author and semantic impact unverified.\", \"declarations\": {\"related_tasks\": [{\"id\": \"CONSUMER\", \"statement\": \"Implement these seven customer-facing functions in presentation.py using current shop data rather than hard-coded example results:\\n\\n1. price_label(name): tea \\\"$12.50\\\", cake \\\"$7.25\\\".\\n2. stock_label(name): tea \\\"8 available\\\", cake \\\"4 available\\\", accounting for reservations.\\n3. weight_label(name): tea \\\"0.250 kg\\\", cake \\\"0.500 kg\\\", three decimal places.\\n4. discount_label(name): tea \\\"10% off; $11.25\\\", ca\", \"shared_seams\": [\"shop/contacts\", \"shop/delivery\", \"shop/discounts\", \"shop/orders\", \"shop/prices\", \"shop/stock\", \"shop/weights\"]}], \"workers\": [{\"session\": \"7da4f94f-0752-42a6-a588-78dbb639014d\", \"workstream\": \"CONSUMER\", \"observation\": \"active-lease\", \"working\": \"implement seven customer-facing label functions in presentation.py using current shop data\"}], \"omitted_tasks\": 0, \"omitted_workers\": 0}}",
+        "suppressed": 0,
+        "elapsed_seconds": 0.06254394800635055
+      },
+      {
+        "at": 1788994569.7972786,
+        "session": "1c2a38df-ddab-4eae-b8b7-317d3b7d82ce",
+        "event": "PostToolUse",
+        "tool_use_id": "toolu_1788994569655_0bvv05wz4",
+        "emitted": true,
+        "message": "PI update: inspect changed source and affected callers; validate combined behavior. Related assignments are not edit prohibitions. Follow existing scope and repair agreement; this notice grants no authority and is not an acceptance result. Data follows:\n{\"source\": \"PI steering observation/v1\", \"source_changes\": [\"inventory.py\"], \"omitted_paths\": 0, \"attribution\": \"Observed checkout differences; author and semantic impact unverified.\"}",
+        "suppressed": 0,
+        "elapsed_seconds": 0.08108887303387746
+      },
+      {
+        "at": 1788994569.9509165,
+        "session": "1c2a38df-ddab-4eae-b8b7-317d3b7d82ce",
+        "event": "PostToolUse",
+        "tool_use_id": "toolu_1788994569803_ea6b07mr9",
+        "emitted": true,
+        "message": "PI update: inspect changed source and affected callers; validate combined behavior. Related assignments are not edit prohibitions. Follow existing scope and repair agreement; this notice grants no authority and is not an acceptance result. Data follows:\n{\"source\": \"PI steering observation/v1\", \"source_changes\": [\"shipping.py\"], \"omitted_paths\": 0, \"attribution\": \"Observed checkout differences; author and semantic impact unverified.\"}",
+        "suppressed": 0,
+        "elapsed_seconds": 0.08167767198756337
+      },
+      {
+        "at": 1788994570.1045105,
+        "session": "1c2a38df-ddab-4eae-b8b7-317d3b7d82ce",
+        "event": "PostToolUse",
+        "tool_use_id": "toolu_1788994569956_oa7z173va",
+        "emitted": true,
+        "message": "PI update: inspect changed source and affected callers; validate combined behavior. Related assignments are not edit prohibitions. Follow existing scope and repair agreement; this notice grants no authority and is not an acceptance result. Data follows:\n{\"source\": \"PI steering observation/v1\", \"source_changes\": [\"promotions.py\"], \"omitted_paths\": 0, \"attribution\": \"Observed checkout differences; author and semantic impact unverified.\"}",
+        "suppressed": 0,
+        "elapsed_seconds": 0.08064167300472036
+      },
+      {
+        "at": 1788994570.252657,
+        "session": "1c2a38df-ddab-4eae-b8b7-317d3b7d82ce",
+        "event": "PostToolUse",
+        "tool_use_id": "toolu_1788994570111_v3tb2vcda",
+        "emitted": true,
+        "message": "PI update: inspect changed source and affected callers; validate combined behavior. Related assignments are not edit prohibitions. Follow existing scope and repair agreement; this notice grants no authority and is not an acceptance result. Data follows:\n{\"source\": \"PI steering observation/v1\", \"source_changes\": [\"delivery.py\"], \"omitted_paths\": 0, \"attribution\": \"Observed checkout differences; author and semantic impact unverified.\"}",
+        "suppressed": 0,
+        "elapsed_seconds": 0.0773541089729406
+      },
+      {
+        "at": 1788994570.407212,
+        "session": "1c2a38df-ddab-4eae-b8b7-317d3b7d82ce",
+        "event": "PostToolUse",
+        "tool_use_id": "toolu_1788994570258_sjj5bhc1x",
+        "emitted": true,
+        "message": "PI update: inspect changed source and affected callers; validate combined behavior. Related assignments are not edit prohibitions. Follow existing scope and repair agreement; this notice grants no authority and is not an acceptance result. Data follows:\n{\"source\": \"PI steering observation/v1\", \"source_changes\": [\"customers.py\"], \"omitted_paths\": 0, \"attribution\": \"Observed checkout differences; author and semantic impact unverified.\"}",
+        "suppressed": 0,
+        "elapsed_seconds": 0.08270386303775012
+      },
+      {
+        "at": 1788994570.5560632,
+        "session": "1c2a38df-ddab-4eae-b8b7-317d3b7d82ce",
+        "event": "PostToolUse",
+        "tool_use_id": "toolu_1788994570413_wl5alyv8k",
+        "emitted": true,
+        "message": "PI update: inspect changed source and affected callers; validate combined behavior. Related assignments are not edit prohibitions. Follow existing scope and repair agreement; this notice grants no authority and is not an acceptance result. Data follows:\n{\"source\": \"PI steering observation/v1\", \"source_changes\": [\"orders.py\"], \"omitted_paths\": 0, \"attribution\": \"Observed checkout differences; author and semantic impact unverified.\"}",
+        "suppressed": 0,
+        "elapsed_seconds": 0.07669249299215153
+      },
+      {
+        "at": 1788994570.6901612,
+        "session": "1c2a38df-ddab-4eae-b8b7-317d3b7d82ce",
+        "event": "UserPromptSubmit",
+        "tool_use_id": null,
+        "emitted": false,
+        "message": null,
+        "suppressed": 0,
+        "elapsed_seconds": 0.08208599098725244
+      },
+      {
+        "at": 1788994573.7495465,
+        "session": "1c2a38df-ddab-4eae-b8b7-317d3b7d82ce",
+        "event": "PostToolUseFailure",
+        "tool_use_id": "toolu_1788994573569_09zb6q9qb",
+        "emitted": true,
+        "message": "PI update: inspect changed source and affected callers; validate combined behavior. Related assignments are not edit prohibitions. Follow existing scope and repair agreement; this notice grants no authority and is not an acceptance result. Data follows:\n{\"source\": \"PI steering observation/v1\", \"source_changes\": [\"presentation.py\"], \"omitted_paths\": 0, \"attribution\": \"Observed checkout differences; author and semantic impact unverified.\"}",
+        "suppressed": 0,
+        "elapsed_seconds": 0.08028557698708028
+      },
+      {
+        "at": 1788994573.852113,
+        "session": "1c2a38df-ddab-4eae-b8b7-317d3b7d82ce",
+        "event": "UserPromptSubmit",
+        "tool_use_id": null,
+        "emitted": false,
+        "message": null,
+        "suppressed": 0,
+        "elapsed_seconds": 0.06131196499336511
+      },
+      {
+        "at": 1788994577.3060045,
+        "session": "1c2a38df-ddab-4eae-b8b7-317d3b7d82ce",
+        "event": "PostToolUse",
+        "tool_use_id": "toolu_1788994577172_z38ajkb7v",
+        "emitted": false,
+        "message": null,
+        "suppressed": 0,
+        "elapsed_seconds": 0.08294083800865337
+      },
+      {
+        "at": 1788994577.4588232,
+        "session": "1c2a38df-ddab-4eae-b8b7-317d3b7d82ce",
+        "event": "UserPromptSubmit",
+        "tool_use_id": null,
+        "emitted": false,
+        "message": null,
+        "suppressed": 0,
+        "elapsed_seconds": 0.1017335700453259
+      },
+      {
+        "at": 1788994580.0075617,
+        "session": "1c2a38df-ddab-4eae-b8b7-317d3b7d82ce",
+        "event": "PostToolUse",
+        "tool_use_id": "toolu_1788994579897_j3s9slke2",
+        "emitted": true,
+        "message": "PI update: inspect changed source and affected callers; validate combined behavior. Related assignments are not edit prohibitions. Follow existing scope and repair agreement; this notice grants no authority and is not an acceptance result. Data follows:\n{\"source\": \"PI steering observation/v1\", \"source_changes\": [\"checkout.py\"], \"omitted_paths\": 0, \"attribution\": \"Observed checkout differences; author and semantic impact unverified.\"}",
+        "suppressed": 0,
+        "elapsed_seconds": 0.05893531197216362
+      },
+      {
+        "at": 1788994580.1262817,
+        "session": "1c2a38df-ddab-4eae-b8b7-317d3b7d82ce",
+        "event": "UserPromptSubmit",
+        "tool_use_id": null,
+        "emitted": false,
+        "message": null,
+        "suppressed": 0,
+        "elapsed_seconds": 0.079169753997121
+      },
+      {
+        "at": 1788994582.034268,
+        "session": "1c2a38df-ddab-4eae-b8b7-317d3b7d82ce",
+        "event": "PostToolUse",
+        "tool_use_id": "toolu_1788994581481_xl4443yhp",
+        "emitted": false,
+        "message": null,
+        "suppressed": 0,
+        "elapsed_seconds": 0.07998060202226043
+      },
+      {
+        "at": 1788994582.1374035,
+        "session": "1c2a38df-ddab-4eae-b8b7-317d3b7d82ce",
+        "event": "UserPromptSubmit",
+        "tool_use_id": null,
+        "emitted": false,
+        "message": null,
+        "suppressed": 0,
+        "elapsed_seconds": 0.061018061998765916
+      },
+      {
+        "at": 1788994590.3907287,
+        "session": "1c2a38df-ddab-4eae-b8b7-317d3b7d82ce",
+        "event": "PostToolUse",
+        "tool_use_id": "toolu_1788994590214_57qsdbg2r",
+        "emitted": true,
+        "message": "PI update: inspect changed source and affected callers; validate combined behavior. Related assignments are not edit prohibitions. Follow existing scope and repair agreement; this notice grants no authority and is not an acceptance result. Data follows:\n{\"source\": \"PI steering observation/v1\", \"source_changes\": [\"presentation.py\"], \"omitted_paths\": 0, \"attribution\": \"Observed checkout differences; author and semantic impact unverified.\"}",
+        "suppressed": 0,
+        "elapsed_seconds": 0.08036850503413007
+      },
+      {
+        "at": 1788994590.524212,
+        "session": "1c2a38df-ddab-4eae-b8b7-317d3b7d82ce",
+        "event": "UserPromptSubmit",
+        "tool_use_id": null,
+        "emitted": false,
+        "message": null,
+        "suppressed": 0,
+        "elapsed_seconds": 0.07690386899048463
+      },
+      {
+        "at": 1788994594.4767148,
+        "session": "1c2a38df-ddab-4eae-b8b7-317d3b7d82ce",
+        "event": "PostToolUse",
+        "tool_use_id": "toolu_1788994593686_uxpi5dfni",
+        "emitted": false,
+        "message": null,
+        "suppressed": 0,
+        "elapsed_seconds": 0.07715182000538334
+      },
+      {
+        "at": 1788994594.608365,
+        "session": "1c2a38df-ddab-4eae-b8b7-317d3b7d82ce",
+        "event": "UserPromptSubmit",
+        "tool_use_id": null,
+        "emitted": false,
+        "message": null,
+        "suppressed": 0,
+        "elapsed_seconds": 0.07956036197720096
+      },
+      {
+        "at": 1788994605.1497955,
+        "session": "1c2a38df-ddab-4eae-b8b7-317d3b7d82ce",
+        "event": "PostToolUse",
+        "tool_use_id": "toolu_1788994604917_0ge01r62z",
+        "emitted": false,
+        "message": null,
+        "suppressed": 0,
+        "elapsed_seconds": 0.07499937497777864
+      },
+      {
+        "at": 1788994605.2480757,
+        "session": "1c2a38df-ddab-4eae-b8b7-317d3b7d82ce",
+        "event": "UserPromptSubmit",
+        "tool_use_id": null,
+        "emitted": false,
+        "message": null,
+        "suppressed": 0,
+        "elapsed_seconds": 0.05989161494653672
+      }
+    ],
+    "consumer": [
+      {
+        "at": 1788994527.0328782,
+        "session": "7da4f94f-0752-42a6-a588-78dbb639014d",
+        "event": "UserPromptSubmit",
+        "tool_use_id": null,
+        "emitted": true,
+        "message": "PI update: inspect changed source and affected callers; validate combined behavior. Related assignments are not edit prohibitions. Follow existing scope and repair agreement; this notice grants no authority and is not an acceptance result. Data follows:\n{\"source\": \"PI steering observation/v1\", \"source_changes\": [], \"omitted_paths\": 0, \"attribution\": \"Observed checkout differences; author and semantic impact unverified.\", \"declarations\": {\"related_tasks\": [{\"id\": \"PRODUCER\", \"statement\": \"Migrate these seven shop representations, preserving the existing public helpers and their current-data behavior described in README.md:\\n\\n1. catalog.PRICES: integer cents, tea 1250 and cake 725, while checkout.total still returns dollars.\\n2. inventory.STOCK: records containing on_hand and reserved; tea 10/2, cake 5/1. available still returns sellable units.\\n3. shipping.WEIGHTS: integer grams, tea \", \"shared_seams\": [\"shop/contacts\", \"shop/delivery\", \"shop/discounts\", \"shop/orders\", \"shop/prices\", \"shop/stock\", \"shop/weights\"]}], \"workers\": [], \"omitted_tasks\": 0, \"omitted_workers\": 0}}",
+        "suppressed": 0,
+        "elapsed_seconds": 0.08970415900694206
+      },
+      {
+        "at": 1788994534.7255955,
+        "session": "7da4f94f-0752-42a6-a588-78dbb639014d",
+        "event": "PostToolUse",
+        "tool_use_id": "toolu_1788994534516_ozjtjxznr",
+        "emitted": false,
+        "message": null,
+        "suppressed": 0,
+        "elapsed_seconds": 0.0790209699771367
+      },
+      {
+        "at": 1788994534.8612404,
+        "session": "7da4f94f-0752-42a6-a588-78dbb639014d",
+        "event": "PostToolUse",
+        "tool_use_id": "toolu_1788994534742_868wt33y7",
+        "emitted": false,
+        "message": null,
+        "suppressed": 0,
+        "elapsed_seconds": 0.06701355997938663
+      },
+      {
+        "at": 1788994534.9262226,
+        "session": "7da4f94f-0752-42a6-a588-78dbb639014d",
+        "event": "PostToolUse",
+        "tool_use_id": "toolu_1788994534742_s4ixhnvor",
+        "emitted": false,
+        "message": null,
+        "suppressed": 0,
+        "elapsed_seconds": 0.10439294303068891
+      },
+      {
+        "at": 1788994535.0411355,
+        "session": "7da4f94f-0752-42a6-a588-78dbb639014d",
+        "event": "UserPromptSubmit",
+        "tool_use_id": null,
+        "emitted": false,
+        "message": null,
+        "suppressed": 0,
+        "elapsed_seconds": 0.07895476301200688
+      },
+      {
+        "at": 1788994547.8126233,
+        "session": "7da4f94f-0752-42a6-a588-78dbb639014d",
+        "event": "PostToolUse",
+        "tool_use_id": "toolu_1788994547515_eta5upqr9",
+        "emitted": true,
+        "message": "PI update: inspect changed source and affected callers; validate combined behavior. Related assignments are not edit prohibitions. Follow existing scope and repair agreement; this notice grants no authority and is not an acceptance result. Data follows:\n{\"source\": \"PI steering observation/v1\", \"source_changes\": [], \"omitted_paths\": 0, \"attribution\": \"Observed checkout differences; author and semantic impact unverified.\", \"declarations\": {\"related_tasks\": [{\"id\": \"PRODUCER\", \"statement\": \"Migrate these seven shop representations, preserving the existing public helpers and their current-data behavior described in README.md:\\n\\n1. catalog.PRICES: integer cents, tea 1250 and cake 725, while checkout.total still returns dollars.\\n2. inventory.STOCK: records containing on_hand and reserved; tea 10/2, cake 5/1. available still returns sellable units.\\n3. shipping.WEIGHTS: integer grams, tea \", \"shared_seams\": [\"shop/contacts\", \"shop/delivery\", \"shop/discounts\", \"shop/orders\", \"shop/prices\", \"shop/stock\", \"shop/weights\"]}], \"workers\": [{\"session\": \"1c2a38df-ddab-4eae-b8b7-317d3b7d82ce\", \"workstream\": \"PRODUCER\", \"observation\": \"active-lease\", \"working\": \"migrate seven shop representations: PRICES cents, STOCK on_hand/reserved, WEIGHTS grams, DISCOUNTS basis points, LEAD_TIME hours, CONTACTS email/display_name, STATUS strings; keep public helpers' current-data behavior\"}], \"omitted_tasks\": 0, \"omitted_workers\": 0}}",
+        "suppressed": 0,
+        "elapsed_seconds": 0.12306407501455396
+      },
+      {
+        "at": 1788994547.9658146,
+        "session": "7da4f94f-0752-42a6-a588-78dbb639014d",
+        "event": "PostToolUse",
+        "tool_use_id": "toolu_1788994547823_qkuazy67w",
+        "emitted": false,
+        "message": null,
+        "suppressed": 0,
+        "elapsed_seconds": 0.05962305603316054
+      },
+      {
+        "at": 1788994548.030649,
+        "session": "7da4f94f-0752-42a6-a588-78dbb639014d",
+        "event": "PostToolUse",
+        "tool_use_id": "toolu_1788994547823_dqq446lec",
+        "emitted": false,
+        "message": null,
+        "suppressed": 0,
+        "elapsed_seconds": 0.12437604198930785
+      },
+      {
+        "at": 1788994548.0934153,
+        "session": "7da4f94f-0752-42a6-a588-78dbb639014d",
+        "event": "PostToolUse",
+        "tool_use_id": "toolu_1788994547823_2sb2ktfqt",
+        "emitted": false,
+        "message": null,
+        "suppressed": 0,
+        "elapsed_seconds": 0.1871058780234307
+      },
+      {
+        "at": 1788994548.1530085,
+        "session": "7da4f94f-0752-42a6-a588-78dbb639014d",
+        "event": "PostToolUse",
+        "tool_use_id": "toolu_1788994547824_4d6onc4lj",
+        "emitted": false,
+        "message": null,
+        "suppressed": 0,
+        "elapsed_seconds": 0.23802337498636916
+      },
+      {
+        "at": 1788994548.2577548,
+        "session": "7da4f94f-0752-42a6-a588-78dbb639014d",
+        "event": "PostToolUse",
+        "tool_use_id": "toolu_1788994547824_34o56bypt",
+        "emitted": false,
+        "message": null,
+        "suppressed": 0,
+        "elapsed_seconds": 0.3362655250239186
+      },
+      {
+        "at": 1788994548.3591197,
+        "session": "7da4f94f-0752-42a6-a588-78dbb639014d",
+        "event": "PostToolUse",
+        "tool_use_id": "toolu_1788994547824_i74txnalz",
+        "emitted": false,
+        "message": null,
+        "suppressed": 0,
+        "elapsed_seconds": 0.4234855110407807
+      },
+      {
+        "at": 1788994548.4397407,
+        "session": "7da4f94f-0752-42a6-a588-78dbb639014d",
+        "event": "PostToolUse",
+        "tool_use_id": "toolu_1788994547824_jkgcxy34r",
+        "emitted": false,
+        "message": null,
+        "suppressed": 0,
+        "elapsed_seconds": 0.49135194899281487
+      },
+      {
+        "at": 1788994548.521991,
+        "session": "7da4f94f-0752-42a6-a588-78dbb639014d",
+        "event": "PostToolUse",
+        "tool_use_id": "toolu_1788994547824_u7q0brzy9",
+        "emitted": false,
+        "message": null,
+        "suppressed": 0,
+        "elapsed_seconds": 0.5605048830038868
+      },
+      {
+        "at": 1788994548.5837917,
+        "session": "7da4f94f-0752-42a6-a588-78dbb639014d",
+        "event": "PostToolUse",
+        "tool_use_id": "toolu_1788994547824_6aov1qyma",
+        "emitted": false,
+        "message": null,
+        "suppressed": 0,
+        "elapsed_seconds": 0.6172324059880339
+      },
+      {
+        "at": 1788994548.7062283,
+        "session": "7da4f94f-0752-42a6-a588-78dbb639014d",
+        "event": "UserPromptSubmit",
+        "tool_use_id": null,
+        "emitted": false,
+        "message": null,
+        "suppressed": 0,
+        "elapsed_seconds": 0.08346786198671907
+      },
+      {
+        "at": 1788994560.1830301,
+        "session": "7da4f94f-0752-42a6-a588-78dbb639014d",
+        "event": "PostToolUse",
+        "tool_use_id": "toolu_1788994559629_9lh0f8rnv",
+        "emitted": false,
+        "message": null,
+        "suppressed": 0,
+        "elapsed_seconds": 0.07475940696895123
+      },
+      {
+        "at": 1788994560.3237147,
+        "session": "7da4f94f-0752-42a6-a588-78dbb639014d",
+        "event": "PostToolUse",
+        "tool_use_id": "toolu_1788994560191_h49zxdzb9",
+        "emitted": false,
+        "message": null,
+        "suppressed": 0,
+        "elapsed_seconds": 0.060800030012615025
+      },
+      {
+        "at": 1788994560.4249988,
+        "session": "7da4f94f-0752-42a6-a588-78dbb639014d",
+        "event": "UserPromptSubmit",
+        "tool_use_id": null,
+        "emitted": false,
+        "message": null,
+        "suppressed": 0,
+        "elapsed_seconds": 0.06324076396413147
+      },
+      {
+        "at": 1788994569.0791395,
+        "session": "7da4f94f-0752-42a6-a588-78dbb639014d",
+        "event": "PostToolUse",
+        "tool_use_id": "toolu_1788994568906_ouffe4vzt",
+        "emitted": true,
+        "message": "PI update: inspect changed source and affected callers; validate combined behavior. Related assignments are not edit prohibitions. Follow existing scope and repair agreement; this notice grants no authority and is not an acceptance result. Data follows:\n{\"source\": \"PI steering observation/v1\", \"source_changes\": [\"presentation.py\"], \"omitted_paths\": 0, \"attribution\": \"Observed checkout differences; author and semantic impact unverified.\"}",
+        "suppressed": 0,
+        "elapsed_seconds": 0.07869917899370193
+      },
+      {
+        "at": 1788994569.2146945,
+        "session": "7da4f94f-0752-42a6-a588-78dbb639014d",
+        "event": "UserPromptSubmit",
+        "tool_use_id": null,
+        "emitted": false,
+        "message": null,
+        "suppressed": 0,
+        "elapsed_seconds": 0.08423181297257543
+      },
+      {
+        "at": 1788994573.2064035,
+        "session": "7da4f94f-0752-42a6-a588-78dbb639014d",
+        "event": "PostToolUse",
+        "tool_use_id": "toolu_1788994573078_ir4cizcyb",
+        "emitted": true,
+        "message": "PI update: inspect changed source and affected callers; validate combined behavior. Related assignments are not edit prohibitions. Follow existing scope and repair agreement; this notice grants no authority and is not an acceptance result. Data follows:\n{\"source\": \"PI steering observation/v1\", \"source_changes\": [\"catalog.py\", \"customers.py\", \"delivery.py\", \"inventory.py\", \"orders.py\", \"presentation.py\", \"promotions.py\", \"shipping.py\"], \"omitted_paths\": 0, \"attribution\": \"Observed checkout differences; author and semantic impact unverified.\"}",
+        "suppressed": 0,
+        "elapsed_seconds": 0.07248494599480182
+      },
+      {
+        "at": 1788994573.316067,
+        "session": "7da4f94f-0752-42a6-a588-78dbb639014d",
+        "event": "UserPromptSubmit",
+        "tool_use_id": null,
+        "emitted": false,
+        "message": null,
+        "suppressed": 0,
+        "elapsed_seconds": 0.0754569269483909
+      },
+      {
+        "at": 1788994580.5900385,
+        "session": "7da4f94f-0752-42a6-a588-78dbb639014d",
+        "event": "PostToolUse",
+        "tool_use_id": "toolu_1788994580434_4djktmu12",
+        "emitted": true,
+        "message": "PI update: inspect changed source and affected callers; validate combined behavior. Related assignments are not edit prohibitions. Follow existing scope and repair agreement; this notice grants no authority and is not an acceptance result. Data follows:\n{\"source\": \"PI steering observation/v1\", \"source_changes\": [\"checkout.py\"], \"omitted_paths\": 0, \"attribution\": \"Observed checkout differences; author and semantic impact unverified.\"}",
+        "suppressed": 0,
+        "elapsed_seconds": 0.08153901604237035
+      },
+      {
+        "at": 1788994580.6623795,
+        "session": "7da4f94f-0752-42a6-a588-78dbb639014d",
+        "event": "PostToolUse",
+        "tool_use_id": "toolu_1788994580434_kz9c84r8k",
+        "emitted": false,
+        "message": null,
+        "suppressed": 0,
+        "elapsed_seconds": 0.15386784996371716
+      },
+      {
+        "at": 1788994580.72406,
+        "session": "7da4f94f-0752-42a6-a588-78dbb639014d",
+        "event": "PostToolUse",
+        "tool_use_id": "toolu_1788994580434_qjjv77ghc",
+        "emitted": false,
+        "message": null,
+        "suppressed": 0,
+        "elapsed_seconds": 0.20796827098820359
+      },
+      {
+        "at": 1788994580.787345,
+        "session": "7da4f94f-0752-42a6-a588-78dbb639014d",
+        "event": "PostToolUse",
+        "tool_use_id": "toolu_1788994580434_386ca90f3",
+        "emitted": false,
+        "message": null,
+        "suppressed": 0,
+        "elapsed_seconds": 0.2677601430332288
+      },
+      {
+        "at": 1788994580.8670635,
+        "session": "7da4f94f-0752-42a6-a588-78dbb639014d",
+        "event": "PostToolUse",
+        "tool_use_id": "toolu_1788994580434_f9dg504uw",
+        "emitted": false,
+        "message": null,
+        "suppressed": 0,
+        "elapsed_seconds": 0.3429676939849742
+      },
+      {
+        "at": 1788994580.9271512,
+        "session": "7da4f94f-0752-42a6-a588-78dbb639014d",
+        "event": "PostToolUse",
+        "tool_use_id": "toolu_1788994580434_zwc2bclos",
+        "emitted": false,
+        "message": null,
+        "suppressed": 0,
+        "elapsed_seconds": 0.40279270097380504
+      },
+      {
+        "at": 1788994580.9908428,
+        "session": "7da4f94f-0752-42a6-a588-78dbb639014d",
+        "event": "PostToolUse",
+        "tool_use_id": "toolu_1788994580434_pwgxyxx26",
+        "emitted": false,
+        "message": null,
+        "suppressed": 0,
+        "elapsed_seconds": 0.45560891600325704
+      },
+      {
+        "at": 1788994581.0514863,
+        "session": "7da4f94f-0752-42a6-a588-78dbb639014d",
+        "event": "PostToolUse",
+        "tool_use_id": "toolu_1788994580434_thvmkymgo",
+        "emitted": false,
+        "message": null,
+        "suppressed": 0,
+        "elapsed_seconds": 0.4912567969877273
+      },
+      {
+        "at": 1788994581.1847107,
+        "session": "7da4f94f-0752-42a6-a588-78dbb639014d",
+        "event": "UserPromptSubmit",
+        "tool_use_id": null,
+        "emitted": false,
+        "message": null,
+        "suppressed": 0,
+        "elapsed_seconds": 0.07981069799279794
+      },
+      {
+        "at": 1788994584.58625,
+        "session": "7da4f94f-0752-42a6-a588-78dbb639014d",
+        "event": "PostToolUse",
+        "tool_use_id": "toolu_1788994584423_4eelz2pvk",
+        "emitted": false,
+        "message": null,
+        "suppressed": 0,
+        "elapsed_seconds": 0.09697266295552254
+      },
+      {
+        "at": 1788994584.720931,
+        "session": "7da4f94f-0752-42a6-a588-78dbb639014d",
+        "event": "UserPromptSubmit",
+        "tool_use_id": null,
+        "emitted": false,
+        "message": null,
+        "suppressed": 0,
+        "elapsed_seconds": 0.08155888697365299
+      },
+      {
+        "at": 1788994589.1535199,
+        "session": "7da4f94f-0752-42a6-a588-78dbb639014d",
+        "event": "PostToolUse",
+        "tool_use_id": "toolu_1788994589003_aad3va19l",
+        "emitted": true,
+        "message": "PI update: inspect changed source and affected callers; validate combined behavior. Related assignments are not edit prohibitions. Follow existing scope and repair agreement; this notice grants no authority and is not an acceptance result. Data follows:\n{\"source\": \"PI steering observation/v1\", \"source_changes\": [\"presentation.py\"], \"omitted_paths\": 0, \"attribution\": \"Observed checkout differences; author and semantic impact unverified.\"}",
+        "suppressed": 0,
+        "elapsed_seconds": 0.07688486098777503
+      },
+      {
+        "at": 1788994589.266399,
+        "session": "7da4f94f-0752-42a6-a588-78dbb639014d",
+        "event": "UserPromptSubmit",
+        "tool_use_id": null,
+        "emitted": false,
+        "message": null,
+        "suppressed": 0,
+        "elapsed_seconds": 0.06178918096702546
+      },
+      {
+        "at": 1788994598.601258,
+        "session": "7da4f94f-0752-42a6-a588-78dbb639014d",
+        "event": "PostToolUse",
+        "tool_use_id": "toolu_1788994598323_tgbb84jc5",
+        "emitted": false,
+        "message": null,
+        "suppressed": 0,
+        "elapsed_seconds": 0.07789757999125868
+      },
+      {
+        "at": 1788994598.723556,
+        "session": "7da4f94f-0752-42a6-a588-78dbb639014d",
+        "event": "UserPromptSubmit",
+        "tool_use_id": null,
+        "emitted": false,
+        "message": null,
+        "suppressed": 0,
+        "elapsed_seconds": 0.07345572800841182
+      },
+      {
+        "at": 1788994603.6526916,
+        "session": "7da4f94f-0752-42a6-a588-78dbb639014d",
+        "event": "PostToolUse",
+        "tool_use_id": "toolu_1788994603443_gg3k31nfs",
+        "emitted": false,
+        "message": null,
+        "suppressed": 0,
+        "elapsed_seconds": 0.07818857103120536
+      },
+      {
+        "at": 1788994603.7793775,
+        "session": "7da4f94f-0752-42a6-a588-78dbb639014d",
+        "event": "UserPromptSubmit",
+        "tool_use_id": null,
+        "emitted": false,
+        "message": null,
+        "suppressed": 0,
+        "elapsed_seconds": 0.07882823399268091
+      },
+      {
+        "at": 1788994611.390246,
+        "session": "7da4f94f-0752-42a6-a588-78dbb639014d",
+        "event": "PostToolUse",
+        "tool_use_id": "toolu_1788994610441_zs6uqnaqx",
+        "emitted": true,
+        "message": "PI update: inspect changed source and affected callers; validate combined behavior. Related assignments are not edit prohibitions. Follow existing scope and repair agreement; this notice grants no authority and is not an acceptance result. Data follows:\n{\"source\": \"PI steering observation/v1\", \"source_changes\": [], \"omitted_paths\": 0, \"attribution\": \"Observed checkout differences; author and semantic impact unverified.\", \"declarations\": {\"related_tasks\": [{\"id\": \"PRODUCER\", \"statement\": \"Migrate these seven shop representations, preserving the existing public helpers and their current-data behavior described in README.md:\\n\\n1. catalog.PRICES: integer cents, tea 1250 and cake 725, while checkout.total still returns dollars.\\n2. inventory.STOCK: records containing on_hand and reserved; tea 10/2, cake 5/1. available still returns sellable units.\\n3. shipping.WEIGHTS: integer grams, tea \", \"shared_seams\": [\"shop/contacts\", \"shop/delivery\", \"shop/discounts\", \"shop/orders\", \"shop/prices\", \"shop/stock\", \"shop/weights\"]}], \"workers\": [{\"session\": \"1c2a38df-ddab-4eae-b8b7-317d3b7d82ce\", \"workstream\": \"PRODUCER\", \"observation\": \"released\", \"working\": \"Migrated seven representations: PRICES->cents, STOCK->{on_hand,reserved}, WEIGHTS->grams, DISCOUNTS->bps, LEAD_TIME->hours, CONTACTS->{email,display_name}, STATUS->strings. Updated checkout.total to divide cents by 100. All 7 existing tests\"}], \"omitted_tasks\": 0, \"omitted_workers\": 0}}",
+        "suppressed": 0,
+        "elapsed_seconds": 0.06329725997056812
+      },
+      {
+        "at": 1788994611.4897683,
+        "session": "7da4f94f-0752-42a6-a588-78dbb639014d",
+        "event": "UserPromptSubmit",
+        "tool_use_id": null,
+        "emitted": false,
+        "message": null,
+        "suppressed": 0,
+        "elapsed_seconds": 0.06134577398188412
+      }
+    ]
+  },
+  "provenance": {
+    "batch": "20260909-qwen-steering-v1",
+    "project": "C1",
+    "backend": "v0.05 unchanged; Qwen steering integration v1",
+    "frozen_sha256": "2385cfe579c25290cfa21a32fe8d9c7e7be8ac9f706225697da9a02a59d07303",
+    "plan_sha256": "3f6077382e2b81d302c6c2d649afe5b3fc87242bbd1d57040d404db627798119",
+    "result_sha256": "47a60a7ee5df7dea37b922428da1978952c0aeb75ce7d78c70d5edc3a6053fdb",
+    "module_hashes": {
+      "concurrency_study.py": "158e364406791ed6efae0de9cac7d26a2bec2c17f197e59955dedee5b547c967",
+      "seven_seams.py": "7185c16ff9a45f3a36d432c36c9a784cca88d2fd1ef74a641e81a825f0e35d67",
+      "qwen_code_adapter.py": "8c0b6e3260123cbd9d8ce996fc25c2f9871474df8a04a8a19966f86ae4707641",
+      "isolation_v2.py": "147e2683f9fb0b6f243bdc6f89feee2b756978453ebb77fad6b383b0d261ca08",
+      "qwen_seven_seams.py": "adee913e5cc070a1ba2b09a02d5fe7f6bc026c5ac84bb60a062d68bd4ce54628",
+      "qwen_profiles.py": "f44db5d71bdfd8628608cc09bbb7c4e6ab52cc9c3b2d2bda9a00a534eb9c8214",
+      "qwen_compact_pi.py": "b80b6549f20364d1b65cd02ea051e1eb7ca0b1c02abdaa11dea0b6e5468df7c0",
+      "qwen_compact_pi_v2.py": "49aaed6c53096a918bd2510b9ae302d4a80316d1322df5f00294bd34dd4c4c37",
+      "qwen_worker_cli.py": "aa06f6fbe45c19053f73ddb36dd5486c170f37b69be87556b33cf838b12415cc",
+      "qwen_steering.py": "0236bc1326bb31cd72adb773aff101321f49b0decf5777da5c4956514ef148e6",
+      "qwen_steering_hook.py": "929acb0646dfa08bf6872a51f45769784b330dad306332fe6b5d7fec49a17872"
+    },
+    "template_sha256": "e2449ccc6ede1f0568e021da0603688d728f267d627d4339dc05ed29608b32c2",
+    "qwen_code_version": "0.23.2"
+  },
+  "limitations": [
+    "One steering-on project, no new off condition; no causal reliability inference.",
+    "Hook emission is not proof of attention; native transport tested separately with scripted provider.",
+    "File changes are scoped observations, not author attribution or inferred semantic impact.",
+    "Post-exit acceptance; setup_seconds excludes compact/steering preparation.",
+    "Input includes cached input; all notices and their costs remain part of treatment."
+  ]
+}

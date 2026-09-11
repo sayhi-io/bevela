@@ -1,0 +1,112 @@
+"""Sequencing amendment: retain verified budget timeouts and continue fresh projects.
+
+The frozen native recorder, model controls, fixture and acceptance never change.
+This is not retry permission: a started project without a receipt still blocks.
+"""
+import argparse
+import fcntl
+import json
+from pathlib import Path
+
+from experiments import qwen_distributed_study as study
+from experiments import qwen_native_cancellation as cancellation
+
+
+def disposition(root):
+    plan = study.verify(root)
+    result = json.loads((root / 'result.json').read_text())
+    if result['native_identity_verified'] and not result['infrastructure_errors']:
+        return {'state': 'original_gate_passed'}
+    telemetry = json.loads((root / 'worker-analysis.json').read_text())
+    expected = {(role, session) for role, session in plan['sessions'].items()}
+    for records in (result['workers'], telemetry):
+        assert len(records) == len(expected)
+        assert {(r['role'], r['session']) for r in records} == expected
+    observed = {r['role']: r for r in telemetry}
+    timed_out = []
+    evidence = {}
+    native_cancellations = {}
+    for worker in result['workers']:
+        role = worker['role']
+        native = observed[role]
+        initial = native['native_initialization']
+        assert initial and all(r['model'] == plan['model'] and r['session_id'] == worker['session']
+                               for r in initial), 'Wrong native initialization'
+        path = root / role / 'transport.jsonl'
+        evidence[role] = study.sha(path)
+        transport = [json.loads(line) for line in path.read_text().splitlines()]
+        requests = [r for r in transport if r['event'] == 'request']
+        assert requests and all(r.get('model') == plan['model'] and r.get('reasoning_effort') == 'xhigh'
+            and r.get('chat_template_kwargs', {}).get('enable_thinking') is True for r in requests), 'Wrong request controls'
+        assert not any(r['event'] == 'response' and r.get('status', 200) >= 400 for r in transport), 'HTTP failure'
+        errors = [r for r in transport if r['event'] == 'transport_error']
+        correlated = cancellation.inspect(root, role, worker['session'], plan['model'], transport)
+        matched = {(row['request'], row['transport_error_at'], row['transport_error_type'])
+                   for row in correlated['matches']}
+        if matched:
+            native_cancellations[role] = correlated
+        if not worker.get('timed_out'):
+            assert native['native_identity_verified'] and all(
+                (e.get('request'), e.get('at'), e.get('type')) in matched for e in errors), 'Non-timeout failure needs inspection'
+            continue
+        assert worker['stream_complete'] and worker['exit_code'] in (-15, -9), 'Unexpected timeout termination'
+        assert plan['timeout_seconds'] <= worker['elapsed_seconds'] <= plan['timeout_seconds'] + 30
+        cutoff = worker['start_monotonic_ns'] + plan['timeout_seconds'] * 1000000000
+        responded = {e['request'] for e in transport if e['event'] == 'response'
+                     and e.get('status') == 200 and e['mono_ns'] < cutoff}
+        assert all((e.get('request'), e.get('at'), e.get('type')) in matched or (e.get('type') in ('ConnectionResetError', 'BrokenPipeError', 'IncompleteRead')
+            and e['request'] in responded
+            and cutoff <= e['mono_ns'] <= worker['end_monotonic_ns'] + 15000000000) for e in errors), 'Non-boundary transport failure'
+        assert all(r['session_id'] == worker['session'] for r in native['native_final']), 'Wrong final session'
+        timed_out.append(role)
+    assert timed_out or native_cancellations, 'Failure was not a predetermined timeout or native cancellation'
+    value = {'state': 'reviewed_native_stream_cancellation' if native_cancellations else 'reviewed_predetermined_timeout',
+        'at': study.utc(), 'timed_out_roles': timed_out,
+        'result_sha256': study.sha(root / 'result.json'), 'plan_sha256': study.sha(root / 'plan.json'),
+        'transport_sha256': evidence, 'controller_sha256': study.sha(__file__),
+        'classifier_sha256': study.sha(cancellation.__file__), 'native_cancellations': native_cancellations,
+        'meaning': 'Raw failures, missing usage and acceptance are unchanged. Corroborated native stream-limit retries and budget cancellation are not successful execution or recovered output. No evaluator retry or worker change; only advancement to the next fresh frozen project.'}
+    existing = root / 'timeout-disposition-v3.json'
+    if existing.exists():
+        old = json.loads(existing.read_text())
+        assert all(old[k] == value[k] for k in ('state', 'result_sha256', 'plan_sha256', 'transport_sha256',
+            'controller_sha256', 'classifier_sha256', 'native_cancellations', 'timed_out_roles'))
+        return old
+    study.write_json(existing, value)
+    return value
+
+
+def run(batch):
+    frozen = json.loads((batch / 'frozen.json').read_text())
+    assert frozen['study_sha256'] == study.sha(study.__file__)
+    assert frozen['adapter_sha256'] == study.sha(study.adapter.__file__)
+    with (batch.parent / '.qwen-distributed-study.lock').open('a') as lock:
+        fcntl.flock(lock, fcntl.LOCK_EX | fcntl.LOCK_NB)
+        amendment = batch / 'sequencing-amendment-v3.json'
+        if not amendment.exists():
+            study.write_json(amendment, {'version': 3, 'at': study.utc(), 'controller_sha256': study.sha(__file__),
+                'classifier_sha256': study.sha(cancellation.__file__),
+                'reason': 'After C3, recognize only exact same-session native 900000ms StreamLifetimeExceededError/retry with uniquely correlated HTTP200 stream closure and subsequent HTTP200. Preserve failed/partial projects, v1/v2 evidence and frozen recorder/settings. Do not change native cap or replace trials.'})
+        assert json.loads(amendment.read_text())['controller_sha256'] == study.sha(__file__)
+        for label in frozen['order']:
+            frozen_controller = json.loads(amendment.read_text())
+            assert frozen_controller['controller_sha256'] == study.sha(__file__)
+            assert frozen_controller['classifier_sha256'] == study.sha(cancellation.__file__)
+            root = batch / label
+            assert study.sha(root / 'plan.json') == frozen['plans'][label]
+            if not (root / 'result.json').exists():
+                if (root / 'started.json').exists():
+                    raise RuntimeError('Started project without final receipt; never retry: ' + label)
+                print(json.dumps({'event': 'starting', 'trial': label, 'at': study.utc()}), flush=True)
+                result = study.run(root)
+                print(json.dumps({'event': 'completed', 'trial': label, 'at': study.utc(),
+                    'accepted': result['accepted'], 'autonomous_complete': result['autonomous_complete'],
+                    'groups': result['result'].get('groups'), 'project_seconds': result['project_seconds'],
+                    'usage': result['usage']}), flush=True)
+            print(json.dumps({'event': 'disposition', 'trial': label, **disposition(root)}), flush=True)
+
+
+if __name__ == '__main__':
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument('batch', type=Path)
+    run(parser.parse_args().batch.resolve())

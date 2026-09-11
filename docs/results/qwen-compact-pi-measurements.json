@@ -1,0 +1,888 @@
+{
+  "publication": {
+    "kind": "sanitized-public-copy",
+    "source_ledger_sha256": "140788018209c3ddf24b4af1aeae0b0c9d8a8953a7a1737a4ab87fbc97d4dc79",
+    "redactions": [
+      "Absolute private evaluation paths in checker errors replaced with <private-evaluation>/source/."
+    ],
+    "meaning": "Scores and error types unchanged. Existing evidence hashes identify original local artifacts, not this derived public file."
+  },
+  "schema": "pi-for-qwen-public/v1",
+  "qwen_profile": {
+    "thinking": false,
+    "confidence": false,
+    "pi": true,
+    "runs": 3,
+    "effort": "medium",
+    "context": 230000
+  },
+  "instruction_profile": "qwen-compact-pi/v1",
+  "model": "qwen38-27b-dflash2",
+  "effort": "medium",
+  "qwen_code_version": "0.23.2",
+  "pi_behavior": "v0.05 backend unchanged; qwen-compact-pi/v1 startup instructions",
+  "context_tokens": 230000,
+  "deadline_seconds": 1800,
+  "order": [
+    "C1",
+    "C2",
+    "C3"
+  ],
+  "frozen_sha256": "f350ad8e1ce6695ec650a4333a29a2d8b4c150d1f10d9e39313b19d3279bfb34",
+  "recorder_sha256": "adee913e5cc070a1ba2b09a02d5fe7f6bc026c5ac84bb60a062d68bd4ce54628",
+  "summary": {
+    "C": {
+      "runs": 3,
+      "accepted": 1,
+      "scores": [
+        0,
+        0,
+        7
+      ],
+      "median_project_seconds": 103.226578038,
+      "median_worker_seconds": 189.896137694,
+      "median_input_plus_output_tokens": 1289644,
+      "worker_timeouts": 0,
+      "native_successes": 4
+    }
+  },
+  "projects_newest_first": [
+    {
+      "project": "C3",
+      "condition": "C",
+      "score": 7,
+      "accepted": true,
+      "failed_seams": [],
+      "checks": {
+        "prices": {
+          "producer": {
+            "passed": true,
+            "failures": [],
+            "checks": 4
+          },
+          "consumer": {
+            "passed": true,
+            "failures": [],
+            "checks": 2
+          },
+          "both_preserved": true
+        },
+        "stock": {
+          "producer": {
+            "passed": true,
+            "failures": [],
+            "checks": 4
+          },
+          "consumer": {
+            "passed": true,
+            "failures": [],
+            "checks": 2
+          },
+          "both_preserved": true
+        },
+        "weights": {
+          "producer": {
+            "passed": true,
+            "failures": [],
+            "checks": 4
+          },
+          "consumer": {
+            "passed": true,
+            "failures": [],
+            "checks": 2
+          },
+          "both_preserved": true
+        },
+        "discounts": {
+          "producer": {
+            "passed": true,
+            "failures": [],
+            "checks": 6
+          },
+          "consumer": {
+            "passed": true,
+            "failures": [],
+            "checks": 3
+          },
+          "both_preserved": true
+        },
+        "delivery": {
+          "producer": {
+            "passed": true,
+            "failures": [],
+            "checks": 4
+          },
+          "consumer": {
+            "passed": true,
+            "failures": [],
+            "checks": 2
+          },
+          "both_preserved": true
+        },
+        "contacts": {
+          "producer": {
+            "passed": true,
+            "failures": [],
+            "checks": 4
+          },
+          "consumer": {
+            "passed": true,
+            "failures": [],
+            "checks": 2
+          },
+          "both_preserved": true
+        },
+        "orders": {
+          "producer": {
+            "passed": true,
+            "failures": [],
+            "checks": 4
+          },
+          "consumer": {
+            "passed": true,
+            "failures": [],
+            "checks": 2
+          },
+          "both_preserved": true
+        }
+      },
+      "project_seconds": 103.226578038,
+      "aggregate_worker_seconds": 189.896137694,
+      "concurrency": {
+        "start_ns": 293027419110436,
+        "end_ns": 293130379758231,
+        "worker_interval_seconds": 102.960647795,
+        "worker_seconds": 189.896137694,
+        "factor": 1.8443564775553187,
+        "max_simultaneous": 2,
+        "active_timeline": [
+          {
+            "seconds": 0.0,
+            "active": 1
+          },
+          {
+            "seconds": 0.000134784,
+            "active": 2
+          },
+          {
+            "seconds": 86.935624683,
+            "active": 1
+          },
+          {
+            "seconds": 102.960647795,
+            "active": 0
+          }
+        ]
+      },
+      "setup_seconds": 0.2256587669835426,
+      "archive_seconds": 0.133773825,
+      "verification_seconds": 0.048217683,
+      "human_interventions": 0,
+      "workers": [
+        {
+          "role": "producer",
+          "session": "02463b70-db04-4c8c-aad0-ad2be501c2fd",
+          "started_at": "2026-09-09T22:05:28.482439+00:00",
+          "finished_at": "2026-09-09T22:06:55.417921+00:00",
+          "elapsed_seconds": 86.935489899,
+          "exit_code": 0,
+          "timed_out": null,
+          "stream_complete": true,
+          "relay_complete": true,
+          "usage": {
+            "input_tokens": 684571,
+            "cached_input_tokens": 664256,
+            "output_tokens": 4666,
+            "reasoning_tokens": 0,
+            "requests": 19,
+            "usage_requests": 19,
+            "reasoning_observed": false,
+            "input_usage_requests": 19,
+            "complete_input_usage": true,
+            "output_usage_requests": 19,
+            "complete_output_usage": true,
+            "cached_input_usage_requests": 19,
+            "complete_cached_input_usage": true,
+            "reasoning_usage_requests": 19,
+            "complete_reasoning_usage": true,
+            "complete_usage": true
+          },
+          "controls_verified": true,
+          "thinking_disabled_verified": true,
+          "initialization_verified": true,
+          "final_identity_verified": true,
+          "native_success": true
+        },
+        {
+          "role": "consumer",
+          "session": "209456ad-435f-4929-b834-94f4a89d3b0c",
+          "started_at": "2026-09-09T22:05:28.482300+00:00",
+          "finished_at": "2026-09-09T22:07:11.442950+00:00",
+          "elapsed_seconds": 102.960647795,
+          "exit_code": 0,
+          "timed_out": null,
+          "stream_complete": true,
+          "relay_complete": true,
+          "usage": {
+            "input_tokens": 595282,
+            "cached_input_tokens": 571136,
+            "output_tokens": 5125,
+            "reasoning_tokens": 0,
+            "requests": 16,
+            "usage_requests": 16,
+            "reasoning_observed": false,
+            "input_usage_requests": 16,
+            "complete_input_usage": true,
+            "output_usage_requests": 16,
+            "complete_output_usage": true,
+            "cached_input_usage_requests": 16,
+            "complete_cached_input_usage": true,
+            "reasoning_usage_requests": 16,
+            "complete_reasoning_usage": true,
+            "complete_usage": true
+          },
+          "controls_verified": true,
+          "thinking_disabled_verified": true,
+          "initialization_verified": true,
+          "final_identity_verified": true,
+          "native_success": true
+        }
+      ],
+      "usage": {
+        "input_tokens": 1279853,
+        "cached_input_tokens": 1235392,
+        "output_tokens": 9791,
+        "reasoning_tokens": 0,
+        "requests": 35,
+        "usage_requests": 35,
+        "complete_input_output": true,
+        "complete_cached_input": true,
+        "complete_reasoning": true
+      },
+      "infrastructure_ok": true,
+      "protected_inputs_changed": [],
+      "result_sha256": "4c2bcda89db6591016fe4a21cb1fcbdbf9283a11067c07c97d250161c943c553",
+      "plan_sha256": "79e4980fa23c983e0b1da0ca607a2d6e5fbb88561905ace2bc9c2a6412dca92b"
+    },
+    {
+      "project": "C2",
+      "condition": "C",
+      "score": 0,
+      "accepted": false,
+      "failed_seams": [
+        "prices",
+        "stock",
+        "weights",
+        "discounts",
+        "delivery",
+        "contacts",
+        "orders"
+      ],
+      "checks": {
+        "prices": {
+          "producer": {
+            "passed": false,
+            "failures": [
+              {
+                "check": 1,
+                "error": "AssertionError: Expected 1250, got 12.5"
+              },
+              {
+                "check": 3,
+                "error": "AssertionError: Expected 22.25, got 1507.25"
+              }
+            ],
+            "checks": 4
+          },
+          "consumer": {
+            "passed": false,
+            "failures": [
+              {
+                "check": 2,
+                "error": "AssertionError: Expected ['$15.00'], got ['$1500.00']"
+              }
+            ],
+            "checks": 2
+          },
+          "both_preserved": false
+        },
+        "stock": {
+          "producer": {
+            "passed": false,
+            "failures": [
+              {
+                "check": 1,
+                "error": "TypeError: 'int' object is not subscriptable"
+              },
+              {
+                "check": 3,
+                "error": "TypeError: unsupported operand type(s) for -: 'dict' and 'int'"
+              }
+            ],
+            "checks": 4
+          },
+          "consumer": {
+            "passed": false,
+            "failures": [
+              {
+                "check": 2,
+                "error": "TypeError: unsupported operand type(s) for -: 'dict' and 'int'"
+              }
+            ],
+            "checks": 2
+          },
+          "both_preserved": false
+        },
+        "weights": {
+          "producer": {
+            "passed": false,
+            "failures": [
+              {
+                "check": 1,
+                "error": "AssertionError: Expected 250, got 0.25"
+              },
+              {
+                "check": 3,
+                "error": "AssertionError: Expected 0.875, got 375.5"
+              }
+            ],
+            "checks": 4
+          },
+          "consumer": {
+            "passed": false,
+            "failures": [
+              {
+                "check": 2,
+                "error": "AssertionError: Expected ['0.375 kg'], got ['375.000 kg']"
+              }
+            ],
+            "checks": 2
+          },
+          "both_preserved": false
+        },
+        "discounts": {
+          "producer": {
+            "passed": false,
+            "failures": [
+              {
+                "check": 1,
+                "error": "AssertionError: Expected 1000, got 10"
+              },
+              {
+                "check": 4,
+                "error": "AssertionError: Expected 10, got -237.5"
+              },
+              {
+                "check": 5,
+                "error": "AssertionError: Expected 14.4, got 1440.0"
+              }
+            ],
+            "checks": 6
+          },
+          "consumer": {
+            "passed": false,
+            "failures": [
+              {
+                "check": 2,
+                "error": "AssertionError: Expected ['20% off; $10.00'], got ['2000% off; $-237.50']"
+              },
+              {
+                "check": 3,
+                "error": "AssertionError: Expected ['10% off; $14.40'], got ['10% off; $1440.00']"
+              }
+            ],
+            "checks": 3
+          },
+          "both_preserved": false
+        },
+        "delivery": {
+          "producer": {
+            "passed": false,
+            "failures": [
+              {
+                "check": 1,
+                "error": "AssertionError: Expected 48, got 2"
+              },
+              {
+                "check": 3,
+                "error": "AssertionError: Expected 3, got 72"
+              }
+            ],
+            "checks": 4
+          },
+          "consumer": {
+            "passed": false,
+            "failures": [
+              {
+                "check": 2,
+                "error": "AssertionError: Expected ['3 days'], got ['72 days']"
+              }
+            ],
+            "checks": 2
+          },
+          "both_preserved": false
+        },
+        "contacts": {
+          "producer": {
+            "passed": false,
+            "failures": [
+              {
+                "check": 1,
+                "error": "TypeError: string indices must be integers, not 'str'"
+              },
+              {
+                "check": 3,
+                "error": "AssertionError: Expected 'ada2@example.test', got {'email': 'ada2@example.test', 'display_name': 'Ada Lovelace'}"
+              }
+            ],
+            "checks": 4
+          },
+          "consumer": {
+            "passed": false,
+            "failures": [
+              {
+                "check": 2,
+                "error": "AssertionError: Expected ['Ada Lovelace <ada2@example.test>'], got [\"Ada <{'email': 'ada2@example.test', 'display_name': 'Ada Lovelace'}>\"]"
+              }
+            ],
+            "checks": 2
+          },
+          "both_preserved": false
+        },
+        "orders": {
+          "producer": {
+            "passed": false,
+            "failures": [
+              {
+                "check": 1,
+                "error": "AssertionError: Expected 'paid', got True"
+              }
+            ],
+            "checks": 4
+          },
+          "consumer": {
+            "passed": true,
+            "failures": [],
+            "checks": 2
+          },
+          "both_preserved": false
+        }
+      },
+      "project_seconds": 83.978764018,
+      "aggregate_worker_seconds": 153.345570635,
+      "concurrency": {
+        "start_ns": 292943303284461,
+        "end_ns": 293026931110485,
+        "worker_interval_seconds": 83.627826024,
+        "worker_seconds": 153.345570635,
+        "factor": 1.833666829877797,
+        "max_simultaneous": 2,
+        "active_timeline": [
+          {
+            "seconds": 0.0,
+            "active": 1
+          },
+          {
+            "seconds": 4.9791e-05,
+            "active": 2
+          },
+          {
+            "seconds": 69.717794402,
+            "active": 1
+          },
+          {
+            "seconds": 83.627826024,
+            "active": 0
+          }
+        ]
+      },
+      "setup_seconds": 0.22484830499161035,
+      "archive_seconds": 0.133261532,
+      "verification_seconds": 0.028343941,
+      "human_interventions": 0,
+      "workers": [
+        {
+          "role": "producer",
+          "session": "d8d34e20-a7b3-43c0-b157-1344e0541978",
+          "started_at": "2026-09-09T22:04:04.366472+00:00",
+          "finished_at": "2026-09-09T22:05:27.994297+00:00",
+          "elapsed_seconds": 83.627826024,
+          "exit_code": 1,
+          "timed_out": null,
+          "stream_complete": true,
+          "relay_complete": true,
+          "usage": {
+            "input_tokens": 459175,
+            "cached_input_tokens": 398912,
+            "output_tokens": 2526,
+            "reasoning_tokens": 0,
+            "requests": 11,
+            "usage_requests": 11,
+            "reasoning_observed": false,
+            "input_usage_requests": 11,
+            "complete_input_usage": true,
+            "output_usage_requests": 11,
+            "complete_output_usage": true,
+            "cached_input_usage_requests": 10,
+            "complete_cached_input_usage": false,
+            "reasoning_usage_requests": 11,
+            "complete_reasoning_usage": true,
+            "complete_usage": true
+          },
+          "controls_verified": true,
+          "thinking_disabled_verified": true,
+          "initialization_verified": true,
+          "final_identity_verified": true,
+          "native_success": false
+        },
+        {
+          "role": "consumer",
+          "session": "3c69273e-d6b0-4f52-82df-2ed1a374cc3f",
+          "started_at": "2026-09-09T22:04:04.366525+00:00",
+          "finished_at": "2026-09-09T22:05:14.084269+00:00",
+          "elapsed_seconds": 69.717744611,
+          "exit_code": 0,
+          "timed_out": null,
+          "stream_complete": true,
+          "relay_complete": true,
+          "usage": {
+            "input_tokens": 273693,
+            "cached_input_tokens": 254784,
+            "output_tokens": 2520,
+            "reasoning_tokens": 0,
+            "requests": 8,
+            "usage_requests": 8,
+            "reasoning_observed": false,
+            "input_usage_requests": 8,
+            "complete_input_usage": true,
+            "output_usage_requests": 8,
+            "complete_output_usage": true,
+            "cached_input_usage_requests": 8,
+            "complete_cached_input_usage": true,
+            "reasoning_usage_requests": 8,
+            "complete_reasoning_usage": true,
+            "complete_usage": true
+          },
+          "controls_verified": true,
+          "thinking_disabled_verified": true,
+          "initialization_verified": true,
+          "final_identity_verified": true,
+          "native_success": true
+        }
+      ],
+      "usage": {
+        "input_tokens": 732868,
+        "cached_input_tokens": 653696,
+        "output_tokens": 5046,
+        "reasoning_tokens": 0,
+        "requests": 19,
+        "usage_requests": 19,
+        "complete_input_output": true,
+        "complete_cached_input": false,
+        "complete_reasoning": true
+      },
+      "infrastructure_ok": true,
+      "protected_inputs_changed": [],
+      "result_sha256": "84e3364ed97f8cfc58852e3678cacac12888dafe1363e008ec31be64ec81c997",
+      "plan_sha256": "823adeccce942248971ddddfd94c32fa6f2e79c38b0f36b90c6f52d6071c707f"
+    },
+    {
+      "project": "C1",
+      "condition": "C",
+      "score": 0,
+      "accepted": false,
+      "failed_seams": [
+        "prices",
+        "stock",
+        "weights",
+        "discounts",
+        "delivery",
+        "contacts",
+        "orders"
+      ],
+      "checks": {
+        "prices": {
+          "producer": {
+            "passed": true,
+            "failures": [],
+            "checks": 4
+          },
+          "consumer": {
+            "passed": false,
+            "failures": [
+              {
+                "check": 1,
+                "error": "ValueError: ImportError: cannot import name 'NAMES' from 'customers' (<private-evaluation>/source/customers.py)"
+              },
+              {
+                "check": 2,
+                "error": "ValueError: ImportError: cannot import name 'NAMES' from 'customers' (<private-evaluation>/source/customers.py)"
+              }
+            ],
+            "checks": 2
+          },
+          "both_preserved": false
+        },
+        "stock": {
+          "producer": {
+            "passed": true,
+            "failures": [],
+            "checks": 4
+          },
+          "consumer": {
+            "passed": false,
+            "failures": [
+              {
+                "check": 1,
+                "error": "ValueError: ImportError: cannot import name 'NAMES' from 'customers' (<private-evaluation>/source/customers.py)"
+              },
+              {
+                "check": 2,
+                "error": "ValueError: ImportError: cannot import name 'NAMES' from 'customers' (<private-evaluation>/source/customers.py)"
+              }
+            ],
+            "checks": 2
+          },
+          "both_preserved": false
+        },
+        "weights": {
+          "producer": {
+            "passed": true,
+            "failures": [],
+            "checks": 4
+          },
+          "consumer": {
+            "passed": false,
+            "failures": [
+              {
+                "check": 1,
+                "error": "ValueError: ImportError: cannot import name 'NAMES' from 'customers' (<private-evaluation>/source/customers.py)"
+              },
+              {
+                "check": 2,
+                "error": "ValueError: ImportError: cannot import name 'NAMES' from 'customers' (<private-evaluation>/source/customers.py)"
+              }
+            ],
+            "checks": 2
+          },
+          "both_preserved": false
+        },
+        "discounts": {
+          "producer": {
+            "passed": true,
+            "failures": [],
+            "checks": 6
+          },
+          "consumer": {
+            "passed": false,
+            "failures": [
+              {
+                "check": 1,
+                "error": "ValueError: ImportError: cannot import name 'NAMES' from 'customers' (<private-evaluation>/source/customers.py)"
+              },
+              {
+                "check": 2,
+                "error": "ValueError: ImportError: cannot import name 'NAMES' from 'customers' (<private-evaluation>/source/customers.py)"
+              },
+              {
+                "check": 3,
+                "error": "ValueError: ImportError: cannot import name 'NAMES' from 'customers' (<private-evaluation>/source/customers.py)"
+              }
+            ],
+            "checks": 3
+          },
+          "both_preserved": false
+        },
+        "delivery": {
+          "producer": {
+            "passed": true,
+            "failures": [],
+            "checks": 4
+          },
+          "consumer": {
+            "passed": false,
+            "failures": [
+              {
+                "check": 1,
+                "error": "ValueError: ImportError: cannot import name 'NAMES' from 'customers' (<private-evaluation>/source/customers.py)"
+              },
+              {
+                "check": 2,
+                "error": "ValueError: ImportError: cannot import name 'NAMES' from 'customers' (<private-evaluation>/source/customers.py)"
+              }
+            ],
+            "checks": 2
+          },
+          "both_preserved": false
+        },
+        "contacts": {
+          "producer": {
+            "passed": true,
+            "failures": [],
+            "checks": 4
+          },
+          "consumer": {
+            "passed": false,
+            "failures": [
+              {
+                "check": 1,
+                "error": "ValueError: ImportError: cannot import name 'NAMES' from 'customers' (<private-evaluation>/source/customers.py)"
+              },
+              {
+                "check": 2,
+                "error": "ValueError: ImportError: cannot import name 'NAMES' from 'customers' (<private-evaluation>/source/customers.py)"
+              }
+            ],
+            "checks": 2
+          },
+          "both_preserved": false
+        },
+        "orders": {
+          "producer": {
+            "passed": true,
+            "failures": [],
+            "checks": 4
+          },
+          "consumer": {
+            "passed": false,
+            "failures": [
+              {
+                "check": 1,
+                "error": "ValueError: ImportError: cannot import name 'NAMES' from 'customers' (<private-evaluation>/source/customers.py)"
+              },
+              {
+                "check": 2,
+                "error": "ValueError: ImportError: cannot import name 'NAMES' from 'customers' (<private-evaluation>/source/customers.py)"
+              }
+            ],
+            "checks": 2
+          },
+          "both_preserved": false
+        }
+      },
+      "project_seconds": 129.917340542,
+      "aggregate_worker_seconds": 200.160362913,
+      "concurrency": {
+        "start_ns": 292813248087153,
+        "end_ns": 292942586928948,
+        "worker_interval_seconds": 129.338841795,
+        "worker_seconds": 200.160362913,
+        "factor": 1.5475657593273564,
+        "max_simultaneous": 2,
+        "active_timeline": [
+          {
+            "seconds": 0.0,
+            "active": 1
+          },
+          {
+            "seconds": 0.000160783,
+            "active": 2
+          },
+          {
+            "seconds": 70.821681901,
+            "active": 1
+          },
+          {
+            "seconds": 129.338841795,
+            "active": 0
+          }
+        ]
+      },
+      "setup_seconds": 0.24628341803327203,
+      "archive_seconds": 0.134589749,
+      "verification_seconds": 0.033021015,
+      "human_interventions": 0,
+      "workers": [
+        {
+          "role": "producer",
+          "session": "43132077-30ae-4b22-9ab0-922d9a097fa4",
+          "started_at": "2026-09-09T22:01:54.311436+00:00",
+          "finished_at": "2026-09-09T22:04:03.650115+00:00",
+          "elapsed_seconds": 129.338681012,
+          "exit_code": 1,
+          "timed_out": null,
+          "stream_complete": true,
+          "relay_complete": true,
+          "usage": {
+            "input_tokens": 1097901,
+            "cached_input_tokens": 1066304,
+            "output_tokens": 6544,
+            "reasoning_tokens": 0,
+            "requests": 24,
+            "usage_requests": 24,
+            "reasoning_observed": false,
+            "input_usage_requests": 24,
+            "complete_input_usage": true,
+            "output_usage_requests": 24,
+            "complete_output_usage": true,
+            "cached_input_usage_requests": 24,
+            "complete_cached_input_usage": true,
+            "reasoning_usage_requests": 24,
+            "complete_reasoning_usage": true,
+            "complete_usage": true
+          },
+          "controls_verified": true,
+          "thinking_disabled_verified": true,
+          "initialization_verified": true,
+          "final_identity_verified": true,
+          "native_success": false
+        },
+        {
+          "role": "consumer",
+          "session": "b13fae36-bf1c-41ed-bca4-b2858858cb57",
+          "started_at": "2026-09-09T22:01:54.311282+00:00",
+          "finished_at": "2026-09-09T22:03:05.132958+00:00",
+          "elapsed_seconds": 70.821681901,
+          "exit_code": 0,
+          "timed_out": null,
+          "stream_complete": true,
+          "relay_complete": true,
+          "usage": {
+            "input_tokens": 366041,
+            "cached_input_tokens": 317056,
+            "output_tokens": 2591,
+            "reasoning_tokens": 0,
+            "requests": 10,
+            "usage_requests": 10,
+            "reasoning_observed": false,
+            "input_usage_requests": 10,
+            "complete_input_usage": true,
+            "output_usage_requests": 10,
+            "complete_output_usage": true,
+            "cached_input_usage_requests": 9,
+            "complete_cached_input_usage": false,
+            "reasoning_usage_requests": 10,
+            "complete_reasoning_usage": true,
+            "complete_usage": true
+          },
+          "controls_verified": true,
+          "thinking_disabled_verified": true,
+          "initialization_verified": true,
+          "final_identity_verified": true,
+          "native_success": true
+        }
+      ],
+      "usage": {
+        "input_tokens": 1463942,
+        "cached_input_tokens": 1383360,
+        "output_tokens": 9135,
+        "reasoning_tokens": 0,
+        "requests": 34,
+        "usage_requests": 34,
+        "complete_input_output": true,
+        "complete_cached_input": false,
+        "complete_reasoning": true
+      },
+      "infrastructure_ok": true,
+      "protected_inputs_changed": [],
+      "result_sha256": "a9a641525bee046185c2db65043d8458a9d3f152df2bceb86c8e2361b39681ab",
+      "plan_sha256": "e7503b291d120502831b096f984c12f592831619b5ec168d3fc0b0827756170d"
+    }
+  ],
+  "limitations": [
+    "Original own-task control versus PI peer-task context; not an equal-static-context ablation.",
+    "Three compact-instruction PI projects versus one preceding full-instruction thinking-off PI project; no new control.",
+    "Final post-exit acceptance; no continuous time-to-first-correct measurement.",
+    "Cached input and reasoning are subsets; no exclusive GPU reservation or causal timing claim."
+  ]
+}
