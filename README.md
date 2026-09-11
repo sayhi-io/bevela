@@ -165,7 +165,7 @@ Those successes belong alongside the failures—not in place of them. The Septem
 - [Distributed candidate 2 · thinking on](docs/results/qwen-distributed.md): **0/5 accepted in each arm**; 35/40 workers timed out across both arms.
 - [Original seven seams · Medium](docs/results/qwen-seven-seams.md): **3/3 ordinary versus 2/3 PI** projects accepted.
 - [First seven-seam steering pilot · thinking off](docs/results/qwen-steering.md): **1/1 accepted, 7/7 in 95s**; no new matched control and only one pilot.
-- [Ten steering-on repeats · thinking off](RESULTS.md#qwen-steering-ten-repeat-cohort): **10/10 accepted, every project 7/7**; two workers per fresh project, median **99.4s**. No new matched steering-off cohort.
+- [Ten steering-on repeats · thinking off](RESULTS.md#qwen-steering-ten-repeat-cohort): **10/10 accepted, every project 7/7**, versus the [earlier ordinary thinking-off baseline](docs/results/qwen-ordinary-thinking-off.md): **0/1 accepted, 0/7**. Same fixture, task prompts, checker, runtime and model; two workers per project. PI median **99.4s**. The baseline is one run, not ten matched control repeats.
 - [Distributed 500-limit follow-ups · thinking off](RESULTS.md#qwen-distributed-500-limit-follow-ups): **8/15 → 14/15 → 15/15** across three fresh projects. The final artifact passed in **13m 15s**, but one worker exited nonzero, so clean autonomous completion was not established.
 - [Latest independent requests · September 10](docs/results/qwen-independent-requests.md): **3/3 ordinary versus 1/3 PI+steering** accepted; ordinary scored 15/15 each, PI scored 13/15, 13/15, 15/15.
 

@@ -24,7 +24,7 @@ defined [below](#pi-behavior-versions), not deployed release numbers.
 | Sep 10 · after cap500 | [Distributed steering · 500 calls / 500 turns](#qwen-distributed-500-limit-follow-ups) | Qwen3.8 DFlash2 · thinking off | No new matched control | **1/1 artifact accepted, 15/15 in 795.062s**; reporting worker exited 1, so `autonomous_complete=false` | v0.05 backend unchanged; cap500-turn500 adapter v1 |
 | Sep 10 · after initial distributed pilot | [Distributed steering · 500-call cap](#qwen-distributed-500-limit-follow-ups) | Qwen3.8 DFlash2 · thinking off | No new matched control | **0/1 accepted, 14/15 in 1,076.096s**; partial-return pipeline failed | v0.05 backend unchanged; cap500 adapter v1 |
 | Sep 10 · after ten-repeat cohort | [Distributed steering · initial pilot](#qwen-distributed-500-limit-follow-ups) | Qwen3.8 DFlash2 · thinking off | No new matched control | **0/1 accepted, 8/15 in 844.115s** | v0.05 backend unchanged; nested steering adapter v1 |
-| Sep 10 · completed 00:44 UTC | [Seven-seam steering · ten repeats](#qwen-steering-ten-repeat-cohort) | Qwen3.8 DFlash2 · thinking off | No new matched control | **10/10 accepted, 7/7 every project**; median 99.4s, range 48.0–303.2s | v0.05 backend unchanged; steering v1 repeated without treatment changes |
+| Sep 10 · completed 00:44 UTC | [Seven-seam steering · ten repeats](#qwen-steering-ten-repeat-cohort) | Qwen3.8 DFlash2 · thinking off | [Earlier ordinary thinking-off control](docs/results/qwen-ordinary-thinking-off.md): **0/1 accepted, 0/7**; same fixture/runtime/task inputs, one run rather than ten control repeats | **10/10 accepted, 7/7 every project**; median 99.4s, range 48.0–303.2s | v0.05 backend unchanged; steering v1 repeated without treatment changes |
 | Sep 9, 22:55–22:57 | [Qwen PI steering · first pilot](docs/results/qwen-steering.md) | Qwen3.8 DFlash2 · thinking off | No new control; preceding pull-only PI project scored 0/7 | **1/1 accepted, 7/7 in 95s**; both enrolled; 18 automatic notices, consumer reconciled migration. One pilot, not established reliability. | v0.05 backend unchanged; steering integration v1 |
 | Sep 9, 22:42–22:44 | [Compact PI v2 · filtered Qwen CLI](docs/results/qwen-compact-pi-v2.md) | Qwen3.8 DFlash2 · thinking off | Not run | **0/1 accepted, 0/7 in 76s**; both workers finished. Consumer made no PI calls; producer left stale consumer unchanged. No loop or timeout. | v0.05 backend unchanged; Qwen CLI v2 |
 | Sep 9, 22:01–22:07 | [Compact PI prompt · Qwen thinking off](docs/results/qwen-compact-pi.md) | Qwen3.8 DFlash2 · thinking off | Not run | **1/3 accepted: 0/7, 0/7, 7/7**; 130s, 84s, 103s. Two native loop-guard stops; no timeouts. | v0.05 unchanged; compact instructions v1 |
@@ -113,6 +113,24 @@ model `qwen38-27b-dflash2`, thinking off, confidence off and PI/steering on.
 Projects ran sequentially, with two concurrent role workers inside each project.
 The pilot is separate and is not counted as one of these ten repeats.
 
+There **is an earlier ordinary control**: [thinking-off B1](docs/results/qwen-ordinary-thinking-off.md)
+on September 9 scored **0/7 in 44.072s**, with PI absent and both workers exiting
+normally. Its frozen fixture and runtime manifests, producer/consumer prompts,
+common task input and checker hashes match the ten-repeat cohort's first project;
+model, context window and timeout match too. Thinking and confidence were off in
+both. The repeat wrapper verifies the same treatment across the ten PI projects.
+
+| Comparison | Projects accepted | Integrated scores | Project time |
+| --- | --- | --- | --- |
+| Earlier ordinary control, no PI | **0/1** | 0/7 | 44.072s, unaccepted |
+| Subsequent PI + steering repeats | **10/10** | 7/7 each | Median 99.444s |
+
+This is a **one-versus-ten historical comparison**, not ten newly paired control
+runs. PI availability, compact instructions, filtered CLI and automatic steering
+are a combined treatment; this comparison does not isolate steering alone. The
+ordinary failure is not a faster accepted solution. The earlier PI-only thinking-off
+run also passed 7/7, as recorded on the linked control page.
+
 | Trial | Integrated score | Accepted | Project seconds |
 | --- | ---: | --- | ---: |
 | T01 | 7/7 | Yes | 303.185 |
@@ -127,9 +145,10 @@ The pilot is separate and is not counted as one of these ten repeats.
 | T10 | 7/7 | Yes | 73.076 |
 
 Median project time was **99.444s**. This establishes repeated accepted outcomes
-on this fixture with steering enabled. There was no new matched steering-off
-cohort, so it does not isolate the causal effect of steering or establish broad
-reliability on different projects. Acceptance was checked after worker exit;
+on this fixture with steering enabled, alongside a failed earlier ordinary control.
+The single control run cannot estimate ordinary reliability, and these experiments
+do not isolate steering's causal effect or establish reliability on different
+projects. Acceptance was checked after worker exit;
 project time is not time to the first correct intermediate state.
 
 Source: the ten project `result.json` records and `completed.json` in local batch
