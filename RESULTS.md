@@ -20,6 +20,9 @@ defined [below](#pi-behavior-versions), not deployed release numbers.
 
 | Executed | Study | Model / effort | Ordinary outcome | PI outcome | PI behavior |
 | --- | --- | --- | --- | --- | --- |
+| Sep 9, 09:46–10:25 | [Distributed coherence · candidate 2 calibration](docs/results/sol-distributed.md#candidate-2--implementation-defined-return-contracts) | Sol Medium | **3/3 accepted**, 15/15 contracts; four retained implementations each | Not run: both allowed candidates saturated; bounded calibration stopped | v0.05 frozen, not executed |
+| Sep 9, 08:51–09:21 | [Distributed coherence · candidate 1 calibration](docs/results/sol-distributed.md#candidate-1--prescribed-internal-contracts) | Sol Medium | Four fixed-role workers: **3/3 accepted**, 12/12 contracts each; four distinct retained implementations each | Not run: ordinary calibration saturated. Candidate 2 subsequently tested implementation-defined internal contracts. | v0.05 frozen, not executed |
+| Sep 9, 07:31–08:18 | [PI protocol competence calibration](docs/results/sol-protocol.md) | Sol Medium | Not applicable: deterministic protocol scenarios, not software A/B | **8/9 completed workflows**; one reporting/release timeout. Qualified for software calibration, not error-free operation. | v0.05 unchanged |
 | Sep 9, 05:51–06:07 | [Same objective, self-organizing workers](docs/results/self-organizing.md) | Luna Medium | Single: **3/3 accepted**; three workers: **3/3** | Single: **3/3**; three workers: **3/3**. Neither concurrent arm divided implementation usefully. | v0.05 |
 | Sep 9, 05:47 | [Self-organizing v3 infrastructure abort](docs/results/self-organizing.md#integrity-failures-and-limits) | Luna Medium requested | One launch stopped after **99.125s**, no recorded coding output; source 0/7 | Not launched | v0.05 frozen, not executed |
 | Sep 9, 04:56–05:18 | [Concurrency versus context](docs/results/concurrency.md) | Luna Medium | Single: **3/3 accepted**; two workers: **3/3** | Single: **3/3**; two workers: **3/3**. Distinct retained parallel contributions: **3/3 PI vs 0/3 ordinary**. | v0.05 |
@@ -64,7 +67,31 @@ value comes from supplying useful peer context, coordinating concurrent work, or
 both. The later studies below equalized task information and added single-worker
 baselines. [Individual failures and timings](docs/results/seven-seams.md).
 
-## Latest project-level comparison
+## Bounded calibration: capable workers, harder distributed work
+
+Sol Medium completed **8/9** explicitly requested PI workflows within five minutes:
+audits **3/3**, repair owners **3/3**, reviewing peers **2/3**. One reviewer timed out
+after a reporting-command rejection; successful runs also exposed transcription
+friction. This passes the frozen bounded gate, not a claim of perfect protocol use.
+
+**Suspected limit in the preceding software studies:** low-effort failures can mix
+coding difficulty with PI workflow difficulty, while the original fixture saturates
+at higher capability. **The first software calibration examined** four independently
+owned components with fixed, equal assignments, using Sol Medium throughout.
+All three ordinary projects passed all twelve integration groups and retained
+four distinct component implementations. **Suspected limit:** fully prescribed
+internal contracts allowed independent implementation without much reconciliation.
+**Candidate 2 tested** producer-defined internal payloads under equally visible,
+fixed business requirements: **3/3 ordinary projects accepted all fifteen groups**.
+Both allowed candidates saturated, so execution stopped before the single-worker
+ceiling and matched PI evaluation. **Possible limit:** normal inspection still
+resolved the available seams without difficult reconciliation. A future separately
+authorized version should test unresolved semantic evolution, not weaken Sol or
+cripple ordinary tools. No PI software effect is measured here.
+[Software results](docs/results/sol-distributed.md) · [Protocol evidence](docs/results/sol-protocol.md) ·
+[Frozen software-study plan](docs/CLI_SOL_DISTRIBUTED_SOFTWARE.md).
+
+## Latest completed project-level comparison
 
 Luna Medium, original fixture, identical complete objective for every worker.
 Three fresh projects per condition; **all reached 7/7**. Time and token columns

@@ -1,0 +1,26 @@
+{
+  "boundaries": {
+    "catalog": [
+      "contracts/catalog-quote",
+      "contracts/inventory-reservation",
+      "contracts/partial-returns"
+    ],
+    "orders": [
+      "contracts/catalog-quote",
+      "contracts/inventory-reservation",
+      "contracts/order-state",
+      "contracts/partial-returns"
+    ],
+    "settlement": [
+      "contracts/order-state",
+      "contracts/settlement-event",
+      "contracts/partial-returns"
+    ],
+    "reporting": [
+      "contracts/order-state",
+      "contracts/settlement-event",
+      "contracts/legacy-receipt",
+      "contracts/partial-returns"
+    ]
+  }
+}

@@ -1,0 +1,3 @@
+Implement Reporting's OBJECTIVE.md contract within reporting/: normalize old/new order/payment events, persist deduplication, reject conflicting amounts/snapshots, join reversed/delayed streams without status regression, and preserve integer revenue and legacy receipt formatting through restart/migration.
+
+The complete objective, other component tasks and unchanged public acceptance checker are available to every worker. Implement only your assigned root; you may add focused tests there. Do not edit other roots, OBJECTIVE.md, architecture.json, role tasks, or acceptance.py. Preserve existing local tests. No prescribed coordination sequence or waiting is part of the task.

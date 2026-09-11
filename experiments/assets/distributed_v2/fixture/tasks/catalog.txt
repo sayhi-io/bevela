@@ -1,0 +1,4 @@
+Implement Catalog's OBJECTIVE.md contract within catalog/: retain legacy put/get; add decimal half-up unit rounding and integer quotes, durable snapshot reservations, atomic basket validation, canonical retry identity, and exactly-once release. Migrate version-1 prices and real persisted reservations.
+
+The complete objective, other component tasks and unchanged public acceptance checker are available to every worker. Implement only your assigned root; you may add focused tests there. Do not edit other roots, OBJECTIVE.md, architecture.json, role tasks, or acceptance.py. Preserve existing local tests. No prescribed coordination sequence or waiting is part of the task.
+Also implement OBJECTIVE.md's complete partial-return extension. Add restore and partial-release accounting, with a durable producer-owned JSON receipt documented in catalog/CONTRACT.md.

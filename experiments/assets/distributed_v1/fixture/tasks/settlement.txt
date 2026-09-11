@@ -1,0 +1,3 @@
+Implement Settlement's OBJECTIVE.md contract within settlement/: normalize legacy/new order events, reject conflicting redelivery, persist delayed capture intent, handle cancellation before placement/drain and after capture, and expose restart-safe payment/refund events, acknowledgments and integer balance. Preserve old captures on migration.
+
+The complete objective, other component tasks and unchanged public acceptance checker are available to every worker. Implement only your assigned root; you may add focused tests there. Do not edit other roots, OBJECTIVE.md, architecture.json, role tasks, or acceptance.py. Preserve existing local tests. No prescribed coordination sequence or waiting is part of the task.
