@@ -12,7 +12,20 @@ test('calendar indexes only valid handoffs, reports and known recent releases',(
  const before=JSON.stringify(result),events=F.events(result);
  assert.deepEqual(events.map(event=>event.type),['release','report','handoff']);
  assert.deepEqual(events.map(event=>event.summary),['Wrapped up','Checked one','Shipped one']);
+ assert.deepEqual(events[0].release,result.recently_rested[0]);
  assert.equal(JSON.stringify(result),before);
+});
+
+test('calendar adds usable PR observations and scoped local Git commits without inventing work links',()=>{
+ const observed=local(2026,8,10,10),committed=local(2026,8,10,9),result={workstreams:[work('a:one',{pull_requests:[{repository:'https://github.com/sayhi-io/bevela',number:14,url:'https://github.com/sayhi-io/bevela/pull/14',relationship:'implementation',observation_status:'last-known',observation:{observed_at:observed,state:'merged'}}]})],local_git:{status:'observed',commits:[{scope:'a',repository:'bevela',oid:'a'.repeat(40),committed_at:committed,subject:'Add calendar evidence',publication:'local-only'},{scope:'a',repository:'bad',oid:'short',committed_at:committed,subject:'invalid',publication:'unknown'}]}};
+ const events=F.events(result),pr=events.find(event=>event.type==='pull-request'),commit=events.find(event=>event.type==='commit');
+ assert.equal(events.length,2);assert.equal(pr.label,'Pull request observed · merged');assert.equal(pr.ref.number,14);
+ assert.equal(commit.work,null);assert.equal(commit.commit.publication,'local-only');assert.equal(commit.summary,'Add calendar evidence');
+});
+
+test('PR references without usable observations and malformed local commits stay off calendar',()=>{
+ const result={workstreams:[work('a:one',{pull_requests:[{observation_status:'not-observed',observation:{observed_at:local(2026,8,10)}}]})],local_git:{commits:[null,{scope:'a',repository:'repo',oid:'b'.repeat(40),committed_at:'bad',subject:'bad',publication:'local-only'}]}};
+ assert.deepEqual(F.events(result),[]);
 });
 
 test('developer board requires fresh observation and never promotes lifecycle alone',()=>{
@@ -36,7 +49,36 @@ test('month is a Monday-first six-week grid with events on exact local dates',()
  assert.equal(view.days.filter(day=>day.inMonth).length,30);
 });
 
+test('week is a compact Monday-first seven-day range around the selected date',()=>{
+ const date=local(2026,8,10),events=[{id:'one',date:F.dateKey(date)}],view=F.week(new Date(2026,8,10,12),events);
+ assert.equal(view.days.length,7);assert.equal(view.days[0].date.getDay(),1);assert.equal(view.days[6].date.getDay(),0);
+ assert.equal(view.days.find(day=>day.key===F.dateKey(date)).events.length,1);
+ assert.deepEqual(F.week('invalid',events).days,[]);
+});
+
 test('empty and invalid timestamps remain absent rather than becoming epoch activity',()=>{
  assert.equal(F.dateKey(''),null);assert.equal(F.dateKey(null),null);assert.equal(F.time(undefined),null);
  assert.deepEqual(F.events({workstreams:[work('a:none')]}),[]);
+});
+
+test('selected-day evidence can be searched, filtered and sorted without mutating events',()=>{
+ const rows=[
+  {id:'report',type:'report',label:'Worker report',at:20,summary:'Validated calendar ledger',work:{key:'sayhi/project:beta'}},
+  {id:'commit',type:'commit',label:'Git commit',at:10,summary:'Add search controls',scope:'sayhi/project',commit:{repository:'project',oid:'a'.repeat(40),publication:'local-only'}},
+  {id:'handoff',type:'handoff',label:'Provider handoff',at:30,summary:'Ready for review',work:{key:'sayhi/project:alpha'}},
+ ],original=rows.map(row=>row.id);
+ assert.deepEqual(F.filterEvents(rows,{query:'calendar ledger'}).map(row=>row.id),['report']);
+ assert.deepEqual(F.filterEvents(rows,{query:'local-only',type:'commit'}).map(row=>row.id),['commit']);
+ assert.deepEqual(F.filterEvents(rows,{sort:'oldest'}).map(row=>row.id),['commit','report','handoff']);
+ assert.deepEqual(F.filterEvents(rows,{sort:'workstream'}).map(row=>row.id),['commit','handoff','report']);
+ assert.deepEqual(rows.map(row=>row.id),original);
+});
+
+test('short previews preserve full searchable evidence and native references',()=>{
+ const summary='Reviewed the calendar implementation at '+ 'b'.repeat(40)+'; follow-up evidence mentions keyboard restoration';
+ const row={id:'report',type:'report',label:'Worker report',at:1,summary,work:{key:'scope:internal-id',title:'Calendar redesign',provider_identifier:'SAYINT-62'},report:{payload:{session:'independent-session'}}};
+ assert.ok(F.preview(summary,100).length<=101);
+ assert.ok(!F.preview(summary,100).includes('b'.repeat(40)));
+ for(const query of ['keyboard restoration','b'.repeat(40),'SAYINT-62','Calendar redesign','independent-session'])assert.deepEqual(F.filterEvents([row],{query}),[row]);
+ assert.equal(row.summary,summary);
 });

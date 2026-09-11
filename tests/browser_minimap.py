@@ -1,6 +1,7 @@
 """Minimap interactions over the real local cache; candidate-only loopback server."""
 import argparse
 import json
+import os
 from pathlib import Path
 import threading
 from http.server import ThreadingHTTPServer
@@ -34,7 +35,8 @@ def check_width_control(page):
  page.keyboard.press('Home')
 try:
  with sync_playwright() as p:
-  browser=p.chromium.launch(headless=True)
+  options={'executable_path':os.environ['BROWSER_EXECUTABLE']} if os.getenv('BROWSER_EXECUTABLE') else {}
+  browser=p.chromium.launch(headless=True,args=['--disable-gpu','--disable-software-rasterizer'],**options)
   context=browser.new_context(http_credentials=access,viewport={'width':1440,'height':1050},reduced_motion='reduce',has_touch=True)
   page=context.new_page();errors=[];page.on('pageerror',lambda e:errors.append(str(e)))
   page.goto(f'http://127.0.0.1:{server.server_port}/observatory#work')
@@ -57,8 +59,13 @@ try:
   page.locator('#refresh').click();expect(key).not_to_have_attribute('open','')
   expect(page.locator('#refresh')).to_be_focused()
   expect(page.locator('#view-title')).to_have_text('Work')
-  expect(page.locator('#view-description')).to_be_visible()
+  expect(page.locator('#product-title')).to_have_text('Work')
+  expect(page.locator('#product-description')).to_be_visible()
+  expect(page.locator('#view-description')).to_be_hidden()
+  assert page.locator('#view-title').evaluate("node => getComputedStyle(node).position==='absolute' && node.getBoundingClientRect().height===1")
   page.locator('#view-nav a[href="#home"]').click()
+  expect(page.locator('#product-title')).to_have_text('Mission Control')
+  expect(page.locator('#product-description')).to_be_hidden()
   expect(page.locator('#view-title')).to_be_focused()
   expect(page.locator('#view-description')).to_be_hidden()
   assert page.locator('#view-title').evaluate("node => getComputedStyle(node).position==='absolute' && node.getBoundingClientRect().height===1")
@@ -71,8 +78,10 @@ try:
   page.evaluate('window.scrollTo(0,0)')
   page.screenshot(path=str(args.output/'home-without-redundant-heading.png'),animations='disabled')
   page.locator('#view-nav a[href="#work"]').click()
-  expect(page.locator('#view-description')).to_be_visible()
-  assert page.locator('#view-title').evaluate("node => getComputedStyle(node).position==='static'")
+  expect(page.locator('#product-title')).to_have_text('Work')
+  expect(page.locator('#product-description')).to_be_visible()
+  expect(page.locator('#view-description')).to_be_hidden()
+  assert page.locator('#view-title').evaluate("node => getComputedStyle(node).position==='absolute' && node.getBoundingClientRect().height===1")
   expect(page.locator('#page-minimap')).not_to_be_visible()
   page.screenshot(path=str(args.output/'minimap-collapsed-desktop.png'),animations='disabled')
   page.locator('#minimap-toggle').click()
@@ -92,7 +101,7 @@ try:
   page.locator('.minimap-entry').first.focus()
   page.evaluate('render(data)')
   expect(page.locator('.minimap-entry').first).to_be_focused()
-  page.locator('#theme').select_option('light')
+  page.locator('.display-options>summary').click();page.locator('#theme').select_option('light');page.locator('.display-options>summary').click()
   page.wait_for_function("() => getComputedStyle(document.querySelector('#page-minimap')).backgroundColor==='rgb(251, 252, 250)'")
   page.screenshot(path=str(args.output/'minimap-cards-light.png'),animations='disabled')
   check_width_control(page)
@@ -118,7 +127,7 @@ try:
   target.click()
   expect(page.locator('#architecture .tile').last.locator('h3')).to_be_focused()
   assert page.locator('#minimap-index').evaluate('(node) => node.scrollTop > 0')
-  page.locator('#theme').select_option('dark')
+  page.locator('.display-options>summary').click();page.locator('#theme').select_option('dark');page.locator('.display-options>summary').click()
   page.wait_for_function("() => getComputedStyle(document.querySelector('#page-minimap')).backgroundColor==='rgb(28, 37, 31)'")
   page.screenshot(path=str(args.output/'minimap-list-dark.png'),animations='disabled')
   page.locator('#notifications').click()

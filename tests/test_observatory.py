@@ -168,7 +168,7 @@ class ServiceTests(SnapshotCase):
 
     def test_api_auth_scope_and_readonly(self):
         store=Store(self.config);store.refresh()
-        principals={'reader':{'token_sha256':hashlib.sha256(b'test-secret').hexdigest(),'scopes':[self.scope]},'denied':{'token_sha256':hashlib.sha256(b'test-secret').hexdigest(),'scopes':[]}}
+        principals={'reader':{'token_sha256':hashlib.sha256(b'test-secret').hexdigest(),'scopes':[self.scope],'local_git_calendar':True},'denied':{'token_sha256':hashlib.sha256(b'test-secret').hexdigest(),'scopes':[]}}
         server=ThreadingHTTPServer(('127.0.0.1',0),handler(store,principals));thread=threading.Thread(target=server.serve_forever);thread.start()
         self.addCleanup(server.server_close);self.addCleanup(server.shutdown);self.addCleanup(lambda:None)
         base='http://127.0.0.1:'+str(server.server_port)
@@ -178,7 +178,7 @@ class ServiceTests(SnapshotCase):
             return urlopen(Request(base+path,headers=headers,method=method),timeout=2)
         with self.assertRaises(HTTPError) as e:request('/api/v1/observatory')
         self.assertEqual(e.exception.code,401)
-        for path,mime in [('/minimap.js','text/javascript'),('/minimap.css','text/css'),('/activity-views-facts.js','text/javascript'),('/identity-facts.js','text/javascript'),('/design-lab.js','text/javascript'),('/design-lab.css','text/css')]:
+        for path,mime in [('/minimap.js','text/javascript'),('/minimap.css','text/css'),('/activity-views-facts.js','text/javascript'),('/workspace-views.js','text/javascript'),('/identity-facts.js','text/javascript'),('/design-lab.js','text/javascript'),('/design-lab.css','text/css'),('/inter-variable.woff2','font/woff2')]:
             with self.subTest(asset=path):
                 with self.assertRaises(HTTPError) as denied:request(path)
                 self.assertEqual(denied.exception.code,401)
@@ -186,8 +186,9 @@ class ServiceTests(SnapshotCase):
                     self.assertIn(mime,response.headers['Content-Type'])
                     self.assertTrue(response.read())
         with request('/api/v1/observatory','reader') as r:
-            payload=json.load(r);self.assertTrue(payload['workstreams']);self.assertNotIn('workspace_inventory',payload)
-        with request('/api/v1/observatory','denied') as r:self.assertFalse(json.load(r)['workstreams'])
+            payload=json.load(r);self.assertTrue(payload['workstreams']);self.assertNotIn('workspace_inventory',payload);self.assertEqual(payload['local_git']['status'],'not-configured')
+        with request('/api/v1/observatory','denied') as r:
+            payload=json.load(r);self.assertFalse(payload['workstreams']);self.assertNotIn('local_git',payload)
         with self.assertRaises(HTTPError) as e:request('/api/v1/observatory?scope=other','reader')
         self.assertEqual(e.exception.code,403)
         with self.assertRaises(HTTPError) as e:request('/api/v1/observatory','reader','POST')

@@ -110,6 +110,31 @@ Git provider remains authoritative; merged never implies deployed or production
 authorized. No GitHub polling, credential service, automatic PR inference, provider
 write from the browser, or stale-observation attention automation is introduced.
 
+The evidence calendar also indexes usable PR observations by their own
+`observation.observed_at`. This is the observation time, not an inferred opened,
+updated, merged, or closed transition time. References without a usable observation
+remain absent from the calendar rather than acquiring a fabricated date.
+
+## Optional local Git calendar evidence
+
+An operator can separately enable `local_git_calendar` for a principal and configure
+an absolute repository root plus an exact list of immediate repository names and
+scope bindings. Authorization and selected-scope filtering happen before Git is read.
+The bounded observer invokes only local Git commands with terminal prompting disabled
+and a sanitized environment that excludes ambient repository, object-store and Git
+configuration overrides. It never fetches or contacts a remote. It considers local
+branches and existing remote-tracking refs within the configured lookback and
+per-repository limits.
+
+The top-level `local_git` response contains status/coverage and commits with only
+`scope`, `repository`, full `oid`, timezone-aware `committed_at`, bounded `subject`,
+and `publication`. Publication is `remote-tracking` when the object appears in the
+bounded remote-tracking history, `local-only` only when that history was completely
+examined, otherwise `unknown`. Paths, authors, emails, branch names, commit bodies,
+diffs and credentials are not exported. A repository commit is not automatically
+attributed to a Workstream and is not evidence of time worked, review, merge,
+deployment, or production authorization.
+
 ## Optional measured activity (local dogfood)
 
 Workstreams now carry `activity`, separate from presence and durable records.

@@ -29,7 +29,8 @@ def main():
     errors=[]
     try:
         with sync_playwright() as p:
-            browser=p.chromium.launch(headless=True)
+            options={'executable_path':os.environ['BROWSER_EXECUTABLE']} if os.getenv('BROWSER_EXECUTABLE') else {}
+            browser=p.chromium.launch(headless=True,args=['--disable-gpu','--disable-software-rasterizer'],**options)
             ctx=browser.new_context(http_credentials={'username':access['username'],'password':access['password']},viewport={'width':1536,'height':1100},reduced_motion='reduce')
             page=ctx.new_page();page.on('pageerror',lambda error:errors.append(str(error)))
             url=f'http://127.0.0.1:{server.server_port}'
@@ -43,7 +44,7 @@ def main():
             page.wait_for_function("() => document.querySelectorAll('.map-jelly').length === 3")
             assert page.locator('.convergence-band').count()==2
             page.screenshot(path=str(out/'sparkops-ha-dark.png'),full_page=True)
-            page.select_option('#theme','light')
+            page.locator('.display-options>summary').click();page.select_option('#theme','light');page.locator('.display-options>summary').click()
             page.screenshot(path=str(out/'sparkops-ha-light.png'),full_page=True)
             port=page.locator('.map-port.selected').first;port.focus();page.keyboard.press('Enter')
             page.wait_for_selector('#seam-detail[open]')
@@ -68,7 +69,7 @@ def main():
             assert page.locator('.work-group .activity-chart').count()==0
             assert page.locator('.work-group .execution-badge').count()==0
             page.screenshot(path=str(out/'worker-groups-light.png'),full_page=True)
-            page.select_option('#theme','dark');page.screenshot(path=str(out/'worker-groups-dark.png'),full_page=True)
+            page.locator('.display-options>summary').click();page.select_option('#theme','dark');page.locator('.display-options>summary').click();page.screenshot(path=str(out/'worker-groups-dark.png'),full_page=True)
             chip=page.locator('#workstreams .worker-chip.reporting').first
             selected_session=chip.get_attribute('data-session')
             selected_workstream=chip.get_attribute('data-group')

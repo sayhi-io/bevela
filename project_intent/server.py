@@ -11,11 +11,13 @@ from urllib.parse import urlparse, parse_qs
 from .model import project
 from .runtime import Store
 from .workspace_inventory import observe as observe_workspace
+from .local_git import Observer as LocalGitObserver
 
 WEB=Path(__file__).parent/'web'
 
 
 def handler(store,principals):
+    local_git_observer=LocalGitObserver(store.config)
     class Handler(BaseHTTPRequestHandler):
         def log_message(self,*args): pass  # No paths, credentials, or provider bodies in access logs.
 
@@ -57,9 +59,13 @@ def handler(store,principals):
                 except PermissionError:return self.send(403,{'error':'Scope not authorized'})
                 inventory=observe_workspace(store.config,principal,result,selected)
                 if inventory is not None:result['workspace_inventory']=inventory
+                local_git=local_git_observer.view(principal,selected)
+                if local_git is not None:result['local_git']=local_git
                 return self.send(200,result)
             assets={'/':('index.html','text/html; charset=utf-8'),'/app.js':('app.js','text/javascript; charset=utf-8'),'/theme.js':('theme.js','text/javascript; charset=utf-8'),'/style.css':('style.css','text/css; charset=utf-8')}
             assets.update({'/observatory':('observatory.html','text/html; charset=utf-8'),'/observatory.js':('observatory.js','text/javascript; charset=utf-8'),'/observatory.css':('observatory.css','text/css; charset=utf-8')})
+            assets['/inter-variable.woff2']=('inter-variable.woff2','font/woff2')
+            assets['/workspace-views.js']=('workspace-views.js','text/javascript; charset=utf-8')
             assets['/workstream-map']=('observatory.html','text/html; charset=utf-8')
             assets.update({'/minimap.js':('minimap.js','text/javascript; charset=utf-8'),'/minimap.css':('minimap.css','text/css; charset=utf-8')})
             for name in ('workstream-map.js','workstream-map-facts.js','workstream-map.css','worker-group-facts.js','worker-groups.js','worker-groups.css','activity-views-facts.js','identity-facts.js','design-lab.js','design-lab.css'):

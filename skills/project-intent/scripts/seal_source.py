@@ -7,6 +7,9 @@ from pathlib import Path, PurePosixPath
 
 
 ROOT_FILES = {"AGENTS.md", "README.md", "PROJECT.md", "pyproject.toml", ".gitignore"}
+# Exact audited assets, not general permission to include binary or text state.
+SOURCE_ASSETS = {"project_intent/web/inter-variable.woff2", "project_intent/web/INTER-LICENSE.txt",
+                 "scripts/publish_loopback.py"}
 ROOT_DIRS = {"project_intent", "tests", "docs", "skills", ".github"}
 FORBIDDEN = {".git", ".venv", "node_modules", "__pycache__", "state", "runtime", "evidence"}
 SUFFIXES = {".py", ".md", ".toml", ".json", ".js", ".cjs", ".css", ".html", ".yaml", ".yml", ".svg"}
@@ -22,7 +25,7 @@ def source_path(root, value):
         raise ValueError(f"Non-relative source path: {value}")
     if any(part in FORBIDDEN or part.endswith(".egg-info") for part in path.parts):
         raise ValueError(f"Operational/build path refused: {value}")
-    allowed = value in ROOT_FILES or value == ".project-intent/snapshot.json"
+    allowed = value in ROOT_FILES or value in SOURCE_ASSETS or value == ".project-intent/snapshot.json"
     allowed = allowed or (path.parts[0] in ROOT_DIRS and path.suffix in SUFFIXES)
     if not allowed:
         raise ValueError(f"Outside Project Intent source allowlist: {value}")
