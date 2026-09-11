@@ -14,6 +14,7 @@ from urllib.request import Request, urlopen
 from experiments import qwen_code_adapter as adapter
 from experiments import qwen_distributed_study as study
 from experiments import qwen_boundary_resume as boundary
+from tests.qwen_reference_support import evaluator_environment
 
 ROOT = Path(__file__).resolve().parents[1]
 
@@ -208,8 +209,7 @@ class QwenStudyTests(unittest.TestCase):
         shutil.copytree(fixture/'reference',source,dirs_exist_ok=True)
         # The historical evaluator mounts npm even for Python-only scoring.
         # Supply an empty disposable prefix, never the operator's installation.
-        (self.parent / '.npm-global').mkdir()
-        with patch.object(Path, 'home', return_value=self.parent):
+        with evaluator_environment(study.base.native, self.parent):
             result = study.base.score(source,fixture/'fixture/acceptance.py')
         self.assertTrue(result['accepted'],result)
         self.assertEqual(len(result['groups']),15)

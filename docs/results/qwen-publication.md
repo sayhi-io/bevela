@@ -34,6 +34,10 @@ The full Linux suite requires `bubblewrap` and system Node at `/usr/bin/node`
 for sandboxed synthetic-runtime probes (on Ubuntu: `sudo apt-get install bubblewrap nodejs`).
 The two Python-only reference checks supply an empty disposable npm prefix for
 the historical evaluator; they do not require the developer's npm installation.
+A test-only wrapper also mounts the system `/lib64` read-only where present,
+because x86 Python needs a loader path absent on the original ARM host.
+These compatibility checks do not establish unmodified historical-launcher
+portability. The frozen/executable experiment sources are not rewritten.
 
 ```sh
 python3 -m venv .venv

@@ -9,6 +9,7 @@ import unittest
 from unittest.mock import patch
 
 from experiments import qwen_independent_tasks as study
+from tests.qwen_reference_support import evaluator_environment
 
 
 class IndependentTaskTests(unittest.TestCase):
@@ -67,8 +68,7 @@ class IndependentTaskTests(unittest.TestCase):
             shutil.copytree(study.FIXTURE.parent / 'reference' / component, root / 'work' / component, dirs_exist_ok=True)
         # Preserve the historical sandbox without requiring an operator's npm
         # installation for this Python-only reference check.
-        (self.root / '.npm-global').mkdir()
-        with patch.object(Path, 'home', return_value=self.root):
+        with evaluator_environment(engine.base.native, self.root):
             result = engine.base.score(root / 'work', root / 'check_contract.py')
         self.assertTrue(result['accepted'])
         self.assertEqual(sum(g['passed'] for g in result['groups'].values()), 15)
