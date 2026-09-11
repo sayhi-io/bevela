@@ -4,6 +4,7 @@ from datetime import datetime, timezone
 from pathlib import PurePosixPath
 import re
 from urllib.parse import urlsplit
+from .runtime_identity import runtime_session_ref
 
 CONTRACT = 'sayhi.project-intent.observatory/v1'
 
@@ -132,6 +133,7 @@ def valid_presence(p, now=None):
         for value in p.get('touching_paths',[])+p.get('avoid_paths',[]):
             if not value or PurePosixPath(value).is_absolute() or '..' in PurePosixPath(value).parts or any(c in value for c in '\\*?[]'):return False
         if p.get('access','unspecified') not in ('inspect','edit','unspecified'):return False
+        runtime_session_ref(p)
         checkout=p.get('checkout')
         if checkout is not None:
             if not isinstance(checkout,dict):return False
@@ -206,6 +208,7 @@ def project(states, allowed_scopes, selected=None, now=None):
                     continue
                 status = 'inactive' if p['status']=='inactive' else ('active' if expires>now else 'expired')
                 sessions.append({'scope':s['id'],'session':p['session'],'workstream':s['id']+':'+p['workstream'],
+                    'runtime_session':runtime_session_ref(p),
                     'status':status,'working':p.get('working',p.get('working_on','')),
                     'approaching':p.get('approaching',[]),'avoid':p.get('avoid',[]),
                     'heartbeat_at':p['heartbeat_at'],'expires_at':p['expires_at'],

@@ -1,5 +1,9 @@
 # Provisional local session connector
 
+For additive Codex/Qwen conversation references in ordinary worker enrollment,
+see [runtime session identities](RUNTIME_SESSIONS.md). Those references are
+separate from the operator attachment and delivery mechanism described here.
+
 This optional CLI adapter lets an authorized local operator attach an existing
 Codex session and issue one bounded continuation. It is separate from Mission
 Control's read-only HTTP API. It is not the mature SparkOps execution bridge;

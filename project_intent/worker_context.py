@@ -7,6 +7,7 @@ import subprocess
 
 from .model import project, utcnow, date, validate_snapshot
 from .enrollment import read_registrations
+from .runtime_identity import runtime_session_ref
 
 
 def checkout_identity(directory):
@@ -108,6 +109,7 @@ def nearby_workers(states,checkout,touching,seams,scope=None):
             paths=sorted({p for p in touching for q in worker.get('touching_paths',[]) if same and path_overlap(p,q)})
             if same or shared:
                 nearby.append({'scope':state['id'],'workstream':worker['workstream'],'session':worker['session'],
+                    'runtime_session':runtime_session_ref(worker),
                     'working':worker.get('working',''),'heartbeat_at':worker.get('heartbeat_at'),
                     'checkout':other,'access':worker.get('access','unspecified'),'touching_paths':worker.get('touching_paths',[]),
                     'touching_seams':worker.get('touching_seams',[]),'approaching':worker.get('approaching',[]),
@@ -148,6 +150,7 @@ def integration_context(state, selected, checkout, touching=(), seams=(), sessio
                         ('session','workstream','working','status','heartbeat_at','expires_at',
                          'checkout','access','touching_paths','touching_seams','approaching','avoid_paths','avoid')})
         workers[-1].update(observation=observation,shared_seams=shared,overlapping_paths=paths,
+                          runtime_session=runtime_session_ref(worker),
                           same_checkout=bool(same and checkout['root']==other['root']))
     return {'scope':state['id'],'related_work':sorted(related,key=lambda r:r['id']),
             'last_known_workers':sorted(workers,key=lambda r:r['session']),
