@@ -21,6 +21,10 @@ defined [below](#pi-behavior-versions), not deployed release numbers.
 | Executed | Study | Model / effort | Ordinary outcome | PI outcome | PI behavior |
 | --- | --- | --- | --- | --- | --- |
 | Sep 10 · recorded summary | [Qwen independent requests · candidate 2](docs/results/qwen-independent-requests.md) | Qwen3.8 DFlash2 · thinking off | **3/3 accepted**, 15/15 each | Steering on: **1/3 accepted**, 13/15, 13/15, 15/15; first two stopped at the 30-minute worker boundary. Owner-recorded outcomes, not a newly audited measurements export. | v0.05 backend unchanged; independent-request steering adapter v1 |
+| Sep 10 · after cap500 | [Distributed steering · 500 calls / 500 turns](#qwen-distributed-500-limit-follow-ups) | Qwen3.8 DFlash2 · thinking off | No new matched control | **1/1 artifact accepted, 15/15 in 795.062s**; reporting worker exited 1, so `autonomous_complete=false` | v0.05 backend unchanged; cap500-turn500 adapter v1 |
+| Sep 10 · after initial distributed pilot | [Distributed steering · 500-call cap](#qwen-distributed-500-limit-follow-ups) | Qwen3.8 DFlash2 · thinking off | No new matched control | **0/1 accepted, 14/15 in 1,076.096s**; partial-return pipeline failed | v0.05 backend unchanged; cap500 adapter v1 |
+| Sep 10 · after ten-repeat cohort | [Distributed steering · initial pilot](#qwen-distributed-500-limit-follow-ups) | Qwen3.8 DFlash2 · thinking off | No new matched control | **0/1 accepted, 8/15 in 844.115s** | v0.05 backend unchanged; nested steering adapter v1 |
+| Sep 10 · completed 00:44 UTC | [Seven-seam steering · ten repeats](#qwen-steering-ten-repeat-cohort) | Qwen3.8 DFlash2 · thinking off | No new matched control | **10/10 accepted, 7/7 every project**; median 99.4s, range 48.0–303.2s | v0.05 backend unchanged; steering v1 repeated without treatment changes |
 | Sep 9, 22:55–22:57 | [Qwen PI steering · first pilot](docs/results/qwen-steering.md) | Qwen3.8 DFlash2 · thinking off | No new control; preceding pull-only PI project scored 0/7 | **1/1 accepted, 7/7 in 95s**; both enrolled; 18 automatic notices, consumer reconciled migration. One pilot, not established reliability. | v0.05 backend unchanged; steering integration v1 |
 | Sep 9, 22:42–22:44 | [Compact PI v2 · filtered Qwen CLI](docs/results/qwen-compact-pi-v2.md) | Qwen3.8 DFlash2 · thinking off | Not run | **0/1 accepted, 0/7 in 76s**; both workers finished. Consumer made no PI calls; producer left stale consumer unchanged. No loop or timeout. | v0.05 backend unchanged; Qwen CLI v2 |
 | Sep 9, 22:01–22:07 | [Compact PI prompt · Qwen thinking off](docs/results/qwen-compact-pi.md) | Qwen3.8 DFlash2 · thinking off | Not run | **1/3 accepted: 0/7, 0/7, 7/7**; 130s, 84s, 103s. Two native loop-guard stops; no timeouts. | v0.05 unchanged; compact instructions v1 |
@@ -101,6 +105,71 @@ cripple ordinary tools. No PI software effect is measured here.
 [Software results](docs/results/sol-distributed.md) · [Protocol evidence](docs/results/sol-protocol.md) ·
 [Frozen software-study plan](docs/CLI_SOL_DISTRIBUTED_SOFTWARE.md).
 
+## Qwen steering ten-repeat cohort
+
+**Ten fresh projects, ten accepted results, 7/7 every time.** This September 10
+cohort repeated the successful seven-seam steering pilot with native Qwen Code,
+model `qwen38-27b-dflash2`, thinking off, confidence off and PI/steering on.
+Projects ran sequentially, with two concurrent role workers inside each project.
+The pilot is separate and is not counted as one of these ten repeats.
+
+| Trial | Integrated score | Accepted | Project seconds |
+| --- | ---: | --- | ---: |
+| T01 | 7/7 | Yes | 303.185 |
+| T02 | 7/7 | Yes | 105.218 |
+| T03 | 7/7 | Yes | 114.269 |
+| T04 | 7/7 | Yes | 94.821 |
+| T05 | 7/7 | Yes | 82.371 |
+| T06 | 7/7 | Yes | 133.303 |
+| T07 | 7/7 | Yes | 98.036 |
+| T08 | 7/7 | Yes | 100.851 |
+| T09 | 7/7 | Yes | 48.037 |
+| T10 | 7/7 | Yes | 73.076 |
+
+Median project time was **99.444s**. This establishes repeated accepted outcomes
+on this fixture with steering enabled. There was no new matched steering-off
+cohort, so it does not isolate the causal effect of steering or establish broad
+reliability on different projects. Acceptance was checked after worker exit;
+project time is not time to the first correct intermediate state.
+
+Source: the ten project `result.json` records and `completed.json` in local batch
+`20260910-qwen-steering-repeat-v1`, inspected September 11. The completion receipt
+records ten projects at `2026-09-10T00:44:42.876069+00:00`. These are summaries of
+recorded outcomes, not newly executed trials or a full transcript/provenance audit.
+[Frozen cohort method](docs/CLI_QWEN_STEERING.md#ten-repeat-stability-cohort) ·
+[Original pilot](docs/results/qwen-steering.md).
+
+## Qwen distributed 500-limit follow-ups
+
+The harder distributed candidate 2 reached **15/15 artifact acceptance** after
+the native tool-call and session-turn allowances were both set to 500. These
+were three separate fresh four-worker projects, not repairs or resumes of one
+failed checkout. All used `qwen38-27b-dflash2`, thinking off and PI/steering on.
+
+| Fresh project | Native limit change | Integrated score | Artifact accepted | Project seconds |
+| --- | --- | ---: | --- | ---: |
+| Initial distributed steering | Initial native limits | 8/15 | No | 844.115 |
+| cap500 | Tool calls per turn set to 500 | 14/15 | No | 1,076.096 |
+| cap500-turn500 | Session turns raised from 150 to 500; call cap stays 500 | **15/15** | **Yes** | **795.062** |
+
+The cap500 run failed `partial_return_pipeline`. The final run passed all fifteen
+groups in **13m 15s**, but its reporting worker exited with code **1**; the other
+three workers exited 0. Its recorder therefore retained **`accepted=true` and
+`autonomous_complete=false`**. Correct final source and clean worker execution
+are separate outcomes; do not erase either fact.
+
+The changes were to **native execution allowances**, not to the notification
+budget: the steering hook still allowed **12 notices per worker**. Three fresh
+runs show this observed progression, not proof that the limit changes alone
+caused it. There was no newly matched ordinary control for these pilots. The
+earlier seven-seam cohort and this fifteen-group fixture must not be pooled.
+
+Source: project `C1/result.json` and frozen plans in local batches
+`20260910-qwen-distributed-steering-v1`, `20260910-qwen-distributed-cap500-v1`
+and `20260910-qwen-distributed-turn500-v1`, inspected September 11. No original
+results or frozen inputs were changed, and no models were rerun for this summary.
+[Versioned methods and limit changes](docs/CLI_QWEN_DISTRIBUTED_STEERING.md).
+
 ## Latest Qwen follow-up: independent requests
 
 The September 10 study-owner summary records **3/3 ordinary projects accepted**,
@@ -109,6 +178,9 @@ the 30-minute worker boundary. Workers noticed peers but did not establish a PI
 repair agreement. This is not evidence of a reliable PI advantage or proof that
 PI caused the failures. [Recorded outcomes and evidence limits](docs/results/qwen-independent-requests.md).
 The [proposed follow-up](docs/QWEN_STEERING_BACKLOG.md) remains on hold.
+This later comparison changed to three different worker requests and already
+used **500 tool calls per turn and 500 session turns**. It does not replace the
+earlier ten-repeat success or the accepted four-worker distributed artifact.
 
 ## Earlier Qwen Code distributed comparison: no PI win
 

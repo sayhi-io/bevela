@@ -157,17 +157,25 @@ Then ordinary concurrent workers passed **3/3 projects on each candidate**, reta
 
 ### Then we tried native Qwen Code—and steering.
 
-The September 9–10 Qwen3.8 DFlash2 studies did **not establish a reliable PI advantage**.
-These are separate small experiments, not one pooled benchmark:
+With steering, Qwen3.8 DFlash2 completed **ten fresh seven-seam projects at 7/7**.
+On the harder distributed candidate, a later 500-limit run reached **15/15**.
+Those successes belong alongside the failures—not in place of them. The September
+9–10 studies used different worker arrangements and settings, not one pooled benchmark:
 
 - [Distributed candidate 2 · thinking on](docs/results/qwen-distributed.md): **0/5 accepted in each arm**; 35/40 workers timed out across both arms.
 - [Original seven seams · Medium](docs/results/qwen-seven-seams.md): **3/3 ordinary versus 2/3 PI** projects accepted.
 - [First seven-seam steering pilot · thinking off](docs/results/qwen-steering.md): **1/1 accepted, 7/7 in 95s**; no new matched control and only one pilot.
+- [Ten steering-on repeats · thinking off](RESULTS.md#qwen-steering-ten-repeat-cohort): **10/10 accepted, every project 7/7**; two workers per fresh project, median **99.4s**. No new matched steering-off cohort.
+- [Distributed 500-limit follow-ups · thinking off](RESULTS.md#qwen-distributed-500-limit-follow-ups): **8/15 → 14/15 → 15/15** across three fresh projects. The final artifact passed in **13m 15s**, but one worker exited nonzero, so clean autonomous completion was not established.
 - [Latest independent requests · September 10](docs/results/qwen-independent-requests.md): **3/3 ordinary versus 1/3 PI+steering** accepted; ordinary scored 15/15 each, PI scored 13/15, 13/15, 15/15.
 
 The latest comparison is the study owner's recorded outcome summary, not a newly audited
 per-worker measurements export. Two PI projects stopped at the 30-minute boundary;
-that does not establish that PI caused their failures.
+that does not establish that PI caused their failures. This later three-worker
+comparison already used 500 tool calls per turn and 500 session turns. Those were
+native execution limits, not notification counts; the steering allowance remained
+12 notices per worker. The earlier successes and later comparison do not by
+themselves establish a causal PI advantage.
 
 On the smaller seven-seam fixture, [one ordinary worker with thinking off](docs/results/qwen-single-worker.md)
 also passed **3/3**, with a median **47.9 seconds**. Notifications reaching workers
