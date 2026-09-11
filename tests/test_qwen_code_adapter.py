@@ -206,7 +206,11 @@ class QwenStudyTests(unittest.TestCase):
         source = self.parent/'reference'
         shutil.copytree(fixture/'fixture',source)
         shutil.copytree(fixture/'reference',source,dirs_exist_ok=True)
-        result = study.base.score(source,fixture/'fixture/acceptance.py')
+        # The historical evaluator mounts npm even for Python-only scoring.
+        # Supply an empty disposable prefix, never the operator's installation.
+        (self.parent / '.npm-global').mkdir()
+        with patch.object(Path, 'home', return_value=self.parent):
+            result = study.base.score(source,fixture/'fixture/acceptance.py')
         self.assertTrue(result['accepted'],result)
         self.assertEqual(len(result['groups']),15)
 

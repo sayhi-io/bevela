@@ -30,6 +30,11 @@ was written; this note records the later source-publication step.
 
 Use an environment owned by this checkout:
 
+The full Linux suite requires `bubblewrap` and system Node at `/usr/bin/node`
+for sandboxed synthetic-runtime probes (on Ubuntu: `sudo apt-get install bubblewrap nodejs`).
+The two Python-only reference checks supply an empty disposable npm prefix for
+the historical evaluator; they do not require the developer's npm installation.
+
 ```sh
 python3 -m venv .venv
 .venv/bin/python -m pip install -e .

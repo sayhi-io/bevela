@@ -216,9 +216,24 @@ Browse workstreams, architecture, reports, worker/session observations and atten
 
 Historical registrations are not a headcount. Missing observations do not mean no one is working. Integration context and repair plans are CLI features; Mission Control does not yet display those plans.
 
-<!-- Screenshot placeholder. Recommended capture: Workstream Map with several simultaneous workers, visible seams, and one overlap or repair state. -->
+<p align="center">
+  <a href="docs/images/mission-control-calendar.png">
+    <img src="docs/images/mission-control-calendar.png" width="760" alt="Mission Control weekly calendar above a searchable activity list with event filters and sorting." />
+  </a>
+</p>
 
-> **Screenshot coming soon.**
+**Calendar.** A compact week above searchable, filterable evidence: reports, handoffs
+and scoped Git observations. Select either image to inspect it at full resolution.
+
+<p align="center">
+  <a href="docs/images/mission-control-map.png">
+    <img src="docs/images/mission-control-map.png" width="760" alt="Mission Control boundary index and experimental workstream map showing shared study boundaries." />
+  </a>
+</p>
+
+**Workstream Map.** Inspect declared shared boundaries across workstreams.
+These September 11 UI snapshots illustrate the read-only views; lifecycle labels
+are not proof of live activity, and connections are not verified conflicts or test results.
 
 ## Get started
 

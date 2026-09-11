@@ -65,7 +65,11 @@ class IndependentTaskTests(unittest.TestCase):
         # Reference is used only in this disposable unit test; never model inputs.
         for component in study.original.base.ROLES:
             shutil.copytree(study.FIXTURE.parent / 'reference' / component, root / 'work' / component, dirs_exist_ok=True)
-        result = engine.base.score(root / 'work', root / 'check_contract.py')
+        # Preserve the historical sandbox without requiring an operator's npm
+        # installation for this Python-only reference check.
+        (self.root / '.npm-global').mkdir()
+        with patch.object(Path, 'home', return_value=self.root):
+            result = engine.base.score(root / 'work', root / 'check_contract.py')
         self.assertTrue(result['accepted'])
         self.assertEqual(sum(g['passed'] for g in result['groups'].values()), 15)
 

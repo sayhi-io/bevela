@@ -41,6 +41,14 @@ class QwenPublicationTests(unittest.TestCase):
                 with self.subTest(page=path.name, target=target):
                     self.assertTrue((path.parent / target.split('#')[0]).is_file())
 
+    def test_readme_screenshots_are_bounded_and_link_to_originals(self):
+        readme = (ROOT / 'README.md').read_text()
+        for name in ('calendar', 'map'):
+            target = 'docs/images/mission-control-' + name + '.png'
+            self.assertIn('href="' + target + '"', readme)
+            self.assertIn('src="' + target + '" width="760"', readme)
+            self.assertTrue((ROOT / target).read_bytes().startswith(b'\x89PNG\r\n\x1a\n'))
+
 
 if __name__ == '__main__':
     unittest.main()
