@@ -149,9 +149,11 @@ def telemetry(root, row, plan):
     events = []
     for line in (folder / 'stdout.jsonl').read_text().splitlines():
         try:
-            events.append(json.loads(line))
+            value = json.loads(line)
         except ValueError:
-            pass
+            continue
+        if isinstance(value, dict):  # Non-object JSON lines are not native records.
+            events.append(value)
     transport = [json.loads(line) for line in (folder / 'transport.jsonl').read_text().splitlines()]
     initial = [e for e in events if e.get('type') == 'system' and e.get('subtype') == 'init']
     final = [e for e in events if e.get('type') == 'result']
