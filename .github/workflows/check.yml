@@ -8,6 +8,10 @@ jobs:
     # hosted image rejects its UID-map setup; keep this test on a compatible
     # supported runner instead of skipping it or disabling host AppArmor.
     runs-on: ubuntu-22.04
+    env:
+      # Optional: a read-only token for the private meanaverage/sayhi-fakes repo.
+      # Without it the fake-CLI runner integration tests skip explicitly.
+      HAS_SAYHI_FAKES: ${{ secrets.SAYHI_FAKES_READ_TOKEN != '' }}
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
         with:
@@ -21,6 +25,26 @@ jobs:
           # Synthetic Qwen probes execute /usr/bin/node inside the sandbox;
           # the hosted toolcache's Node is outside that filesystem allowlist.
           sudo apt-get install --yes bubblewrap nodejs
+      - name: Check out sayhi-fakes CLI stand-ins (v0.1.0)
+        if: env.HAS_SAYHI_FAKES == 'true'
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          repository: meanaverage/sayhi-fakes
+          ref: 268e78438e177f927bd9e527449c0a935278cda5
+          path: .sayhi-fakes
+          token: ${{ secrets.SAYHI_FAKES_READ_TOKEN }}
+          persist-credentials: false
+      - name: Provide Node 20 at /usr/bin/node for sandboxed fake Qwen Code
+        if: env.HAS_SAYHI_FAKES == 'true'
+        uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020
+        with:
+          node-version: 20
+      - name: Expose sayhi-fakes to the tests
+        if: env.HAS_SAYHI_FAKES == 'true'
+        run: |
+          # qwen_code_adapter.argv() launches exactly /usr/bin/node inside bubblewrap.
+          sudo install -m 0755 "$(command -v node)" /usr/bin/node
+          echo "SAYHI_FAKES_ROOT=$GITHUB_WORKSPACE/.sayhi-fakes" >> "$GITHUB_ENV"
       - name: Independent offline contract tests
         run: python3 -m unittest discover -s tests -v
       - name: Projection-only Workstream Map tests

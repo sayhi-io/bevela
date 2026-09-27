@@ -117,15 +117,19 @@ def worker_analysis(root, row):
     events = []
     for line in (directory / 'stdout.jsonl').read_text().splitlines():
         try:
-            events.append(json.loads(line))
+            value = json.loads(line)
         except ValueError:
-            pass
+            continue
+        if isinstance(value, dict):  # Non-object JSON lines are not native records.
+            events.append(value)
     initial = [r for r in events if r.get('type') == 'system' and r.get('subtype') == 'init']
     final = [r for r in events if r.get('type') == 'result']
     calls = []
     for event in events:
-        for item in event.get('message', {}).get('content', []) if isinstance(event.get('message', {}).get('content'), list) else []:
-            if item.get('type') == 'tool_use':
+        message = event.get('message')
+        content = message.get('content') if isinstance(message, dict) else None
+        for item in content if isinstance(content, list) else []:
+            if isinstance(item, dict) and item.get('type') == 'tool_use':
                 calls.append({'name': item.get('name'), 'input': item.get('input'), 'id': item.get('id')})
     transport_path = directory / 'transport.jsonl'
     transport = [json.loads(line) for line in transport_path.read_text().splitlines()] if transport_path.exists() else []

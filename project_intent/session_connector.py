@@ -5,8 +5,10 @@ import json
 import os
 from pathlib import Path
 import re
+import signal
 import subprocess
 import tempfile
+import time
 from datetime import timedelta
 from typing import Protocol
 from uuid import UUID
@@ -19,7 +21,61 @@ class Backend(Protocol):
     def deliver(self, session: str, checkout: str, message: str, mode: str) -> dict: ...
 
 
+def stop_process_group(process, grace):
+    """Terminate the child's whole process group, then reap the child.
+
+    The npm `codex` launcher spawns the native binary as its own child and can
+    forward SIGTERM but never SIGKILL (codex-cli/bin/codex.js), so signalling
+    only the direct child would orphan a still-running turn.
+    """
+    deadline = time.monotonic() + grace
+    signal_group(process.pid, signal.SIGTERM)
+    try:
+        process.wait(timeout=grace)
+    except subprocess.TimeoutExpired:
+        pass
+    # Members that outlive the leader (launcher did not forward, or ignored
+    # SIGTERM) get the remaining grace, then SIGKILL.
+    while signal_group(process.pid, 0) and time.monotonic() < deadline:
+        time.sleep(.05)
+    signal_group(process.pid, signal.SIGKILL)
+    process.wait()
+
+
+def signal_group(pgid, sig):
+    try:
+        os.killpg(pgid, sig)
+        return True
+    except ProcessLookupError:
+        return False
+
+
+def resume_outcome(stdout, session):
+    """Exact `codex exec --json` receipt: codex-rs/exec/src/exec_events.rs.
+
+    The exact thread must start first, and the one terminal turn.completed must
+    be the last event. Unparseable lines are ignored, never inferred as progress.
+    """
+    events = []
+    for line in stdout.splitlines():
+        try:
+            value = json.loads(line)
+        except ValueError:
+            continue
+        if isinstance(value, dict):
+            events.append(value)
+    types = [e.get('type') for e in events]
+    started = [e for e in events if e.get('type') == 'thread.started']
+    return (bool(events) and len(started) == 1 and events[0] is started[0]
+            and started[0].get('thread_id') == session and types.count('turn.completed') == 1
+            and types[-1] == 'turn.completed' and 'turn.failed' not in types)
+
+
 class CodexBackend:
+    def __init__(self, queue_timeout=45, resume_timeout=300, kill_grace=5):
+        self.timeouts = {'queue': queue_timeout, 'resume': resume_timeout}
+        self.kill_grace = kill_grace
+
     def deliver(self, session, checkout, message, mode):
         argv = (['codex', 'queue', '--thread', session, '--message', message] if mode == 'queue'
                 else ['codex', 'exec', 'resume', '--json', session, '-'])
@@ -27,33 +83,35 @@ class CodexBackend:
             # Child output may contain conversation text: private temporary storage,
             # bounded reads, no raw output persisted in receipts or printed to users.
             with tempfile.TemporaryFile(mode='w+b') as output, tempfile.TemporaryFile(mode='w+b') as errors:
-                result = subprocess.run(argv, cwd=checkout, input=message if mode == 'resume' else None,
-                                        stdout=output, stderr=errors, text=True,
-                                        timeout=45 if mode == 'queue' else 300)
+                # Own process group, so timeout or cancellation stops every
+                # descendant rather than orphaning the native turn.
+                process = subprocess.Popen(argv, cwd=checkout, stdin=subprocess.PIPE if mode == 'resume' else subprocess.DEVNULL,
+                                           stdout=output, stderr=errors, start_new_session=True)
+                try:
+                    # communicate() bounds the stdin write by the same timeout.
+                    process.communicate(message.encode() if mode == 'resume' else None,
+                                        timeout=self.timeouts[mode])
+                    returncode = process.returncode
+                except BaseException:
+                    # Timeout, Ctrl-C or any caller failure: never leave the turn running.
+                    stop_process_group(process, self.kill_grace)
+                    raise
                 output.seek(0)
                 captured = output.read(65537)
                 if len(captured) > 65536:
                     return {'status': 'uncertain', 'execution': 'unknown', 'reason': 'Output exceeds receipt bound; inspect target'}
-                # Mock backends may provide stdout directly; real run writes output.
-                result.stdout = captured.decode('utf-8', errors='replace') or getattr(result, 'stdout', '') or ''
+                stdout = captured.decode('utf-8', errors='replace')
         except FileNotFoundError:
             return {'status': 'unavailable', 'execution': 'not-started'}
         except (subprocess.TimeoutExpired, OSError):
             return {'status': 'uncertain', 'execution': 'unknown', 'reason': 'Transport interrupted; inspect target before any new request'}
         if mode == 'queue':
-            match = re.fullmatch(r'Queued message ([0-9a-f-]{36}) for thread ' + re.escape(session) + r'\.', result.stdout.strip())
-            if result.returncode == 0 and match:
+            match = re.fullmatch(r'Queued message ([0-9a-f-]{36}) for thread ' + re.escape(session) + r'\.', stdout.strip())
+            if returncode == 0 and match:
                 return {'status': 'queued', 'message_id': match[1], 'execution': 'unconfirmed'}
-        else:
-            events = []
-            for line in result.stdout.splitlines():
-                try: events.append(json.loads(line))
-                except ValueError: pass
-            exact = any(e.get('type') == 'thread.started' and e.get('thread_id') == session for e in events if isinstance(e, dict))
-            completed = any(e.get('type') == 'turn.completed' for e in events if isinstance(e, dict))
-            if exact and result.returncode == 0 and completed:
-                return {'status': 'turn-completed', 'execution': 'observed-complete', 'acceptance': 'not-assessed'}
-        return {'status': 'uncertain', 'execution': 'unknown', 'exit_code': result.returncode,
+        elif returncode == 0 and resume_outcome(stdout, session):
+            return {'status': 'turn-completed', 'execution': 'observed-complete', 'acceptance': 'not-assessed'}
+        return {'status': 'uncertain', 'execution': 'unknown', 'exit_code': returncode,
                 'reason': 'No exact delivery receipt; inspect target. No automatic resume/queue fallback.'}
 
 
@@ -140,7 +198,16 @@ def continue_session(config_path, scope, workstream, session, checkout, request_
                        requested_at=utcnow().isoformat(), authority_ref=cfg['authority_ref'])
         # Persist before launch: crash/timeout never authorizes automatic redelivery.
         save(receipt_path, receipt)
-        receipt.update((backend or CodexBackend()).deliver(session, target['checkout'], message, mode))
+        try:
+            receipt.update((backend or CodexBackend()).deliver(session, target['checkout'], message, mode))
+        except BaseException as error:
+            # Local cancellation or adapter failure: record it, still uncertain;
+            # the same request ID never relaunches (see duplicate path above).
+            receipt.update(status='uncertain', execution='unknown', interrupted=type(error).__name__,
+                           reason='Delivery interrupted locally; inspect target before any new request',
+                           observed_at=utcnow().isoformat())
+            save(receipt_path, receipt)
+            raise
         receipt['observed_at'] = utcnow().isoformat()
         save(receipt_path, receipt)
         return receipt

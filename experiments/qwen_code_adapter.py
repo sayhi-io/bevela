@@ -266,6 +266,22 @@ def consume_native(source, output, events, state, observer=None, role='worker'):
         state['error_type'] = type(error).__name__
 
 
+def signal_group(pgid, sig):
+    try:
+        os.killpg(pgid, sig)
+    except ProcessLookupError:
+        pass  # The group already exited between wait() and this signal.
+
+
+def stop(process, grace=5):
+    signal_group(process.pid, signal.SIGTERM)
+    try:
+        process.wait(timeout=grace)
+    except subprocess.TimeoutExpired:
+        signal_group(process.pid, signal.SIGKILL)
+        process.wait()
+
+
 def record(root, role, plan, observer=None):
     directory = root / role
     directory.mkdir()
@@ -301,14 +317,17 @@ def record(root, role, plan, observer=None):
                 row['exit_code'] = process.wait(timeout=plan['timeout_seconds'])
             except subprocess.TimeoutExpired:
                 row['timed_out'] = True
-                os.killpg(process.pid, signal.SIGTERM)
-                try:
-                    process.wait(timeout=5)
-                except subprocess.TimeoutExpired:
-                    os.killpg(process.pid, signal.SIGKILL)
-                    process.wait()
+                stop(process)
                 row['exit_code'] = process.returncode
+            except BaseException:
+                # Cancellation (Ctrl-C, controller failure) must not leave the
+                # native worker running while this recorder process survives.
+                # started.json without result.json keeps the no-retry fence.
+                stop(process)
+                raise
             reader.join(timeout=10)
+            if not reader.is_alive():
+                process.stdout.close()
             row['stream_eof'] = reader_state.get('eof', False)
             row['stream_error_type'] = reader_state.get('error_type')
             row['stream_complete'] = (not reader.is_alive() and row['stream_eof']

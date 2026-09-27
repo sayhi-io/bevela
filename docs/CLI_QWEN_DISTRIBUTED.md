@@ -138,6 +138,14 @@ Freeze stores fixture/checker, prompt, PI, adapter and runtime hashes before any
 model project. A resumed batch skips only finalized projects and refuses an
 already-started project without a final receipt. No silent retries or replacements.
 
+Recorder corrections found by the fake-CLI integration tests
+(`tests/test_qwen_record_fake_cli.py`, run with `SAYHI_FAKES_ROOT` set): a cancelled
+recorder (Ctrl-C or controller failure) now stops the sandbox process group before
+re-raising, still leaving `started.json` without `result.json`; and stream analysis
+skips JSON lines that are not objects instead of raising. These change the adapter
+and study hashes, so a batch frozen before them must keep running from its own
+frozen source revision.
+
 ## Sequencing amendment after B1
 
 B1 hit its predeclared 1,800-second limit with three workers still active. Its

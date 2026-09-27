@@ -2,11 +2,12 @@ import json
 import os
 from pathlib import Path
 import subprocess
+import sys
 import tempfile
 import unittest
 from unittest.mock import patch
 
-from project_intent.session_connector import attach, continue_session, CodexBackend
+from project_intent.session_connector import attach, continue_session, CodexBackend, resume_outcome
 
 
 class ConnectorTests(unittest.TestCase):
@@ -71,22 +72,51 @@ class ConnectorTests(unittest.TestCase):
         link = self.root / 'linked.jsonl'; link.symlink_to(self.rollout)
         with self.assertRaises(OSError): attach(*self.common, link)
 
+    def stub_codex(self, stdout='', exit_code=0):
+        """A real `codex` executable on PATH that records argv/stdin (no sayhi-fakes needed)."""
+        bin_dir = self.root / 'bin'; bin_dir.mkdir(exist_ok=True)
+        stub = bin_dir / 'codex'
+        stub.write_text(f"#!{sys.executable}\nimport json, sys\n"
+                        f"open({str(self.root / 'argv.json')!r}, 'w').write(json.dumps([sys.argv[1:], sys.stdin.read()]))\n"
+                        f"sys.stdout.write({stdout!r})\nsys.exit({exit_code})\n")
+        stub.chmod(0o755)
+        environment = patch.dict(os.environ, {'PATH': f"{bin_dir}{os.pathsep}{os.environ.get('PATH', '')}"})
+        environment.start(); self.addCleanup(environment.stop)
+        return lambda: json.loads((self.root / 'argv.json').read_text())
+
     def test_queue_exact_receipt_and_shell_free(self):
-        output = f'Queued message 01a07387-d85b-78f3-8924-2e085ce13937 for thread {self.session}.\n'
-        with patch('subprocess.run', return_value=subprocess.CompletedProcess([], 0, output, '')) as run:
-            result = CodexBackend().deliver(self.session, '/tmp', 'literal $(example)', 'queue')
-            self.assertEqual(result['status'], 'queued')
-            self.assertEqual(run.call_args.args[0][-1], 'literal $(example)')
-            self.assertNotIn('shell', run.call_args.kwargs)
-        with patch('subprocess.run', return_value=subprocess.CompletedProcess([], 1, '', 'active writer')):
-            self.assertEqual(CodexBackend().deliver(self.session, '/tmp', 'hello', 'resume')['status'], 'uncertain')
+        observed = self.stub_codex(f'Queued message 01a07387-d85b-78f3-8924-2e085ce13937 for thread {self.session}.\n')
+        result = CodexBackend().deliver(self.session, '/tmp', 'literal $(example)', 'queue')
+        self.assertEqual(result['status'], 'queued')
+        self.assertEqual(observed()[0], ['queue', '--thread', self.session, '--message', 'literal $(example)'])
+        self.assertEqual(observed()[1], '')
+        self.stub_codex('', 1)
+        self.assertEqual(CodexBackend().deliver(self.session, '/tmp', 'hello', 'resume')['status'], 'uncertain')
 
     def test_resume_requires_exact_thread_and_turn(self):
         events = '\n'.join(json.dumps(x) for x in [dict(type='thread.started',thread_id=self.session),dict(type='turn.completed')])
-        with patch('subprocess.run', return_value=subprocess.CompletedProcess([],0,events,'')):
-            self.assertEqual(CodexBackend().deliver(self.session, '/tmp','hello','resume')['status'], 'turn-completed')
-        with patch('subprocess.run', side_effect=subprocess.TimeoutExpired('codex',300)):
-            self.assertEqual(CodexBackend().deliver(self.session,'/tmp','hello','resume')['status'],'uncertain')
+        observed = self.stub_codex(events)
+        self.assertEqual(CodexBackend().deliver(self.session, '/tmp','hello','resume')['status'], 'turn-completed')
+        self.assertEqual(observed(), [['exec', 'resume', '--json', self.session, '-'], 'hello'])
+        self.stub_codex(events, 1)
+        self.assertEqual(CodexBackend().deliver(self.session, '/tmp','hello','resume')['status'], 'uncertain')
 
+    def test_missing_codex_is_unavailable(self):
+        with patch.dict(os.environ, {'PATH': str(self.root / 'empty')}):
+            self.assertEqual(CodexBackend().deliver(self.session, '/tmp', 'hello', 'resume')['status'], 'unavailable')
+
+    def test_resume_outcome_order_and_terminal_rules(self):
+        s = self.session
+        start, turn, done = dict(type='thread.started', thread_id=s), dict(type='turn.started'), dict(type='turn.completed')
+        item = dict(type='item.completed', item=dict(type='agent_message'))
+        def text(*rows): return '\n'.join(r if isinstance(r, str) else json.dumps(r) for r in rows)
+        accepted = [text(start, turn, item, done), text('[1]', 'not json', start, turn, done),
+                    text(start, turn, dict(type='error', message='retrying'), done)]
+        rejected = ['', text(start, turn), text(done, start), text(start, turn, done, item),
+                    text(dict(type='thread.started', thread_id='other'), start, turn, done),
+                    text(start, turn, dict(type='turn.failed', error={}), done), text(start, turn, done, done),
+                    text(dict(type='thread.started', thread_id='other'), turn, done), text(start, turn, '{"type":"turn.completed"')]
+        for value in accepted: self.assertTrue(resume_outcome(value, s), value)
+        for value in rejected: self.assertFalse(resume_outcome(value, s), value)
 
 if __name__ == '__main__': unittest.main()

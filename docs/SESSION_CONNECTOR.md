@@ -73,12 +73,23 @@ resumed merely because queue delivery succeeded.
 `--delivery resume` explicitly runs noninteractive `codex exec resume` for a known
 dormant session, using existing local Codex configuration. It does not override
 sandbox or approval flags. Do not resume your own active thread or a thread with
-an existing writer. A completed exact-session turn can be observed; task acceptance,
-tests, readiness and production authority still require their own evidence.
+an existing writer. A completed exact-session turn can be observed only when the
+JSONL stream starts with that session's `thread.started`, ends with its single
+`turn.completed`, has no `turn.failed` and the process exits 0; unparseable lines
+never count as progress. Task acceptance, tests, readiness and production authority
+still require their own evidence.
 Resume is bounded to 300 seconds; timeout is uncertain, not proof the work did
-nothing. Child execution may already have produced side effects or child processes.
-Inspect the target before any further continuation. No automatic queue/resume
-fallback or retry occurs. This is deliberately not a background job supervisor.
+nothing. Codex runs in its own process group: timeout or local interruption
+(Ctrl-C) sends SIGTERM to the whole group, then SIGKILL after a grace period, so the
+native binary under the npm launcher is not left running. An interruption is
+recorded on the receipt (`interrupted`) and still reads `uncertain`. Child execution
+may already have produced side effects. Inspect the target before any further
+continuation. No automatic queue/resume fallback or retry occurs. This is
+deliberately not a background job supervisor.
+
+`tests/test_codex_backend_fake_cli.py` drives this backend against the scripted
+`fake-codex` from the private sayhi-fakes repository when `SAYHI_FAKES_ROOT` names a
+checkout; otherwise those tests skip explicitly.
 
 Each request ID is durable local operational state. It records a digest before
 delivery, so a crash after sending cannot silently trigger resending. Reusing the

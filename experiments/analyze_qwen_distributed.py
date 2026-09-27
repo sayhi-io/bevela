@@ -69,11 +69,14 @@ def tool_events(root, role, origin):
     if not (root / role / 'events.jsonl').is_file():
         raise ValueError('Native event log unavailable: ' + role)
     for row in rows(root / role / 'events.jsonl'):
-        event = row.get('event', {})
-        content = event.get('message', {}).get('content', [])
+        event = row.get('event')
+        message = event.get('message') if isinstance(event, dict) else None
+        content = message.get('content') if isinstance(message, dict) else None
         if not isinstance(content, list):
             continue
         for item in content:
+            if not isinstance(item, dict):
+                continue
             seconds = (row['mono_ns'] - origin) / 1e9
             if item.get('type') == 'tool_use':
                 inputs = item.get('input') or {}
